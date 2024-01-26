@@ -17,16 +17,10 @@ const affiliateSchema = new mongoose.Schema({
   password: String,
   id_number: String,
   id_creation_date: String,
-  id_file: {
-    data: Buffer,
-    contentType: String
-  },
+  id_file: String,
   license_id: String,
   license_date: String,
-  license_file: {
-    data: Buffer,
-    contentType: String
-  },
+  license_file: String,
   vehicles: [],
 });
 
