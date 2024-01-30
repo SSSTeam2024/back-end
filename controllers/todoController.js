@@ -1,24 +1,11 @@
 const todoService = require('../services/todoService');
-const fs = require('fs');
-const affiliateService = require('../services/affiliateServices/affiliateService');
 
 const createTodo = async (req, res) => {
   try {
-    const { title, description, base64, extension } = req.body;
-    const uniqueFilename = affiliateService.generateUniqueFilename('png', 'cardId');
-    console.log(uniqueFilename);
-    // const base64Data = base64.replace(/^data:image\/\w+;base64,/, '');
-    // const binaryData = Buffer.from(base64Data, 'base64');
-    // const image_path = 'files/affiliateFiles/filetest.'+extension;
-    // fs.writeFile(image_path, binaryData, 'binary', (err) => {
-    //   if (err) {
-    //     console.error('Error saving the file:', err);
-    //   } else {
-    //     console.log('File saved successfully!');
-    //   }
-    // });
-    //  const newTodo = await todoService.createTodo({ title, description, image_path });
-    //  res.sendStatus(201).json(newTodo);
+    const { title, description, image_path } = req.body;
+   
+    const newTodo = await todoService.createTodo({ title, description, image_path });
+    res.sendStatus(201).json(newTodo);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
