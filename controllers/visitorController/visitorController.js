@@ -4,8 +4,8 @@ const createVisitor = async (req, res) => {
   try {
     const { email, name, phone } = req.body;
 
-    await visitorService.createVisitor({ email, name, phone });
-    res.sendStatus(201);
+    const visitor = await visitorService.createVisitor({ email, name, phone });
+    res.json(visitor);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

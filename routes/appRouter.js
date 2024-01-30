@@ -8,6 +8,7 @@ const sourceRoutes = require('./sourceRoutes/sourceRoutes');
 const feedbackRoutes = require('./feedbackRoutes/feedbackRoutes');
 const visitorRoutes = require('./visitorRoutes/visitorRoutes');
 const emailTemplateRoutes = require('./emailTemplateRoutes/emailTemplateRoutes');
+const quoteRoutes = require('./quoteRoutes/quoteRoutes');
 
 
 const router = new Router();
@@ -23,5 +24,6 @@ router.use('/source', sourceRoutes);
 router.use('/feedback', feedbackRoutes);
 router.use('/visitor', visitorRoutes);
 router.use('/emailTemplate', emailTemplateRoutes);
+router.use('/quote', quoteRoutes);
 
 module.exports = router;
