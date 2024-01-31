@@ -77,31 +77,31 @@ const updateComplainById = async (req, res) => {
   }
 };
 
-// const getComplainById = async (req, res) => {
-//   try {
-//     const affiliateId = req.params.id;
+const getComplainById = async (req, res) => {
+  try {
+    const complainId = req.params.id;
 
-//     const getAffiliate = await affiliateService.getAffiliateById(affiliateId);
+    const getComplain = await complainService.getComplainById(complainId);
 
-//     if (!getAffiliate) {
-//       return res.status(404).send('Affiliate not found');
-//     }
-//     res.json(getAffiliate);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send(error.message);
-//   }
-// }
+    if (!getComplain) {
+      return res.status(404).send('Complain not found');
+    }
+    res.json(getComplain);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
 
-// const getAllComplains = async (req, res) => {
-//   try {
-//     const affiliates = await affiliateService.getAffiliates();
-//     res.json({ affiliates });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send(error.message);
-//   }
-// };
+const getAllComplains = async (req, res) => {
+  try {
+    const complains = await complainService.getComplains();
+    res.json({ complains });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
 
 const deleteComplainById = async (req, res) => {
   try {
@@ -122,7 +122,7 @@ const deleteComplainById = async (req, res) => {
 module.exports = {
   addNewComplain,
   updateComplainById,
-  // getComplainById,
-  // getAllComplains,
+  getComplainById,
+  getAllComplains,
   deleteComplainById
 };

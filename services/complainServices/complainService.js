@@ -28,6 +28,10 @@ async function saveMediaFile(base64String, fileName) {
   });
 }
 
+const getComplainById = async (id) => {
+  return await complainDao.getComplainById(id);
+}
+
 const getComplains = async () => {
   return await complainDao.getComplains();
 };
@@ -43,6 +47,7 @@ const deleteComplain = async (id) => {
 module.exports = {
   createComplain,
   getComplains,
+  getComplainById,
   updateComplain,
   deleteComplain,
 };

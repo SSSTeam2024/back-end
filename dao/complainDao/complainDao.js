@@ -8,6 +8,10 @@ const getComplains = async () => {
   return await Complain.find();
 };
 
+const getComplainById = async (id) => {
+  return await Complain.findById(id);
+}
+
 const updateComplain = async (id, updateData) => {
   return await Complain.findByIdAndUpdate(id, updateData, { new: true });
 };
@@ -19,6 +23,7 @@ const deleteComplain = async (id) => {
 module.exports = {
   createComplain,
   getComplains,
+  getComplainById,
   updateComplain,
   deleteComplain,
 };
