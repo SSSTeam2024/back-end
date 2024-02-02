@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const schoolSchema = new mongoose.Schema({
-  username: String,
+  name: String,
   login: String,
   password: String,
   email: String,
@@ -10,16 +10,16 @@ const schoolSchema = new mongoose.Schema({
   address: String,
   service_date: String,
   status: String,
+  legal_status:String,
   account_name: String,
+  corporateCategory:String,
+  contract:String,
   sort_code: Number,
   account_number: Number,
   bank_name: String,
   id_creation_date: Date,
-  id_file: {
-    data: Buffer,
-    contentType: String
-  },
+  id_file: String,
 
-});
+},{timestamps:true});
 
 module.exports = mongoose.model('School', schoolSchema);

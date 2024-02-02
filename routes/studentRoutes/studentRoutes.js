@@ -3,11 +3,13 @@ const studentController = require('../../controllers/studentControllers/studentC
 
 const router = express.Router();
 
-// router.post('/register', studentController.register);
-// router.get('/login', studentController.login);
-// router.get('/getStudent/:id_student', studentController.getStudentByLogin);
-// router.get('/getAllStudents', studentController.getStudentByLogin);
-// router.delete('/todos/:id', studentController.deleteTodo);
-router.post('/newStudent', studentController.addStudent);
-
+router.get('/getAllStudents', studentController.getAllStudents);
+router.get('/getStudent/:email', studentController.getStudentByEmail);
+router.post('/registerStudent', studentController.registerStudent);
+router.post('/login', studentController.login);
+router.delete('/deleteStudent/:id', studentController.deleteStudent);
+router.put('/updateStudent/:id', studentController.updateProfile);
+router.put('/updatePassword/:id', studentController.updatePassword);
+router.get('/getStudent/:id', studentController.getStudentById);
+router.post('/logout', studentController.logout);
 module.exports = router;

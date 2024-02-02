@@ -3,17 +3,31 @@ const Student = require('../../models/studentModels/student');
 const createStudent = async (studentData) => {
     return await Student.create(studentData);
   };
-
+  // find student by login
+  const findStudentByLogin = async (login) => {
+    return await Student.findOne({ login });
+  };
+// get all students
   const getAllStudents = async () => {
     return await Student.find({});
   };
-  // const getStudentByEmail = async (email) => {
-
-  // }
-
-  const getStudentByLogin = async (id) => {
-    return await Student.findOne({ id });
+// get student by id
+  const getStudentById = async (id) => {
+    return await Student.findById(id);
+  }
+  // get student by email address
+  const getStudentEmail = async (email) => {
+    return await Student.findOne({ email });
+  }
+// updateStudent profile
+  const updateStudent= async (id, updateData) => {
+    return await Student.findByIdAndUpdate(id, updateData, { new: true });
   };
+  // delete student profile
+  const deleteStudent = async (id) => {
+    return await Student.findByIdAndDelete(id);
+  };
+  
 
   // const getAllStudentsByCorporateId = async (corporateId) => {
 
@@ -22,32 +36,25 @@ const createStudent = async (studentData) => {
   // const getAllStudentsByParentId = async (parentId) => {
     
   // }
-
-  const updateStudentByLogin = async (id, updatedData) => {
-    return await Student.findOneAndUpdate({ id }, updatedData, { new: true });
-  };
   
-  const deleteStudentByLogin = async (id) => {
-    return await Student.findOneAndDelete({ id });
-  };
+  // update password
+  const updatePassword = async (id, password) => {
+    console.log('Hashed pwd: '+password);
+    return await Student.findByIdAndUpdate({ _id:id }, {
+      $set: {
+        password: password
+      }
+    });
+  }
 
-  const addStudent = async (studentData) => {
-    try {
-      const newStudent = new Student(studentData);
-      const savedStudent = await newStudent.save();
-      return savedStudent;
-    } catch (error) {
-      console.error("Error adding student:", error);
-      throw error;
-    }
-  };
-  
 
 module.exports = {
     createStudent,
     getAllStudents,
-    getStudentByLogin,
-    deleteStudentByLogin,
-    updateStudentByLogin,
-    addStudent
+    updatePassword,
+    findStudentByLogin,
+    getStudentById,
+    deleteStudent,
+    updateStudent,
+    getStudentEmail
 };

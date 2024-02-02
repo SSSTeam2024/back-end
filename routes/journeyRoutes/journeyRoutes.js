@@ -4,7 +4,7 @@ const journeyController = require('../../controllers/journeyControllers/journeyC
 
 const router = express.Router();
 
-router.post('/newJouney', journeyController.createJourney);
+router.post('/newJourney', journeyController.createJourney);
 router.put('/updateJourney/:id', journeyController.updateJourney);
 router.delete('/deleteJouney/:id', journeyController.deleteJouney);
 router.get('/getAllJourneys', journeyController.getJourneys);
