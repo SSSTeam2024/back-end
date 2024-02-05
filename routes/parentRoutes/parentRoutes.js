@@ -10,6 +10,6 @@ router.post('/login', parentController.login);
 router.delete('/deleteParent/:id', parentController.deleteParent);
 router.put('/updateParent/:id', parentController.updateProfile);
 router.put('/updatePassword/:id', parentController.updatePassword);
-router.get('/getParent/:id', parentController.getParentById);
+router.get('/getParentById/:id', parentController.getParentById);
 router.post('/logout', parentController.logout);
 module.exports = router;

@@ -1,7 +1,7 @@
 const studentService = require("../../services/studentService");
 const globalFunctions = require('../../utils/globalFunction');
 // register student
-const registerStudent= async (req, res) => {
+const registerStudent = async (req, res) => {
   try {
     const { 
       firstName,
@@ -20,10 +20,11 @@ const registerStudent= async (req, res) => {
       password,
       id_creation_date,
       IdFileBase64String,
-      IdFileExtension 
+      IdFileExtension,
+      parent_id 
     } = req.body;
 
-    let id_file = globalFunctions.generateUniqueFilename(IdFileExtension,'CardId');
+    let id_file = globalFunctions.generateUniqueFilename(IdFileExtension, 'CardId');
 
     let documents = [
       {
@@ -31,28 +32,43 @@ const registerStudent= async (req, res) => {
         extension: IdFileExtension,
         name: id_file
       },
-     
     ];
+
+    await studentService.registerStudent(
+      { 
+        firstName,
+        lastName,
+        nameParent,
+        card_id,
+        country,
+        deparment,
+        houseStreerNumber,
+        classStudent,
+        dateBirth,
+        email,
+        phone,
+        status,
+        login,
+        password,
+        id_creation_date,
+        id_file,
+        parent_id,
+      },
+      documents
+    );
     
-    await studentService.registerStudent({ 
-      firstName,
-      lastName,
-      nameParent,
-      card_id,
-      country,
-      deparment,
-      houseStreerNumber,
-      classStudent,
-      dateBirth,
-      email,
-      phone,
-      status,
-      login,
-      password,
-      id_creation_date,
-      id_file,
-     },documents);
     res.sendStatus(201);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+// get student by id parent
+const getStudentsByParentId = async (req, res) => {
+  try {
+    const { parentId } = req.params;
+    const students = await studentService.getStudentsByParentId(parentId);
+    res.json(students);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -74,21 +90,28 @@ const login = async (req, res) => {
   }
 };
 // get student by id
+
 const getStudentById = async (req, res) => {
   try {
+    console.log(req)
     const studentId = req.params.id;
+    console.log('Student ID:', studentId);
 
-    const getStudent= await studentService.getStudentById(studentId);
+    const getStudent = await studentService.getStudentById(studentId);
+    console.log('Result from service:', getStudent);
 
     if (!getStudent) {
+      console.log('Student not found');
       return res.status(404).send('Student not found');
     }
+
     res.json(getStudent);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
   }
 }
+
 // get all students
 const getAllStudents = async (req, res) => {
   try {
@@ -107,7 +130,7 @@ const getStudentByEmail = async (req, res) => {
     const getStudent= await studentService.getStudentByEmail(studentEmail);
 
     if (!getStudent) {
-      return res.status(404).send('Student not found');
+      return res.status(404).send('Stud not found');
     }
     res.json(getStudent);
   } catch (error) {
@@ -294,5 +317,6 @@ module.exports = {
   getStudentById,
   getAllStudents,
   getStudentByEmail,
-  updatePassword
+  updatePassword,
+  getStudentsByParentId
 };

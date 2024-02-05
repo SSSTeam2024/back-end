@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const parentSchema = new mongoose.Schema(
   {
     firstName: String,
@@ -15,7 +16,7 @@ const parentSchema = new mongoose.Schema(
     id_creation_date: String,
     id_file: String,
     card_id_file: String,
-   
+    student_id: { type: Schema.Types.ObjectId, ref: "Student" },
   },
   { timestamps: true }
 );

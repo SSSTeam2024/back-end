@@ -1,60 +1,83 @@
-const Student = require('../../models/studentModels/student');
+const Student = require("../../models/studentModels/student");
+const Parent=require ("../../models/parentsModel/parents")
 
 const createStudent = async (studentData) => {
-    return await Student.create(studentData);
-  };
-  // find student by login
-  const findStudentByLogin = async (login) => {
-    return await Student.findOne({ login });
-  };
+  const newStudent = await Student.create(studentData);
+  const studentId = newStudent._id;
+  await updateParentWithStudentId(studentData.parent_id, studentId);
+  return newStudent;
+};
+
+// update the parent's profile with the student's ID
+const updateParentWithStudentId = async (parentId, studentId) => {
+  await Parent.findByIdAndUpdate(parentId, { $set: { student_id: studentId } });
+};
+
+// find student by login
+const findStudentByLogin = async (login) => {
+  return await Student.findOne({ login });
+};
 // get all students
-  const getAllStudents = async () => {
-    return await Student.find({});
-  };
+const getAllStudents = async () => {
+  return await Student.find({});
+};
 // get student by id
-  const getStudentById = async (id) => {
-    return await Student.findById(id);
+const getStudentById = async (id) => {
+  try {
+    console.log("Querying database for student with ID:", id);
+    const getStudent = await Student.findOne({ _id: id });
+    console.log("Result from database:", getStudent);
+    return getStudent;
+  } catch (error) {
+    throw error;
   }
-  // get student by email address
-  const getStudentEmail = async (email) => {
-    return await Student.findOne({ email });
-  }
+};
+
+// get student by email address
+const getStudentEmail = async (email) => {
+  return await Student.findOne({ email });
+};
 // updateStudent profile
-  const updateStudent= async (id, updateData) => {
-    return await Student.findByIdAndUpdate(id, updateData, { new: true });
-  };
-  // delete student profile
-  const deleteStudent = async (id) => {
-    return await Student.findByIdAndDelete(id);
-  };
-  
+const updateStudent = async (id, updateData) => {
+  return await Student.findByIdAndUpdate(id, updateData, { new: true });
+};
+// delete student profile
+const deleteStudent = async (id) => {
+  return await Student.findByIdAndDelete(id);
+};
+// get student by id parent
 
-  // const getAllStudentsByCorporateId = async (corporateId) => {
-
-  // }
-  
-  // const getAllStudentsByParentId = async (parentId) => {
-    
-  // }
-  
-  // update password
-  const updatePassword = async (id, password) => {
-    console.log('Hashed pwd: '+password);
-    return await Student.findByIdAndUpdate({ _id:id }, {
-      $set: {
-        password: password
-      }
-    });
+const getStudentByParentId = async (parentId) => {
+  try {
+    const students = await Student.find({ parent_id: parentId }).exec();
+    return students;
+  } catch (error) {
+    console.error('Error in getStudentByParentId:', error);
+    throw error;
   }
+};
 
+// update password
+const updatePassword = async (id, password) => {
+  console.log("Hashed pwd: " + password);
+  return await Student.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        password: password,
+      },
+    }
+  );
+};
 
 module.exports = {
-    createStudent,
-    getAllStudents,
-    updatePassword,
-    findStudentByLogin,
-    getStudentById,
-    deleteStudent,
-    updateStudent,
-    getStudentEmail
+  createStudent,
+  getAllStudents,
+  updatePassword,
+  findStudentByLogin,
+  getStudentById,
+  deleteStudent,
+  updateStudent,
+  getStudentEmail,
+  getStudentByParentId
 };

@@ -10,6 +10,7 @@ router.post('/login', studentController.login);
 router.delete('/deleteStudent/:id', studentController.deleteStudent);
 router.put('/updateStudent/:id', studentController.updateProfile);
 router.put('/updatePassword/:id', studentController.updatePassword);
-router.get('/getStudent/:id', studentController.getStudentById);
+router.get('/getStudentById/:id', studentController.getStudentById);
+router.get('/getStudentByIdParent/:id', studentController.getStudentsByParentId);
 router.post('/logout', studentController.logout);
 module.exports = router;

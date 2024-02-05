@@ -1,22 +1,40 @@
 const studentDao = require("../dao/studentDao/student.Dao");
+const Parent = require("../models/parentsModel/parents");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
-const createStudent = async (studentData) => {
-  return await studentDao.createStudent(studentData);
-};
-// register a new student
+// register a new student and update parent profile
 const registerStudent = async (studentData, documents) => {
-  console.log(studentData);
-  console.log(documents);
-  let saveResult = await saveDocumentToServer(documents);
-  console.log(saveResult);
-  const hashedPassword = await bcrypt.hash(studentData.password, 10);
-  return await studentDao.createStudent({
-    ...studentData,
-    password: hashedPassword,
-  });
+  try {
+    console.log(studentData);
+    console.log(documents);
+    let saveResult = await saveDocumentToServer(documents);
+    console.log(saveResult);
+    const hashedPassword = await bcrypt.hash(studentData.password, 10);
+
+    const newStudent = await studentDao.createStudent({
+      ...studentData,
+      password: hashedPassword,
+    });
+
+    const studentId = newStudent._id;
+    await updateParentWithStudentId(studentData.parent_id, studentId);
+
+    return newStudent;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// update the parent's profile with the student's ID
+const updateParentWithStudentId = async (parentId, studentId) => {
+  await Parent.findByIdAndUpdate(parentId, { $set: { student_id: studentId } });
+};
+// get student by id parent
+const getStudentsByParentId = async (parentId) => {
+  return await studentDao.getStudentByParentId(parentId);
 };
 
 // login student account
@@ -24,14 +42,14 @@ const loginStudent = async (login, password) => {
   const student = await studentDao.findStudentByLogin(login);
 
   if (!student) {
-    throw new Error('Student not found');
+    throw new Error("Student not found");
   }
 
   if (await bcrypt.compare(password, student.password)) {
-    const accessToken = jwt.sign({ login: student.login }, 'yourSecretKey');
+    const accessToken = jwt.sign({ login: student.login }, "yourSecretKey");
     return { accessToken };
   } else {
-    throw new Error('Incorrect password');
+    throw new Error("Incorrect password");
   }
 };
 
@@ -56,10 +74,10 @@ async function saveAdministrativeFile(base64String, fileName) {
 const getStudents = async () => {
   return await studentDao.getAllStudents();
 };
-// get student bu id
+// get student by id
 const getStudentById = async (id) => {
   return await studentDao.getStudentById(id);
-}
+};
 // get student by email address
 const getStudentByEmail = async (email) => {
   return await studentDao.getStudentEmail(email);
@@ -68,7 +86,7 @@ const getStudentByEmail = async (email) => {
 const updatedStudent = async (id, updateData) => {
   return await studentDao.updateStudent(id, updateData);
 };
-//delete student 
+//delete student
 const deleteStudent = async (id) => {
   return await studentDao.deleteStudent(id);
 };
@@ -79,9 +97,7 @@ const updatePassword = async (id, password) => {
   return await studentDao.updatePassword(id, hashedPassword);
 };
 
-
 module.exports = {
-  createStudent,
   registerStudent,
   getStudents,
   updatedStudent,
@@ -90,5 +106,6 @@ module.exports = {
   saveDocumentToServer,
   getStudentById,
   getStudentByEmail,
-  updatePassword
+  updatePassword,
+  getStudentsByParentId
 };
