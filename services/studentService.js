@@ -7,10 +7,10 @@ const fs = require("fs");
 // register a new student and update parent profile
 const registerStudent = async (studentData, documents) => {
   try {
-    console.log(studentData);
-    console.log(documents);
+    console.log("Registering student with data:", studentData);
+    console.log("Documents:", documents);
     let saveResult = await saveDocumentToServer(documents);
-    console.log(saveResult);
+    console.log("Save result:", saveResult);
     const hashedPassword = await bcrypt.hash(studentData.password, 10);
 
     const newStudent = await studentDao.createStudent({
@@ -19,7 +19,9 @@ const registerStudent = async (studentData, documents) => {
     });
 
     const studentId = newStudent._id;
+    console.log("New student ID:", studentId);
     await updateParentWithStudentId(studentData.parent_id, studentId);
+    console.log("Parent updated with student ID.");
 
     return newStudent;
   } catch (error) {
@@ -28,13 +30,16 @@ const registerStudent = async (studentData, documents) => {
   }
 };
 
+
 // update the parent's profile with the student's ID
 const updateParentWithStudentId = async (parentId, studentId) => {
-  await Parent.findByIdAndUpdate(parentId, { $set: { student_id: studentId } });
+  await Parent.findByIdAndUpdate(parentId, { $push: { student_id: studentId } });
 };
+
+
 // get student by id parent
-const getStudentsByParentId = async (parentId) => {
-  return await studentDao.getStudentByParentId(parentId);
+const getStudentsByParentId = async (studentId) => {
+  return await studentDao.getStudentByParentId(studentId);
 };
 
 // login student account
@@ -107,5 +112,5 @@ module.exports = {
   getStudentById,
   getStudentByEmail,
   updatePassword,
-  getStudentsByParentId
+  getStudentsByParentId,
 };

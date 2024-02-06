@@ -12,9 +12,16 @@ const createParent = async (studentData) => {
     return await Parent.find({});
   };
 // get Parent by id
-  const getParentById = async (id) => {
-    return await Parent.findById(id);
+const getParentById = async (id) => {
+  try {
+    console.log("Querying database for parent with ID:", id);
+    const getParent = await Parent.findOne({ _id: id });
+    console.log("Result from database:", getParent);
+    return getParent;
+  } catch (error) {
+    throw error;
   }
+};
   // get Parent by email address
   const getParentEmail = async (email) => {
     return await Parent.findOne({ email });
@@ -38,6 +45,18 @@ const createParent = async (studentData) => {
     });
   }
 
+  // get parent by student id
+
+  const getParentByStudentId = async (studentId) => {
+    try {
+      const parents = await Parent.find({ student_ids: { $in: [studentId] } }).exec();
+      return parents;
+    } catch (error) {
+      console.error('Error in getParentByStudentId:', error);
+      throw error;
+    }
+  };
+
 
 module.exports = {
     createParent,
@@ -47,6 +66,7 @@ module.exports = {
     getParentEmail,
     deleteParent,
     updateParent,
-    updatePassword
+    updatePassword,
+    getParentByStudentId
     
 };

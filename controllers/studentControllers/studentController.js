@@ -63,17 +63,29 @@ const registerStudent = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+
 // get student by id parent
-const getStudentsByParentId = async (req, res) => {
+const getStudentByIdParent = async (req, res) => {
   try {
-    const { parentId } = req.params;
+    const parentId = req.params.id;
+    console.log('Parent ID:', parentId);
+
     const students = await studentService.getStudentsByParentId(parentId);
+    console.log('Result from service:', students);
+
+    if (!students || students.length === 0) {
+      console.log('No students found for the given parent ID');
+      return res.status(404).send('No students found for the given parent ID');
+    }
+
     res.json(students);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
   }
 };
+
 // login student
 const login = async (req, res) => {
   try {
@@ -318,5 +330,5 @@ module.exports = {
   getAllStudents,
   getStudentByEmail,
   updatePassword,
-  getStudentsByParentId
+  getStudentByIdParent
 };

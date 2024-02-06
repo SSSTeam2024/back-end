@@ -74,16 +74,20 @@ const login = async (req, res) => {
     res.status(401).send(error.message);
   }
 };
+
+// get parent by id
 const getParentById = async (req, res) => {
   try {
+    console.log(req)
     const parentId = req.params.id;
-    console.log("ParentId:", parentId);
+    console.log('Parent ID:', parentId);
 
     const getParent = await parentService.getParentById(parentId);
-    console.log("Parent:", getParent);
+    console.log('Result from service:', getParent);
 
     if (!getParent) {
-      return res.status(404).send("Parent not found");
+      console.log('Parent not found');
+      return res.status(404).send('Parent not found');
     }
 
     res.json(getParent);
@@ -91,8 +95,7 @@ const getParentById = async (req, res) => {
     console.error(error);
     res.status(500).send(error.message);
   }
-};
-
+}
 // get all parents
 const getAllParents = async (req, res) => {
   try {
@@ -281,6 +284,38 @@ const deleteParent = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+// get parent by student id
+const getParentByStudentId = async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    console.log('Student ID:', studentId);
+
+    const parents = await parentService.getParentByStudentId(studentId);
+    console.log('Result from service:', parents);
+
+    if (!parents || parents.length === 0) {
+      console.log('No parents found for the given student ID');
+      return res.status(404).send('No parents found for the given student ID');
+    }
+
+    // Assuming one parent for multiple children
+    const parent = parents[0];
+
+    // Here you might want to fetch details of the associated children as well
+    const children = await studentService.getStudentsByParentId(parent._id);
+
+    // Append children to the parent object
+    parent.children = children;
+
+    res.json(parent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+
 module.exports = {
   registerParent,
   login,
@@ -292,4 +327,5 @@ module.exports = {
   getAllParents,
   getParentById,
   updatePassword,
+  getParentByStudentId
 };

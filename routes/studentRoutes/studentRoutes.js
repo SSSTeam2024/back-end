@@ -11,6 +11,6 @@ router.delete('/deleteStudent/:id', studentController.deleteStudent);
 router.put('/updateStudent/:id', studentController.updateProfile);
 router.put('/updatePassword/:id', studentController.updatePassword);
 router.get('/getStudentById/:id', studentController.getStudentById);
-router.get('/getStudentByIdParent/:id', studentController.getStudentsByParentId);
+router.get('/getStudentByIdParent/:id', studentController.getStudentByIdParent);
 router.post('/logout', studentController.logout);
 module.exports = router;

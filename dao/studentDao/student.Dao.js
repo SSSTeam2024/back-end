@@ -21,6 +21,8 @@ const findStudentByLogin = async (login) => {
 const getAllStudents = async () => {
   return await Student.find({});
 };
+
+
 // get student by id
 const getStudentById = async (id) => {
   try {
@@ -45,12 +47,14 @@ const updateStudent = async (id, updateData) => {
 const deleteStudent = async (id) => {
   return await Student.findByIdAndDelete(id);
 };
+
+
 // get student by id parent
 
 const getStudentByParentId = async (parentId) => {
   try {
-    const students = await Student.find({ parent_id: parentId }).exec();
-    return students;
+    const student = await Student.find({ parent_id: parentId }).exec();
+    return student;
   } catch (error) {
     console.error('Error in getStudentByParentId:', error);
     throw error;

@@ -79,6 +79,11 @@ const updatePassword = async (id, password) => {
   return await parentDao.updatePassword(id, hashedPassword);
 };
 
+// get parent by student id
+
+const getParentByStudentId = async (studentId) => {
+  return await parentDao.getParentByStudentId(studentId);
+};
 
 module.exports = {
 registerParent,
@@ -90,5 +95,6 @@ registerParent,
   saveDocumentToServer,
   updatePassword,
   createParent,
-  loginParent
+  loginParent,
+  getParentByStudentId
 };

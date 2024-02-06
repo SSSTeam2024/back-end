@@ -12,4 +12,5 @@ router.put('/updateParent/:id', parentController.updateProfile);
 router.put('/updatePassword/:id', parentController.updatePassword);
 router.get('/getParentById/:id', parentController.getParentById);
 router.post('/logout', parentController.logout);
+router.get('/getParentByStudentId/:id', parentController.getParentByStudentId);
 module.exports = router;
