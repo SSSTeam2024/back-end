@@ -12,6 +12,10 @@ const getEmailTemplateById = async (id) => {
   return await EmailTemplate.findById(id);
 }
 
+const getEmailTemplateByName = async (name) => {
+  return await EmailTemplate.findOne({ name });
+}
+
 const updateEmailTemplate = async (id, updateData) => {
   return await EmailTemplate.findByIdAndUpdate(id, updateData, { new: true });
 };
@@ -26,4 +30,5 @@ module.exports = {
   getEmailTemplateById,
   updateEmailTemplate,
   deleteEmailTemplate,
+  getEmailTemplateByName
 };

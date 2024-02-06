@@ -12,6 +12,7 @@ const createQuote = async (req, res) => {
       id_vehicle,
       handled_by_subcontractor,
       id_visitor,
+      vehicle_type,
       passengers_number,
       luggage_details,
       journey_type,
@@ -33,6 +34,8 @@ const createQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination_point,
+      type,
+      estimated_return_start_time
     } = req.body;
 
     const quote = await quoteService.createQuote({ 
@@ -44,6 +47,7 @@ const createQuote = async (req, res) => {
       id_vehicle,
       handled_by_subcontractor,
       id_visitor,
+      vehicle_type,
       passengers_number,
       luggage_details,
       journey_type,
@@ -65,6 +69,8 @@ const createQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination_point,
+      type,
+      estimated_return_start_time
      });
     res.json(quote);
   } catch (error) {
@@ -176,9 +182,21 @@ const deleteQuote = async (req, res) => {
   }
 };
 
+const sendBookingEmail = async (req, res) => {
+  try {
+    const { id_visitor, price } = req.body;
+    const sentResult = await quoteService.sendBookingEmail({ id_visitor, price });
+    res.json({success: sentResult});
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
   updateQuote,
   deleteQuote,
+  sendBookingEmail
 };

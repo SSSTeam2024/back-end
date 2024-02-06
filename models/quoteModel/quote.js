@@ -10,6 +10,7 @@ const quoteSchema = new mongoose.Schema(
     id_vehicle: String,
     handled_by_subcontractor: String, //id of subcontractor
     id_visitor: String,
+    vehicle_type: String,
     passengers_number: Number,
     luggage_details: String,
     journey_type: String,
@@ -53,7 +54,9 @@ const quoteSchema = new mongoose.Schema(
           lat: Number,
           lon: Number
         }
-      }
+      },
+    type: String, // One way or return
+    estimated_return_start_time: String,
   },
   {
     timestamps: true,
