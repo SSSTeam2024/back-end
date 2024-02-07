@@ -1,16 +1,30 @@
 const Student = require("../../models/studentModels/student");
 const Parent=require ("../../models/parentsModel/parents")
 
+// Update the parent's profile with the student's ID
+const updateParentWithStudentId = async (parentId, studentId) => {
+  await Parent.findByIdAndUpdate(parentId, { $push: { students: studentId } });
+};
+// remove student from the parent
+const removeStudentFromParent = async (parentId, studentId) => {
+  await Parent.findByIdAndUpdate(
+    parentId,
+    { $pull: { students: studentId } },
+    { new: true } 
+  );
+};
+
+// Update the student's profile with the parent's ID
+const updateStudentWithParentId = async (studentId, parentId) => {
+  await Student.findByIdAndUpdate(studentId, { $set: { parent: parentId } });
+};
+
 const createStudent = async (studentData) => {
   const newStudent = await Student.create(studentData);
   const studentId = newStudent._id;
   await updateParentWithStudentId(studentData.parent_id, studentId);
+  await updateStudentWithParentId(studentId, studentData.parent_id);
   return newStudent;
-};
-
-// update the parent's profile with the student's ID
-const updateParentWithStudentId = async (parentId, studentId) => {
-  await Parent.findByIdAndUpdate(parentId, { $set: { student_id: studentId } });
 };
 
 // find student by login
@@ -45,7 +59,11 @@ const updateStudent = async (id, updateData) => {
 };
 // delete student profile
 const deleteStudent = async (id) => {
-  return await Student.findByIdAndDelete(id);
+  const deletedStudent = await Student.findByIdAndDelete(id);
+  if (deletedStudent) {
+    await removeStudentFromParent(deletedStudent.parent, id);
+  }
+  return deletedStudent;
 };
 
 

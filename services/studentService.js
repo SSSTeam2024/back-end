@@ -23,7 +23,7 @@ const registerStudent = async (studentData, documents) => {
     await updateParentWithStudentId(studentData.parent_id, studentId);
     console.log("Parent updated with student ID.");
 
-    return newStudent;
+    return newStudent; 
   } catch (error) {
     console.error(error);
     throw error;
