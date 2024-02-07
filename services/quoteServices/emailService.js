@@ -36,7 +36,7 @@ const sendEmail = async (email) => {
           cid: "unique-image-id", // Unique ID for referencing the image in the HTML content
         },
       ],
-      //cc: ['dali.fatma20@gmail.com', 'berrebehamani@gmail.com']
+      //cc: ['abdelbari.benyagouta@gmail.com']
     };
 
     // Send email

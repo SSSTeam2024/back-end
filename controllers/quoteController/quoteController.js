@@ -184,8 +184,8 @@ const deleteQuote = async (req, res) => {
 
 const sendBookingEmail = async (req, res) => {
   try {
-    const { id_visitor, price } = req.body;
-    const sentResult = await quoteService.sendBookingEmail({ id_visitor, price });
+    const { id_visitor, price, quote_id } = req.body;
+    const sentResult = await quoteService.sendBookingEmail({ id_visitor, price, quote_id });
     res.json({success: sentResult});
   } catch (error) {
     console.error(error);
