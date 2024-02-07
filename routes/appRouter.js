@@ -1,7 +1,14 @@
 const Router = require('express');
-
+const router = new Router();
 const authRoutes = require('./authRoutes');
 const todoRoutes = require('./todoRoutes');
+const schoolRoutes= require("./schoolRoutes.js/schoolRoutes")
+const studentRoutes= require("./studentRoutes/studentRoutes")
+const parentRoutes= require("./parentRoutes/parentRoutes")
+const journeyRoutes= require("./journeyRoutes/journeyRoutes")
+const luggageRoutes= require("./luggageRoutes/luggageRoutes")
+const vehicleTypeRoutes= require("./vehiculeTyoeRoutes/vehiculeTypeRoutes")
+const passengerLuggageLimitsIdRoutes= require("./passengerLuggageLimitsRoutes/passengerLuggageLimitsRoutes")
 const affiliateRoutes = require('./affiliateRoutes/affiliateRoutes');
 const complainRoutes = require('./complainRoutes/complainRoutes');
 const sourceRoutes = require('./sourceRoutes/sourceRoutes');
@@ -11,8 +18,17 @@ const emailTemplateRoutes = require('./emailTemplateRoutes/emailTemplateRoutes')
 const quoteRoutes = require('./quoteRoutes/quoteRoutes');
 const noteRoutes = require('./noteRoutes/noteRoutes');
 
+router.use('/authSchool',schoolRoutes);
+router.use('/student',studentRoutes)
+router.use('/parent',parentRoutes)
 
-const router = new Router();
+router.use('/journey',journeyRoutes)
+
+router.use('/luggage',luggageRoutes)
+
+router.use('/vehicleType',vehicleTypeRoutes)
+
+router.use('/passengerLuggageLimit',passengerLuggageLimitsIdRoutes)
 
 /// FOR TEST ONLY ///
 router.use('/auth', authRoutes);
