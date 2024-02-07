@@ -8,4 +8,5 @@ router.post('/newLuggage', LuggageController.createLuggage);
 router.put('/updateLuggage/:id', LuggageController.updateLuggage);
 router.delete('/deleteLuggage/:id', LuggageController.deleteLuggage);
 router.get('/getAllLuggages', LuggageController.getLuggages);
+router.get('/getLuggage/:id', LuggageController.getLuggageById);
 module.exports = router;

@@ -1,6 +1,8 @@
 
 const luggageService = require('../../services/luggageService');
 
+// create Luggage
+
 const createLuggage = async (req, res) => {
     try {
       const {size,description} = req.body;
@@ -12,7 +14,7 @@ const createLuggage = async (req, res) => {
     }
   };
 
-
+// update Luggage
   const updateLuggage = async (req, res) => {
     try {
       const luggageId = req.params.id;
@@ -29,7 +31,7 @@ const createLuggage = async (req, res) => {
       res.status(500).send(error.message);
     }
   };
-
+// delete luggage
   const deleteLuggage = async (req, res) => {
     try {
       const luggageId = req.params.id;
@@ -45,6 +47,7 @@ const createLuggage = async (req, res) => {
       res.status(500).send(error.message);
     }
   };
+  // get Luggages
   const getLuggages = async (req, res) => {
     try {
       const luggages = await luggageService.getLuggages();
@@ -55,10 +58,29 @@ const createLuggage = async (req, res) => {
     }
   };
 
+  //get Luggage by id 
+
+  const getLuggageById = async (req, res) => {
+    try {
+      const luggageId = req.params.id;
+  
+      const getLuggage = await luggageService.getLuggageById(luggageId);
+  
+      if (!getLuggage) {
+        return res.status(404).send('Luggage not found');
+      }
+      res.json(getLuggage);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  }
+
   module.exports = {
     createLuggage,
     updateLuggage,
     deleteLuggage,
-    getLuggages
+    getLuggages,
+    getLuggageById
   };
   

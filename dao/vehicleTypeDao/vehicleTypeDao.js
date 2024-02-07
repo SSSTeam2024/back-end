@@ -14,10 +14,14 @@ const updateVehicleType = async (id, updateData) => {
   const getVehicleTypes= async () => {
     return await VehicleType.find();
   };
+  const getVehicleTypeById = async (id) => {
+    return await VehicleType.findById(id);
+  }
 module.exports = {
     createVehicleType,
     updateVehicleType,
     deletedVehicleType,
-    getVehicleTypes
+    getVehicleTypes,
+    getVehicleTypeById
   };
   

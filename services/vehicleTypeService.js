@@ -15,10 +15,13 @@ const updateVehicleType = async (id, updateData) => {
   const getVehicleTypes= async () => {
     return await VehicleTypeDao.getVehicleTypes();
   };
-
+  const getVehicleTypeById = async (id) => {
+    return await VehicleTypeDao.getVehicleTypeById(id);
+  }
 module.exports = {
     createVehicleType,
     updateVehicleType,
     deleteVehicleType,
-    getVehicleTypes
+    getVehicleTypes,
+    getVehicleTypeById
   };

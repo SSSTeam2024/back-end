@@ -14,10 +14,15 @@ const updateLuggage = async (id, updateData) => {
   const getLuggages= async () => {
     return await Luggage.find();
   };
+
+  const getLuggageById = async (id) => {
+    return await Luggage.findById(id);
+  }
 module.exports = {
     createLuggage,
     updateLuggage,
     deletedLuggage,
-    getLuggages
+    getLuggages,
+    getLuggageById
   };
   

@@ -14,9 +14,14 @@ const updatePassengerLuggageLimits = async (id, updateData) => {
   const getPassengerLuggageLimits= async () => {
     return await passengerLuggageLimitsType.find();
   };
+
+  const getPassengerLuggageLimitsById = async (id) => {
+    return await passengerLuggageLimitsType.findById(id);
+  }
 module.exports = {
     createPassengerLuggageLimits,
     updatePassengerLuggageLimits,
     deletedPassengerLuggageLimits,
-    getPassengerLuggageLimits
+    getPassengerLuggageLimits,
+    getPassengerLuggageLimitsById
   };

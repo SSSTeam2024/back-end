@@ -14,10 +14,14 @@ const updateJourney = async (id, updateData) => {
   const getJourneys= async () => {
     return await Jouney.find();
   };
+  const getJourneyById = async (id) => {
+    return await Jouney.findById(id);
+  }
 module.exports = {
     createJourney,
     updateJourney,
     deletedJouney,
-    getJourneys
+    getJourneys,
+    getJourneyById
   };
   

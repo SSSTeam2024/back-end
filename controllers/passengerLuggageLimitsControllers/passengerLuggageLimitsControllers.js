@@ -54,10 +54,25 @@ const createPassengerLuggageLimits = async (req, res) => {
       res.status(500).send(error.message);
     }
   };
-
+  const getPassengerLuggageLimitsById = async (req, res) => {
+    try {
+      const luggageId = req.params.id;
+  
+      const getLuggage = await PassengerLuggageLimitsService.getPassengerLuggageLimitsById(luggageId);
+  
+      if (!getLuggage) {
+        return res.status(404).send('Passenger Luggage Limits not found');
+      }
+      res.json(getLuggage);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  }
   module.exports = {
     getPassengerLuggageLimits,
     deletePassengerLuggageLimits,
     updatePassengerLuggageLimits,
-    createPassengerLuggageLimits
+    createPassengerLuggageLimits,
+    getPassengerLuggageLimitsById
   };

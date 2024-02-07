@@ -15,10 +15,13 @@ const updatePassengerLuggageLimits= async (id, updateData) => {
   const getPassengerLuggageLimits= async () => {
     return await PassengerLuggageLimitsDao.getPassengerLuggageLimits();
   };
-
+  const getPassengerLuggageLimitsById = async (id) => {
+    return await PassengerLuggageLimitsDao.getPassengerLuggageLimitsById(id);
+  }
 module.exports = {
     updatePassengerLuggageLimits,
     createPassengerLuggageLimits,
     deletePassengerLuggageLimits,
-    getPassengerLuggageLimits
+    getPassengerLuggageLimits,
+    getPassengerLuggageLimitsById
   };

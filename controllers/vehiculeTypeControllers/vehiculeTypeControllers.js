@@ -54,11 +54,26 @@ const createVehicleType = async (req, res) => {
       res.status(500).send(error.message);
     }
   };
-
+  const getVehicleTypeById = async (req, res) => {
+    try {
+      const vehicleTypeById = req.params.id;
+  
+      const getVehicleType = await VehicleTypeService.getVehicleTypeById(vehicleTypeById);
+  
+      if (!getVehicleType) {
+        return res.status(404).send('Journey not found');
+      }
+      res.json(getVehicleType);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  }
   module.exports = {
     deleteVehicleType,
     updateVehicleType,
     createVehicleType,
-    getVehicleTypes
+    getVehicleTypes,
+    getVehicleTypeById
   };
   

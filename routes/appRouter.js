@@ -17,17 +17,15 @@ const visitorRoutes = require('./visitorRoutes/visitorRoutes');
 const emailTemplateRoutes = require('./emailTemplateRoutes/emailTemplateRoutes');
 const quoteRoutes = require('./quoteRoutes/quoteRoutes');
 const noteRoutes = require('./noteRoutes/noteRoutes');
+const authCentralAppRoutes= require("./authCentralAppRoutes/authCentralAppRoutes")
 
 router.use('/authSchool',schoolRoutes);
+router.use('/authCentralApp',authCentralAppRoutes);
 router.use('/student',studentRoutes)
 router.use('/parent',parentRoutes)
-
 router.use('/journey',journeyRoutes)
-
 router.use('/luggage',luggageRoutes)
-
 router.use('/vehicleType',vehicleTypeRoutes)
-
 router.use('/passengerLuggageLimit',passengerLuggageLimitsIdRoutes)
 
 /// FOR TEST ONLY ///
