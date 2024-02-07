@@ -1,6 +1,5 @@
 const express = require('express');
 const todoController = require('../controllers/todoController');
-const authenticateJWT = require('../utils/authentication');
 
 const router = express.Router();
 
