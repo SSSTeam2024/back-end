@@ -28,7 +28,8 @@ const sendBookingEmail = async (bookingData) => {
   let id = bookingData.id_visitor;
   let price = bookingData.price;
   let quote_id = bookingData.quote_id;
-  let email = await prepareQuoteBookingEmail(id, price, quote_id);
+  let url = 'http://localhost:3000/api/quote/confirm-booking/'+quote_id;
+  let email = await prepareQuoteBookingEmail(id, price, url);
   await emailService.sendEmail(email);
   return "Booking Email sent!";
 };
@@ -77,15 +78,15 @@ async function prepareAfterQuoteCreationEmail(idVisitor, quote) {
     body: emailBody,
   };
   return fullEmailObject;
-}
+};
 
-async function prepareQuoteBookingEmail(idVisitor, price, quote_id) {
+async function prepareQuoteBookingEmail(idVisitor, price, url) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
   let emailBody = emailTemplatesStructure.emailTemplates.booking(
     visitor,
     price,
-    quote_id
+    url
   );
   let emailSubject = "Booking Processed";
   let fullEmailObject = {
@@ -94,7 +95,11 @@ async function prepareQuoteBookingEmail(idVisitor, price, quote_id) {
     body: emailBody,
   };
   return fullEmailObject;
-}
+};
+
+const updateQuoteStatus = async (id) => {
+  return await quoteDao.updateQuoteStatus(id);
+};
 
 module.exports = {
   createQuote,
@@ -102,4 +107,5 @@ module.exports = {
   updateQuote,
   deleteQuote,
   sendBookingEmail,
+  updateQuoteStatus
 };

@@ -10,6 +10,8 @@ const visitorRoutes = require('./visitorRoutes/visitorRoutes');
 const emailTemplateRoutes = require('./emailTemplateRoutes/emailTemplateRoutes');
 const quoteRoutes = require('./quoteRoutes/quoteRoutes');
 const noteRoutes = require('./noteRoutes/noteRoutes');
+const vehicleRoutes = require('./vehicleRoutes/vehicleRoutes');
+const driverRoutes = require('./driverRoutes/driverRoutes');
 
 
 const router = new Router();
@@ -27,5 +29,7 @@ router.use('/visitor', visitorRoutes);
 router.use('/emailTemplate', emailTemplateRoutes);
 router.use('/quote', quoteRoutes);
 router.use('/note', noteRoutes);
+router.use('/vehicle', vehicleRoutes);
+router.use('/driver', driverRoutes);
 
 module.exports = router;

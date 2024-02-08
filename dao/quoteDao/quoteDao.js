@@ -16,9 +16,19 @@ const deleteQuote = async (id) => {
   return await Quote.findByIdAndDelete(id);
 };
 
+const updateQuoteStatus = async (id) => {
+  let bookedStatus = 'Booked';
+  return await Quote.findByIdAndUpdate({ _id:id }, {
+    $set: {
+      status: bookedStatus
+    }
+  });
+};
+
 module.exports = {
   createQuote,
   getQuotes,
   updateQuote,
   deleteQuote,
+  updateQuoteStatus
 };
