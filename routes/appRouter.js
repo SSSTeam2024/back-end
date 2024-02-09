@@ -21,6 +21,7 @@ const vehicleRoutes = require('./vehicleRoutes/vehicleRoutes');
 const driverRoutes = require('./driverRoutes/driverRoutes');
 const luxuryRoutes = require('./luxuryRoutes/luxuryRoutes');
 const mileageBandRoutes = require('./mileageBandRoutes/mileageBandRoutes');
+const hourlyBandRoutes = require('./hourlyBandRoutes/hourlyBandRoutes');
 
 router.use('/authSchool',schoolRoutes);
 router.use('/student',studentRoutes)
@@ -51,5 +52,6 @@ router.use('/vehicle', vehicleRoutes);
 router.use('/driver', driverRoutes);
 router.use('/vehicleExtraLuxurys', luxuryRoutes);
 router.use('/mileageBand', mileageBandRoutes);
+router.use('/hourlyBand', hourlyBandRoutes);
 
 module.exports = router;
