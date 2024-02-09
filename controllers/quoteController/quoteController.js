@@ -193,6 +193,17 @@ const sendBookingEmail = async (req, res) => {
   }
 };
 
+const sendPaymentEmail = async (req, res) => {
+  try {
+    const { id_visitor, quote_id } = req.body;
+    const sentResult = await quoteService.sendPaymentEmail({ id_visitor, quote_id });
+    res.json({success: sentResult});
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const updateQuoteStatus = async (req, res) => {
   try {
     const quoteId = req.params.id;
@@ -219,5 +230,6 @@ module.exports = {
   updateQuote,
   deleteQuote,
   sendBookingEmail,
-  updateQuoteStatus
+  updateQuoteStatus,
+  sendPaymentEmail
 };

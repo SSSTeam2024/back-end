@@ -9,5 +9,6 @@ router.put('/updateQuote/:id', quoteController.updateQuote);
 router.delete('/deleteQuote/:id', quoteController.deleteQuote);
 router.post('/sendBookingEmail',quoteController.sendBookingEmail);
 router.get('/confirm-booking/:id', quoteController.updateQuoteStatus);
+router.post('/sendPaymentEmail',quoteController.sendPaymentEmail);
 
 module.exports = router;

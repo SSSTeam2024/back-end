@@ -12,6 +12,10 @@ const updateQuote = async (id, updateData) => {
   return await Quote.findByIdAndUpdate(id, updateData, { new: true });
 };
 
+const getQuoteById = async (id) => {
+  return await Quote.findById(id);
+}
+
 const deleteQuote = async (id) => {
   return await Quote.findByIdAndDelete(id);
 };
@@ -30,5 +34,6 @@ module.exports = {
   getQuotes,
   updateQuote,
   deleteQuote,
-  updateQuoteStatus
+  updateQuoteStatus,
+  getQuoteById
 };
