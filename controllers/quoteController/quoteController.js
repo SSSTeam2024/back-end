@@ -1,5 +1,5 @@
 const quoteService = require("../../services/quoteServices/quoteService");
-const Quote = require('../../models/quoteModel/quote');
+const emailTemplatesStructure = require('../../utils/emailTemplatesStructure');
 
 const createQuote = async (req, res) => {
   try {
@@ -193,10 +193,31 @@ const sendBookingEmail = async (req, res) => {
   }
 };
 
+const updateQuoteStatus = async (req, res) => {
+  try {
+    const quoteId = req.params.id;
+
+    const updatedQuote = await quoteService.updateQuoteStatus(quoteId);
+
+    if (!updatedQuote) {
+      return res.status(404).send("Quote not found");
+    }
+    console.log(updatedQuote);
+    let bookingSuccessPageContent = emailTemplatesStructure.emailTemplates.booking_success();
+    res.writeHead(200, { 'Content-Type':'text/html'});
+    res.end(bookingSuccessPageContent);
+  } catch (error) {
+    console.error(error);
+    //res.status(500).send(error.message);
+    res.end("<div><p>Quote not booked due to an internal error , please try again!<p></div>");
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
   updateQuote,
   deleteQuote,
-  sendBookingEmail
+  sendBookingEmail,
+  updateQuoteStatus
 };

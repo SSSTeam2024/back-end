@@ -239,6 +239,23 @@ const emailTemplates = {
                   color: #ffe605;
                 "
               >
+                <b>Route</b>
+              </td>
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                <label><a href="https://www.google.com/maps/dir/?api=1&origin=`+ quote.start_point.coordinates.lat +`,`+ quote.start_point.coordinates.lon +`&destination=`+ quote.destination_point.coordinates.lat +`,`+ quote.destination_point.coordinates.lon +`&travelmode=driving">View Route</a></label>
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="
+                  width: 200px;
+                  text-align: right;
+                  vertical-align: top;
+                  padding-right: 15px;
+                  background-color: #555;
+                  color: #ffe605;
+                "
+              >
                 <b>Luggage</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
@@ -360,6 +377,8 @@ const emailTemplates = {
     </fieldset>
   </body>
 </html>
+
+
     `,
   one_way_quote_received: (visitor, quote, creationDate) =>
     `
@@ -638,76 +657,119 @@ const emailTemplates = {
 </html>
  
   `,
-  booking: (visitor, price, quote_id) =>
+  booking: (visitor, price, url) =>
     `
     <html>
-    <body
+  <body
+    style="
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    "
+  >
+  <table
       style="
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-          Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-          sans-serif;
+        width: 600px;
+        height: 96px;
+        margin: 0 auto;
+        border: none;
+        text-align: center;
+        padding: 0;
+        border-collapse: collapse;
+        color: #000;
       "
     >
-    <table
-        style="
-          width: 600px;
-          height: 96px;
-          margin: 0 auto;
-          border: none;
-          text-align: center;
-          padding: 0;
-          border-collapse: collapse;
-          color: #000;
-        "
-      >
-      <tbody style="font-family: 'Roboto'; font-size: 1rem;">
-        <tr>
-          <td>
-            <a href="">
-              <img src="cid:unique-image-id" alt="" />
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td style="text-align: left">
-            <p>Dear ` + visitor.name + `</p>
-            <p>I hope this email finds you well.</p>
-            <p>
-              We are pleased to inform you that your quote request has been
-              successfully processed, and we are excited to assist you with your
-              arrangements.
-            </p>
-            <p>
-              As per your request, the total price for the journey is <strong style="font-size: 1rem;">` + price
-                +`</strong>.
-            </p>
-            <p>
-              To proceed with confirming your booking, please click on the button
-              below: [Confirm Booking ` + quote_id + `]
-            </p>
-            <p>
-              Once booked, you will receive an email with payment link to complete
-              your payment process. 
-            <p>
-              If you have any questions or need further
-              assistance, please do not hesitate to reach out to our dedicated
-              team at Bouden Coach Travel.
-            </p>  
-            </p>
-            <p>
-              Thank you once again for choosing us. We look forward to provide you
-              with an exceptional experience.
-            </p>
-            <p>Warm regards,</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    </body>
-  </html>
-  
+    <tbody style="font-family: 'Roboto'; font-size: 1rem;color: #000;">
+      <tr>
+        <td>
+          <a href="">
+            <img src="cid:unique-image-id" alt="" />
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">
+          <p>Dear ` + visitor.name + `</p>
+          <p>I hope this email finds you well.</p>
+          <p>
+            We are pleased to inform you that your quote request has been
+            successfully processed, and we are excited to assist you with your
+            arrangements.
+          </p>
+          <p>
+            As per your request, the total price for the journey is <strong style="font-size: 1rem;">` + price
+              +`</strong>.
+          </p>
+          <p>
+            To proceed with confirming your booking, please click on the button
+            below: 
+            <a href="` + url + `" style="display: inline-block;
+                                padding: 10px 20px;
+                                margin: 10px;
+                                text-align: center;
+                                text-decoration: none;
+                                font-size: 16px;
+                                cursor: pointer;
+                                color: #fff;
+                                background-color: #e67e22;
+                                border: 2px solid #d6731d;
+                                border-radius: 17px;">Confirm Your Booking</a>
+          </p>
+          <p>
+            Once booked, you will receive an email with payment link to complete
+            your payment process. 
+          <p>
+            If you have any questions or need further
+            assistance, please do not hesitate to reach out to our dedicated
+            team at Bouden Coach Travel.
+          </p>  
+          </p>
+          <p>
+            Thank you once again for choosing us. We look forward to provide you
+            with an exceptional experience.
+          </p>
+          <p>Warm regards,</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </body>
+</html>
 
   `,
+  booking_success: () =>
+  `
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Success</title>
+
+    <style>
+      body {
+        background: #62f1621c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+      }
+      p {
+        font-size: 1.3rem;
+        border: 2px solid #00800047;
+        border-radius: 4px;
+        padding: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p>Your quote has been successfully booked!</p>
+    </div>
+  </body>
+</html>
+
+  `
 };
 
 module.exports = {
