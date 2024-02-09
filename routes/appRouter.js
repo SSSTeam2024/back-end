@@ -12,6 +12,7 @@ const quoteRoutes = require('./quoteRoutes/quoteRoutes');
 const noteRoutes = require('./noteRoutes/noteRoutes');
 const vehicleRoutes = require('./vehicleRoutes/vehicleRoutes');
 const driverRoutes = require('./driverRoutes/driverRoutes');
+const luxuryRoutes = require('./luxuryRoutes/luxuryRoutes');
 
 
 const router = new Router();
@@ -31,5 +32,6 @@ router.use('/quote', quoteRoutes);
 router.use('/note', noteRoutes);
 router.use('/vehicle', vehicleRoutes);
 router.use('/driver', driverRoutes);
+router.use('/vehicleExtraLuxurys', luxuryRoutes);
 
 module.exports = router;
