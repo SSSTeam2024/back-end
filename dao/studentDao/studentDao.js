@@ -58,14 +58,17 @@ const updateStudent = async (id, updateData) => {
   return await Student.findByIdAndUpdate(id, updateData, { new: true });
 };
 // delete student profile
-const deleteStudent = async (id) => {
-  const deletedStudent = await Student.findByIdAndDelete(id);
-  if (deletedStudent) {
-    await removeStudentFromParent(deletedStudent.parent, id);
-  }
-  return deletedStudent;
-};
+// const deleteStudent = async (id) => {
+//   const deletedStudent = await Student.findByIdAndDelete(id);
+//   if (deletedStudent) {
+//     await removeStudentFromParent(deletedStudent.parent, id);
+//   }
+//   return deletedStudent;
+// };
 
+const deleteStudent = async (id) => {
+  return await Student.findByIdAndDelete(id);
+};
 
 // get student by id parent
 

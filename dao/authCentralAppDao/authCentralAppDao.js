@@ -1,30 +1,34 @@
-const CentralApp = require('../../models/authCentralAppModels/authCentralApp');
+const appCentralApp = require("../../models/authCentralAppModels/authCentralApp");
 
-//create centralApp
-const createCentralApp = async (centralAppData) => {
-  return await CentralApp.create(centralAppData);
+//create AappCentralApp
+const creatAappCentralApp = async (centralAppData) => {
+  return await appCentralApp.create(centralAppData);
+};
+// find AappCentralApp by login
+const findCentralAppByUsername = async (login) => {
+  return await appCentralApp.findOne({ login });
+};
+// update AappCentralApp profile
+const updateAappCentralApp = async (id, updateData) => {
+  return await appCentralApp.findByIdAndUpdate(id, updateData, { new: true });
 };
 
-// update centralApp profile
-const updateSchool= async (id, updateData) => {
-  return await School.findByIdAndUpdate(id, updateData, { new: true });
-};
-
-  // update password
-  const updatePassword = async (id, password) => {
-    console.log('Hashed pwd: '+password);
-    return await School.findByIdAndUpdate({ _id:id }, {
+// update password
+const updatePassword = async (id, password) => {
+  console.log("Hashed pwd: " + password);
+  return await appCentralApp.findByIdAndUpdate(
+    { _id: id },
+    {
       $set: {
-        password: password
-      }
-    });
-  }
-
+        password: password,
+      },
+    }
+  );
+};
 
 module.exports = {
-    createCentralApp,
-    findSchoolByUsername,
-    deleteSchool,
-    updateSchool,
-    updatePassword
+  creatAappCentralApp,
+  updateAappCentralApp,
+  updatePassword,
+  findCentralAppByUsername,
 };

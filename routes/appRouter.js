@@ -18,8 +18,10 @@ const emailTemplateRoutes = require('./emailTemplateRoutes/emailTemplateRoutes')
 const quoteRoutes = require('./quoteRoutes/quoteRoutes');
 const noteRoutes = require('./noteRoutes/noteRoutes');
 const authCentralAppRoutes= require("./authCentralAppRoutes/authCentralAppRoutes")
+const authTeamRoutes= require("./teamRoutes/teamRoutes")
 
 router.use('/authSchool',schoolRoutes);
+router.use('/team',authTeamRoutes);
 router.use('/authCentralApp',authCentralAppRoutes);
 router.use('/student',studentRoutes)
 router.use('/parent',parentRoutes)

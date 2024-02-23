@@ -5,14 +5,17 @@ const fs = require("fs");
 
 
 // register school service acccount
-const registerSchool = async (schoolDaoData) => {
+const registerSchool = async (schoolDaoData,documents) => {
   console.log("schoolDaoData:", schoolDaoData);
+  let saveResult = await saveDocumentToServer(documents);
+  console.log(saveResult);
   const hashedPassword = await bcrypt.hash(schoolDaoData.password, 10);
   return await schoolDao.createSchool({
     ...schoolDaoData,
     password: hashedPassword,
   });
 };
+
 // login school service acccount
 const loginSchool = async (login, password) => {
   const school = await schoolDao.findSchoolByUsername(login);
