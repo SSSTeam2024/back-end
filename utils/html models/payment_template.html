@@ -1,0 +1,279 @@
+<html>
+  <body
+    style="
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    "
+  >
+  <table
+      style="
+        width: 600px;
+        height: 96px;
+        margin: 0 auto;
+        border: none;
+        text-align: center;
+        padding: 0;
+        border-collapse: collapse;
+        color: #000;
+      "
+    >
+    <tbody style="font-family: 'Roboto'; font-size: 1rem;">
+      <tr>
+        <td>
+          <a href="">
+            <img src="cid:unique-image-id" alt="" />
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">
+          <p>Dear ` + visitor.name + `, </p>
+
+          <p>I hope this email finds you well.</p>
+          <p>We would like to extend our gratitude for choosing our service for your journey.</p>
+          <p>Here you find the payment link for the quote.</p> 
+          <p>Simply click on the button below to proceed with your payment:
+            <a href="` + url + `" style="display: inline-block;
+                                padding: 10px 20px;
+                                margin: 10px;
+                                text-align: center;
+                                text-decoration: none;
+                                font-size: 16px;
+                                cursor: pointer;
+                                color: #fff;
+                                background-color: #e67e22;
+                                border: 2px solid #d6731d;
+                                border-radius: 17px;">Proceed Your Payment</a>
+          </p>
+          <p>Please ensure to complete the payment process at your earliest convenience to avoid any delays in your journey.</p> 
+          <p>If you encounter any issues or have any questions regarding the payment process, feel free to reach out to our customer support team.</p>
+          <p>Warm regards.</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <fieldset
+    style="
+      width: 600px;
+      margin: auto;
+    "
+  >
+    <legend style="margin-left: 20%">
+      <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
+      creationDate +`
+    </legend>
+      <table
+        style="
+          width: 600px;
+          border: none;
+          text-align: center;
+          padding: 8px;
+        "
+      >
+        <tbody>
+          <tr>
+              <td colspan="2" style="color: #000;">
+                <b>QUOTE REQUEST RECEIVED</b>
+              </td>
+          </tr>
+          <tr>
+              <td
+                style="
+                  width: 200px;
+                  text-align: right;
+                  vertical-align: top;
+                  padding-right: 15px;
+                  background-color: #555;
+                  color: #ffe605;
+                "
+              >
+                <b>Pickup</b>
+              </td>
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+                <label></label>
+              </td>
+            </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Date & Time</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` + quote.estimated_start_time + ` </label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Collection Address</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>`+ quote.start_point.placeName +`</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Destination Address</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>`+ quote.destination_point.placeName +`</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Luggage</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>`+ quote.luggage_details +`</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Number Of Passengers</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>`+ quote.passengers_number +`</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Vehicle Type</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label> `+ quote.vehicle_type +` </label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Journey Type</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>`+ quote.journey_type +`</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Passenger Name</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +visitor.name +`</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Passenger Phone</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` + visitor.phone +`</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Email</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>
+                <a
+                  style="
+                    text-decoration: none !important;
+                  "
+                  >` + visitor.email +`</a
+                >
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </fieldset>
+  </body>
+</html>
