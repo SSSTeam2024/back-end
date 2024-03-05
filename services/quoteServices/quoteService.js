@@ -28,7 +28,7 @@ const deleteQuote = async (id) => {
 const getAllQuotes = async () => {
   try {
     const responseAllQuotes = await fetch(
-      "http://localhost:3000/api/quote/getAllQuotes"
+      "https://bouden.uk.oxa.cloud/api/quote/getAllQuotes"
     );
 
     const dataAllQuotes = await responseAllQuotes.json();
@@ -42,7 +42,7 @@ const getAllQuotes = async () => {
 const getAllPricingCalendar = async () => {
   try {
     const responseAllPricingCalendar = await fetch(
-      "http://localhost:3000/api/pricingCalendar/getAllPricingCalendars"
+      "https://bouden.uk.oxa.cloud/api/pricingCalendar/getAllPricingCalendars"
     );
     const dataAllPricingCalendar = await responseAllPricingCalendar.json();
     return dataAllPricingCalendar;
@@ -55,7 +55,7 @@ const getAllPricingCalendar = async () => {
 const getAllMileageBands = async () => {
   try {
     const responseAllMileageBands = await fetch(
-      "http://localhost:3000/api/mileageBand/getAllMileageBands"
+      "https://bouden.uk.oxa.cloud/api/mileageBand/getAllMileageBands"
     );
     const dataAllMileageBands = await responseAllMileageBands.json();
     return dataAllMileageBands;
@@ -204,11 +204,11 @@ const processQuote = async (quote) => {
       let quote_id = quote._id;
       await quoteDao.updateQuotePrice(quote_id, price);
       let updatedQuote = await quoteDao.getQuoteById(quote_id);
-      let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
+      let url =
+        "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
       let email = await prepareQuoteBookingEmail(id, price, url, updatedQuote);
       await emailService.sendEmail(email);
       return "Booking Email sent!";
-      // console.log("Booking Email sent!");
     }
   } catch (error) {
     console.error("Error:", error);
@@ -250,7 +250,7 @@ const sendBookingEmail = async (bookingData) => {
   let quote_id = bookingData.quote_id;
   await quoteDao.updateQuotePrice(quote_id, price);
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
+  let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(id, price, url, quote);
   await emailService.sendEmail(email);
   return "Booking Email sent!";
@@ -271,7 +271,7 @@ const sendPaymentEmail = async (paymentData) => {
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
   let url =
-    "http://localhost:3000/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
+    "https://bouden.uk.oxa.cloud/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
