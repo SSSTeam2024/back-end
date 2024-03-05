@@ -1,34 +1,9 @@
-const complainService = require('../../services/complainServices/complainService');
-const globalFunctions = require('../../utils/globalFunctions');
+const complainService = require("../../services/complainServices/complainService");
+const globalFunctions = require("../../utils/globalFunctions");
 
 const addNewComplain = async (req, res) => {
   try {
-    const { 
-        id_corporate,
-        id_student,
-        id_parent,
-        id_employee,
-        subject,
-        description,
-        complainDate,
-        responseMessage,
-        responseDate,
-        status,
-        mediaBase64String,
-        mediaExtension
-    } = req.body;
-
-    let media = globalFunctions.generateUniqueFilename(mediaExtension,'complainMedia');
-
-    let documents = [
-      {
-        base64String: mediaBase64String,
-        extension: mediaExtension,
-        name: media
-      }
-    ];
-    
-    await complainService.createComplain({ 
+    const {
       id_corporate,
       id_student,
       id_parent,
@@ -37,10 +12,43 @@ const addNewComplain = async (req, res) => {
       description,
       complainDate,
       responseMessage,
+      responseAuthor,
       responseDate,
       status,
-      media
-     },documents);
+      mediaBase64String,
+      mediaExtension,
+    } = req.body;
+
+    let media = globalFunctions.generateUniqueFilename(
+      mediaExtension,
+      "complainMedia"
+    );
+
+    let documents = [
+      {
+        base64String: mediaBase64String,
+        extension: mediaExtension,
+        name: media,
+      },
+    ];
+
+    await complainService.createComplain(
+      {
+        id_corporate,
+        id_student,
+        id_parent,
+        id_employee,
+        subject,
+        description,
+        complainDate,
+        responseMessage,
+        responseAuthor,
+        responseDate,
+        status,
+        media,
+      },
+      documents
+    );
     res.sendStatus(201);
   } catch (error) {
     console.error(error);
@@ -48,27 +56,40 @@ const addNewComplain = async (req, res) => {
   }
 };
 
+const respondToComplain = async (req, res) => {
+  try {
+    const { _id, responseMessage, responseAuthor } = req.body;
+    console.log(req.body);
+    // Update status to "answered"
+    await complainService.respondToComplaint(
+      _id,
+      responseMessage,
+      responseAuthor
+    );
+    console.log(req.body);
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error responding to complaint:", error);
+    res.status(500).send(error.message);
+  }
+};
+
 const updateComplainById = async (req, res) => {
   try {
     const complainId = req.params.id;
-    const { 
-      subject,
-      description,
-      responseMessage,
-      responseDate,
-      status
-     } = req.body;
+    const { subject, description, responseMessage, responseDate, status } =
+      req.body;
 
-    const updatedComplain = await complainService.updateComplain(complainId, { 
+    const updatedComplain = await complainService.updateComplain(complainId, {
       subject,
       description,
       responseMessage,
       responseDate,
-      status
-     });
+      status,
+    });
 
     if (!updatedComplain) {
-      return res.status(404).send('Complain not found!');
+      return res.status(404).send("Complain not found!");
     }
     res.json(updatedComplain);
   } catch (error) {
@@ -84,19 +105,19 @@ const getComplainById = async (req, res) => {
     const getComplain = await complainService.getComplainById(complainId);
 
     if (!getComplain) {
-      return res.status(404).send('Complain not found');
+      return res.status(404).send("Complain not found");
     }
     res.json(getComplain);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 
 const getAllComplains = async (req, res) => {
   try {
     const complains = await complainService.getComplains();
-    res.json(complains );
+    res.json(complains);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -110,7 +131,7 @@ const deleteComplainById = async (req, res) => {
     const deletedComplain = await complainService.deleteComplain(complainId);
 
     if (!deletedComplain) {
-      return res.status(404).send('Complain not found');
+      return res.status(404).send("Complain not found");
     }
     res.sendStatus(200);
   } catch (error) {
@@ -124,5 +145,6 @@ module.exports = {
   updateComplainById,
   getComplainById,
   getAllComplains,
-  deleteComplainById
+  deleteComplainById,
+  respondToComplain,
 };

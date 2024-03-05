@@ -16,7 +16,11 @@ const employeeSchema = new mongoose.Schema({
   dateOfBirth: String,
   legalcard: String,
   username: String,
-  groupId: { type: Schema.Types.ObjectId, ref: "groupEmployee" },
+  groupId: {
+    type: Schema.Types.ObjectId,
+    ref: "groupEmployee",
+    required: false,
+  },
   login: String,
   password: String,
   nationality: String,

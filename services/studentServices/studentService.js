@@ -60,14 +60,21 @@ const loginStudent = async (login, password) => {
 
 // function saveDocumentToServer
 async function saveDocumentToServer(documents) {
-  await saveAdministrativeFile(documents[0].base64String, documents[0].name);
+  let counter = 0;
+  for (const file of documents) {
+    console.log(file);
+    await saveAdministrativeFile(file.base64String, file.name, file.path);
+    counter++;
+    console.log("File number " + counter + " saved");
+  }
+  if (counter == documents.length) return true;
 }
 
-async function saveAdministrativeFile(base64String, fileName) {
-  const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
-  const binaryData = Buffer.from(base64Data, "base64");
-  const filePath = "files/studentFiles/" + fileName;
-  fs.writeFile(filePath, binaryData, "binary", (err) => {
+async function saveAdministrativeFile(base64String, fileName, filePath) {
+  //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
+  const binaryData = Buffer.from(base64String, "base64");
+  const fullFilePath = filePath + fileName;
+  fs.writeFile(fullFilePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);
     } else {
@@ -75,6 +82,7 @@ async function saveAdministrativeFile(base64String, fileName) {
     }
   });
 }
+
 // get all students
 const getStudents = async () => {
   return await studentDao.getAllStudents();
@@ -92,8 +100,8 @@ const updatedStudent = async (id, updateData) => {
   return await studentDao.updateStudent(id, updateData);
 };
 //delete student
-const deleteStudent = async (id) => {
-  return await studentDao.deleteStudent(id);
+const deleteStudent = async (idstudent) => {
+  return await studentDao.deleteStudent(idstudent);
 };
 // update password
 const updatePassword = async (id, password) => {

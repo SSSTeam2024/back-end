@@ -17,7 +17,7 @@ const addNewEmployee = async (req, res) => {
       photosExtension,
       dateOfBirth,
       username,
-      group,
+      groupId,
       positionTitle,
       legalcardBase64String,
       legalcardExtension,
@@ -27,14 +27,11 @@ const addNewEmployee = async (req, res) => {
       status,
     } = req.body;
 
-    let groupId = group._id;
-
-    if (groupId === "") {
-      groupId = "001122334455667788991234";
-    }
-
+    // let grouppId= groupId._id;
+    // if (grouppId === "" ) {
+    //   grouppId = "001122334455667788991234"
+    // }
     console.log(req.body);
-
     const legalcardPath = "files/employeeFiles/";
     const photoPath = "files/employeeFiles/";
 
@@ -171,7 +168,7 @@ const updateEmployee = async (req, res) => {
       photosExtension,
       dateOfBirth,
       username,
-      group,
+      groupId,
       legalcardBase64String,
       legalcardExtension,
       login,
@@ -195,7 +192,7 @@ const updateEmployee = async (req, res) => {
       photosExtension,
       dateOfBirth,
       username,
-      group,
+      groupId,
       legalcardBase64String,
       legalcardExtension,
       login,

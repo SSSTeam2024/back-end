@@ -1,5 +1,5 @@
 const Student = require("../../models/studentModels/student");
-const Parent=require ("../../models/parentsModel/parents")
+const Parent = require("../../models/parentsModel/parents");
 
 // Update the parent's profile with the student's ID
 const updateParentWithStudentId = async (parentId, studentId) => {
@@ -10,7 +10,7 @@ const removeStudentFromParent = async (parentId, studentId) => {
   await Parent.findByIdAndUpdate(
     parentId,
     { $pull: { students: studentId } },
-    { new: true } 
+    { new: true }
   );
 };
 
@@ -36,7 +36,6 @@ const getAllStudents = async () => {
   return await Student.find({});
 };
 
-
 // get student by id
 const getStudentById = async (id) => {
   try {
@@ -58,14 +57,17 @@ const updateStudent = async (id, updateData) => {
   return await Student.findByIdAndUpdate(id, updateData, { new: true });
 };
 // delete student profile
-const deleteStudent = async (id) => {
-  const deletedStudent = await Student.findByIdAndDelete(id);
-  if (deletedStudent) {
-    await removeStudentFromParent(deletedStudent.parent, id);
-  }
-  return deletedStudent;
-};
+// const deleteStudent = async (id) => {
+//   const deletedStudent = await Student.findByIdAndDelete(id);
+//   if (deletedStudent) {
+//     await removeStudentFromParent(deletedStudent.parent, id);
+//   }
+//   return deletedStudent;
+// };
 
+const deleteStudent = async (id) => {
+  return await Student.findByIdAndDelete(id);
+};
 
 // get student by id parent
 
@@ -74,7 +76,7 @@ const getStudentByParentId = async (parentId) => {
     const student = await Student.find({ parent_id: parentId }).exec();
     return student;
   } catch (error) {
-    console.error('Error in getStudentByParentId:', error);
+    console.error("Error in getStudentByParentId:", error);
     throw error;
   }
 };
@@ -101,5 +103,5 @@ module.exports = {
   deleteStudent,
   updateStudent,
   getStudentEmail,
-  getStudentByParentId
+  getStudentByParentId,
 };
