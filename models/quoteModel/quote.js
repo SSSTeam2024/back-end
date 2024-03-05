@@ -7,10 +7,10 @@ const quoteSchema = new mongoose.Schema(
     id_corporate: String,
     owner: String,
     handled_by: Number,
-    id_driver: { type: Schema.Types.ObjectId, ref: 'Driver' },
-    id_vehicle: { type: Schema.Types.ObjectId, ref: 'Vehicle' },
+    id_driver: { type: Schema.Types.ObjectId, ref: "Driver" },
+    id_vehicle: { type: Schema.Types.ObjectId, ref: "Vehicle" },
     handled_by_subcontractor: String, //id of subcontractor
-    id_visitor: { type: Schema.Types.ObjectId, ref: 'Visitor' },
+    id_visitor: { type: Schema.Types.ObjectId, ref: "Visitor" },
     vehicle_type: String,
     passengers_number: Number,
     luggage_details: String,
@@ -31,8 +31,8 @@ const quoteSchema = new mongoose.Schema(
       placeName: String,
       coordinates: {
         lat: Number,
-        lon: Number
-      }
+        lon: Number,
+      },
     },
     estimated_start_time: String,
     real_start_time: String,
@@ -45,19 +45,19 @@ const quoteSchema = new mongoose.Schema(
         placeName: String,
         coordinates: {
           lat: Number,
-          lon: Number
-        }
+          lon: Number,
+        },
       },
       cause: String,
-      delay: String
+      delay: String,
     },
     estimated_end_time: String,
     destination_point: {
       placeName: String,
       coordinates: {
         lat: Number,
-        lon: Number
-      }
+        lon: Number,
+      },
     },
     type: String, // One way or return
     estimated_return_start_time: String,
