@@ -1,5 +1,5 @@
 const quoteService = require("../../services/quoteServices/quoteService");
-const emailTemplatesStructure = require('../../utils/emailTemplatesStructure');
+const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 
 const createQuote = async (req, res) => {
   try {
@@ -38,46 +38,50 @@ const createQuote = async (req, res) => {
       estimated_end_time,
       destination_point,
       type,
-      estimated_return_start_time
+      estimated_return_start_time,
+      distance,
     } = req.body;
 
-    const quote = await quoteService.createQuote({ 
-      id_schedule,
-      id_corporate,
-      owner,
-      handled_by,
-      id_driver,
-      id_vehicle,
-      handled_by_subcontractor,
-      id_visitor,
-      vehicle_type,
-      passengers_number,
-      luggage_details,
-      journey_type,
-      notes,
-      heard_of_us,
-      pushed_price,
-      id_invoice,
-      paid_by_client,
-      paid_by_bouden,
-      status,
-      manual_cost,
-      progress,
-      balance,
-      deposit,
-      automatic_cost,
-      start_point,
-      estimated_start_time,
-      real_start_time,
-      start_delay_time,
-      mid_stations,
-      delays,
-      change_route,
-      estimated_end_time,
-      destination_point,
-      type,
-      estimated_return_start_time
-     });
+    const quote = await quoteService.createQuote(
+      {
+        id_schedule,
+        id_corporate,
+        owner,
+        handled_by,
+        id_driver,
+        id_vehicle,
+        handled_by_subcontractor,
+        id_visitor,
+        vehicle_type,
+        passengers_number,
+        luggage_details,
+        journey_type,
+        notes,
+        heard_of_us,
+        pushed_price,
+        id_invoice,
+        paid_by_client,
+        paid_by_bouden,
+        status,
+        manual_cost,
+        progress,
+        balance,
+        deposit,
+        automatic_cost,
+        start_point,
+        estimated_start_time,
+        real_start_time,
+        start_delay_time,
+        mid_stations,
+        delays,
+        change_route,
+        estimated_end_time,
+        destination_point,
+        type,
+        estimated_return_start_time,
+      },
+      distance
+    );
     res.json(quote);
   } catch (error) {
     console.error(error);
@@ -88,7 +92,7 @@ const createQuote = async (req, res) => {
 const getQuotes = async (req, res) => {
   try {
     const quotes = await quoteService.getQuotes();
-    res.json( quotes );
+    res.json(quotes);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -98,7 +102,7 @@ const getQuotes = async (req, res) => {
 const updateQuote = async (req, res) => {
   try {
     const quoteId = req.params.id;
-    const { 
+    const {
       id_schedule,
       id_corporate,
       owner,
@@ -131,9 +135,9 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
-     } = req.body;
+    } = req.body;
 
-    const updatedQuote = await quoteService.updateQuote(quoteId, { 
+    const updatedQuote = await quoteService.updateQuote(quoteId, {
       id_schedule,
       id_corporate,
       owner,
@@ -166,7 +170,7 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
-     });
+    });
 
     if (!updatedQuote) {
       return res.status(404).send("Quote not found");
@@ -197,8 +201,12 @@ const deleteQuote = async (req, res) => {
 const sendBookingEmail = async (req, res) => {
   try {
     const { id_visitor, price, quote_id } = req.body;
-    const sentResult = await quoteService.sendBookingEmail({ id_visitor, price, quote_id });
-    res.json({success: sentResult});
+    const sentResult = await quoteService.sendBookingEmail({
+      id_visitor,
+      price,
+      quote_id,
+    });
+    res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -207,9 +215,15 @@ const sendBookingEmail = async (req, res) => {
 
 const assignDriverAPI = async (req, res) => {
   try {
-    const { id_visitor, price, quote_id, id_driver, id_vehicle} = req.body;
-    const sentResult = await quoteService.sendAssign({ id_visitor, price, quote_id, id_driver, id_vehicle });
-    res.json({success: sentResult});
+    const { id_visitor, price, quote_id, id_driver, id_vehicle } = req.body;
+    const sentResult = await quoteService.sendAssign({
+      id_visitor,
+      price,
+      quote_id,
+      id_driver,
+      id_vehicle,
+    });
+    res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -219,8 +233,11 @@ const assignDriverAPI = async (req, res) => {
 const sendPaymentEmail = async (req, res) => {
   try {
     const { id_visitor, quote_id } = req.body;
-    const sentResult = await quoteService.sendPaymentEmail({ id_visitor, quote_id });
-    res.json({success: sentResult});
+    const sentResult = await quoteService.sendPaymentEmail({
+      id_visitor,
+      quote_id,
+    });
+    res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -237,13 +254,16 @@ const updateQuoteStatus = async (req, res) => {
       return res.status(404).send("Quote not found");
     }
     console.log(updatedQuote);
-    let bookingSuccessPageContent = emailTemplatesStructure.emailTemplates.booking_success();
-    res.writeHead(200, { 'Content-Type':'text/html'});
+    let bookingSuccessPageContent =
+      emailTemplatesStructure.emailTemplates.booking_success();
+    res.writeHead(200, { "Content-Type": "text/html" });
     res.end(bookingSuccessPageContent);
   } catch (error) {
     console.error(error);
     //res.status(500).send(error.message);
-    res.end("<div><p>Quote not booked due to an internal error , please try again!<p></div>");
+    res.end(
+      "<div><p>Quote not booked due to an internal error , please try again!<p></div>"
+    );
   }
 };
 
@@ -255,5 +275,5 @@ module.exports = {
   sendBookingEmail,
   updateQuoteStatus,
   sendPaymentEmail,
-  assignDriverAPI
+  assignDriverAPI,
 };

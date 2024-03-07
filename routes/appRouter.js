@@ -32,6 +32,7 @@ const employeeAttendanceRoutes = require("./employeeAttendanceRoutes/employeeAtt
 const studentAttendanceRoutes = require("./studentAttendanceRoutes/studentAttendanceRoute");
 const groupEmployeeRoutes = require("./groupCompanyRoutes/groupCompanyRoutes");
 const pricingCalendarRoutes = require("./pricingCalendarRoutes/pricingCalendarRoute");
+const modeRoutes = require("./modeRoutes/modeRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -73,5 +74,6 @@ router.use("/employeeAttendance", employeeAttendanceRoutes);
 router.use("/studentAttendance", studentAttendanceRoutes);
 router.use("/groupEmployee", groupEmployeeRoutes);
 router.use("/pricingCalendar", pricingCalendarRoutes);
+router.use("/mode", modeRoutes);
 
 module.exports = router;

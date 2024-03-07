@@ -31,7 +31,9 @@ const emailTemplates = {
         </tr>
         <tr>
           <td style="text-align: left">
-            <p>Dear ` + visitor.name + `</p>
+            <p>Dear ` +
+    visitor.name +
+    `</p>
             <p>
               Thank you for your recent enquiry, we hope to have a quotation
               ready for you as soon as possible.
@@ -58,8 +60,9 @@ const emailTemplates = {
       "
     >
       <legend style="margin-left: 20%">
-        <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
-        creationDate +`
+        <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    creationDate +
+    `
       </legend>
         <table
           style="
@@ -106,7 +109,9 @@ const emailTemplates = {
                 <b>Date & Time</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>` + quote.estimated_start_time + ` </label>
+                <label>` +
+    quote.estimated_start_time +
+    ` </label>
               </td>
             </tr>
             <tr>
@@ -123,7 +128,9 @@ const emailTemplates = {
                 <b>Collection Address</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.start_point.placeName +`</label>
+                <label>` +
+    quote.start_point.placeName +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -140,7 +147,9 @@ const emailTemplates = {
                 <b>Destination Address</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.destination_point.placeName +`</label>
+                <label>` +
+    quote.destination_point.placeName +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -157,7 +166,9 @@ const emailTemplates = {
                 <b>Luggage</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.luggage_details +`</label>
+                <label>` +
+    quote.luggage_details +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -191,7 +202,9 @@ const emailTemplates = {
                 <b>Date & Time</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.estimated_return_start_time + `</label>
+                <label>` +
+    quote.estimated_return_start_time +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -208,7 +221,9 @@ const emailTemplates = {
                 <b>Collection Address</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.destination_point.placeName +`</label>
+                <label>` +
+    quote.destination_point.placeName +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -225,7 +240,9 @@ const emailTemplates = {
                 <b>Destination Address</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.start_point.placeName +`</label>
+                <label>` +
+    quote.start_point.placeName +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -242,7 +259,15 @@ const emailTemplates = {
                 <b>Route</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label><a href="https://www.google.com/maps/dir/?api=1&origin=`+ quote.start_point.coordinates.lat +`,`+ quote.start_point.coordinates.lon +`&destination=`+ quote.destination_point.coordinates.lat +`,`+ quote.destination_point.coordinates.lon +`&travelmode=driving">View Route</a></label>
+                <label><a href="https://www.google.com/maps/dir/?api=1&origin=` +
+    quote.start_point.coordinates.lat +
+    `,` +
+    quote.start_point.coordinates.lon +
+    `&destination=` +
+    quote.destination_point.coordinates.lat +
+    `,` +
+    quote.destination_point.coordinates.lon +
+    `&travelmode=driving">View Route</a></label>
               </td>
             </tr>
             <tr>
@@ -259,7 +284,9 @@ const emailTemplates = {
                 <b>Luggage</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.luggage_details +`</label>
+                <label>` +
+    quote.luggage_details +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -276,7 +303,9 @@ const emailTemplates = {
                 <b>Number Of Passengers</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.passengers_number +`</label>
+                <label>` +
+    quote.passengers_number +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -293,7 +322,9 @@ const emailTemplates = {
                 <b>Vehicle Type</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label> `+ quote.vehicle_type +` </label>
+                <label> ` +
+    quote.vehicle_type +
+    ` </label>
               </td>
             </tr>
             <tr>
@@ -310,7 +341,9 @@ const emailTemplates = {
                 <b>Journey Type</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.journey_type +`</label>
+                <label>` +
+    quote.journey_type +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -327,7 +360,9 @@ const emailTemplates = {
                 <b>Passenger Name</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>` +visitor.name +`</label>
+                <label>` +
+    visitor.name +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -344,7 +379,9 @@ const emailTemplates = {
                 <b>Passenger Phone</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>` + visitor.phone +`</label>
+                <label>` +
+    visitor.phone +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -366,7 +403,9 @@ const emailTemplates = {
                     style="
                       text-decoration: none !important;
                     "
-                    >` + visitor.email +`</a
+                    >` +
+    visitor.email +
+    `</a
                   >
                 </label>
               </td>
@@ -412,7 +451,9 @@ const emailTemplates = {
         </tr>
         <tr>
           <td style="text-align: left">
-            <p>Dear ` + visitor.name + `</p>
+            <p>Dear ` +
+    visitor.name +
+    `</p>
             <p>
               Thank you for your recent enquiry, we hope to have a quotation
               ready for you as soon as possible.
@@ -439,8 +480,9 @@ const emailTemplates = {
       "
     >
       <legend style="margin-left: 20%">
-        <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
-        creationDate +`
+        <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    creationDate +
+    `
       </legend>
         <table
           style="
@@ -487,7 +529,9 @@ const emailTemplates = {
                 <b>Date & Time</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>` + quote.estimated_start_time + ` </label>
+                <label>` +
+    quote.estimated_start_time +
+    ` </label>
               </td>
             </tr>
             <tr>
@@ -504,7 +548,9 @@ const emailTemplates = {
                 <b>Collection Address</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.start_point.placeName +`</label>
+                <label>` +
+    quote.start_point.placeName +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -521,7 +567,9 @@ const emailTemplates = {
                 <b>Destination Address</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.destination_point.placeName +`</label>
+                <label>` +
+    quote.destination_point.placeName +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -538,7 +586,9 @@ const emailTemplates = {
                 <b>Luggage</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.luggage_details +`</label>
+                <label>` +
+    quote.luggage_details +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -555,7 +605,9 @@ const emailTemplates = {
                 <b>Number Of Passengers</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.passengers_number +`</label>
+                <label>` +
+    quote.passengers_number +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -572,7 +624,9 @@ const emailTemplates = {
                 <b>Vehicle Type</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label> `+ quote.vehicle_type +` </label>
+                <label> ` +
+    quote.vehicle_type +
+    ` </label>
               </td>
             </tr>
             <tr>
@@ -589,7 +643,9 @@ const emailTemplates = {
                 <b>Journey Type</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>`+ quote.journey_type +`</label>
+                <label>` +
+    quote.journey_type +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -606,7 +662,9 @@ const emailTemplates = {
                 <b>Passenger Name</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>` +visitor.name +`</label>
+                <label>` +
+    visitor.name +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -623,7 +681,9 @@ const emailTemplates = {
                 <b>Passenger Phone</b>
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label>` + visitor.phone +`</label>
+                <label>` +
+    visitor.phone +
+    `</label>
               </td>
             </tr>
             <tr>
@@ -645,7 +705,9 @@ const emailTemplates = {
                     style="
                       text-decoration: none !important;
                     "
-                    >` + visitor.email +`</a
+                    >` +
+    visitor.email +
+    `</a
                   >
                 </label>
               </td>
@@ -679,7 +741,7 @@ const emailTemplates = {
         color: #000;
       "
     >
-    <tbody style="font-family: 'Roboto'; font-size: 1rem;color: #000;">
+    <tbody style="font-family: 'Roboto'; font-size: 1rem;">
       <tr>
         <td>
           <a href="">
@@ -689,21 +751,26 @@ const emailTemplates = {
       </tr>
       <tr>
         <td style="text-align: left">
-          <p>Dear ` + visitor.name + `</p>
+          <p>Dear ` +
+    visitor.name +
+    `</p>
           <p>I hope this email finds you well.</p>
           <p>
             We are pleased to inform you that your quote request has been
             successfully processed, and we are excited to assist you with your
             arrangements.
           </p>
-          <p>
-            As per your request, the total price for the journey is <strong style="font-size: 1rem;">` + price
-              +`</strong>.
-          </p>
-          <p>
+          <!-- <p>
+            As per your request, the total price for the journey is <strong style="font-size: 1rem;">` +
+    price +
+    `</strong>.
+          </p> -->
+          <!-- <p>
             To proceed with confirming your booking, please click on the button
             below: 
-            <a href="` + url + `" style="display: inline-block;
+            <a href="` +
+    url +
+    `" style="display: inline-block;
                                 padding: 10px 20px;
                                 margin: 10px;
                                 text-align: center;
@@ -714,7 +781,7 @@ const emailTemplates = {
                                 background-color: #e67e22;
                                 border: 2px solid #d6731d;
                                 border-radius: 17px;">Confirm Your Booking</a>
-          </p>
+          </p> -->
           <p>
             Once booked, you will receive an email with payment link to complete
             your payment process. 
@@ -741,8 +808,9 @@ const emailTemplates = {
     "
   >
     <legend style="margin-left: 20%">
-      <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
-      creationDate +`
+      <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    creationDate +
+    `
     </legend>
       <table
         style="
@@ -755,7 +823,7 @@ const emailTemplates = {
         <tbody>
           <tr>
               <td colspan="2" style="color: #000;">
-                <b>QUOTE REQUEST</b>
+                <b>QUOTE REQUEST RECEIVED</b>
               </td>
           </tr>
           <tr>
@@ -789,7 +857,9 @@ const emailTemplates = {
               <b>Date & Time</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>` + quote.estimated_start_time + ` </label>
+              <label>` +
+    quote.estimated_start_time +
+    ` </label>
             </td>
           </tr>
           <tr>
@@ -806,7 +876,9 @@ const emailTemplates = {
               <b>Collection Address</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.start_point.placeName +`</label>
+              <label>` +
+    quote.start_point.placeName +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -823,7 +895,9 @@ const emailTemplates = {
               <b>Destination Address</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.destination_point.placeName +`</label>
+              <label>` +
+    quote.destination_point.placeName +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -840,7 +914,9 @@ const emailTemplates = {
               <b>Luggage</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.luggage_details +`</label>
+              <label>` +
+    quote.luggage_details +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -857,7 +933,9 @@ const emailTemplates = {
               <b>Number Of Passengers</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.passengers_number +`</label>
+              <label>` +
+    quote.passengers_number +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -874,8 +952,28 @@ const emailTemplates = {
               <b>Vehicle Type</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label> `+ quote.vehicle_type +` </label>
+              <label> ` +
+    quote.vehicle_type +
+    ` </label>
             </td>
+          </tr>
+          <tr>
+            <td  style="
+            width: 200px;
+            text-align: right;
+            vertical-align: top;
+            padding-right: 15px;
+            background-color: #555;
+            color: #ffe605;
+          "></td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+            <span style="color: #000">£` +
+    price +
+    `</span> 
+      <a href=` +
+    url +
+    `>BOOK NOW</a>
+              </td>
           </tr>
           <tr>
             <td
@@ -891,7 +989,9 @@ const emailTemplates = {
               <b>Journey Type</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.journey_type +`</label>
+              <label>` +
+    quote.journey_type +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -908,7 +1008,9 @@ const emailTemplates = {
               <b>Passenger Name</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>` +visitor.name +`</label>
+              <label>` +
+    visitor.name +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -925,7 +1027,9 @@ const emailTemplates = {
               <b>Passenger Phone</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>` + visitor.phone +`</label>
+              <label>` +
+    visitor.phone +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -947,7 +1051,9 @@ const emailTemplates = {
                   style="
                     text-decoration: none !important;
                   "
-                  >` + visitor.email +`</a
+                  >` +
+    visitor.email +
+    `</a
                 >
               </label>
             </td>
@@ -955,12 +1061,165 @@ const emailTemplates = {
         </tbody>
       </table>
   </fieldset>
+  <fieldset
+    style="
+      width: 400px;
+      margin: auto;
+    "
+  >
+    <legend style="margin-left: 20%">
+      <strong>PAYMENT</strong>
+    </legend>
+      <table
+        style="
+          width: 400px;
+          border: none;
+          text-align: center;
+          padding: 8px;
+        "
+      >
+        <tbody>
+          <tr>
+              <td
+                style="
+                  width: 200px;
+                  text-align: right;
+                  vertical-align: top;
+                  padding-right: 15px;
+                  background-color: #555;
+                  color: #ffe605;
+                "
+              >
+                <b>Vehicle Price</b>
+              </td>
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+                £` +
+    price +
+    `
+              </td>
+            </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>VAT</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>£` +
+    price * 0.2 +
+    ` </label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Total Price</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>£` +
+    (Number(price) + Number(price) * 0.2) +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Deposit Amount</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>£` +
+    (Number(price) + Number(price) * 0.2 * 0.3) +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Current Balance</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>£` +
+    (Number(price) + Number(price) * 0.2) +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Balance Due Date</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +
+    quote.estimated_start_time +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Click to Book</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+             <a href=` +
+    url +
+    `>BOOK NOW</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </fieldset>
   </body>
 </html>
-
   `,
   booking_success: () =>
-  `
+    `
   <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -992,8 +1251,8 @@ const emailTemplates = {
 </html>
 
   `,
-  payment: (visitor, url, quote, creationDate) => 
-  `
+  payment: (visitor, url, quote, creationDate) =>
+    `
   <html>
   <body
     style="
@@ -1024,13 +1283,17 @@ const emailTemplates = {
       </tr>
       <tr>
         <td style="text-align: left">
-          <p>Dear ` + visitor.name + `, </p>
+          <p>Dear ` +
+    visitor.name +
+    `, </p>
 
           <p>I hope this email finds you well.</p>
           <p>We would like to extend our gratitude for choosing our service for your journey.</p>
           <p>Here you find the payment link for the quote.</p> 
           <p>Simply click on the button below to proceed with your payment:
-            <a href="` + url + `" style="display: inline-block;
+            <a href="` +
+    url +
+    `" style="display: inline-block;
                                 padding: 10px 20px;
                                 margin: 10px;
                                 text-align: center;
@@ -1057,8 +1320,9 @@ const emailTemplates = {
     "
   >
     <legend style="margin-left: 20%">
-      <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
-      creationDate +`
+      <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    creationDate +
+    `
     </legend>
       <table
         style="
@@ -1105,7 +1369,9 @@ const emailTemplates = {
               <b>Date & Time</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>` + quote.estimated_start_time + ` </label>
+              <label>` +
+    quote.estimated_start_time +
+    ` </label>
             </td>
           </tr>
           <tr>
@@ -1122,7 +1388,9 @@ const emailTemplates = {
               <b>Collection Address</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.start_point.placeName +`</label>
+              <label>` +
+    quote.start_point.placeName +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -1139,7 +1407,9 @@ const emailTemplates = {
               <b>Destination Address</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.destination_point.placeName +`</label>
+              <label>` +
+    quote.destination_point.placeName +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -1156,7 +1426,9 @@ const emailTemplates = {
               <b>Luggage</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.luggage_details +`</label>
+              <label>` +
+    quote.luggage_details +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -1173,7 +1445,9 @@ const emailTemplates = {
               <b>Number Of Passengers</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.passengers_number +`</label>
+              <label>` +
+    quote.passengers_number +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -1190,7 +1464,9 @@ const emailTemplates = {
               <b>Vehicle Type</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label> `+ quote.vehicle_type +` </label>
+              <label> ` +
+    quote.vehicle_type +
+    ` </label>
             </td>
           </tr>
           <tr>
@@ -1207,7 +1483,9 @@ const emailTemplates = {
               <b>Journey Type</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>`+ quote.journey_type +`</label>
+              <label>` +
+    quote.journey_type +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -1224,7 +1502,9 @@ const emailTemplates = {
               <b>Passenger Name</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>` +visitor.name +`</label>
+              <label>` +
+    visitor.name +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -1241,7 +1521,9 @@ const emailTemplates = {
               <b>Passenger Phone</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>` + visitor.phone +`</label>
+              <label>` +
+    visitor.phone +
+    `</label>
             </td>
           </tr>
           <tr>
@@ -1263,7 +1545,9 @@ const emailTemplates = {
                   style="
                     text-decoration: none !important;
                   "
-                  >` + visitor.email +`</a
+                  >` +
+    visitor.email +
+    `</a
                 >
               </label>
             </td>
@@ -1274,7 +1558,7 @@ const emailTemplates = {
   </body>
 </html>
 
-  `
+  `,
 };
 
 module.exports = {
