@@ -19,6 +19,7 @@ const quoteRoutes = require('./quoteRoutes/quoteRoutes');
 const noteRoutes = require('./noteRoutes/noteRoutes');
 const authCentralAppRoutes= require("./authCentralAppRoutes/authCentralAppRoutes")
 const authTeamRoutes= require("./teamRoutes/teamRoutes")
+const programmRoutes= require("./programmRoutes/programmRoutes")
 
 router.use('/authSchool',schoolRoutes);
 router.use('/team',authTeamRoutes);
@@ -43,5 +44,6 @@ router.use('/visitor', visitorRoutes);
 router.use('/emailTemplate', emailTemplateRoutes);
 router.use('/quote', quoteRoutes);
 router.use('/note', noteRoutes);
+router.use('/programm', programmRoutes);
 
 module.exports = router;
