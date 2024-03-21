@@ -23,6 +23,9 @@ const createProgramm = async (req, res) => {
       stops,
       origin_point,
       programName,
+      dropOff_time,
+      pickUp_Time,
+      workDates
     } = req.body;
     const newProgramm = await programmService.createProgramm({
       notes,
@@ -36,6 +39,9 @@ const createProgramm = async (req, res) => {
       stops,
       origin_point,
       programName,
+      dropOff_time,
+      pickUp_Time,
+      workDates
     });
     console.log("req.body",req.body)
     res.status(201).json(newProgramm);
