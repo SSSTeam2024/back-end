@@ -719,7 +719,7 @@ const emailTemplates = {
 </html>
  
   `,
-  booking: (visitor, price, url, quote, creationDate) =>
+  booking: (visitor, price, deposit_percentage, url, quote, creationDate) =>
     `
     <html>
   <body
@@ -1151,7 +1151,10 @@ const emailTemplates = {
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
               <label>£` +
-    (Number(price) + Number(price) * 0.2 * 0.3) +
+    (
+      (Number(price) + Number(price) * 0.2) *
+      (Number(deposit_percentage) / 100)
+    ).toFixed(2) +
     `</label>
             </td>
           </tr>

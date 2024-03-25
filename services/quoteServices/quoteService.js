@@ -1,9 +1,7 @@
 const quoteDao = require("../../dao/quoteDao/quoteDao");
 const visitorDao = require("../../dao/visitorDao/visitorDao");
-const emailTemplateDao = require("../../dao/emailTemplateDao/emailTemplateDao");
 const emailService = require("./emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
-const Quote = require("../../models/quoteModel/quote");
 const modeDao = require("../../dao/modeDao/modeDao");
 const mileageBandDao = require("../../dao/mileageBandDao/mileageBandDao");
 
@@ -26,21 +24,26 @@ const createQuote = async (quoteData, distance) => {
     let dataAllMileageBands = await mileageBandDao.getMileageBands();
     for (let i = 0; i < dataAllMileageBands.length; i++) {
       if (quoteData.vehicle_type === dataAllMileageBands[i].vehicle_type.type) {
+        let selectedBand = dataAllMileageBands.find(
+          (band) =>
+            band.vehicle_type.type === quoteData.vehicle_type &&
+            Number(mileDistance) <= Number(band.mileage_limit)
+        );
+        // console.log(selectedBand);
         let base_charge =
-          dataAllMileageBands[i].vehicle_type.base_change.match(
-            /£(\d+(\.\d{1,4})?)/
-          );
+          selectedBand.vehicle_type?.base_change.match(/£(\d+(\.\d{1,4})?)/);
         let extractedBase_charge = base_charge ? base_charge[1] : null;
-        console.log(extractedBase_charge);
-
-        let unitPrice =
-          dataAllMileageBands[i].price.match(/£(\d+(\.\d{1,4})?)/);
-        let extractedUnitPrice = unitPrice ? unitPrice[1] : null;
-        console.log(extractedUnitPrice);
-
+        // console.log(extractedBase_charge);
+        // let unitPrice = selectedBand.price.match(/£(\d+(\.\d{1,4})?)/);
+        // let extractedUnitPrice = unitPrice ? unitPrice[1] : null;
+        // let extractedUnitPrice = selectedBand.price;
+        // console.log(selectedBand.price);
+        // console.log(selectedBand.vehicle_type?.coverage_mile);
         autoPrice = (
           Number(extractedBase_charge) +
-          Number(mileDistance) * Number(extractedUnitPrice)
+          (Number(mileDistance) -
+            Number(selectedBand.vehicle_type?.coverage_mile)) *
+            Number(selectedBand.price)
         ).toFixed(2);
         break;
       }
@@ -60,6 +63,10 @@ const getQuotes = async () => {
   return await quoteDao.getQuotes();
 };
 
+const getQuoteById = async (id) => {
+  return await quoteDao.getQuoteById(id);
+};
+
 const updateQuote = async (id, updateData) => {
   return await quoteDao.updateQuote(id, updateData);
 };
@@ -68,133 +75,32 @@ const deleteQuote = async (id) => {
   return await quoteDao.deleteQuote(id);
 };
 
-const getAllQuotes = async () => {
-  try {
-    const responseAllQuotes = await fetch(
-      "https://bouden.uk.oxa.cloud/api/quote/getAllQuotes"
-    );
-
-    const dataAllQuotes = await responseAllQuotes.json();
-    return dataAllQuotes;
-  } catch (error) {
-    console.error("Error fetching quotes:", error);
-    throw error; // rethrow the error to handle it later if needed
-  }
-};
-
-const getAllPricingCalendar = async () => {
-  try {
-    const responseAllPricingCalendar = await fetch(
-      "https://bouden.uk.oxa.cloud/api/pricingCalendar/getAllPricingCalendars"
-    );
-    const dataAllPricingCalendar = await responseAllPricingCalendar.json();
-    return dataAllPricingCalendar;
-  } catch (error) {
-    console.error("Error fetching Pricing Calendar:", error);
-    throw error; // rethrow the error to handle it later if needed
-  }
-};
-
-// const processQuote = async (quote) => {
-//   try {
-//     const allQuotesss = await getAllQuotes();
-//     const allPricingCalendaaar = await getAllPricingCalendar();
-//     const allMileageBaaands = await getAllMileageBands();
-//     let match = allMileageBaaands[0].price.match(/£(\d+(\.\d{1,4})?)/);
-//     let extractedValue = match ? match[1] : null;
-//     let base_charge =
-//       allPricingCalendaaar[1].vehicle_type.base_change.match(
-//         /£(\d+(\.\d{1,4})?)/
-//       );
-//     let extractedBAse_charge = base_charge ? base_charge[1] : null;
-//     var R = 3958.8; // Radius of the Earth in miles
-//     var rlat1 = quote.start_point.coordinates.lat * (Math.PI / 180); // Convert degrees to radians
-//     var rlat2 = quote.destination_point.coordinates.lat * (Math.PI / 180); // Convert degrees to radians
-//     var difflat = rlat2 - rlat1; // Radian difference (latitudes)
-//     var difflon =
-//       (quote.destination_point.coordinates.lon -
-//         quote.start_point.coordinates.lon) *
-//       (Math.PI / 180); // Radian difference (longitudes)
-
-//     var d =
-//       2 *
-//       R *
-//       Math.asin(
-//         Math.sqrt(
-//           Math.sin(difflat / 2) * Math.sin(difflat / 2) +
-//             Math.cos(rlat1) *
-//               Math.cos(rlat2) *
-//               Math.sin(difflon / 2) *
-//               Math.sin(difflon / 2)
-//         )
-//       );
-//     const convertKmToMiles = (km) => {
-//       return km * 0.621371;
-//     };
-
-//     let inMiles = convertKmToMiles(d);
-//     let pricing =
-//       parseFloat(extractedBAse_charge) +
-//       (parseFloat(extractedValue) * inMiles +
-//         (parseFloat(extractedValue) *
-//           inMiles *
-//           parseInt(allPricingCalendaaar[1].uplift)) /
-//           100);
-//     // if (
-//     //   quote.estimated_start_time === allPricingCalendaaar[1].startPeriod &&
-//     //   quote.vehicle_type === allPricingCalendaaar[1].vehicle_type.type &&
-//     //   quote.status !== "Booked"
-//     // ) {
-//     //   let id = quote.id_visitor;
-//     //   let price = Math.round(pricing);
-//     //   let quote_id = quote._id;
-//     //   await quoteDao.updateQuotePrice(quote_id, price);
-//     //   let updatedQuote = await quoteDao.getQuoteById(quote_id);
-//     //   let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
-//     //   let email = await prepareQuoteBookingEmail(id, price, url, updatedQuote);
-//     //   await emailService.sendEmail(email);
-//     //   return "Booking Email sent!";
-//     // }
-//   } catch (error) {
-//     console.error("Error:", error);
-//   }
-// };
-
-// const processAllQuotes = async () => {
-//   try {
-//     const allQuotes = await getAllQuotes();
-//     for (const quote of allQuotes) {
-//       await processQuote(quote);
-//     }
-//   } catch (error) {
-//     console.error("Error fetching quotes:", error);
-//   }
-// };
-
-// let allowedCalls = 2;
-
-// const yourFunction = () => {
-//   processAllQuotes();
-//   allowedCalls--;
-
-//   if (allowedCalls <= 0) {
-//     console.log("Function called the maximum allowed times.");
-//   }
-// };
-
-// const intervalId = setInterval(yourFunction, 10000);
-
-// setTimeout(() => clearInterval(intervalId), allowedCalls * 10000);
-
 const sendBookingEmail = async (bookingData) => {
   let id = bookingData.id_visitor;
   let price = bookingData.price;
   let quote_id = bookingData.quote_id;
-  console.log(price);
-  await quoteDao.updateQuotePrice(quote_id, price);
+  let auto_price = bookingData.automatic_cost;
+  let deposit_amount = bookingData.deposit_amount;
+  let deposit_percentage = bookingData.deposit_percentage;
+  let total_price = bookingData.total_price;
+
+  await quoteDao.updateQuotePrice(
+    quote_id,
+    price,
+    auto_price,
+    deposit_amount,
+    deposit_percentage,
+    total_price
+  );
   let quote = await quoteDao.getQuoteById(quote_id);
   let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
-  let email = await prepareQuoteBookingEmail(id, price, url, quote);
+  let email = await prepareQuoteBookingEmail(
+    id,
+    price,
+    deposit_percentage,
+    url,
+    quote
+  );
   await emailService.sendEmail(email);
   return "Booking Email sent!";
 };
@@ -265,7 +171,13 @@ async function prepareAfterQuoteCreationEmail(idVisitor, quote) {
   return fullEmailObject;
 }
 
-async function prepareQuoteBookingEmail(idVisitor, price, url, quote) {
+async function prepareQuoteBookingEmail(
+  idVisitor,
+  price,
+  deposit_percentage,
+  url,
+  quote
+) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
   const creationDate = quote.createdAt;
@@ -281,6 +193,7 @@ async function prepareQuoteBookingEmail(idVisitor, price, url, quote) {
   let emailBody = emailTemplatesStructure.emailTemplates.booking(
     visitor,
     price,
+    deposit_percentage,
     url,
     quote,
     formattedCreationDate
@@ -335,4 +248,5 @@ module.exports = {
   updateQuoteStatus,
   sendPaymentEmail,
   sendAssign,
+  getQuoteById,
 };

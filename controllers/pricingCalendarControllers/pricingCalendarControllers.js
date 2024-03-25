@@ -9,6 +9,7 @@ const createPricingCalendar = async (req, res) => {
       exclusive,
       accountCompany,
       accountSchool,
+      accountPassenger,
       startDate,
       startTime,
       endDate,
@@ -16,6 +17,8 @@ const createPricingCalendar = async (req, res) => {
       days,
       uplift,
       endPeriod,
+      allAccounts,
+      allVehicles,
       startPeriod,
     } = req.body;
 
@@ -26,6 +29,7 @@ const createPricingCalendar = async (req, res) => {
       exclusive,
       accountCompany,
       accountSchool,
+      accountPassenger,
       startDate,
       startTime,
       endDate,
@@ -33,8 +37,11 @@ const createPricingCalendar = async (req, res) => {
       days,
       uplift,
       endPeriod,
+      allAccounts,
+      allVehicles,
       startPeriod,
     });
+    console.log(req.body);
     res.sendStatus(201);
   } catch (error) {
     console.error(error);
@@ -92,14 +99,13 @@ const updatePricingCalendar = async (req, res) => {
 
 const deletePricingCalendar = async (req, res) => {
   try {
-    const luxuryId = req.params.id;
+    const pricingCalendarId = req.params.id;
 
-    const deletedLuxury = await pricingCalendarService.deletePricingCalendar(
-      luxuryId
-    );
+    const deletedPricingCalendar =
+      await pricingCalendarService.deletePricingCalendar(pricingCalendarId);
 
-    if (!deletedLuxury) {
-      return res.status(404).send("Email Template not found");
+    if (!deletedPricingCalendar) {
+      return res.status(404).send("Pricing Calendar not found");
     }
     res.sendStatus(200);
   } catch (error) {

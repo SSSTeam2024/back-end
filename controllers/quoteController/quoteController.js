@@ -25,7 +25,8 @@ const createQuote = async (req, res) => {
       status,
       progress,
       balance,
-      deposit,
+      deposit_percentage,
+      deposit_amount,
       manual_cost,
       automatic_cost,
       start_point,
@@ -40,6 +41,8 @@ const createQuote = async (req, res) => {
       type,
       estimated_return_start_time,
       distance,
+      duration,
+      total_price,
     } = req.body;
 
     const quote = await quoteService.createQuote(
@@ -64,9 +67,10 @@ const createQuote = async (req, res) => {
         paid_by_bouden,
         status,
         manual_cost,
-        progress,
+        progress: "New",
         balance,
-        deposit,
+        deposit_percentage,
+        deposit_amount,
         automatic_cost,
         start_point,
         estimated_start_time,
@@ -79,8 +83,10 @@ const createQuote = async (req, res) => {
         destination_point,
         type,
         estimated_return_start_time,
+        total_price,
       },
-      distance
+      distance,
+      duration
     );
     res.json(quote);
   } catch (error) {
@@ -93,6 +99,20 @@ const getQuotes = async (req, res) => {
   try {
     const quotes = await quoteService.getQuotes();
     res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getQuoteById = async (req, res) => {
+  try {
+    const quoteId = req.params.id;
+    const getQuote = await quoteService.getQuoteById(quoteId);
+    if (!getQuote) {
+      return res.status(404).send("Quote not found");
+    }
+    res.json(getQuote);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -135,6 +155,7 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
+      total_price,
     } = req.body;
 
     const updatedQuote = await quoteService.updateQuote(quoteId, {
@@ -170,6 +191,7 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
+      total_price,
     });
 
     if (!updatedQuote) {
@@ -200,11 +222,23 @@ const deleteQuote = async (req, res) => {
 
 const sendBookingEmail = async (req, res) => {
   try {
-    const { id_visitor, price, quote_id } = req.body;
+    const {
+      id_visitor,
+      price,
+      quote_id,
+      automatic_cost,
+      deposit_amount,
+      deposit_percentage,
+      total_price,
+    } = req.body;
     const sentResult = await quoteService.sendBookingEmail({
       id_visitor,
       price,
       quote_id,
+      automatic_cost,
+      deposit_amount,
+      deposit_percentage,
+      total_price,
     });
     res.json({ success: sentResult });
   } catch (error) {
@@ -276,4 +310,5 @@ module.exports = {
   updateQuoteStatus,
   sendPaymentEmail,
   assignDriverAPI,
+  getQuoteById,
 };

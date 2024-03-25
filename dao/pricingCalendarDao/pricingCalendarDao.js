@@ -8,7 +8,8 @@ const getPricingCalendars = async () => {
   return await PricingCalendar.find()
     .populate("vehicle_type")
     .populate("accountCompany")
-    .populate("accountSchool");
+    .populate("accountSchool")
+    .populate("accountPassenger");
 };
 
 const getPricingCalendarById = async (id) => {

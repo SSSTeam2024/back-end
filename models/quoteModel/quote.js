@@ -24,9 +24,11 @@ const quoteSchema = new mongoose.Schema(
     status: String,
     progress: String,
     balance: String,
-    deposit: String,
+    deposit_percentage: String,
     manual_cost: String,
     automatic_cost: String,
+    deposit_amount: String,
+    total_price: String,
     start_point: {
       placeName: String,
       coordinates: {

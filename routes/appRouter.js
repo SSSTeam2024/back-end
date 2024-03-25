@@ -33,6 +33,12 @@ const studentAttendanceRoutes = require("./studentAttendanceRoutes/studentAttend
 const groupEmployeeRoutes = require("./groupCompanyRoutes/groupCompanyRoutes");
 const pricingCalendarRoutes = require("./pricingCalendarRoutes/pricingCalendarRoute");
 const modeRoutes = require("./modeRoutes/modeRoutes");
+const regionalPricingRoutes = require("./regionalPricingRoutes/regionalPricingRoutes");
+const locationRoutes = require("./locationRoutes/locationRoutes");
+const pricingPostalCodeRoutes = require("./pricingPostalCodeRoutes/pricingPostalCodeRoutes");
+const forceSingleRoutes = require("./forceSingleRoutes/forceSingleRoutes");
+const programmRoutes = require("./programmRoutes/programmRoutes");
+const contractRoutes = require("./contractRoutes/contractRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -75,5 +81,11 @@ router.use("/studentAttendance", studentAttendanceRoutes);
 router.use("/groupEmployee", groupEmployeeRoutes);
 router.use("/pricingCalendar", pricingCalendarRoutes);
 router.use("/mode", modeRoutes);
+router.use("/regionalPricing", regionalPricingRoutes);
+router.use("/location", locationRoutes);
+router.use("/pricingPostalCode", pricingPostalCodeRoutes);
+router.use("/forceSingle", forceSingleRoutes);
+router.use("/programm", programmRoutes);
+router.use("/contract", contractRoutes);
 
 module.exports = router;

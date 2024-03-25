@@ -16,6 +16,13 @@ const pricingCalendarSchema = new mongoose.Schema({
     ref: "School",
     required: false,
   },
+  accountPassenger: {
+    type: Schema.Types.ObjectId,
+    ref: "Visitor",
+    required: false,
+  },
+  allAccounts: [String],
+  allVehicles: [String],
   startDate: String,
   startPeriod: String,
   startTime: String,

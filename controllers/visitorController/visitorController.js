@@ -2,19 +2,28 @@ const visitorService = require("../../services/visitorServices/visitorService");
 
 const createVisitor = async (req, res) => {
   try {
-    const { email, name, phone, start_point,
+    const {
+      email,
+      name,
+      phone,
+      start_point,
       estimated_start_time,
       destination_point,
-      estimated_return_start_time, status,
-      enquiryDate
+      estimated_return_start_time,
+      status,
+      enquiryDate,
     } = req.body;
 
     const visitor = await visitorService.createVisitor({
-      email, name, phone, start_point,
+      email,
+      name,
+      phone,
+      start_point,
       estimated_start_time,
       destination_point,
-      estimated_return_start_time, status,
-      enquiryDate
+      estimated_return_start_time,
+      status,
+      enquiryDate,
     });
     res.json(visitor);
   } catch (error) {
@@ -49,8 +58,26 @@ const getVisitorById = async (req, res) => {
   }
 };
 
+// delete visitor account
+const deleteVisitor = async (req, res) => {
+  try {
+    const visitorId = req.params.id;
+
+    const deletedVisitor = await visitorService.deleteVisitor(visitorId);
+
+    if (!deletedVisitor) {
+      return res.status(404).send("Visitor not found");
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createVisitor,
   getVisitors,
   getVisitorById,
+  deleteVisitor,
 };

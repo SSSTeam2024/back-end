@@ -2,10 +2,11 @@ const VehicleTypeService = require("../../services/vehicleTypeServices/vehicleTy
 
 const createVehicleType = async (req, res) => {
   try {
-    const { type, base_change } = req.body;
+    const { type, base_change, coverage_mile } = req.body;
     const newVehicleType = await VehicleTypeService.createVehicleType({
       type,
       base_change,
+      coverage_mile,
     });
     res.status(201).json(newVehicleType);
   } catch (error) {
@@ -17,11 +18,11 @@ const createVehicleType = async (req, res) => {
 const updateVehicleType = async (req, res) => {
   try {
     const vehicleTypeId = req.params.id;
-    const { type, base_change } = req.body;
+    const { type, base_change, coverage_mile } = req.body;
 
     const updatedVehicleType = await VehicleTypeService.updateVehicleType(
       vehicleTypeId,
-      { type, base_change }
+      { type, base_change, coverage_mile }
     );
 
     if (!updatedVehicleType) {
