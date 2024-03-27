@@ -10,6 +10,8 @@ router.put("/updateQuote/:id", quoteController.updateQuote);
 router.delete("/deleteQuote/:id", quoteController.deleteQuote);
 router.post("/sendBookingEmail", quoteController.sendBookingEmail);
 router.post("/assignDriver", quoteController.assignDriverAPI);
+router.post("/assignDriverToQuote", quoteController.assignDriverToQuoteAPI);
+router.post("/assignVehicleToDriver", quoteController.assignVehicleToQuoteAPI);
 router.get("/confirm-booking/:id", quoteController.updateQuoteStatus);
 router.post("/sendPaymentEmail", quoteController.sendPaymentEmail);
 

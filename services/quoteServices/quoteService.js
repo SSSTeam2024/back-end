@@ -50,8 +50,7 @@ const createQuote = async (quoteData, distance) => {
     }
     let quote_id = quote._id;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url =
-      "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+    let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
     email = await prepareQuoteBookingEmail(id, autoPrice, url, quote);
   }
 
@@ -93,7 +92,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
@@ -115,12 +114,26 @@ const sendAssign = async (bookingData) => {
   return "Driver and Vehicle Assigned!!";
 };
 
+const assignDriver = async (bookingData) => {
+  let quote_id = bookingData.quote_id;
+  let driver = bookingData.id_driver;
+  await quoteDao.updateDriver(quote_id, driver);
+  return "Driver Assigned!!";
+};
+
+const assignVehicle = async (bookingData) => {
+  let quote_id = bookingData.quote_id;
+  let vehicle = bookingData.id_vehicle;
+  await quoteDao.updateVehicle(quote_id, vehicle);
+  return "Vehicle Assigned!!";
+};
+
 const sendPaymentEmail = async (paymentData) => {
   let id = paymentData.id_visitor;
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
   let url =
-    "https://bouden.uk.oxa.cloud/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
+    "http://localhost:3000/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
@@ -249,4 +262,6 @@ module.exports = {
   sendPaymentEmail,
   sendAssign,
   getQuoteById,
+  assignDriver,
+  assignVehicle,
 };

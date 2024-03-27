@@ -20,8 +20,29 @@ const getProgrammById = async (id) => {
   return await Programm.findById(id);
 };
 
+const updateStatus = async (
+  id,
+  notes_for_client,
+  unit_price,
+  total_price,
+  program_status
+) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        notes_for_client: notes_for_client,
+        unit_price: unit_price,
+        total_price: total_price,
+        program_status: program_status,
+      },
+    }
+  );
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
   getProgrammById,
+  updateStatus,
 };

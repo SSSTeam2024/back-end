@@ -34,6 +34,11 @@ const programmSchema = new mongoose.Schema(
     pickUp_Time: String,
     dropOff_time: String,
     workDates: [String],
+    clientID: String,
+    notes_for_client: String,
+    unit_price: String,
+    total_price: String,
+    program_status: String,
   },
   {
     timestamps: true,

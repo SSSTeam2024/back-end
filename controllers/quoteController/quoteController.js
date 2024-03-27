@@ -264,6 +264,34 @@ const assignDriverAPI = async (req, res) => {
   }
 };
 
+const assignDriverToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_id, id_driver } = req.body;
+    const sentResult = await quoteService.assignDriver({
+      quote_id,
+      id_driver,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const assignVehicleToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_id, id_vehicle } = req.body;
+    const sentResult = await quoteService.assignVehicle({
+      quote_id,
+      id_vehicle,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const sendPaymentEmail = async (req, res) => {
   try {
     const { id_visitor, quote_id } = req.body;
@@ -311,4 +339,6 @@ module.exports = {
   sendPaymentEmail,
   assignDriverAPI,
   getQuoteById,
+  assignDriverToQuoteAPI,
+  assignVehicleToQuoteAPI,
 };

@@ -73,6 +73,30 @@ const updateQuoteDriver = async (id, price, diver, vehicle) => {
   );
 };
 
+const updateDriver = async (id, diver) => {
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        id_driver: diver,
+        progress: "Driver Allocated",
+      },
+    }
+  );
+};
+
+const updateVehicle = async (id, vehicle) => {
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        id_vehicle: vehicle,
+        progress: "Vehicle Allocated",
+      },
+    }
+  );
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -82,4 +106,6 @@ module.exports = {
   getQuoteById,
   updateQuotePrice,
   updateQuoteDriver,
+  updateDriver,
+  updateVehicle,
 };

@@ -8,6 +8,6 @@ router.get("/getAllProgramms", programmController.getProgramms);
 router.get("/getProgrammById/:id", programmController.getProgrammById);
 // router.put('/updateQuote/:id', quoteController.updateQuote);
 // router.delete('/deleteQuote/:id', quoteController.deleteQuote);
-// router.post('/sendBookingEmail',quoteController.sendBookingEmail);
+router.post("/sendResponse", programmController.sendResponseAPI);
 
 module.exports = router;

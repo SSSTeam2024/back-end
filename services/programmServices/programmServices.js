@@ -19,8 +19,25 @@ const getProgrammById = async (id) => {
   return await programmDao.getProgrammById(id);
 };
 
+const sendRespond = async (respondData) => {
+  let program_id = respondData.id;
+  let program_status = respondData.program_status;
+  let unit_price = respondData.unit_price;
+  let total_price = respondData.total_price;
+  let notes_for_client = respondData.notes_for_client;
+  await programmDao.updateStatus(
+    program_id,
+    notes_for_client,
+    unit_price,
+    total_price,
+    program_status
+  );
+  return "Response Send!!";
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
   getProgrammById,
+  sendRespond,
 };

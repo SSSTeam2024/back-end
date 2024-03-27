@@ -26,6 +26,11 @@ const createProgramm = async (req, res) => {
       dropOff_time,
       pickUp_Time,
       workDates,
+      clientID,
+      notes_for_client,
+      unit_price,
+      total_price,
+      program_status,
     } = req.body;
     const newProgramm = await programmService.createProgramm({
       notes,
@@ -42,6 +47,11 @@ const createProgramm = async (req, res) => {
       dropOff_time,
       pickUp_Time,
       workDates,
+      clientID,
+      notes_for_client,
+      unit_price,
+      total_price,
+      program_status,
     });
     res.status(201).json(newProgramm);
   } catch (error) {
@@ -64,8 +74,27 @@ const getProgrammById = async (req, res) => {
   }
 };
 
+const sendResponseAPI = async (req, res) => {
+  try {
+    const { id, notes_for_client, unit_price, total_price, program_status } =
+      req.body;
+    const sentResult = await programmService.sendRespond({
+      id,
+      notes_for_client,
+      unit_price,
+      total_price,
+      program_status,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getProgramms,
   createProgramm,
   getProgrammById,
+  sendResponseAPI,
 };
