@@ -19,6 +19,7 @@ const schoolSchema = new mongoose.Schema({
   bank_name: String,
   id_creation_date: Date,
   id_file: String,
+  api_token: String,
 
 },{timestamps:true});
 

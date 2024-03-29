@@ -10,11 +10,12 @@ const programmSchema = new mongoose.Schema(
         lng: Number,
       },
     },
-    stops: [{
-      id: String,
-      address: String,
-      time: String,
-    }
+    stops: [
+      {
+        id: String,
+        address: String,
+        time: String,
+      },
     ],
     destination_point: {
       placeName: String,
@@ -33,11 +34,34 @@ const programmSchema = new mongoose.Schema(
     pickUp_Time: String,
     dropOff_time: String,
     workDates: [String],
+    clientID: String,
+    notes_for_client: [
+      {
+        msg: String,
+        date: String,
+        sender: String,
+      },
+    ],
+    notes_for_admin: [
+      {
+        msg: String,
+        date: String,
+        sender: String,
+      },
+    ],
+    unit_price: String,
+    total_price: String,
+    program_status: [
+      {
+        status: String,
+        date_status: String,
+      },
+      
+    ],
   },
   {
     timestamps: true,
   }
-  
 );
 
 module.exports = mongoose.model("Programm", programmSchema);

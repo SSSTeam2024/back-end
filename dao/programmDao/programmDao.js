@@ -12,11 +12,56 @@ const getProgramms = async () => {
 //   return await Quote.findByIdAndUpdate(id, updateData, { new: true });
 // };
 
-// const deleteQuote = async (id) => {
-//   return await Quote.findByIdAndDelete(id);
-// };
+// delete Program 
+
+const deleteProgram = async (id) => {
+  return await Programm.findByIdAndDelete(id);
+};
+
+const updateStatus = async (
+  id,
+  notes_for_client,
+  unit_price,
+  total_price,
+  program_status
+) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        notes_for_client: notes_for_client,
+        unit_price: unit_price,
+        total_price: total_price,
+        program_status: program_status,
+      },
+    }
+  );
+};
+
+const updateNotesAdmin = async (
+  id,
+  notes_for_admin,
+  unit_price,
+  total_price,
+  program_status
+) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        notes_for_admin: notes_for_admin,
+        unit_price: unit_price,
+        total_price: total_price,
+        program_status: program_status,
+      },
+    }
+  );
+};
 
 module.exports = {
 createProgramm,
 getProgramms,
+deleteProgram,
+updateStatus,
+updateNotesAdmin
 };

@@ -26,7 +26,10 @@ const loginSchool = async (login, password) => {
 
   if (await bcrypt.compare(password, school.password)) {
     const accessToken = jwt.sign({ login: school.login }, "yourSecretKey");
-    return { accessToken, school };
+    console.log(typeof accessToken);
+    await schoolDao.updateJwtToken(school._id, String(accessToken));
+    let updatedSchool = await schoolDao.getSchoolById(school._id);
+    return updatedSchool;
   } else {
     throw new Error("Incorrect password");
   }
@@ -71,10 +74,22 @@ const updatedSchool = async (id, updateData) => {
 const getSchoolById = async (id) => {
   return await schoolDao.getSchoolById(id);
 }
+
+// get school by token
+const getSchoolByToken = async (token) => {
+  return await schoolDao.findSchoolByToken(token);
+}
+
 // get all schools
 const getSchools = async () => {
   return await schoolDao.getAllSchools();
 };
+
+//logout
+const logout = async (id) => {
+  return await schoolDao.logout(id);
+};
+
 module.exports = {
   registerSchool,
   loginSchool,
@@ -83,5 +98,7 @@ module.exports = {
   deleteSchool,
   updatedSchool,
   getSchoolById,
-  getSchools
+  getSchools,
+  getSchoolByToken,
+  logout
 };

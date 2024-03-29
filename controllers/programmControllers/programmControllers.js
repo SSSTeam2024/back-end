@@ -25,7 +25,13 @@ const createProgramm = async (req, res) => {
       programName,
       dropOff_time,
       pickUp_Time,
-      workDates
+      workDates,
+      clientID,
+      notes_for_client,
+      notes_for_admin,
+      unit_price,
+      total_price,
+      program_status,
     } = req.body;
     const newProgramm = await programmService.createProgramm({
       notes,
@@ -41,10 +47,67 @@ const createProgramm = async (req, res) => {
       programName,
       dropOff_time,
       pickUp_Time,
-      workDates
+      workDates,
+      clientID,
+      notes_for_client,
+      notes_for_admin,
+      unit_price,
+      total_price,
+      program_status,
     });
-    console.log("req.body",req.body)
     res.status(201).json(newProgramm);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+//delete program
+const deleteProgram = async (req, res) => {
+  try {
+    const programId = req.params.id;
+
+    const deletedProgram = await programmService.deleteProgram(programId);
+
+    if (!deletedProgram) {
+      return res.status(404).send("Program not found");
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+const sendResponseAPI = async (req, res) => {
+  try {
+    const { id, notes_for_client, unit_price, total_price, program_status } =
+      req.body;
+    const sentResult = await programmService.sendRespond({
+      id,
+      notes_for_client,
+      unit_price,
+      total_price,
+      program_status,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const sendResponseNoteAPI = async (req, res) => {
+  try {
+    const { id, notes_for_admin, unit_price, total_price, program_status } =
+      req.body;
+    const sentResult = await programmService.sendAdminRespond({
+      id,
+      notes_for_admin,
+      unit_price,
+      total_price,
+      program_status,
+    });
+    res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -54,4 +117,7 @@ const createProgramm = async (req, res) => {
 module.exports = {
   getProgramms,
   createProgramm,
+  deleteProgram,
+  sendResponseAPI,
+  sendResponseNoteAPI
 };

@@ -8,6 +8,14 @@ const createSchool = async (schoolData) => {
 const findSchoolByUsername = async (login) => {
   return await School.findOne({ login });
 };
+
+// find school by token
+const findSchoolByToken = async (token) => {
+  let api_token = token;
+  return await School.findOne({ api_token });
+};
+
+
 // delete school 
 
 const deleteSchool = async (id) => {
@@ -28,6 +36,14 @@ const getSchoolById = async (id) => {
 const getAllSchools = async () => {
   return await School.find({});
 };
+const updateJwtToken = async (id, token) => {
+  return await School.findByIdAndUpdate({ _id:id }, {
+    $set: {
+      api_token: token
+    }
+  });
+}
+
   // update password
   const updatePassword = async (id, password) => {
     console.log('Hashed pwd: '+password);
@@ -38,6 +54,15 @@ const getAllSchools = async () => {
     });
   }
 
+    // logout
+    const logout = async (id) => {
+      return await School.findByIdAndUpdate({ _id:id }, {
+        $set: {
+          api_token: ""
+        }
+      });
+    }
+
 
 module.exports = {
     createSchool,
@@ -46,5 +71,8 @@ module.exports = {
     updateSchool,
     getSchoolById,
     getAllSchools,
-    updatePassword
+    updateJwtToken,
+    updatePassword,
+    findSchoolByToken,
+    logout
 };
