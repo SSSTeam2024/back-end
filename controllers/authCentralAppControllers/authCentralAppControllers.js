@@ -24,6 +24,7 @@ const registerCentralApp = async (req, res) => {
       id_creation_date,
       IdFileBase64String,
       IdFileExtension,
+      api_token,
     } = req.body;
 
     let id_file = globalFunctions.generateUniqueFilename(
@@ -59,6 +60,7 @@ const registerCentralApp = async (req, res) => {
         bank_name,
         id_creation_date,
         id_file,
+        api_token,
       },
       documents
     );
@@ -75,11 +77,7 @@ const loginCentralApp = async (req, res) => {
     const { login, password } = req.body;
     const result = await authCentralApp.loginCentralApp(login, password);
 
-    res.cookie("access_token", result.accessToken, {
-      httpOnly: true,
-      secure: true,
-    });
-    res.json(result);
+    res.json({ central: result });
   } catch (error) {
     console.error(error);
     res.status(401).send(error.message);
@@ -87,8 +85,11 @@ const loginCentralApp = async (req, res) => {
 };
 
 //logout CentralApp account
-const logout = (req, res) => {
-  res.clearCookie("access_token");
+const logout = async (req, res) => {
+  let id = req.params.id;
+
+  await authCentralApp.logout(id);
+
   res.sendStatus(200);
 };
 // update CentralApp profile
@@ -200,10 +201,46 @@ const updatePassword = async (req, res) => {
   }
 };
 
+// get account by token
+const getCentralAppByJwtToken = async (req, res) => {
+  try {
+    const token = req.body.token;
+
+    const getCentral = await authCentralApp.getCentralAppByToken(token);
+
+    if (!getCentral) {
+      return res.status(404).send("Account not found");
+    }
+    res.json({ central: getCentral });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// get account by id
+const getAccountById = async (req, res) => {
+  try {
+    const accountId = req.params.id;
+
+    const getAccount = await authCentralApp.getCentralAppById(accountId);
+
+    if (!getAccount) {
+      return res.status(404).send("Account not found");
+    }
+    res.json(getAccount);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
-registerCentralApp,
+  registerCentralApp,
   loginCentralApp,
   logout,
   updateCentralApp,
   updatePassword,
+  getCentralAppByJwtToken,
+  getAccountById,
 };

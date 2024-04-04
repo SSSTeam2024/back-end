@@ -39,8 +39,8 @@ async function saveFile(base64String, fileName, file_path) {
   });
 }
 
-const loginDriver = async (username, password) => {
-  const driver = await driverDao.findDriverByLogin(username);
+const loginDriver = async (email, password) => {
+  const driver = await driverDao.findDriverByLogin(email);
 
   if (!driver) {
     throw new Error("Driver not found");
@@ -48,7 +48,9 @@ const loginDriver = async (username, password) => {
 
   if (await bcrypt.compare(password, driver.password)) {
     const accessToken = jwt.sign({ driver: driver.username }, "yourSecretKey");
-    return { accessToken };
+    await driverDao.updateJwtToken(driver._id, String(accessToken));
+    let updatedDriver = await driverDao.getDriverById(driver._id);
+    return updatedDriver;
   } else {
     throw new Error("Incorrect password");
   }
@@ -80,6 +82,14 @@ const updatePassword = async (id, password) => {
   return await driverDao.updatePassword(id, hashedPassword);
 };
 
+const logout = async (id) => {
+  return await driverDao.logout(id);
+};
+
+const getDriverByToken = async (token) => {
+  return await driverDao.findDriverByToken(token);
+};
+
 module.exports = {
   registerDriver,
   loginDriver,
@@ -90,4 +100,6 @@ module.exports = {
   deleteDriver,
   getDriverByEmail,
   updatePassword,
+  logout,
+  getDriverByToken,
 };

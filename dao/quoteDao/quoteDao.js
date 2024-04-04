@@ -85,6 +85,18 @@ const updateDriver = async (id, diver) => {
   );
 };
 
+const updateStatusToCancel = async (id, status) => {
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        status: status,
+        progress: "Cancel",
+      },
+    }
+  );
+};
+
 const updateVehicle = async (id, vehicle) => {
   return await Quote.findByIdAndUpdate(
     { _id: id },
@@ -92,6 +104,38 @@ const updateVehicle = async (id, vehicle) => {
       $set: {
         id_vehicle: vehicle,
         progress: "Vehicle Allocated",
+      },
+    }
+  );
+};
+
+const updateToQuote = async (id_schedule, convertData) => {
+  return await Quote.create(convertData);
+};
+
+const getQuotesByDriverID = async (id, date) => {
+  // Construct the query
+const year = date.substring(0, 4);
+const month = date.substring(5, 7);
+const littleThanMonth = String(Number(month)+1).padStart(2,"0");
+console.log(littleThanMonth)
+const query = {
+    "date": { $gt: `${year}-${month}-00` , $lt: `${year}-${littleThanMonth}-00`},
+    "id_driver": id
+};
+
+// Execute the query
+const quotes = await Quote.find(query);
+
+  return quotes;
+};
+
+const updateCheckList = async (quote_id, checkList_id) => {
+  return await Quote.findByIdAndUpdate(
+    { _id: quote_id },
+    {
+      $set: {
+      checklist_id: checkList_id,
       },
     }
   );
@@ -108,4 +152,8 @@ module.exports = {
   updateQuoteDriver,
   updateDriver,
   updateVehicle,
+  updateToQuote,
+  updateStatusToCancel,
+  getQuotesByDriverID,
+  updateCheckList
 };

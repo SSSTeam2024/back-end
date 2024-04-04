@@ -1,4 +1,5 @@
 const quoteService = require("../../services/quoteServices/quoteService");
+const programService = require("../../services/programmServices/programmServices");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 
 const createQuote = async (req, res) => {
@@ -30,21 +31,26 @@ const createQuote = async (req, res) => {
       manual_cost,
       automatic_cost,
       start_point,
-      estimated_start_time,
-      real_start_time,
+      pickup_time, // Date selected by client ( programmed start date)
+      real_start_time, // just time when driver click on go button
       start_delay_time,
       mid_stations,
       delays,
       change_route,
-      estimated_end_time,
+      dropoff_time,
+      dropOff_date,
       destination_point,
       type,
-      estimated_return_start_time,
+      // estimated_return_start_time,
       distance,
       duration,
       total_price,
+      checklist_id,
+      date,
+      return_time,
+      return_date
     } = req.body;
-
+    console.log(req.body)
     const quote = await quoteService.createQuote(
       {
         id_schedule,
@@ -67,26 +73,30 @@ const createQuote = async (req, res) => {
         paid_by_bouden,
         status,
         manual_cost,
-        progress: "New",
+        progress,
         balance,
         deposit_percentage,
         deposit_amount,
         automatic_cost,
         start_point,
-        estimated_start_time,
+        pickup_time,
         real_start_time,
         start_delay_time,
         mid_stations,
         delays,
         change_route,
-        estimated_end_time,
+        dropoff_time,
         destination_point,
         type,
-        estimated_return_start_time,
+        // estimated_return_start_time,
         total_price,
+        checklist_id,
+        date,
+        return_date,
+      return_time
       },
       distance,
-      duration
+      //duration,
     );
     res.json(quote);
   } catch (error) {
@@ -292,6 +302,49 @@ const assignVehicleToQuoteAPI = async (req, res) => {
   }
 };
 
+const updateQuoteStatusToCancel = async (req, res) => {
+  try {
+    const { quote_id, status } = req.body;
+    const sentResult = await quoteService.updateToCancel({
+      quote_id,
+      status,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const convertToQuoteAPI = async (req, res) => {
+  try {
+    const { id_schedule } = req.body;
+    let program = await programService.getProgrammById(id_schedule);
+    for (let i = 0; i < program.workDates.length; i++) {
+      const sentResult = await quoteService.convertToQuote({
+        id_schedule: id_schedule,
+        id_corporate: program.clientID,
+        passengers_number: Number(program.recommanded_capacity),
+        start_point: program.origin_point,
+        mid_stations: program.stops,
+        estimated_end_time: program.workDates[i] + " " + program.dropOff_time,
+        destination_point: program.destination_point,
+        estimated_return_start_time:
+          program.workDates[i] + " " + program.pickUp_Time,
+        progress: "Created",
+        manual_cost: program.unit_price,
+        id_driver: "112233445566778899002587",
+        id_vehicle: "998877665544332211009854",
+        id_invoice: "",
+      });
+    }
+    res.status(201).send("Converted Successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const sendPaymentEmail = async (req, res) => {
   try {
     const { id_visitor, quote_id } = req.body;
@@ -329,6 +382,23 @@ const updateQuoteStatus = async (req, res) => {
   }
 };
 
+const getQuotesByDriver = async (req, res) => {
+  try {
+    const driver_id = req.params.id;
+    const date = req.body.date;
+    const quotesByDriver = await quoteService.getQuotesByDriverID(
+      driver_id,
+      date
+    );
+    if (!quotesByDriver) {
+      return res.status(404).send("No Jobs for this month");
+    }
+    res.send(quotesByDriver);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -341,4 +411,7 @@ module.exports = {
   getQuoteById,
   assignDriverToQuoteAPI,
   assignVehicleToQuoteAPI,
+  convertToQuoteAPI,
+  updateQuoteStatusToCancel,
+  getQuotesByDriver,
 };

@@ -1,4 +1,5 @@
 const Programm = require("../../models/programmModel/programm");
+const Contract = require("../../models/contractModel/contract");
 
 const createProgramm = async (programmData) => {
   return await Programm.create(programmData);
@@ -40,9 +41,15 @@ const updateStatus = async (
   );
 };
 
+const convert_to_contract = async (programData) => {
+  console.log("45 DAO", programData);
+  return await Contract.create(programData);
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
   getProgrammById,
   updateStatus,
+  convert_to_contract,
 };

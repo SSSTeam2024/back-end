@@ -35,10 +35,22 @@ const programmSchema = new mongoose.Schema(
     dropOff_time: String,
     workDates: [String],
     clientID: String,
-    notes_for_client: String,
+    notes_for_client: [
+      {
+        msg: String,
+        date: String,
+        sender: String,
+      },
+    ],
+    notes_for_admin: [String],
     unit_price: String,
     total_price: String,
-    program_status: String,
+    program_status: [
+      {
+        status: String,
+        date_status: String,
+      },
+    ],
   },
   {
     timestamps: true,

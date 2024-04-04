@@ -33,10 +33,10 @@ const quoteSchema = new mongoose.Schema(
       placeName: String,
       coordinates: {
         lat: Number,
-        lon: Number,
+        lng: Number,
       },
     },
-    estimated_start_time: String,
+    pickup_time: String,
     real_start_time: String,
     start_delay_time: String,
     mid_stations: Array, /// Array of objects {id_stop , time (up/down), qr_code}
@@ -47,22 +47,28 @@ const quoteSchema = new mongoose.Schema(
         placeName: String,
         coordinates: {
           lat: Number,
-          lon: Number,
+          lng: Number,
         },
       },
       cause: String,
       delay: String,
     },
-    estimated_end_time: String,
+    dropoff_time: String,
+    dropoff_date: String,
     destination_point: {
       placeName: String,
       coordinates: {
         lat: Number,
-        lon: Number,
+        lng: Number,
       },
     },
     type: String, // One way or return
-    estimated_return_start_time: String,
+    //? estimated_return_start_time: String,
+    checklist_id: { type: Schema.Types.ObjectId, ref: "CheckList" }, //* Duty Vehicle Check List updated by driver after complete his check
+    date: String,
+    return_date: String,
+    return_time: String,
+    category: String //TODO: private_hire_job or regular NB: TO ADD TO CONTROLLER
   },
   {
     timestamps: true,

@@ -5,9 +5,7 @@ const fs = require("fs");
 
 // register CentralApp service acccount
 const registerCentralApp = async (centralAppData, documents) => {
-  console.log("centralAppDao:", centralAppData);
   let saveResult = await saveDocumentToServer(documents);
-  console.log(saveResult);
   const hashedPassword = await bcrypt.hash(centralAppData.password, 10);
   return await centralAppDao.creatAappCentralApp({
     ...centralAppData,
@@ -25,7 +23,11 @@ const loginCentralApp = async (login, password) => {
 
   if (await bcrypt.compare(password, centralApp.password)) {
     const accessToken = jwt.sign({ login: centralApp.login }, "yourSecretKey");
-    return { accessToken, centralApp };
+    await centralAppDao.updateJwtToken(centralApp._id, String(accessToken));
+    let updatedCentralApp = await centralAppDao.getCentralAppById(
+      centralApp._id
+    );
+    return updatedCentralApp;
   } else {
     throw new Error("Incorrect password");
   }
@@ -50,15 +52,28 @@ async function saveAdministrativeFile(base64String, fileName) {
 }
 //forgot password
 const updatePassword = async (id, password) => {
-  console.log(password);
   const hashedPassword = await bcrypt.hash(password.password, 10);
   return await centralAppDao.updatePassword(id, hashedPassword);
 };
 
 // update CentralApp account
-
 const updatedCentralApp = async (id, updateData) => {
   return await centralAppDao.updateAappCentralApp(id, updateData);
+};
+
+// get CentralApp by id
+const getCentralAppById = async (id) => {
+  return await centralAppDao.getCentralAppById(id);
+};
+
+// get CentralApp by token
+const getCentralAppByToken = async (token) => {
+  return await centralAppDao.findCentralAppByToken(token);
+};
+
+//logout
+const logout = async (id) => {
+  return await centralAppDao.logout(id);
 };
 
 module.exports = {
@@ -67,4 +82,7 @@ module.exports = {
   saveDocumentToServer,
   updatePassword,
   updatedCentralApp,
+  getCentralAppById,
+  getCentralAppByToken,
+  logout,
 };

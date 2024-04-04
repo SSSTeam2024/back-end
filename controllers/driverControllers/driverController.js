@@ -47,48 +47,60 @@ const register = async (req, res) => {
       notes,
     } = req.body;
 
-    const licenseFilesPath = 'files/driverFiles/licenseFiles/';
-    const dqcFilesPath = 'files/driverFiles/dqcFiles/';
-    const dbsCheckFilesPath = 'files/driverFiles/dbsCheckFiles/';
-    const contractFilesPath = 'files/driverFiles/contractFiles/';
-    const profileImagesPath = 'files/driverFiles/profileImages/';
+    const licenseFilesPath = "files/driverFiles/licenseFiles/";
+    const dqcFilesPath = "files/driverFiles/dqcFiles/";
+    const dbsCheckFilesPath = "files/driverFiles/dbsCheckFiles/";
+    const contractFilesPath = "files/driverFiles/contractFiles/";
+    const profileImagesPath = "files/driverFiles/profileImages/";
 
-    let driver_license = globalFunctions.generateUniqueFilename(driver_license_extension, "drivingLicense");
+    let driver_license = globalFunctions.generateUniqueFilename(
+      driver_license_extension,
+      "drivingLicense"
+    );
     let dqc = globalFunctions.generateUniqueFilename(dqc_extension, "DQC");
-    let dbscheck = globalFunctions.generateUniqueFilename(dbscheck_extension, "dbsCheck");
-    let contract = globalFunctions.generateUniqueFilename(contract_extension, "contract");
-    let profile_image = globalFunctions.generateUniqueFilename(profile_image_extension, "profileImg");
+    let dbscheck = globalFunctions.generateUniqueFilename(
+      dbscheck_extension,
+      "dbsCheck"
+    );
+    let contract = globalFunctions.generateUniqueFilename(
+      contract_extension,
+      "contract"
+    );
+    let profile_image = globalFunctions.generateUniqueFilename(
+      profile_image_extension,
+      "profileImg"
+    );
 
     let documents = [
       {
         base64String: driver_license_base64_string,
         extension: driver_license_extension,
         name: driver_license,
-        path: licenseFilesPath
+        path: licenseFilesPath,
       },
       {
         base64String: dqc_base64_string,
         extension: dqc_extension,
         name: dqc,
-        path: dqcFilesPath
+        path: dqcFilesPath,
       },
       {
         base64String: dbscheck_base64_string,
         extension: dbscheck_extension,
         name: dbscheck,
-        path: dbsCheckFilesPath
+        path: dbsCheckFilesPath,
       },
       {
         base64String: contract_base64_string,
         extension: contract_extension,
         name: contract,
-        path: contractFilesPath
+        path: contractFilesPath,
       },
       {
         base64String: profile_image_base64_string,
         extension: profile_image_extension,
         name: profile_image,
-        path: profileImagesPath
+        path: profileImagesPath,
       },
     ];
 
@@ -142,12 +154,9 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const result = await driverService.loginDriver(username, password);
-    res.cookie("access_token", result.accessToken, {
-      httpOnly: true,
-      secure: true,
-    });
+    const { email, password } = req.body;
+    const result = await driverService.loginDriver(email, password);
+
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -155,9 +164,28 @@ const login = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
-  res.clearCookie("access_token");
+const logout = async (req, res) => {
+  let id = req.params.id;
+
+  await driverService.logout(id);
   res.sendStatus(200);
+};
+
+// get school by token
+const getDriverByJwtToken = async (req, res) => {
+  try {
+    const token = req.body.token;
+
+    const getDriver = await driverService.getDriverByToken(token);
+
+    if (!getDriver) {
+      return res.status(404).send("Driver not found");
+    }
+    res.json(getDriver);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
 };
 
 const updateProfile = async (req, res) => {
@@ -256,7 +284,7 @@ const getById = async (req, res) => {
 const getDrivers = async (req, res) => {
   try {
     const drivers = await driverService.getDrivers();
-    res.json( drivers );
+    res.json(drivers);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -324,4 +352,5 @@ module.exports = {
   deleteDriver,
   getByEmail,
   updatePassword,
+  getDriverByJwtToken,
 };

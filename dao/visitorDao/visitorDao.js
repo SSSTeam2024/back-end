@@ -17,6 +17,17 @@ const deleteVisitor = async (id) => {
   return await Visitor.findByIdAndDelete(id);
 };
 
+const updateStatus = async (visitor_id, status) => {
+  return await Visitor.findByIdAndUpdate(
+    { _id: visitor_id },
+    {
+      $set: {
+        status: status,
+      },
+    }
+  );
+};
+
 module.exports = {
   createVisitor,
   getVisitors,

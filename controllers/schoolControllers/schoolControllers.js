@@ -24,9 +24,13 @@ const registerSchool = async (req, res) => {
       id_creation_date,
       IdFileBase64String,
       IdFileExtension,
+      api_token,
+      legal_representative_firstname,
+      legal_representative_lastname,
+      legal_representative_position,
     } = req.body;
 
-    const logoImagesPath = 'files/schoolFiles/logoImages/';
+    const logoImagesPath = "files/schoolFiles/logoImages/";
 
     let id_file = globalFunctions.generateUniqueFilename(
       IdFileExtension,
@@ -38,7 +42,7 @@ const registerSchool = async (req, res) => {
         base64String: IdFileBase64String,
         extension: IdFileExtension,
         name: id_file,
-        path: logoImagesPath
+        path: logoImagesPath,
       },
     ];
 
@@ -62,6 +66,10 @@ const registerSchool = async (req, res) => {
         bank_name,
         id_creation_date,
         id_file,
+        api_token,
+        legal_representative_firstname,
+        legal_representative_lastname,
+        legal_representative_position,
       },
       documents
     );
@@ -78,11 +86,7 @@ const loginSchool = async (req, res) => {
     const { login, password } = req.body;
     const result = await authShool.loginSchool(login, password);
 
-    res.cookie("access_token", result.accessToken, {
-      httpOnly: true,
-      secure: true,
-    });
-    res.json(result);
+    res.json({ school: result });
   } catch (error) {
     console.error(error);
     res.status(401).send(error.message);
@@ -90,8 +94,11 @@ const loginSchool = async (req, res) => {
 };
 
 //logout school account
-const logout = (req, res) => {
-  res.clearCookie("access_token");
+const logout = async (req, res) => {
+  let id = req.params.id;
+
+  await authShool.logout(id);
+
   res.sendStatus(200);
 };
 //delete school account
@@ -219,7 +226,7 @@ const getSchoolById = async (req, res) => {
 const getAllSchools = async (req, res) => {
   try {
     const schools = await authShool.getSchools();
-    res.json(schools );
+    res.json(schools);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -245,6 +252,23 @@ const updatePassword = async (req, res) => {
   }
 };
 
+// get school by token
+const getSchoolByJwtToken = async (req, res) => {
+  try {
+    const token = req.body.token;
+
+    const getSchool = await authShool.getSchoolByToken(token);
+
+    if (!getSchool) {
+      return res.status(404).send("School not found");
+    }
+    res.json({ school: getSchool });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   registerSchool,
   loginSchool,
@@ -254,4 +278,5 @@ module.exports = {
   getSchoolById,
   getAllSchools,
   updatePassword,
+  getSchoolByJwtToken,
 };

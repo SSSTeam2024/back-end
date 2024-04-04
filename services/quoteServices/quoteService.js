@@ -11,7 +11,7 @@ const convertMeterToMiles = (m) => {
 
 const createQuote = async (quoteData, distance) => {
   let id = quoteData.id_visitor;
-  const quote = await quoteDao.createQuote(quoteData);
+  let quote = await quoteDao.createQuote(quoteData);
   let modes = await modeDao.getModes();
   let priceMode = modes[0].type;
   let email = "";
@@ -29,16 +29,9 @@ const createQuote = async (quoteData, distance) => {
             band.vehicle_type.type === quoteData.vehicle_type &&
             Number(mileDistance) <= Number(band.mileage_limit)
         );
-        // console.log(selectedBand);
         let base_charge =
           selectedBand.vehicle_type?.base_change.match(/£(\d+(\.\d{1,4})?)/);
         let extractedBase_charge = base_charge ? base_charge[1] : null;
-        // console.log(extractedBase_charge);
-        // let unitPrice = selectedBand.price.match(/£(\d+(\.\d{1,4})?)/);
-        // let extractedUnitPrice = unitPrice ? unitPrice[1] : null;
-        // let extractedUnitPrice = selectedBand.price;
-        // console.log(selectedBand.price);
-        // console.log(selectedBand.vehicle_type?.coverage_mile);
         autoPrice = (
           Number(extractedBase_charge) +
           (Number(mileDistance) -
@@ -49,9 +42,17 @@ const createQuote = async (quoteData, distance) => {
       }
     }
     let quote_id = quote._id;
+    let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
     let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
-    email = await prepareQuoteBookingEmail(id, autoPrice, url, quote);
+    console.log("55", quote);
+    email = await prepareQuoteBookingEmail(
+      id,
+      autoPrice,
+      deposit_percentage,
+      url,
+      quote
+    );
   }
 
   await emailService.sendEmail(email);
@@ -121,11 +122,30 @@ const assignDriver = async (bookingData) => {
   return "Driver Assigned!!";
 };
 
+const updateToCancel = async (updateData) => {
+  let quote_id = updateData.quote_id;
+  let status = updateData.status;
+  await quoteDao.updateStatusToCancel(quote_id, status);
+  return "Quote Canceled!!";
+};
+
 const assignVehicle = async (bookingData) => {
   let quote_id = bookingData.quote_id;
   let vehicle = bookingData.id_vehicle;
   await quoteDao.updateVehicle(quote_id, vehicle);
   return "Vehicle Assigned!!";
+};
+
+const convertToQuote = async (convertData) => {
+  let id_schedule = convertData.id_schedule;
+
+  await quoteDao.updateToQuote(id_schedule, convertData);
+
+  return "Converted To Contract!!";
+};
+
+const getQuotesByDriverID = async (id, date) => {
+  return await quoteDao.getQuotesByDriverID(id, date);
 };
 
 const sendPaymentEmail = async (paymentData) => {
@@ -193,6 +213,7 @@ async function prepareQuoteBookingEmail(
 ) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
+  console.log("206", quote);
   const creationDate = quote.createdAt;
 
   const formattedCreationDate = creationDate.toLocaleString("en-GB", {
@@ -264,4 +285,7 @@ module.exports = {
   getQuoteById,
   assignDriver,
   assignVehicle,
+  convertToQuote,
+  updateToCancel,
+  getQuotesByDriverID,
 };

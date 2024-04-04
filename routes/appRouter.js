@@ -39,6 +39,8 @@ const pricingPostalCodeRoutes = require("./pricingPostalCodeRoutes/pricingPostal
 const forceSingleRoutes = require("./forceSingleRoutes/forceSingleRoutes");
 const programmRoutes = require("./programmRoutes/programmRoutes");
 const contractRoutes = require("./contractRoutes/contractRoutes");
+const checkTypeRoutes = require("./checkTypeRoutes/checkTypeRoutes");
+const checkListRoutes = require("./checkListRoutes/checkListRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -87,5 +89,7 @@ router.use("/pricingPostalCode", pricingPostalCodeRoutes);
 router.use("/forceSingle", forceSingleRoutes);
 router.use("/programm", programmRoutes);
 router.use("/contract", contractRoutes);
+router.use("/duty-check", checkTypeRoutes);
+router.use("/check-list", checkListRoutes);
 
 module.exports = router;

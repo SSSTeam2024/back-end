@@ -35,9 +35,16 @@ const sendRespond = async (respondData) => {
   return "Response Send!!";
 };
 
+const convertToContract = async (programData) => {
+  console.log("39 SERVICES", programData);
+  // console.log("40 SERVICES", idProgram);
+  await programmDao.convert_to_contract(programData);
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
   getProgrammById,
   sendRespond,
+  convertToContract,
 };

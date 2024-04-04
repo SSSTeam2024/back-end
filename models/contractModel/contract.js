@@ -17,6 +17,7 @@ const contractSchema = new mongoose.Schema({
   accountName: String,
   accountEmail: String,
   accountPhone: String,
+  paymentMethod: String,
 });
 
 module.exports = mongoose.model("Contract", contractSchema);

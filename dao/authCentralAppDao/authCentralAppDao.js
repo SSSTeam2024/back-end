@@ -13,6 +13,17 @@ const updateAappCentralApp = async (id, updateData) => {
   return await appCentralApp.findByIdAndUpdate(id, updateData, { new: true });
 };
 
+// find school by token
+const findCentralAppByToken = async (token) => {
+  let api_token = token;
+  return await appCentralApp.findOne({ api_token });
+};
+
+// get CentralApp by id
+const getCentralAppById = async (id) => {
+  return await appCentralApp.findById(id);
+};
+
 // update password
 const updatePassword = async (id, password) => {
   console.log("Hashed pwd: " + password);
@@ -26,9 +37,35 @@ const updatePassword = async (id, password) => {
   );
 };
 
+const updateJwtToken = async (id, token) => {
+  return await appCentralApp.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: token,
+      },
+    }
+  );
+};
+
+// logout
+const logout = async (id) => {
+  return await appCentralApp.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: "",
+      },
+    }
+  );
+};
 module.exports = {
   creatAappCentralApp,
   updateAappCentralApp,
   updatePassword,
   findCentralAppByUsername,
+  findCentralAppByToken,
+  getCentralAppById,
+  updateJwtToken,
+  logout,
 };
