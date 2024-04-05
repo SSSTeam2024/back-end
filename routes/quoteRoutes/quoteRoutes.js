@@ -13,9 +13,9 @@ router.post("/assignDriver", quoteController.assignDriverAPI);
 router.post("/assignDriverToQuote", quoteController.assignDriverToQuoteAPI);
 router.post("/assignVehicleToDriver", quoteController.assignVehicleToQuoteAPI);
 router.post("/cancelQuote", quoteController.updateQuoteStatusToCancel);
-router.post("/convertToQuote", quoteController.convertToQuoteAPI);
 router.post("/getQuotesByDriver/:id", quoteController.getQuotesByDriver);
 router.get("/confirm-booking/:id", quoteController.updateQuoteStatus);
 router.post("/sendPaymentEmail", quoteController.sendPaymentEmail);
+router.post("/updateProgress", quoteController.updateProgress);
 
 module.exports = router;

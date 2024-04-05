@@ -33,4 +33,5 @@ module.exports = {
   getVisitors,
   getVisitorById,
   deleteVisitor,
+  updateStatus
 };

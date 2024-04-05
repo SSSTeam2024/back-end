@@ -1,5 +1,6 @@
 const Programm = require("../../models/programmModel/programm");
 const Contract = require("../../models/contractModel/contract");
+const Quote = require("../../models/quoteModel/quote");
 
 const createProgramm = async (programmData) => {
   return await Programm.create(programmData);
@@ -13,9 +14,9 @@ const getProgramms = async () => {
 //   return await Quote.findByIdAndUpdate(id, updateData, { new: true });
 // };
 
-// const deleteQuote = async (id) => {
-//   return await Quote.findByIdAndDelete(id);
-// };
+const deleteProgramm = async (id) => {
+  return await Programm.findByIdAndDelete(id);
+};
 
 const getProgrammById = async (id) => {
   return await Programm.findById(id);
@@ -26,7 +27,8 @@ const updateStatus = async (
   notes_for_client,
   unit_price,
   total_price,
-  program_status
+  program_status,
+  invoiceFrequency
 ) => {
   return await Programm.findByIdAndUpdate(
     { _id: id },
@@ -36,14 +38,18 @@ const updateStatus = async (
         unit_price: unit_price,
         total_price: total_price,
         program_status: program_status,
+        invoiceFrequency: invoiceFrequency
       },
     }
   );
 };
 
 const convert_to_contract = async (programData) => {
-  console.log("45 DAO", programData);
   return await Contract.create(programData);
+};
+
+const updateToQuote = async (id_schedule, programData) => {
+  return await Quote.create(programData);
 };
 
 module.exports = {
@@ -52,4 +58,6 @@ module.exports = {
   getProgrammById,
   updateStatus,
   convert_to_contract,
+  updateToQuote,
+  deleteProgramm
 };

@@ -6,6 +6,7 @@ const contractSchema = new mongoose.Schema({
   customerNotes: String,
   staffNotes: String,
   prices: String,
+  unit_price: String,
   salesperson: { type: Schema.Types.ObjectId, ref: "Team" },
   idProgram: { type: Schema.Types.ObjectId, ref: "Programm" },
   idAccount: String,

@@ -122,6 +122,13 @@ const assignDriver = async (bookingData) => {
   return "Driver Assigned!!";
 };
 
+const updateProgress = async (updateData) => {
+  let quote_id = updateData.quote_id;
+  let progress = updateData.progress;
+  await quoteDao.updateDriver(quote_id, progress);
+  return "Progress Updated!!";
+};
+
 const updateToCancel = async (updateData) => {
   let quote_id = updateData.quote_id;
   let status = updateData.status;
@@ -134,14 +141,6 @@ const assignVehicle = async (bookingData) => {
   let vehicle = bookingData.id_vehicle;
   await quoteDao.updateVehicle(quote_id, vehicle);
   return "Vehicle Assigned!!";
-};
-
-const convertToQuote = async (convertData) => {
-  let id_schedule = convertData.id_schedule;
-
-  await quoteDao.updateToQuote(id_schedule, convertData);
-
-  return "Converted To Contract!!";
 };
 
 const getQuotesByDriverID = async (id, date) => {
@@ -285,7 +284,7 @@ module.exports = {
   getQuoteById,
   assignDriver,
   assignVehicle,
-  convertToQuote,
   updateToCancel,
   getQuotesByDriverID,
+  updateProgress
 };

@@ -68,7 +68,8 @@ const quoteSchema = new mongoose.Schema(
     date: String,
     return_date: String,
     return_time: String,
-    category: String //TODO: private_hire_job or regular NB: TO ADD TO CONTROLLER
+    category: String, //TODO: private_hire_job or regular NB: TO ADD TO CONTROLLER
+    enquiryDate: String
   },
   {
     timestamps: true,

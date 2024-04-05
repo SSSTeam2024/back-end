@@ -51,6 +51,7 @@ const programmSchema = new mongoose.Schema(
         date_status: String,
       },
     ],
+    invoiceFrequency: String
   },
   {
     timestamps: true,

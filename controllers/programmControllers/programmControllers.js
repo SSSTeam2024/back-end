@@ -78,14 +78,16 @@ const getProgrammById = async (req, res) => {
 
 const sendResponseAPI = async (req, res) => {
   try {
-    const { id, notes_for_client, unit_price, total_price, program_status } =
+    const { id, notes_for_client, unit_price, total_price, program_status, invoiceFrequency } =
       req.body;
+      console.log(req.body)
     const sentResult = await programmService.sendRespond({
       id,
       notes_for_client,
       unit_price,
       total_price,
       program_status,
+      invoiceFrequency
     });
     res.json({ success: sentResult });
   } catch (error) {
@@ -105,6 +107,7 @@ const convertedToContract = async (req, res) => {
       customerNotes: "",
       staffNotes: "",
       prices: program.total_price,
+      unit_price: program.unit_price,
       salesperson: "445566778899112233003579",
       idAccount: program.clientID,
       vehicleType: "775533996622884411006482",
@@ -122,10 +125,62 @@ const convertedToContract = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const convertToQuoteAPI = async (req, res) => {
+  try {
+    const { id_schedule } = req.body;
+    let program = await programmService.getProgrammById(id_schedule);
+    for (let i = 0; i < program.workDates.length; i++) {
+      const sentResult = await programmService.convertToQuote({
+        id_schedule: id_schedule,
+        id_corporate: program.clientID,
+        passengers_number: Number(program.recommanded_capacity),
+        start_point: program.origin_point,
+        mid_stations: program.stops,
+        return_time: program.dropOff_time,
+        date: program.workDates[i],
+        return_date: program.workDates[i],
+        destination_point: program.destination_point,
+        pickup_time: program.pickUp_Time,
+        progress: "Booked",
+        status: "Booked",
+        category:"Regular",
+        manual_cost: program.unit_price,
+        id_driver: "112233445566778899002587",
+        id_vehicle: "998877665544332211009854",
+        id_invoice: "",
+        enquiryDate: new Date()
+      });
+    }
+    res.status(201).send("Converted Successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const deleteProgramm = async (req, res) => {
+  try {
+    const programmId = req.params.id;
+
+    const deletedProgramm = await programmService.deleteProgramm(programmId);
+
+    if (!deletedProgramm) {
+      return res.status(404).send("Programm not found");
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getProgramms,
   createProgramm,
   getProgrammById,
   sendResponseAPI,
+  convertToQuoteAPI,
   convertedToContract,
+  deleteProgramm
 };

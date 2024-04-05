@@ -75,9 +75,24 @@ const deleteVisitor = async (req, res) => {
   }
 };
 
+const updateVisitorStatusAPI = async (req, res) => {
+  try {
+    const { visitor_id, status } = req.body;
+    const sentResult = await visitorService.updateToPending({
+      visitor_id,
+      status,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createVisitor,
   getVisitors,
   getVisitorById,
   deleteVisitor,
+  updateVisitorStatusAPI
 };

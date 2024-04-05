@@ -12,9 +12,9 @@ const getProgramms = async () => {
 //   return await quoteDao.updateQuote(id, updateData);
 // };
 
-// const deleteQuote = async (id) => {
-//   return await quoteDao.deleteQuote(id);
-// };
+const deleteProgramm = async (id) => {
+  return await programmDao.deleteProgramm(id);
+};
 const getProgrammById = async (id) => {
   return await programmDao.getProgrammById(id);
 };
@@ -25,26 +25,34 @@ const sendRespond = async (respondData) => {
   let unit_price = respondData.unit_price;
   let total_price = respondData.total_price;
   let notes_for_client = respondData.notes_for_client;
+  let invoiceFrequency = respondData.invoiceFrequency;
   await programmDao.updateStatus(
     program_id,
     notes_for_client,
     unit_price,
     total_price,
-    program_status
+    program_status,
+    invoiceFrequency
   );
   return "Response Send!!";
 };
 
 const convertToContract = async (programData) => {
-  console.log("39 SERVICES", programData);
-  // console.log("40 SERVICES", idProgram);
   await programmDao.convert_to_contract(programData);
 };
 
+const convertToQuote = async (programData) => {
+  console.log("Services 44", programData);
+  let id_schedule = programData.id_schedule;
+  await programmDao.updateToQuote(id_schedule, programData);
+  return "Converted To Quote!!";
+};
 module.exports = {
   createProgramm,
   getProgramms,
   getProgrammById,
   sendRespond,
   convertToContract,
+  convertToQuote,
+  deleteProgramm
 };

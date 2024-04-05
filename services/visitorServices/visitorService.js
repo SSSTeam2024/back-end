@@ -17,9 +17,16 @@ const deleteVisitor = async (id) => {
   return await visitorDao.deleteVisitor(id);
 };
 
+const updateToPending = async (updateData) => {
+  let visitor_id = updateData.visitor_id;
+  let status = updateData.status;
+  await visitorDao.updateStatus(visitor_id, status);
+  return "Visitor Status Updated!!";
+};
 module.exports = {
   createVisitor,
   getVisitors,
   getVisitorById,
   deleteVisitor,
+  updateToPending
 };

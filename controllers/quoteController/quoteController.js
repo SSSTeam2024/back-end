@@ -38,7 +38,7 @@ const createQuote = async (req, res) => {
       delays,
       change_route,
       dropoff_time,
-      dropOff_date,
+      dropoff_date,
       destination_point,
       type,
       // estimated_return_start_time,
@@ -48,7 +48,9 @@ const createQuote = async (req, res) => {
       checklist_id,
       date,
       return_time,
-      return_date
+      return_date,
+      enquiryDate,
+      category
     } = req.body;
     console.log(req.body)
     const quote = await quoteService.createQuote(
@@ -86,6 +88,7 @@ const createQuote = async (req, res) => {
         delays,
         change_route,
         dropoff_time,
+        dropoff_date,
         destination_point,
         type,
         // estimated_return_start_time,
@@ -93,7 +96,9 @@ const createQuote = async (req, res) => {
         checklist_id,
         date,
         return_date,
-      return_time
+      return_time,
+      enquiryDate,
+      category
       },
       distance,
       //duration,
@@ -288,6 +293,20 @@ const assignDriverToQuoteAPI = async (req, res) => {
   }
 };
 
+const updateProgress = async (req, res) => {
+  try {
+    const { quote_id, progress } = req.body;
+    const sentResult = await quoteService.updateProgress({
+      quote_id,
+      progress,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const assignVehicleToQuoteAPI = async (req, res) => {
   try {
     const { quote_id, id_vehicle } = req.body;
@@ -316,34 +335,6 @@ const updateQuoteStatusToCancel = async (req, res) => {
   }
 };
 
-const convertToQuoteAPI = async (req, res) => {
-  try {
-    const { id_schedule } = req.body;
-    let program = await programService.getProgrammById(id_schedule);
-    for (let i = 0; i < program.workDates.length; i++) {
-      const sentResult = await quoteService.convertToQuote({
-        id_schedule: id_schedule,
-        id_corporate: program.clientID,
-        passengers_number: Number(program.recommanded_capacity),
-        start_point: program.origin_point,
-        mid_stations: program.stops,
-        estimated_end_time: program.workDates[i] + " " + program.dropOff_time,
-        destination_point: program.destination_point,
-        estimated_return_start_time:
-          program.workDates[i] + " " + program.pickUp_Time,
-        progress: "Created",
-        manual_cost: program.unit_price,
-        id_driver: "112233445566778899002587",
-        id_vehicle: "998877665544332211009854",
-        id_invoice: "",
-      });
-    }
-    res.status(201).send("Converted Successfully");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
-};
 
 const sendPaymentEmail = async (req, res) => {
   try {
@@ -411,7 +402,7 @@ module.exports = {
   getQuoteById,
   assignDriverToQuoteAPI,
   assignVehicleToQuoteAPI,
-  convertToQuoteAPI,
   updateQuoteStatusToCancel,
   getQuotesByDriver,
+  updateProgress
 };

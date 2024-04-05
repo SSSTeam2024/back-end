@@ -85,6 +85,17 @@ const updateDriver = async (id, diver) => {
   );
 };
 
+const updateProgress = async (id, progress) => {
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        progress: progress
+      },
+    }
+  );
+};
+
 const updateStatusToCancel = async (id, status) => {
   return await Quote.findByIdAndUpdate(
     { _id: id },
@@ -109,10 +120,6 @@ const updateVehicle = async (id, vehicle) => {
   );
 };
 
-const updateToQuote = async (id_schedule, convertData) => {
-  return await Quote.create(convertData);
-};
-
 const getQuotesByDriverID = async (id, date) => {
   // Construct the query
 const year = date.substring(0, 4);
@@ -125,7 +132,7 @@ const query = {
 };
 
 // Execute the query
-const quotes = await Quote.find(query);
+const quotes = await Quote.find(query).populate("id_visitor")
 
   return quotes;
 };
@@ -152,8 +159,8 @@ module.exports = {
   updateQuoteDriver,
   updateDriver,
   updateVehicle,
-  updateToQuote,
   updateStatusToCancel,
   getQuotesByDriverID,
-  updateCheckList
+  updateCheckList,
+  updateProgress
 };
