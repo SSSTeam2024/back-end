@@ -27,22 +27,13 @@ const addNewEmployee = async (req, res) => {
       status,
     } = req.body;
 
-    // let grouppId= groupId._id;
-    // if (grouppId === "" ) {
-    //   grouppId = "001122334455667788991234"
-    // }
-    console.log(req.body);
+  
+   
     const legalcardPath = "files/employeeFiles/";
     const photoPath = "files/employeeFiles/";
 
-    let legalcard = globalFunctions.generateUniqueFilename(
-      legalcardExtension,
-      "employeeMedia"
-    );
-    let photos = globalFunctions.generateUniqueFilename(
-      photosExtension,
-      "employeePhotos"
-    );
+    let legalcard = globalFunctions.generateUniqueFilename( legalcardExtension,  "employeeMedia" );
+    let photos = globalFunctions.generateUniqueFilename( photosExtension, "employeePhotos" );
 
     let documents = [
       {
@@ -238,6 +229,22 @@ const getEmployeeByIdCompany = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+
+
+// const getEmployeeByIdCompany = async (req, res) => {
+//   try {
+//     const idCompany = req.query.idCompany; // Accessing idCompany from query parameters
+//     const getEmployeesByIdCompany = await employeeService.getEmployeeByIdCompany(idCompany);
+//     if (!getEmployeesByIdCompany) {
+//       res.status(404).send("Employee not found");
+//     }
+//     res.json({ employees: getEmployeesByIdCompany }); // Return employees as an array
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send(error.message);
+//   }
+// };
 
 module.exports = {
   addNewEmployee,

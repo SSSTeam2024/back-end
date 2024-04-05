@@ -52,6 +52,17 @@ const updateToQuote = async (id_schedule, programData) => {
   return await Quote.create(programData);
 };
 
+const updateStatusToConverted = async (id, status) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        status: status
+      },
+    }
+  );
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
@@ -59,5 +70,6 @@ module.exports = {
   updateStatus,
   convert_to_contract,
   updateToQuote,
-  deleteProgramm
+  deleteProgramm,
+  updateStatusToConverted
 };

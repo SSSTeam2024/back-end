@@ -50,6 +50,8 @@ const addNewGroup = async (req, res) => {
       timeEnd,
       status,
       id_company,
+      program,
+
       employees,
     } = req.body;
     console.log(req.body);
@@ -64,6 +66,8 @@ const addNewGroup = async (req, res) => {
       timeEnd,
       status,
       id_company,
+      program,
+
       employees,
     });
     res.json(group);
@@ -167,6 +171,22 @@ const deleteGroupEmployee = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+async function removeEmployeeFromGroup(req, res) {
+  try {
+    const groupId = req.params.groupId;
+   
+    const employeeId = req.params.employeeId;
+    console.log('groupId:', groupId);
+console.log('employeeId:', employeeId);
+
+    await groupEmployeeService.removeEmployeeFromGroup(groupId, employeeId);
+
+    res.status(204).send(); // No content - Employee successfully removed from group
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+}
 
 module.exports = {
   getGroups,
@@ -177,4 +197,5 @@ module.exports = {
   updateGroupEmployee,
   deleteGroupEmployee,
   getGroupByIdCompany,
+  removeEmployeeFromGroup,
 };

@@ -32,6 +32,10 @@ const createProgramm = async (req, res) => {
       unit_price,
       total_price,
       program_status,
+      vehiculeType,
+      luggage,
+      journeyType,
+      note
     } = req.body;
     const newProgramm = await programmService.createProgramm({
       notes,
@@ -54,6 +58,10 @@ const createProgramm = async (req, res) => {
       unit_price,
       total_price,
       program_status,
+      vehiculeType,
+      luggage,
+      journeyType,
+      note
     });
     res.status(201).json(newProgramm);
   } catch (error) {
@@ -175,6 +183,22 @@ const deleteProgramm = async (req, res) => {
   }
 };
 
+const updateStatusToConvertedAPI = async (req, res) => {
+  try {
+    const { id, status } = req.body;
+    console.log("id", req.body)
+    const sentResult = await programmService.updateStatusToConverted({
+      id,
+      status
+    });
+    console.log(sentResult)
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getProgramms,
   createProgramm,
@@ -182,5 +206,6 @@ module.exports = {
   sendResponseAPI,
   convertToQuoteAPI,
   convertedToContract,
-  deleteProgramm
+  deleteProgramm,
+  updateStatusToConvertedAPI
 };

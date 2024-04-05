@@ -272,6 +272,12 @@ const updateQuoteStatus = async (id) => {
   return await quoteDao.updateQuoteStatus(id);
 };
 
+const getQuoteByIdSchedule = async (id) =>{
+
+  console.log("quote service",id)
+  return await quoteDao.getQuoteByIdSchedule(id);
+}
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -286,5 +292,6 @@ module.exports = {
   assignVehicle,
   updateToCancel,
   getQuotesByDriverID,
-  updateProgress
+  updateProgress,
+  getQuoteByIdSchedule
 };

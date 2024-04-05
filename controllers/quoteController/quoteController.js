@@ -390,6 +390,24 @@ const getQuotesByDriver = async (req, res) => {
   }
 };
 
+const getQuoteByIdSchedule = async (req, res) => {
+  try {
+    const id = req.body.id_schedule;
+    console.log("quote controller", id);
+    const quote = await quoteService.getQuoteByIdSchedule(id);
+
+    console.log("quote controller", quote);
+    if (!quote) {
+      return res.status(404).json({ error: "Quote not found" });
+    }
+
+    return res.json(quote);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -404,5 +422,6 @@ module.exports = {
   assignVehicleToQuoteAPI,
   updateQuoteStatusToCancel,
   getQuotesByDriver,
-  updateProgress
+  updateProgress,
+  getQuoteByIdSchedule
 };

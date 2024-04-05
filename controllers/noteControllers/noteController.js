@@ -1,14 +1,48 @@
-const noteService = require("../../services/noteServices/noteService");
+const noteService = require("../../services/notesServices/notesServices");
 const globalFunctions = require("../../utils/globalFunctions");
 
 const addNewNote = async (req, res) => {
   try {
-    const { title, message } = req.body;
+    const {
+      title,
+      message,
+      id_corporate,
+      pdfBase64String,
+      pdfExtension,
+      photoBase64Strings,
+      photoExtension,
+    } = req.body;
+
+
+    const pdfPath = "files/noteFiles/pdf/";
+    const photoPath = "files/noteFiles/photo/";
+
+    let pdf = globalFunctions.generateUniqueFilename(pdfExtension, 'notePDF');
+    let photo = globalFunctions.generateUniqueFilename( photoExtension, "notePHOTO" );
+
+    let documents = [
+      {
+        base64String: pdfBase64String,
+        extension: pdfExtension,
+        name: pdf,
+        path: pdfPath
+      },
+      {
+        base64String: photoBase64Strings,
+        extension: photoExtension,
+        name: photo,
+        path: photoPath,
+      }
+    ];
+
 
     const note = await noteService.createNote({
       title,
       message,
-    });
+      id_corporate,
+      pdf,
+      photo
+    }, documents);
     res.json(note);
   } catch (error) {
     console.error(error);
@@ -55,7 +89,7 @@ const getNoteById = async (req, res) => {
 const getAllNotes = async (req, res) => {
   try {
     const notes = await noteService.getNotes();
-    res.json( notes );
+    res.json(notes);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -77,6 +111,20 @@ const deleteNoteById = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+const getNotesByIdCompany = async (req, res) => {
+  try {
+    const id_corporate = req.body.id_corporate;
+    const getNotesByIdCompany =
+      await noteService.getNotesByIdCompany(id_corporate);
+    if (!getNotesByIdCompany) {
+      res.status(404).send("employee not found");
+    }
+    res.json({ getNotesByIdCompany });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
 
 module.exports = {
   addNewNote,
@@ -84,4 +132,5 @@ module.exports = {
   getNoteById,
   getAllNotes,
   deleteNoteById,
+  getNotesByIdCompany
 };

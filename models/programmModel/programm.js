@@ -45,13 +45,17 @@ const programmSchema = new mongoose.Schema(
     notes_for_admin: [String],
     unit_price: String,
     total_price: String,
+    journeyType:String,
+    luggage:String,
+    vehiculeType:String,
     program_status: [
       {
         status: String,
         date_status: String,
       },
     ],
-    invoiceFrequency: String
+    invoiceFrequency: String,
+    status: String,
   },
   {
     timestamps: true,

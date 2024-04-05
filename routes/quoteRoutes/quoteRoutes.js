@@ -17,5 +17,6 @@ router.post("/getQuotesByDriver/:id", quoteController.getQuotesByDriver);
 router.get("/confirm-booking/:id", quoteController.updateQuoteStatus);
 router.post("/sendPaymentEmail", quoteController.sendPaymentEmail);
 router.post("/updateProgress", quoteController.updateProgress);
+router.post("/getQuoteByIdSchedule", quoteController.getQuoteByIdSchedule);
 
 module.exports = router;

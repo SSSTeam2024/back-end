@@ -42,11 +42,19 @@ const convertToContract = async (programData) => {
 };
 
 const convertToQuote = async (programData) => {
-  console.log("Services 44", programData);
   let id_schedule = programData.id_schedule;
   await programmDao.updateToQuote(id_schedule, programData);
   return "Converted To Quote!!";
 };
+
+const updateStatusToConverted = async (programData) => {
+  let id = programData.id;
+  let status = programData.status;
+  console.log("programData", programData)
+  await programmDao.updateStatusToConverted(id, status);
+  return "Converted!!";
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
@@ -54,5 +62,6 @@ module.exports = {
   sendRespond,
   convertToContract,
   convertToQuote,
-  deleteProgramm
+  deleteProgramm,
+  updateStatusToConverted
 };

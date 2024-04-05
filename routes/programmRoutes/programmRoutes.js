@@ -11,5 +11,6 @@ router.delete('/deleteProgram/:id', programmController.deleteProgramm);
 router.post("/convertToQuote", programmController.convertToQuoteAPI);
 router.post("/sendResponse", programmController.sendResponseAPI);
 router.post("/toContract", programmController.convertedToContract);
+router.post("/statusToConverted", programmController.updateStatusToConvertedAPI);
 
 module.exports = router;

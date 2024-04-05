@@ -60,13 +60,13 @@ router.use("/todos", todoRoutes);
 
 /// BCT APIS ///
 router.use("/affiliate", affiliateRoutes);
-router.use("/complain", complainRoutes);
+router.use("/complains", complainRoutes);
 router.use("/source", sourceRoutes);
 router.use("/feedback", feedbackRoutes);
 router.use("/visitor", visitorRoutes);
 router.use("/emailTemplate", emailTemplateRoutes);
 router.use("/quote", quoteRoutes);
-router.use("/note", noteRoutes);
+router.use("/notes", noteRoutes);
 router.use("/vehicle", vehicleRoutes);
 router.use("/driver", driverRoutes);
 router.use("/vehicleExtraLuxurys", luxuryRoutes);

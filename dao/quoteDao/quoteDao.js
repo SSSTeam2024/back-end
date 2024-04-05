@@ -148,6 +148,11 @@ const updateCheckList = async (quote_id, checkList_id) => {
   );
 };
 
+const getQuoteByIdSchedule = async (id) => {
+  const id_schedule= id
+  return await Quote.find({id_schedule});
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -162,5 +167,6 @@ module.exports = {
   updateStatusToCancel,
   getQuotesByDriverID,
   updateCheckList,
-  updateProgress
+  updateProgress,
+  getQuoteByIdSchedule
 };
