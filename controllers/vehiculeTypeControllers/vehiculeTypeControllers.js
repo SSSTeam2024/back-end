@@ -3,8 +3,8 @@ const VehicleTypeService = require('../../services/vehicleTypeService');
 
 const createVehicleType = async (req, res) => {
     try {
-      const {type, base_change} = req.body;
-       const newVehicleType = await VehicleTypeService.createVehicleType({type, base_change});
+      const {type, base_change,coverage_mile} = req.body;
+       const newVehicleType = await VehicleTypeService.createVehicleType({type, base_change,coverage_mile});
        res.status(201).json(newVehicleType);
     } catch (error) {
       console.error(error);
@@ -48,7 +48,7 @@ const createVehicleType = async (req, res) => {
   const getVehicleTypes = async (req, res) => {
     try {
       const VehicleTypes = await VehicleTypeService.getVehicleTypes();
-      res.json({ VehicleTypes });
+      res.json(VehicleTypes);
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);

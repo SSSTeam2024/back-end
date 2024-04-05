@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const programmSchema = new mongoose.Schema(
   {
     programName: String,
+    note:String,
     origin_point: {
       placeName: String,
       coordinates: {
@@ -26,6 +27,9 @@ const programmSchema = new mongoose.Schema(
     },
     pickUp_date: String,
     droppOff_date: String,
+    journeyType:String,
+    luggage:String,
+    vehiculeType:String,
     freeDays_date: [String],
     exceptDays: [String],
     recommanded_capacity: String,

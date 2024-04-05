@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const vehicleSchema = new mongoose.Schema({
   type: String,
-  base_change:String
-
+  base_change: String,
+  coverage_mile: String,
 });
-module.exports = mongoose.model('VehiculeType', vehicleSchema);
+module.exports = mongoose.model("VehiculeType", vehicleSchema);

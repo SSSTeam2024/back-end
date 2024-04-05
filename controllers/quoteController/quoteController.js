@@ -1,5 +1,5 @@
 const quoteService = require("../../services/quoteServices/quoteService");
-const Quote = require('../../models/quoteModel/quote');
+const Quote = require("../../models/quoteModel/quote");
 
 const createQuote = async (req, res) => {
   try {
@@ -35,10 +35,10 @@ const createQuote = async (req, res) => {
       estimated_end_time,
       destination_point,
       type,
-      estimated_return_start_time
+      estimated_return_start_time,
     } = req.body;
 
-    const quote = await quoteService.createQuote({ 
+    const quote = await quoteService.createQuote({
       id_schedule,
       id_corporate,
       owner,
@@ -70,8 +70,8 @@ const createQuote = async (req, res) => {
       estimated_end_time,
       destination_point,
       type,
-      estimated_return_start_time
-     });
+      estimated_return_start_time,
+    });
     res.json(quote);
   } catch (error) {
     console.error(error);
@@ -92,7 +92,7 @@ const getQuotes = async (req, res) => {
 const updateQuote = async (req, res) => {
   try {
     const quoteId = req.params.id;
-    const { 
+    const {
       id_schedule,
       id_corporate,
       owner,
@@ -122,9 +122,9 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
-     } = req.body;
+    } = req.body;
 
-    const updatedQuote = await quoteService.updateQuote(quoteId, { 
+    const updatedQuote = await quoteService.updateQuote(quoteId, {
       id_schedule,
       id_corporate,
       owner,
@@ -154,7 +154,7 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
-     });
+    });
 
     if (!updatedQuote) {
       return res.status(404).send("Quote not found");
@@ -185,8 +185,44 @@ const deleteQuote = async (req, res) => {
 const sendBookingEmail = async (req, res) => {
   try {
     const { id_visitor, price, quote_id } = req.body;
-    const sentResult = await quoteService.sendBookingEmail({ id_visitor, price, quote_id });
-    res.json({success: sentResult});
+    const sentResult = await quoteService.sendBookingEmail({
+      id_visitor,
+      price,
+      quote_id,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getQuoteByIdSchedule = async (req, res) => {
+  try {
+    const id = req.body.id_schedule;
+    console.log("quote controller", id);
+    const quote = await quoteService.getQuoteByIdSchedule(id);
+
+    console.log("quote controller", quote);
+    if (!quote) {
+      return res.status(404).json({ error: "Quote not found" });
+    }
+
+    return res.json(quote);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getQuoteById = async (req, res) => {
+  try {
+    const quoteId = req.params.id;
+    const getQuote = await quoteService.getQuoteById(quoteId);
+    if (!getQuote) {
+      return res.status(404).send("Quote not found");
+    }
+    res.json(getQuote);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -198,5 +234,7 @@ module.exports = {
   getQuotes,
   updateQuote,
   deleteQuote,
-  sendBookingEmail
+  getQuoteById,
+  sendBookingEmail,
+  getQuoteByIdSchedule,
 };

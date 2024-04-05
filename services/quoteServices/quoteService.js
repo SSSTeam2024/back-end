@@ -12,9 +12,20 @@ const createQuote = async (quoteData) => {
   return quote;
 };
 
+
+const getQuoteById = async (id) => {
+  return await quoteDao.getQuoteById(id);
+};
+
 const getQuotes = async () => {
   return await quoteDao.getQuotes();
 };
+
+const getQuoteByIdSchedule = async (id) =>{
+
+  console.log("quote service",id)
+  return await quoteDao.getQuoteByIdSchedule(id);
+}
 
 const updateQuote = async (id, updateData) => {
   return await quoteDao.updateQuote(id, updateData);
@@ -101,5 +112,7 @@ module.exports = {
   getQuotes,
   updateQuote,
   deleteQuote,
+  getQuoteById,
   sendBookingEmail,
+  getQuoteByIdSchedule
 };

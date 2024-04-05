@@ -32,6 +32,10 @@ const createProgramm = async (req, res) => {
       unit_price,
       total_price,
       program_status,
+      vehiculeType,
+      luggage,
+      journeyType,
+      note
     } = req.body;
     const newProgramm = await programmService.createProgramm({
       notes,
@@ -54,6 +58,10 @@ const createProgramm = async (req, res) => {
       unit_price,
       total_price,
       program_status,
+      vehiculeType,
+      luggage,
+      journeyType,
+      note
     });
     res.status(201).json(newProgramm);
   } catch (error) {
