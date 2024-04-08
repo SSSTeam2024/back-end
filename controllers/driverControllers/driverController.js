@@ -168,7 +168,7 @@ const logout = async (req, res) => {
   let id = req.params.id;
 
   await driverService.logout(id);
-  res.sendStatus(200);
+  res.send({ result: "Successfully logged out" });
 };
 
 // get school by token

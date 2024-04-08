@@ -13,7 +13,7 @@ const registerSchool = async (req, res) => {
       activity,
       address,
       service_date,
-      statusSchool,
+      status,
       legal_status,
       account_name,
       corporateCategory,
@@ -25,12 +25,12 @@ const registerSchool = async (req, res) => {
       IdFileBase64String,
       IdFileExtension,
       api_token,
-      legal_representative_firstname,
-      legal_representative_lastname,
-      legal_representative_position,
+      program_status,
+      total_price,
+      clientID,
+      unit_price,
+      notes_for_client,
     } = req.body;
-
-    const logoImagesPath = "files/schoolFiles/logoImages/";
 
     let id_file = globalFunctions.generateUniqueFilename(
       IdFileExtension,
@@ -42,7 +42,6 @@ const registerSchool = async (req, res) => {
         base64String: IdFileBase64String,
         extension: IdFileExtension,
         name: id_file,
-        path: logoImagesPath,
       },
     ];
 
@@ -56,7 +55,7 @@ const registerSchool = async (req, res) => {
         activity,
         address,
         service_date,
-        statusSchool,
+        status,
         legal_status,
         account_name,
         corporateCategory,
@@ -67,9 +66,11 @@ const registerSchool = async (req, res) => {
         id_creation_date,
         id_file,
         api_token,
-        legal_representative_firstname,
-        legal_representative_lastname,
-        legal_representative_position,
+        program_status,
+        total_price,
+        clientID,
+        unit_price,
+        notes_for_client,
       },
       documents
     );
@@ -130,7 +131,7 @@ const updateSchool = async (req, res) => {
       activity,
       address,
       service_date,
-      statusSchool,
+      status,
       legal_status,
       account_name,
       corporateCategory,
@@ -166,7 +167,7 @@ const updateSchool = async (req, res) => {
           activity,
           address,
           service_date,
-          statusSchool,
+          status,
           legal_status,
           account_name,
           corporateCategory,
@@ -192,7 +193,7 @@ const updateSchool = async (req, res) => {
         dateBirth,
         email,
         phone,
-        statusSchool,
+        status,
         login,
         password,
         id_creation_date,
@@ -222,11 +223,28 @@ const getSchoolById = async (req, res) => {
   }
 };
 
+// get school by token
+const getSchoolByJwtToken = async (req, res) => {
+  try {
+    const token = req.body.token;
+
+    const getSchool = await authShool.getSchoolByToken(token);
+
+    if (!getSchool) {
+      return res.status(404).send("School not found");
+    }
+    res.json({ school: getSchool });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 // get all schools
 const getAllSchools = async (req, res) => {
   try {
     const schools = await authShool.getSchools();
-    res.json(schools);
+    res.json({ schools });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -246,23 +264,6 @@ const updatePassword = async (req, res) => {
       return res.status(404).send("School not found!");
     }
     res.json(updateSchool);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
-};
-
-// get school by token
-const getSchoolByJwtToken = async (req, res) => {
-  try {
-    const token = req.body.token;
-
-    const getSchool = await authShool.getSchoolByToken(token);
-
-    if (!getSchool) {
-      return res.status(404).send("School not found");
-    }
-    res.json({ school: getSchool });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
