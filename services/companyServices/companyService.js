@@ -39,6 +39,8 @@ async function saveFile(base64String, fileName, file_path) {
   });
 }
 
+
+// login school service acccount
 const loginCompany = async (login, password) => {
   const company = await companyDao.findCompanyByLogin(login);
 
@@ -47,44 +49,69 @@ const loginCompany = async (login, password) => {
   }
 
   if (await bcrypt.compare(password, company.password)) {
-    const accessToken = jwt.sign({ company: company.login }, "yourSecretKey");
-    return { accessToken };
+    const accessToken = jwt.sign({ login: company.login }, "yourSecretKey");
+    console.log(typeof accessToken);
+    await companyDao.updateJwtToken(company._id, String(accessToken));
+    let updatedCompany = await companyDao.getCompanyById(company._id);
+    return updatedCompany;
   } else {
     throw new Error("Incorrect password");
   }
 };
 
-const getCompanyById = async (id) => {
-  return await companyDao.getCompanyById(id);
-};
-const getCompanies = async () => {
-  return await companyDao.getCompanies();
-};
+// savedocumentToserver function
+// async function saveDocumentToServer(documents) {
+//   await saveAdministrativeFile(documents[0].base64String, documents[0].name);
+// }
 
-const deleteCompany = async (id) => {
-  return await companyDao.deleteCompany(id);
-};
+// async function saveAdministrativeFile(base64String, fileName) {
+//   const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
+//   const binaryData = Buffer.from(base64Data, "base64");
+//   const filePath = "files/schoolFiles/" + fileName;
+//   fs.writeFile(filePath, binaryData, "binary", (err) => {
+//     if (err) {
+//       console.error("Error saving the file:", err);
+//     } else {
+//       console.log("File saved successfully!");
+//     }
+//   });
+// }
 
-const getCompanyByEmail = async (email) => {
-  return await companyDao.getCompanyByEmail(email);
-};
 
-const updateCompany = async (id, updateData) => {
-  return await companyDao.updateCompany(id, updateData);
-};
+//forgot password
 const updatePassword = async (id, password) => {
   console.log(password);
   const hashedPassword = await bcrypt.hash(password.password, 10);
   return await companyDao.updatePassword(id, hashedPassword);
 };
 
-module.exports = {
-  createCompany,
-  getCompanyByEmail,
-  getCompanies,
-  deleteCompany,
-  getCompanyById,
-  updateCompany,
-  loginCompany,
-  updatePassword,
+const getCompanyById = async (id) => {
+    return await companyDao.getCompanyById(id);
+  };
+const getCompanies = async () => {
+    return await companyDao.getCompanies();
+  };
+  
+  const deleteCompany = async (id) => {
+    return await companyDao.deleteCompany(id);
+  };
+  
+  const getCompanyByEmail = async (email) => {
+    return await companyDao.getCompanyByEmail(email);
+  };
+
+  const updateCompany = async (id, updateData) => {
+    return await companyDao.updateCompany(id, updateData);
+  };
+// get Company by token
+const getCompanyByToken = async (token) => {
+  return await companyDao.findCompanyByToken(token);
 };
+//logout
+const logout = async (id) => {
+  return await companyDao.logout(id);
+};
+
+ 
+
+  module.exports = {createCompany,getCompanyByToken, logout, getCompanyByEmail,getCompanies,deleteCompany,getCompanyById, updateCompany, loginCompany, updatePassword}

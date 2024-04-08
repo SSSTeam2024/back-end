@@ -1,4 +1,4 @@
-const Note = require('../../models/notesSchema/notesSchema');
+const Note = require('../../models/noteModels/note');
 
 const createNote = async (noteData) => {
   return await Note.create(noteData);

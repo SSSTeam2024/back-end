@@ -1,4 +1,4 @@
-const noteService = require("../../services/notesServices/notesServices");
+const noteService = require("../../services/noteServices/noteService");
 const globalFunctions = require("../../utils/globalFunctions");
 
 const addNewNote = async (req, res) => {

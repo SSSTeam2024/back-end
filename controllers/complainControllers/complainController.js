@@ -1,4 +1,4 @@
-const complainService = require("../../services/complainServices/complainServices");
+const complainService = require("../../services/complainServices/complainService");
 const globalFunctions = require("../../utils/globalFunctions");
 const mongoose = require("mongoose");
 

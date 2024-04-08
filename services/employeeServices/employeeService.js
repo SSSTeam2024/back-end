@@ -1,6 +1,6 @@
 const employeeDao =require("../../dao/employeeDao/employeeDao")
 const fs = require("fs").promises;
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 

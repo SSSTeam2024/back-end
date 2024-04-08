@@ -125,7 +125,7 @@ const assignDriver = async (bookingData) => {
 const updateProgress = async (updateData) => {
   let quote_id = updateData.quote_id;
   let progress = updateData.progress;
-  await quoteDao.updateDriver(quote_id, progress);
+  await quoteDao.updateProgress(quote_id, progress);
   return "Progress Updated!!";
 };
 

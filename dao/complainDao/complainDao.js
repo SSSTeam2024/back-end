@@ -1,4 +1,4 @@
-const Complain = require('../../models/complainSchema/complainSchema');
+const Complain = require('../../models/complainModels/complain');
 
 const createComplain = async (complainData) => {
  try {

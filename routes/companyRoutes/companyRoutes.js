@@ -9,8 +9,9 @@ router.post("/getCompanyByEmail",companyController.getCompanyByEmail)
 router.delete("/deleteCompany/:id",companyController.deleteCompany)
 router.put("/updateCompany/:id",companyController.updateCompany)
 router.post("/loginCompany",companyController.loginCompany)
-router.post("/logoutCompany",companyController.logoutCompany)
+router.post("/logoutCompany/:id",companyController.logoutCompany)
 router.put("/updatePassword/:id",companyController.updatePassword)
+router.post('/getCompanyByToken', companyController.getCompanyByJwtToken);
 
 
 module.exports = router;

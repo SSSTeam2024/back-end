@@ -9,6 +9,21 @@ const findCompanyByLogin = async (login) => {
     return await Company.findOne({ login });
 };
 
+// find Company by token
+const findCompanyByToken = async (token) => {
+    let api_token = token;
+    return await Company.findOne({ api_token });
+  };
+
+  const updateJwtToken = async (id, token) => {
+    return await Company.findByIdAndUpdate({ _id:id }, {
+      $set: {
+        api_token: token
+      }
+    });
+  }
+
+
 const getCompanies = async () => {
     return await Company.find();
 };
@@ -37,6 +52,14 @@ const updatePassword = async (id, password) => {
     });
   }
 
+// logout
+    const logout = async (id) => {
+        return await Company.findByIdAndUpdate({ _id:id }, {
+          $set: {
+            api_token: ""
+          }
+        });
+      }
 
 module.exports = {
     createCompany,
@@ -46,6 +69,8 @@ module.exports = {
     getCompanyById,
     getCompanyByEmail,
     findCompanyByLogin,
-    updatePassword
-
+    updatePassword,
+    findCompanyByToken,
+    updateJwtToken,
+    logout
 };

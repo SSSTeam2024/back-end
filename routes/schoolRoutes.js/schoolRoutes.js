@@ -12,4 +12,5 @@ router.get('/getSchool/:id', authSchool.getSchoolById);
 router.get('/getAllSchools', authSchool.getAllSchools);
 router.put('/updatePassword/:id', authSchool.updatePassword);
 router.post('/logout', authSchool.logout);
+router.post('/getSchoolByToken', authSchool.getSchoolByJwtToken);
 module.exports = router;
