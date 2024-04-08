@@ -49,6 +49,7 @@ const convert_to_contract = async (programData) => {
 };
 
 const updateToQuote = async (id_schedule, programData) => {
+  console.log(programData)
   return await Quote.create(programData);
 };
 

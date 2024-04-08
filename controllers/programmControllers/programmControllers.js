@@ -111,7 +111,7 @@ const convertedToContract = async (req, res) => {
     await programmService.convertToContract({
       idProgram: idProgram,
       contractName: program.programName,
-      invoiceFrequency: "",
+      invoiceFrequency: program.invoiceFrequency,
       customerNotes: "",
       staffNotes: "",
       prices: program.total_price,
