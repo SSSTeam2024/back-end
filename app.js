@@ -7,7 +7,7 @@ const AppRouter = require('./routes/appRouter');
 const app = express();
 app.use(cors({
   origin:  'http://localhost:3001',
-  methods:["GET", "POST","DELETE"],
+  methods:["GET", "POST","DELETE","PUT"],
 }));
 
 app.use(express.static('files'));

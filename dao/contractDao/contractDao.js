@@ -1,8 +1,33 @@
 const Contract = require("../../models/contractModel/contract");
 
-const createContract = async (ContractData) => {
-  return await Contract.create(ContractData);
+const createContract = async (contractData) => {
+  try {
+    const currentYear = new Date().getFullYear();
+    const latestContract = await Contract.findOne(
+      {},
+      {},
+      { sort: { updatedAt: -1 } }
+    );
+    let latestNumber = 0;
+    if (latestContract && latestContract.accountRef) {
+      const match = latestContract.accountRef.match(/C\d{4}\/(\d+)/);
+      if (match) {
+        latestNumber = parseInt(match[1], 10); 
+      }
+    }
+    const newNumber = latestNumber + 1;
+    const paddedNumber = newNumber.toString().padStart(4, "0");
+    const contractRef = `C${currentYear}/${paddedNumber}`;
+    contractData.accountRef = contractRef;
+    const newContract = await Contract.create(contractData);
+
+    return newContract;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
+
 const updateContract = async (id, updateData) => {
   return await Contract.findByIdAndUpdate(id, updateData, { new: true });
 };

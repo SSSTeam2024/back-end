@@ -17,6 +17,11 @@ const contractSchema = new mongoose.Schema({
   accountName: String,
   accountEmail: String,
   accountPhone: String,
+  
+},
+{
+  timestamps: true,
 });
+
 
 module.exports = mongoose.model("Contract", contractSchema);
