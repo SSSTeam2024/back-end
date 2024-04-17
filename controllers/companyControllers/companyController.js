@@ -95,7 +95,7 @@ const logoutCompany = async (req, res) => {
 const getCompanies = async (req, res) => {
   try {
     const companies = await companyService.getCompanies();
-    res.json({ companies });
+    res.json( companies );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

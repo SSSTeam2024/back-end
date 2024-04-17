@@ -8,4 +8,5 @@ router.post('/newJourney', journeyController.createJourney);
 router.put('/updateJourney/:id', journeyController.updateJourney);
 router.delete('/deleteJouney/:id', journeyController.deleteJouney);
 router.get('/getAllJourneys', journeyController.getJourneys);
+router.get('/getJourneyById/:id', journeyController.getJourneyById);
 module.exports = router;

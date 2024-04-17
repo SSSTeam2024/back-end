@@ -1,9 +1,25 @@
 const checkTypeService = require("../../services/checkTypeServices/checkTypeServices");
+const globalFunctions = require("../../utils/globalFunctions");
 
 const createCheckType = async (req, res) => {
   try {
-    const { type, duration } = req.body;
-    const newCheckType = await checkTypeService.createCheckType({ type, duration });
+    const { type, duration,checkType_image_extension, checkType_image_base64_string } = req.body;
+    const chechTypeFilesPath = "files/checkTypeFiles/";
+    let checkType_images = globalFunctions.generateUniqueFilename(
+      checkType_image_extension,
+      "checkTypeImage"
+    );
+
+    let documents = [
+      {
+        base64String: checkType_image_base64_string,
+        extension: checkType_image_extension,
+        name: type.checkType_images,
+        path: chechTypeFilesPath,
+      }
+    ];
+
+    const newCheckType = await checkTypeService.createCheckType({ type, duration }, documents);
     res.status(201).json(newCheckType);
   } catch (error) {
     console.error(error);

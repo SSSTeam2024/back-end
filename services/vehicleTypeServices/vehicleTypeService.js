@@ -16,9 +16,14 @@ const updateVehicleType = async (id, updateData) => {
     return await VehicleTypeDao.getVehicleTypes();
   };
 
+  const getVehicleTypeById = async (id) => {
+    return await VehicleTypeDao.getVehicleTypeByID(id);
+  };
+
 module.exports = {
     createVehicleType,
     updateVehicleType,
     deleteVehicleType,
-    getVehicleTypes
+    getVehicleTypes,
+    getVehicleTypeById
   };

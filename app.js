@@ -1,10 +1,19 @@
+
+const compression = require('compression')
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const http = require('http');
 
 const AppRouter = require('./routes/appRouter');
 
 const app = express();
+
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+app.use(compression())
 app.use(cors());
 app.use(express.static('files'));
 const port = 3000;
@@ -19,6 +28,10 @@ app.use('/api', AppRouter);
 
 app.all('*', (req, res) => {
   res.status(404).send('404 - Not Found');
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
 });
 
 app.listen(port, () => {

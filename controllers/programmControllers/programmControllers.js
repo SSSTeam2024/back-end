@@ -15,6 +15,7 @@ const createProgramm = async (req, res) => {
       notes,
       extra,
       recommanded_capacity,
+      invoiceFrequency,
       exceptDays,
       freeDays_date,
       droppOff_date,
@@ -26,7 +27,8 @@ const createProgramm = async (req, res) => {
       dropOff_time,
       pickUp_Time,
       workDates,
-      clientID,
+      company_id,
+      school_id,
       notes_for_client,
       notes_for_admin,
       unit_price,
@@ -41,6 +43,7 @@ const createProgramm = async (req, res) => {
       notes,
       extra,
       recommanded_capacity,
+      invoiceFrequency,
       exceptDays,
       freeDays_date,
       droppOff_date,
@@ -52,7 +55,8 @@ const createProgramm = async (req, res) => {
       dropOff_time,
       pickUp_Time,
       workDates,
-      clientID,
+      company_id,
+      school_id,
       notes_for_client,
       notes_for_admin,
       unit_price,
@@ -86,7 +90,7 @@ const getProgrammById = async (req, res) => {
 
 const sendResponseAPI = async (req, res) => {
   try {
-    const { id, notes_for_client, unit_price, total_price, program_status, invoiceFrequency } =
+    const { id, notes_for_client, unit_price, total_price, program_status, invoiceFrequency, within_payment_days } =
       req.body;
       console.log(req.body)
     const sentResult = await programmService.sendRespond({
@@ -95,7 +99,8 @@ const sendResponseAPI = async (req, res) => {
       unit_price,
       total_price,
       program_status,
-      invoiceFrequency
+      invoiceFrequency, 
+      within_payment_days
     });
     res.json({ success: sentResult });
   } catch (error) {
@@ -112,20 +117,26 @@ const convertedToContract = async (req, res) => {
       idProgram: idProgram,
       contractName: program.programName,
       invoiceFrequency: program.invoiceFrequency,
-      customerNotes: "",
+      customerNotes: program.notes,
       staffNotes: "",
-      prices: program.total_price,
+      prices: (Number(program.total_price) + (Number(program.total_price) * 0.2)),
       unit_price: program.unit_price,
       salesperson: "445566778899112233003579",
-      idAccount: program.clientID,
-      vehicleType: "775533996622884411006482",
-      journeyType: "199551144778822003366014",
-      luggageDetails: "335577115599886622440032",
+      idSchool: program.school_id,
+      idCompany: program.company_id,
+      vehicleType: program.vehiculeType,
+      journeyType: program.journeyType,
+      luggageDetails: program.luggage,
       contractStatus: "Pending",
       accountPhone: "",
       accountEmail: "",
       accountName: "",
       accountRef: "",
+      effectiveDate: "",
+      within_payment_days: program.within_payment_days,
+      contract_number: "",
+      subTotal: program.total_price,
+      tva: Number(program.total_price) * 0.2
     });
     res.status(201).send("Converted Successfully");
   } catch (error) {

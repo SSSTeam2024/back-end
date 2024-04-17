@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const checkTypeSchema = new mongoose.Schema({
-  type: [String],
+  type: [{
+    category: String,
+    message: String,
+    checkType_images: String
+  }],
   duration: String, // MM:SS
 });
 

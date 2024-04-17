@@ -110,7 +110,7 @@ const emailTemplates = {
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
                 <label>` +
-    quote.estimated_start_time +
+    quote.date + `<strong> at </strong>` + quote.pickup_time +
     ` </label>
               </td>
             </tr>
@@ -530,7 +530,7 @@ const emailTemplates = {
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
                 <label>` +
-    quote.estimated_start_time +
+                quote.date + `<strong> at </strong>` + quote.pickup_time +
     ` </label>
               </td>
             </tr>

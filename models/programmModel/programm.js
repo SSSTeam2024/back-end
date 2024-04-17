@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Schema = mongoose.Schema;
 const programmSchema = new mongoose.Schema(
   {
     programName: String,
@@ -34,7 +34,8 @@ const programmSchema = new mongoose.Schema(
     pickUp_Time: String,
     dropOff_time: String,
     workDates: [String],
-    clientID: String,
+    company_id: { type: Schema.Types.ObjectId, ref: "Company", default: null },
+    school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     notes_for_client: [
       {
         msg: String,
@@ -56,6 +57,7 @@ const programmSchema = new mongoose.Schema(
     ],
     invoiceFrequency: String,
     status: String,
+    within_payment_days: String
   },
   {
     timestamps: true,

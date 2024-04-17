@@ -7,12 +7,9 @@ const createProgramm = async (programmData) => {
 };
 
 const getProgramms = async () => {
-  return await Programm.find();
+  return await Programm.find().populate("company_id")
+  .populate("school_id")
 };
-
-// const updateQuote = async (id, updateData) => {
-//   return await Quote.findByIdAndUpdate(id, updateData, { new: true });
-// };
 
 const deleteProgramm = async (id) => {
   return await Programm.findByIdAndDelete(id);
@@ -28,8 +25,11 @@ const updateStatus = async (
   unit_price,
   total_price,
   program_status,
-  invoiceFrequency
+  invoiceFrequency,
+  within_payment_days
 ) => {
+  console.log("DAO 31", invoiceFrequency)
+  console.log("DAO 32", within_payment_days)
   return await Programm.findByIdAndUpdate(
     { _id: id },
     {
@@ -38,18 +38,19 @@ const updateStatus = async (
         unit_price: unit_price,
         total_price: total_price,
         program_status: program_status,
-        invoiceFrequency: invoiceFrequency
+        invoiceFrequency: invoiceFrequency,
+        within_payment_days: within_payment_days
       },
     }
   );
 };
 
 const convert_to_contract = async (programData) => {
+  console.log(programData)
   return await Contract.create(programData);
 };
 
 const updateToQuote = async (id_schedule, programData) => {
-  console.log(programData)
   return await Quote.create(programData);
 };
 

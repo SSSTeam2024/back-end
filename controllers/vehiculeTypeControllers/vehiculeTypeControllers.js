@@ -62,9 +62,24 @@ const getVehicleTypes = async (req, res) => {
   }
 };
 
+const getVehicleTypeById = async (req, res) => {
+  try {
+    const vehicleTypeId = req.params.id;
+    const getVehicleType = await VehicleTypeService.getVehicleTypeById(vehicleTypeId);
+    if (!getVehicleType) {
+      return res.status(404).send("Vehicle Type not found");
+    }
+    res.json(getVehicleType);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   deleteVehicleType,
   updateVehicleType,
   createVehicleType,
   getVehicleTypes,
+  getVehicleTypeById
 };

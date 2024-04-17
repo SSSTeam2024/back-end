@@ -130,9 +130,9 @@ const updateProgress = async (updateData) => {
 };
 
 const updateToCancel = async (updateData) => {
-  let quote_id = updateData.quote_id;
+  let quoteId = updateData.quoteId;
   let status = updateData.status;
-  await quoteDao.updateStatusToCancel(quote_id, status);
+  await quoteDao.updateStatusToCancel(quoteId, status);
   return "Quote Canceled!!";
 };
 
@@ -278,6 +278,14 @@ const getQuoteByIdSchedule = async (id) =>{
   return await quoteDao.getQuoteByIdSchedule(id);
 }
 
+const assignDriverAndVehicleToQuoteService = async (bookingData) => {
+  let quote_id = bookingData.quote_ID;
+  let driver = bookingData.driver_ID;
+  let vehicle = bookingData.vehicle_ID;
+  await quoteDao.assignDriverAndVehicleToQuoteDao(quote_id, driver, vehicle);
+  return "Driver and Vehicle Assigned!!";
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -293,5 +301,6 @@ module.exports = {
   updateToCancel,
   getQuotesByDriverID,
   updateProgress,
-  getQuoteByIdSchedule
+  getQuoteByIdSchedule,
+  assignDriverAndVehicleToQuoteService
 };

@@ -8,13 +8,10 @@ const getProgramms = async () => {
   return await programmDao.getProgramms();
 };
 
-// const updateQuote = async (id, updateData) => {
-//   return await quoteDao.updateQuote(id, updateData);
-// };
-
 const deleteProgramm = async (id) => {
   return await programmDao.deleteProgramm(id);
 };
+
 const getProgrammById = async (id) => {
   return await programmDao.getProgrammById(id);
 };
@@ -26,13 +23,16 @@ const sendRespond = async (respondData) => {
   let total_price = respondData.total_price;
   let notes_for_client = respondData.notes_for_client;
   let invoiceFrequency = respondData.invoiceFrequency;
+  let within_payment_days = respondData.within_payment_days;
+  console.log("From Services",respondData)
   await programmDao.updateStatus(
     program_id,
     notes_for_client,
     unit_price,
     total_price,
     program_status,
-    invoiceFrequency
+    invoiceFrequency,
+    within_payment_days
   );
   return "Response Send!!";
 };
@@ -50,7 +50,6 @@ const convertToQuote = async (programData) => {
 const updateStatusToConverted = async (programData) => {
   let id = programData.id;
   let status = programData.status;
-  console.log("programData", programData)
   await programmDao.updateStatusToConverted(id, status);
   return "Converted!!";
 };

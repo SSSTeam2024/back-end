@@ -55,10 +55,25 @@ const createLuggage = async (req, res) => {
     }
   };
 
+  const getLuggageById = async (req, res) => {
+    try {
+      const luggageId = req.params.id;
+      const getLuggage = await luggageService.getLuagggeById(luggageId);
+      if (!getLuggage) {
+        return res.status(404).send("Luggage not found");
+      }
+      res.json(getLuggage);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  };
+
   module.exports = {
     createLuggage,
     updateLuggage,
     deleteLuggage,
-    getLuggages
+    getLuggages,
+    getLuggageById
   };
   

@@ -16,10 +16,15 @@ const updateJourney = async (id, updateData) => {
     return await journeyDao.getJourneys();
   };
 
+  const getJourneyById = async (id) => {
+    return await journeyDao.getJourneyByID(id);
+  };
+
 module.exports = {
     createJourney,
     updateJourney,
     deleteJouney,
-    getJourneys
+    getJourneys,
+    getJourneyById
   };
   

@@ -16,9 +16,13 @@ const updateLuggage = async (id, updateData) => {
     return await luggageDao.getLuggages();
   };
 
+  const getLuagggeById = async (id) => {
+    return await luggageDao.getLuggageByID(id);
+  };
+
 module.exports = {
     createLuggage,
     updateLuggage,
     deleteLuggage,
-    getLuggages
+    getLuggages, getLuagggeById
   };

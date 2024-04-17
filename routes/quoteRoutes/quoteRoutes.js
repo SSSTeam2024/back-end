@@ -18,5 +18,6 @@ router.get("/confirm-booking/:id", quoteController.updateQuoteStatus);
 router.post("/sendPaymentEmail", quoteController.sendPaymentEmail);
 router.post("/updateProgress", quoteController.updateProgress);
 router.post("/getQuoteByIdSchedule", quoteController.getQuoteByIdSchedule);
+router.post("/assignDriverAndVehicleToQuote", quoteController.assignDriverAndVehicleToQuoteAPI);
 
 module.exports = router;

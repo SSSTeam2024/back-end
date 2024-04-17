@@ -6,7 +6,8 @@ const createQuote = async (req, res) => {
   try {
     const {
       id_schedule,
-      id_corporate,
+      company_id,
+      school_id,
       owner,
       handled_by,
       id_driver,
@@ -56,7 +57,8 @@ const createQuote = async (req, res) => {
     const quote = await quoteService.createQuote(
       {
         id_schedule,
-        id_corporate,
+        company_id,
+      school_id,
         owner,
         handled_by,
         id_driver,
@@ -323,9 +325,9 @@ const assignVehicleToQuoteAPI = async (req, res) => {
 
 const updateQuoteStatusToCancel = async (req, res) => {
   try {
-    const { quote_id, status } = req.body;
+    const { quoteId, status } = req.body;
     const sentResult = await quoteService.updateToCancel({
-      quote_id,
+      quoteId,
       status,
     });
     res.json({ success: sentResult });
@@ -408,6 +410,21 @@ const getQuoteByIdSchedule = async (req, res) => {
   }
 };
 
+const assignDriverAndVehicleToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_ID, driver_ID, vehicle_ID } = req.body;
+    const sentResult = await quoteService.assignDriverAndVehicleToQuoteService({
+      quote_ID,
+      driver_ID,
+      vehicle_ID,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -423,5 +440,6 @@ module.exports = {
   updateQuoteStatusToCancel,
   getQuotesByDriver,
   updateProgress,
-  getQuoteByIdSchedule
+  getQuoteByIdSchedule,
+  assignDriverAndVehicleToQuoteAPI
 };

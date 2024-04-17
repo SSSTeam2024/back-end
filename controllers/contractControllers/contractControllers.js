@@ -21,6 +21,11 @@ const createContract = async (req, res) => {
       accountName,
       accountRef,
       paymentMethod,
+      effectiveDate,
+      within_payment_days,
+      contract_number,
+      subTotal,
+      tva
     } = req.body;
     const newContract = await contractService.createContract({
       contractName,
@@ -41,6 +46,11 @@ const createContract = async (req, res) => {
       accountName,
       accountRef,
       paymentMethod,
+      effectiveDate,
+      within_payment_days,
+      contract_number,
+      subTotal,
+      tva
     });
     console.log(newContract);
     res.status(201).json(newContract);

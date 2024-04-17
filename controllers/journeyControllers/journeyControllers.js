@@ -55,10 +55,25 @@ const createJourney = async (req, res) => {
     }
   };
 
+  const getJourneyById = async (req, res) => {
+    try {
+      const journeyId = req.params.id;
+      const getJourney = await journeyService.getJourneyById(journeyId);
+      if (!getJourney) {
+        return res.status(404).send("Journey not found");
+      }
+      res.json(getJourney);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  };
+
   module.exports = {
     deleteJouney,
     updateJourney,
     createJourney,
-    getJourneys
+    getJourneys,
+    getJourneyById
   };
   

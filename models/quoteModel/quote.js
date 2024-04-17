@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const quoteSchema = new mongoose.Schema(
   {
     id_schedule: String,
-    id_corporate: String,
+    company_id: { type: Schema.Types.ObjectId, ref: "Company", default: null },
+    school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     owner: String,
     handled_by: Number,
     id_driver: { type: Schema.Types.ObjectId, ref: "Driver" },
@@ -64,7 +65,7 @@ const quoteSchema = new mongoose.Schema(
     },
     type: String, // One way or return
     //? estimated_return_start_time: String,
-    checklist_id: { type: Schema.Types.ObjectId, ref: "CheckList" }, //* Duty Vehicle Check List updated by driver after complete his check
+    checklist_id: { type: Schema.Types.ObjectId, ref: "CheckList", default: null }, //* Duty Vehicle Check List updated by driver after complete his check
     date: String,
     return_date: String,
     return_time: String,
