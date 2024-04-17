@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const quoteSchema = new mongoose.Schema(
   {
@@ -6,10 +7,10 @@ const quoteSchema = new mongoose.Schema(
     id_corporate: String,
     owner: String,
     handled_by: Number,
-    id_driver: String,
-    id_vehicle: String,
+    id_driver: { type: Schema.Types.ObjectId, ref: "Driver" },
+    id_vehicle: { type: Schema.Types.ObjectId, ref: "Vehicle" },
     handled_by_subcontractor: String, //id of subcontractor
-    id_visitor: String,
+    id_visitor: { type: Schema.Types.ObjectId, ref: "Visitor" },
     vehicle_type: String,
     passengers_number: Number,
     luggage_details: String,
@@ -21,42 +22,57 @@ const quoteSchema = new mongoose.Schema(
     paid_by_client: Boolean,
     paid_by_bouden: Boolean,
     status: String,
+    progress: String,
+    balance: String,
+    deposit_percentage: String,
     manual_cost: String,
     automatic_cost: String,
+    deposit_amount: String,
+    total_price: String,
     start_point: {
-        placeName: String,
-        coordinates: {
-          lat: Number,
-          lon: Number
-        }
+      placeName: String,
+      coordinates: {
+        lat: Number,
+        lng: Number,
+      },
     },
-    estimated_start_time: String,
+    pickup_time: String,
     real_start_time: String,
     start_delay_time: String,
     mid_stations: Array, /// Array of objects {id_stop , time (up/down), qr_code}
     delays: Array, /// Array of objects {id_delay startTime , cause ...}
     change_route: {
-        time: String,
-        position: {
-            placeName: String,
-            coordinates: {
-                lat: Number,
-                lon: Number
-              }
-        },
-        cause: String,
-        delay: String
-    },
-    estimated_end_time: String,
-    destination_point: {
+      time: String,
+      position: {
         placeName: String,
         coordinates: {
           lat: Number,
-          lon: Number
-        }
+          lng: Number,
+        },
       },
+      cause: String,
+      delay: String,
+    },
+    dropoff_time: String,
+    dropoff_date: String,
+    destination_point: {
+      placeName: String,
+      coordinates: {
+        lat: Number,
+        lng: Number,
+      },
+    },
     type: String, // One way or return
-    estimated_return_start_time: String,
+    //? estimated_return_start_time: String,
+    checklist_id: {
+      type: Schema.Types.ObjectId,
+      ref: "CheckList",
+      default: null,
+    }, //* Duty Vehicle Check List updated by driver after complete his check
+    date: String,
+    return_date: String,
+    return_time: String,
+    category: String,
   },
   {
     timestamps: true,

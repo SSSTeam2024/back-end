@@ -1,4 +1,4 @@
-const parentService = require("../../services/parentServices");
+const parentService = require("../../services/parentServices/parentServices");
 const globalFunctions = require("../../utils/globalFunction");
 // register parent
 const registerParent = async (req, res) => {
@@ -100,7 +100,7 @@ const getParentById = async (req, res) => {
 const getAllParents = async (req, res) => {
   try {
     const parents = await parentService.getParents();
-    res.json({ parents });
+    res.json( parents );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

@@ -1,5 +1,5 @@
 
-const luggageService = require('../../services/luggageService');
+const luggageService = require('../../services/luggageServices/luggageService');
 
 const createLuggage = async (req, res) => {
     try {
@@ -48,7 +48,7 @@ const createLuggage = async (req, res) => {
   const getLuggages = async (req, res) => {
     try {
       const luggages = await luggageService.getLuggages();
-      res.json({ luggages });
+      res.json( luggages );
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);

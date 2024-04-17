@@ -15,7 +15,7 @@ const createMileageBand = async (req, res) => {
 const getMileageBands = async (req, res) => {
   try {
     const mileageBands = await mileageBandService.getMileageBands();
-    res.json({ mileageBands });
+    res.json( mileageBands );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

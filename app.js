@@ -1,23 +1,27 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-const AppRouter = require('./routes/appRouter');
+const AppRouter = require("./routes/appRouter");
 
 const app = express();
 app.use(cors());
 const port = 3000;
 
+app.use("/files", express.static("files"));
 // Adjust the limit to accommodate larger payloads
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-mongoose.connect('mongodb+srv://sssteam2024:ogA6KY9XssmX4q6y@testbct.qxx75ys.mongodb.net/bctdb', { });
+mongoose.connect(
+  "mongodb+srv://sssteam2024:ogA6KY9XssmX4q6y@testbct.qxx75ys.mongodb.net/bctdb",
+  {}
+);
 
-app.use('/api', AppRouter);
+app.use("/api", AppRouter);
 
-app.all('*', (req, res) => {
-  res.status(404).send('404 - Not Found');
+app.all("*", (req, res) => {
+  res.status(404).send("404 - Not Found");
 });
 
 app.listen(port, () => {

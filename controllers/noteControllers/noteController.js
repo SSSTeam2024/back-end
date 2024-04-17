@@ -55,7 +55,7 @@ const getNoteById = async (req, res) => {
 const getAllNotes = async (req, res) => {
   try {
     const notes = await noteService.getNotes();
-    res.json({ notes });
+    res.json( notes );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

@@ -1,5 +1,5 @@
 
-const PassengerLuggageLimitsService = require('../../services/passenegerLuggageLimitsService');
+const PassengerLuggageLimitsService = require('../../services/passenegerLuggageLimitsService/passenegerLuggageLimitsService');
 
 const createPassengerLuggageLimits = async (req, res) => {
     try {
@@ -48,7 +48,7 @@ const createPassengerLuggageLimits = async (req, res) => {
   const getPassengerLuggageLimits = async (req, res) => {
     try {
       const passengerLuggageLimits = await PassengerLuggageLimitsService.getPassengerLuggageLimits();
-      res.json({ passengerLuggageLimits });
+      res.json( passengerLuggageLimits );
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);

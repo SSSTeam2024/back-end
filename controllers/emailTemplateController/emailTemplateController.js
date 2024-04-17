@@ -15,7 +15,7 @@ const createEmailTemplate = async (req, res) => {
 const getEmailTemplates = async (req, res) => {
   try {
     const emailTemplates = await emailTemplateService.getEmailTemplates();
-    res.json({ emailTemplates });
+    res.json( emailTemplates );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

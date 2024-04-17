@@ -15,7 +15,7 @@ const createWaitingBand = async (req, res) => {
 const getWaitingBands = async (req, res) => {
   try {
     const waitingBands = await waitingBandService.getWaitingBands();
-    res.json({ waitingBands });
+    res.json( waitingBands );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

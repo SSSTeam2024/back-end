@@ -15,7 +15,7 @@ const createHourlyBand = async (req, res) => {
 const getHourlyBands = async (req, res) => {
   try {
     const hourlyBands = await hourlyBandService.getHourlyBands();
-    res.json({ hourlyBands });
+    res.json(hourlyBands );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

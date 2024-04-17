@@ -162,7 +162,7 @@ const getById = async (req, res) => {
 const getAffiliates = async (req, res) => {
   try {
     const affiliates = await affiliateService.getAffiliates();
-    res.json({ affiliates });
+    res.json(affiliates );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

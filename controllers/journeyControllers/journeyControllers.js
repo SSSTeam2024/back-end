@@ -1,5 +1,5 @@
 
-const journeyService = require('../../services/journeyService');
+const journeyService = require('../../services/journeyServices/journeyService');
 
 const createJourney = async (req, res) => {
     try {
@@ -48,7 +48,7 @@ const createJourney = async (req, res) => {
   const getJourneys = async (req, res) => {
     try {
       const journeys = await journeyService.getJourneys();
-      res.json({ journeys });
+      res.json( journeys );
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);

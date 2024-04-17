@@ -1,4 +1,4 @@
-const visitorDao = require('../../dao/visitorDao/visitorDao');
+const visitorDao = require("../../dao/visitorDao/visitorDao");
 
 const createVisitor = async (visitorData) => {
   return await visitorDao.createVisitor(visitorData);
@@ -10,10 +10,16 @@ const getVisitors = async () => {
 
 const getVisitorById = async (id) => {
   return await visitorDao.getVisitorById(id);
-}
+};
+
+//delete Visitor
+const deleteVisitor = async (id) => {
+  return await visitorDao.deleteVisitor(id);
+};
 
 module.exports = {
   createVisitor,
   getVisitors,
   getVisitorById,
+  deleteVisitor,
 };

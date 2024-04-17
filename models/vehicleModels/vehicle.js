@@ -14,7 +14,7 @@ const vehicleSchema = new mongoose.Schema({
   purchase_date: String,
   purchase_price: String,
   sale_date: String,
-  status: String,
+  statusVehicle: String,
   manufacturer: String,
   engine_size: String,
   fuel_type: String,
@@ -25,6 +25,9 @@ const vehicleSchema = new mongoose.Schema({
   owner_name: String,
   note: String,
   extra: [String],
+  vehicle_images_base64_string: String,
+  vehicle_images_extension: String,
+  vehicle_images: String,
   mot_expiry: String,
   mot_file: String, // File
   tax_expiry: String,

@@ -1,5 +1,6 @@
 const quoteService = require("../../services/quoteServices/quoteService");
-const emailTemplatesStructure = require('../../utils/emailTemplatesStructure');
+const programService = require("../../services/programmServices/programmServices");
+const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 
 const createQuote = async (req, res) => {
   try {
@@ -23,55 +24,83 @@ const createQuote = async (req, res) => {
       paid_by_client,
       paid_by_bouden,
       status,
+      progress,
+      balance,
+      deposit_percentage,
+      deposit_amount,
       manual_cost,
       automatic_cost,
       start_point,
-      estimated_start_time,
-      real_start_time,
+      pickup_time, // Date selected by client ( programmed start date)
+      real_start_time, // just time when driver click on go button
       start_delay_time,
       mid_stations,
       delays,
       change_route,
-      estimated_end_time,
+      dropoff_time,
+      dropoff_date,
       destination_point,
       type,
-      estimated_return_start_time
+      // estimated_return_start_time,
+      distance,
+      duration,
+      total_price,
+      checklist_id,
+      date,
+      return_time,
+      return_date,
+      category,
     } = req.body;
-
-    const quote = await quoteService.createQuote({ 
-      id_schedule,
-      id_corporate,
-      owner,
-      handled_by,
-      id_driver,
-      id_vehicle,
-      handled_by_subcontractor,
-      id_visitor,
-      vehicle_type,
-      passengers_number,
-      luggage_details,
-      journey_type,
-      notes,
-      heard_of_us,
-      pushed_price,
-      id_invoice,
-      paid_by_client,
-      paid_by_bouden,
-      status,
-      manual_cost,
-      automatic_cost,
-      start_point,
-      estimated_start_time,
-      real_start_time,
-      start_delay_time,
-      mid_stations,
-      delays,
-      change_route,
-      estimated_end_time,
-      destination_point,
-      type,
-      estimated_return_start_time
-     });
+    console.log(req.body);
+    const quote = await quoteService.createQuote(
+      {
+        id_schedule,
+        id_corporate,
+        owner,
+        handled_by,
+        id_driver,
+        id_vehicle,
+        handled_by_subcontractor,
+        id_visitor,
+        vehicle_type,
+        passengers_number,
+        luggage_details,
+        journey_type,
+        notes,
+        heard_of_us,
+        pushed_price,
+        id_invoice,
+        paid_by_client,
+        paid_by_bouden,
+        status,
+        manual_cost,
+        progress,
+        balance,
+        deposit_percentage,
+        deposit_amount,
+        automatic_cost,
+        start_point,
+        pickup_time,
+        real_start_time,
+        start_delay_time,
+        mid_stations,
+        delays,
+        change_route,
+        dropoff_time,
+        dropoff_date,
+        destination_point,
+        type,
+        // estimated_return_start_time,
+        total_price,
+        checklist_id,
+        date,
+        return_date,
+        return_time,
+        category,
+      },
+      distance
+      //duration,
+    );
     res.json(quote);
   } catch (error) {
     console.error(error);
@@ -82,7 +111,21 @@ const createQuote = async (req, res) => {
 const getQuotes = async (req, res) => {
   try {
     const quotes = await quoteService.getQuotes();
-    res.json({ quotes });
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getQuoteById = async (req, res) => {
+  try {
+    const quoteId = req.params.id;
+    const getQuote = await quoteService.getQuoteById(quoteId);
+    if (!getQuote) {
+      return res.status(404).send("Quote not found");
+    }
+    res.json(getQuote);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -92,7 +135,7 @@ const getQuotes = async (req, res) => {
 const updateQuote = async (req, res) => {
   try {
     const quoteId = req.params.id;
-    const { 
+    const {
       id_schedule,
       id_corporate,
       owner,
@@ -112,6 +155,9 @@ const updateQuote = async (req, res) => {
       paid_by_bouden,
       status,
       manual_cost,
+      progress,
+      balance,
+      deposit,
       automatic_cost,
       start_point,
       estimated_start_time,
@@ -122,9 +168,10 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
-     } = req.body;
+      total_price,
+    } = req.body;
 
-    const updatedQuote = await quoteService.updateQuote(quoteId, { 
+    const updatedQuote = await quoteService.updateQuote(quoteId, {
       id_schedule,
       id_corporate,
       owner,
@@ -143,6 +190,9 @@ const updateQuote = async (req, res) => {
       paid_by_client,
       paid_by_bouden,
       status,
+      progress,
+      balance,
+      deposit,
       manual_cost,
       automatic_cost,
       start_point,
@@ -154,7 +204,8 @@ const updateQuote = async (req, res) => {
       change_route,
       estimated_end_time,
       destination,
-     });
+      total_price,
+    });
 
     if (!updatedQuote) {
       return res.status(404).send("Quote not found");
@@ -184,9 +235,113 @@ const deleteQuote = async (req, res) => {
 
 const sendBookingEmail = async (req, res) => {
   try {
-    const { id_visitor, price, quote_id } = req.body;
-    const sentResult = await quoteService.sendBookingEmail({ id_visitor, price, quote_id });
-    res.json({success: sentResult});
+    const {
+      id_visitor,
+      price,
+      quote_id,
+      automatic_cost,
+      deposit_amount,
+      deposit_percentage,
+      total_price,
+    } = req.body;
+    const sentResult = await quoteService.sendBookingEmail({
+      id_visitor,
+      price,
+      quote_id,
+      automatic_cost,
+      deposit_amount,
+      deposit_percentage,
+      total_price,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const assignDriverAPI = async (req, res) => {
+  try {
+    const { id_visitor, price, quote_id, id_driver, id_vehicle } = req.body;
+    const sentResult = await quoteService.sendAssign({
+      id_visitor,
+      price,
+      quote_id,
+      id_driver,
+      id_vehicle,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const assignDriverToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_id, id_driver } = req.body;
+    const sentResult = await quoteService.assignDriver({
+      quote_id,
+      id_driver,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const assignVehicleToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_id, id_vehicle } = req.body;
+    const sentResult = await quoteService.assignVehicle({
+      quote_id,
+      id_vehicle,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const updateQuoteStatusToCancel = async (req, res) => {
+  try {
+    const { quote_id, status } = req.body;
+    const sentResult = await quoteService.updateToCancel({
+      quote_id,
+      status,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const convertToQuoteAPI = async (req, res) => {
+  try {
+    const { id_schedule } = req.body;
+    let program = await programService.getProgrammById(id_schedule);
+    for (let i = 0; i < program.workDates.length; i++) {
+      const sentResult = await quoteService.convertToQuote({
+        id_schedule: id_schedule,
+        id_corporate: program.clientID,
+        passengers_number: Number(program.recommanded_capacity),
+        start_point: program.origin_point,
+        mid_stations: program.stops,
+        estimated_end_time: program.workDates[i] + " " + program.dropOff_time,
+        destination_point: program.destination_point,
+        estimated_return_start_time:
+          program.workDates[i] + " " + program.pickUp_Time,
+        progress: "Created",
+        manual_cost: program.unit_price,
+        id_driver: "112233445566778899002587",
+        id_vehicle: "998877665544332211009854",
+        id_invoice: "",
+      });
+    }
+    res.status(201).send("Converted Successfully");
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -196,8 +351,11 @@ const sendBookingEmail = async (req, res) => {
 const sendPaymentEmail = async (req, res) => {
   try {
     const { id_visitor, quote_id } = req.body;
-    const sentResult = await quoteService.sendPaymentEmail({ id_visitor, quote_id });
-    res.json({success: sentResult});
+    const sentResult = await quoteService.sendPaymentEmail({
+      id_visitor,
+      quote_id,
+    });
+    res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -214,13 +372,48 @@ const updateQuoteStatus = async (req, res) => {
       return res.status(404).send("Quote not found");
     }
     console.log(updatedQuote);
-    let bookingSuccessPageContent = emailTemplatesStructure.emailTemplates.booking_success();
-    res.writeHead(200, { 'Content-Type':'text/html'});
+    let bookingSuccessPageContent =
+      emailTemplatesStructure.emailTemplates.booking_success();
+    res.writeHead(200, { "Content-Type": "text/html" });
     res.end(bookingSuccessPageContent);
   } catch (error) {
     console.error(error);
     //res.status(500).send(error.message);
-    res.end("<div><p>Quote not booked due to an internal error , please try again!<p></div>");
+    res.end(
+      "<div><p>Quote not booked due to an internal error , please try again!<p></div>"
+    );
+  }
+};
+
+const getQuotesByDriver = async (req, res) => {
+  try {
+    const driver_id = req.params.id;
+    const date = req.body.date;
+    console.log(date);
+    const quotesByDriver = await quoteService.getQuotesByDriverID(
+      driver_id,
+      date
+    );
+    if (!quotesByDriver) {
+      return res.status(404).send("No Jobs for this month");
+    }
+    res.send(quotesByDriver);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const updateProgress = async (req, res) => {
+  try {
+    const { quote_id, progress } = req.body;
+    const sentResult = await quoteService.updateProgress({
+      quote_id,
+      progress,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
   }
 };
 
@@ -231,5 +424,13 @@ module.exports = {
   deleteQuote,
   sendBookingEmail,
   updateQuoteStatus,
-  sendPaymentEmail
+  sendPaymentEmail,
+  assignDriverAPI,
+  getQuoteById,
+  assignDriverToQuoteAPI,
+  assignVehicleToQuoteAPI,
+  convertToQuoteAPI,
+  updateQuoteStatusToCancel,
+  getQuotesByDriver,
+  updateProgress,
 };

@@ -39,7 +39,7 @@ const createFeedback = async (req, res) => {
 const getFeedbacks = async (req, res) => {
   try {
     const feedbacks = await feedbackService.getFeedbacks();
-    res.json({ feedbacks });
+    res.json( feedbacks );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

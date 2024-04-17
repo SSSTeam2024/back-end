@@ -15,7 +15,7 @@ const createLuxury = async (req, res) => {
 const getLuxurys = async (req, res) => {
   try {
     const luxurys = await luxuryService.getLuxurys();
-    res.json({ luxurys });
+    res.json(luxurys );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

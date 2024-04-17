@@ -1,4 +1,4 @@
-const Driver = require('../../models/driverModels/driver');
+const Driver = require("../../models/driverModels/driver");
 
 const createDriver = async (driver) => {
   return await Driver.create(driver);
@@ -16,26 +16,57 @@ const deleteDriver = async (id) => {
   return await Driver.findByIdAndDelete(id);
 };
 
-const findDriverByLogin = async (username) => {
-  return await Driver.findOne({ username });
+const findDriverByLogin = async (email) => {
+  return await Driver.findOne({ email });
+};
+
+const findDriverByToken = async (token) => {
+  let api_token = token;
+  return await Driver.findOne({ api_token });
+};
+
+const updateJwtToken = async (id, token) => {
+  return await Driver.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: token,
+      },
+    }
+  );
+};
+
+// logout
+const logout = async (id) => {
+  return await Driver.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: "",
+      },
+    }
+  );
 };
 
 const getDriverById = async (id) => {
   return await Driver.findById(id);
-}
+};
 
 const getDriverByEmail = async (email) => {
   return await Driver.findOne({ email });
-}
+};
 
 const updatePassword = async (id, password) => {
-  console.log('Hashed pwd: '+password);
-  return await Driver.findByIdAndUpdate({ _id:id }, {
-    $set: {
-      password: password
+  console.log("Hashed pwd: " + password);
+  return await Driver.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        password: password,
+      },
     }
-  });
-}
+  );
+};
 
 module.exports = {
   createDriver,
@@ -45,5 +76,8 @@ module.exports = {
   findDriverByLogin,
   getDriverById,
   getDriverByEmail,
-  updatePassword
+  updatePassword,
+  logout,
+  updateJwtToken,
+  findDriverByToken,
 };

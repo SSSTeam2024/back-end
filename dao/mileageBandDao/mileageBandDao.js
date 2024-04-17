@@ -1,20 +1,20 @@
-const MileageBand = require('../../models/mileageBandModel/mileageBand');
+const MileageBand = require("../../models/mileageBandModel/mileageBand");
 
 const createMileageBand = async (mileageBandData) => {
   return await MileageBand.create(mileageBandData);
 };
 
 const getMileageBands = async () => {
-  return await MileageBand.find().populate('vehicle_type');
+  return await MileageBand.find().populate("vehicle_type");
 };
 
 const getMileageBandById = async (id) => {
   return await MileageBand.findById(id);
-}
+};
 
 const getMileageBandByName = async (name) => {
   return await MileageBand.findOne({ name });
-}
+};
 
 const updateMileageBand = async (id, updateData) => {
   return await MileageBand.findByIdAndUpdate(id, updateData, { new: true });
@@ -30,5 +30,5 @@ module.exports = {
   getMileageBandById,
   updateMileageBand,
   deleteMileageBand,
-  getMileageBandByName
+  getMileageBandByName,
 };

@@ -20,19 +20,15 @@ const sendEmail = async (email) => {
     const mailOptions = {
       from: {
         name: "Bouden Travel Agency",
-        address: "mouafekhedfi@gmail.com"
+        address: "mouafekhedfi@gmail.com",
       },
-      to: email.to,//email.to, "fourati.oussama9@gmail.com"
+      to: email.to, //email.to, "fourati.oussama9@gmail.com"
       subject: email.subject,
       html: email.body,
       attachments: [
         {
           filename: "logo.jpg",
-          path: path.join(
-            __dirname,
-            "../../files/logo/",
-            "logo.jpg"
-          ), // Adjust the file path based on your actual image location
+          path: path.join(__dirname, "../../files/logo/", "logo.jpg"), // Adjust the file path based on your actual image location
           cid: "unique-image-id", // Unique ID for referencing the image in the HTML content
         },
       ],

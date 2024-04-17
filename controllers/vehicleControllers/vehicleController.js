@@ -17,7 +17,7 @@ const addNewVehicle = async (req, res) => {
       purchase_date,
       purchase_price,
       sale_date,
-      status,
+      statusVehicle,
       manufacturer,
       engine_size,
       fuel_type,
@@ -31,6 +31,8 @@ const addNewVehicle = async (req, res) => {
       mot_expiry,
       mot_file_base64_string, // File
       mot_file_extension, // File
+      vehicle_images_base64_string, // File
+      vehicle_images_extension, // File
       tax_expiry,
       tax_file_base64_string, // File
       tax_file_extension, // File
@@ -53,12 +55,20 @@ const addNewVehicle = async (req, res) => {
     const motFilesPath = 'files/VehicleFiles/motFiles/';
     const taxFilesPath = 'files/VehicleFiles/taxFiles/';
     const insuranceFilesPath = 'files/VehicleFiles/insuranceFiles/';
+    const vehicleImagesPath = 'files/VehicleFiles/vehicleImages/';
 
     let mot_file = globalFunctions.generateUniqueFilename(mot_file_extension,'VehicleMot');
     let tax_file = globalFunctions.generateUniqueFilename(tax_file_extension,'VehicleTax');
     let insurance_file = globalFunctions.generateUniqueFilename(insurance_file_extension,'VehicleInsurance');
+    let vehicle_images = globalFunctions.generateUniqueFilename(vehicle_images_extension,'VehicleImages');
 
     let documents = [
+      {
+        base64String: vehicle_images_base64_string,
+        extension: vehicle_images_extension,
+        name: vehicle_images,
+        path: vehicleImagesPath
+      },
       {
         base64String: mot_file_base64_string,
         extension: mot_file_extension,
@@ -93,7 +103,7 @@ const addNewVehicle = async (req, res) => {
       purchase_date,
       purchase_price,
       sale_date,
-      status,
+      statusVehicle,
       manufacturer,
       engine_size,
       fuel_type,
@@ -120,6 +130,7 @@ const addNewVehicle = async (req, res) => {
       hp_reference_no,
       monthly_repayment_amount,
       hp_company,
+      vehicle_images
      },documents);
     res.json(vehicle);
   } catch (error) {
@@ -145,7 +156,7 @@ const updateVehicleById = async (req, res) => {
       purchase_date,
       purchase_price,
       sale_date,
-      status,
+      statusVehicle,
       manufacturer,
       engine_size,
       fuel_type,
@@ -156,6 +167,7 @@ const updateVehicleById = async (req, res) => {
       owner_name,
       note,
       extra,
+      vehicle_images,
       mot_expiry,
       tax_expiry,
       insurance_expiry,
@@ -185,7 +197,7 @@ const updateVehicleById = async (req, res) => {
       purchase_date,
       purchase_price,
       sale_date,
-      status,
+      statusVehicle,
       manufacturer,
       engine_size,
       fuel_type,
@@ -196,6 +208,7 @@ const updateVehicleById = async (req, res) => {
       owner_name,
       note,
       extra,
+      vehicle_images,
       mot_expiry,
       tax_expiry,
       insurance_expiry,
@@ -240,7 +253,7 @@ const getVehicleById = async (req, res) => {
 const getAllVehicles = async (req, res) => {
   try {
     const vehicles = await vehicleService.getVehicles();
-    res.json({ vehicles });
+    res.json( vehicles );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

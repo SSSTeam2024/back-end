@@ -15,7 +15,7 @@ const createSource = async (req, res) => {
 const getSources = async (req, res) => {
   try {
     const sources = await sourceService.getSources();
-    res.json({ sources });
+    res.json(sources );
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
