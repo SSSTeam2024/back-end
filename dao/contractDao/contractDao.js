@@ -41,11 +41,23 @@ const getContracts = async () => {
     .populate("vehicleType")
     .populate("journeyType")
     .populate("luggageDetails")
-    .populate("salesperson");
+    .populate("salesperson")
 };
 
 const getContractById = async (id) => {
   return await Contract.findById(id);
+};
+
+const updateContractStatus = async (id, effectiveDate) => {
+  return await Contract.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        effectiveDate: effectiveDate,
+        contractStatus: "Approved",
+      },
+    }
+  );
 };
 module.exports = {
   getContractById,
@@ -53,4 +65,5 @@ module.exports = {
   updateContract,
   deletedContract,
   getContracts,
+  updateContractStatus
 };

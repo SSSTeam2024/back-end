@@ -152,10 +152,25 @@ const getContractById = async (req, res) => {
   }
 };
 
+const updateContractStatusToApprovedAPI = async (req, res) => {
+  try {
+    const { contract_id, effectiveDate } = req.body;
+    const sentResult = await contractService.updateContractStatusToApproved({
+      contract_id,
+      effectiveDate,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getContractById,
   getContracts,
   deleteContract,
   updateContract,
   createContract,
+  updateContractStatusToApprovedAPI
 };

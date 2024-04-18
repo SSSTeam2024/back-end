@@ -28,8 +28,6 @@ const updateStatus = async (
   invoiceFrequency,
   within_payment_days
 ) => {
-  console.log("DAO 31", invoiceFrequency)
-  console.log("DAO 32", within_payment_days)
   return await Programm.findByIdAndUpdate(
     { _id: id },
     {
@@ -46,7 +44,6 @@ const updateStatus = async (
 };
 
 const convert_to_contract = async (programData) => {
-  console.log(programData)
   return await Contract.create(programData);
 };
 

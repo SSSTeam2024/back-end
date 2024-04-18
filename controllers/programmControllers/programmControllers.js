@@ -1,4 +1,7 @@
 const programmService = require("../../services/programmServices/programmServices");
+const authShool = require("../../services/schoolServices/authSchool");
+const companyService = require("../../services/companyServices/companyService");
+const Contract = require("../../models/contractModel/contract");
 
 const getProgramms = async (req, res) => {
   try {
@@ -37,8 +40,36 @@ const createProgramm = async (req, res) => {
       vehiculeType,
       luggage,
       journeyType,
-      note
     } = req.body;
+   if(company_id === "") {
+    const newProgramm = await programmService.createProgramm({
+      notes,
+      extra,
+      recommanded_capacity,
+      invoiceFrequency,
+      exceptDays,
+      freeDays_date,
+      droppOff_date,
+      pickUp_date,
+      destination_point,
+      stops,
+      origin_point,
+      programName,
+      dropOff_time,
+      pickUp_Time,
+      workDates,
+      school_id,
+      notes_for_client,
+      notes_for_admin,
+      unit_price,
+      total_price,
+      program_status,
+      vehiculeType,
+      luggage,
+      journeyType,
+    });
+    res.status(201).json(newProgramm);
+   } else {
     const newProgramm = await programmService.createProgramm({
       notes,
       extra,
@@ -56,7 +87,6 @@ const createProgramm = async (req, res) => {
       pickUp_Time,
       workDates,
       company_id,
-      school_id,
       notes_for_client,
       notes_for_admin,
       unit_price,
@@ -65,9 +95,9 @@ const createProgramm = async (req, res) => {
       vehiculeType,
       luggage,
       journeyType,
-      note
     });
     res.status(201).json(newProgramm);
+   }
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -113,32 +143,81 @@ const convertedToContract = async (req, res) => {
   try {
     const { idProgram } = req.body;
     let program = await programmService.getProgrammById(idProgram);
-    await programmService.convertToContract({
-      idProgram: idProgram,
-      contractName: program.programName,
-      invoiceFrequency: program.invoiceFrequency,
-      customerNotes: program.notes,
-      staffNotes: "",
-      prices: (Number(program.total_price) + (Number(program.total_price) * 0.2)),
-      unit_price: program.unit_price,
-      salesperson: "445566778899112233003579",
-      idSchool: program.school_id,
-      idCompany: program.company_id,
-      vehicleType: program.vehiculeType,
-      journeyType: program.journeyType,
-      luggageDetails: program.luggage,
-      contractStatus: "Pending",
-      accountPhone: "",
-      accountEmail: "",
-      accountName: "",
-      accountRef: "",
-      effectiveDate: "",
-      within_payment_days: program.within_payment_days,
-      contract_number: "",
-      subTotal: program.total_price,
-      tva: Number(program.total_price) * 0.2
-    });
-    res.status(201).send("Converted Successfully");
+    let school = await authShool.getSchoolById(program.school_id)
+    let company = await companyService.getCompanyById(program.company_id)
+    const currentYear = new Date().getFullYear();
+    const latestContract = await Contract.findOne(
+      {},
+      {},
+      { sort: { updatedAt: -1 } }
+    );
+    let latestNumber = 0;
+    if (latestContract && latestContract.contractRef) {
+      const match = latestContract.contractRef.match(/C\d{4}\/(\d+)/);
+      if (match) {
+        latestNumber = parseInt(match[1], 10); 
+      }
+    }
+    const newNumber = latestNumber + 1;
+    const paddedNumber = newNumber.toString().padStart(4, "0");
+    const contractRef = `C${currentYear}/${paddedNumber}`
+    if(program.school_id === null) {
+      await programmService.convertToContract({
+        idProgram: idProgram,
+        contractName: program.programName,
+        invoiceFrequency: program.invoiceFrequency,
+        customerNotes: program.notes,
+        staffNotes: "",
+        prices: ((Number(program.total_price)) + ((Number(program.total_price)) * 0.2)).toFixed(2),
+        unit_price: program.unit_price,
+        salesperson: "445566778899112233003579",
+        idCompany: program.company_id,
+        vehicleType: program.vehiculeType,
+        journeyType: program.journeyType,
+        luggageDetails: program.luggage,
+        contractStatus: "Pending",
+        contractRef: contractRef,
+        accountPhone: company.phone,
+        accountEmail: company.email,
+        accountName: company.name,
+        accountRef: company.name,
+        effectiveDate: "",
+        within_payment_days: program.within_payment_days,
+        contract_number: "",
+        subTotal: program.total_price,
+        tva: (Number(program.total_price) * 0.2).toFixed(2)
+      });
+      res.status(201).send("Converted Successfully");
+    }
+    else {
+      await programmService.convertToContract({
+        idProgram: idProgram,
+        contractName: program.programName,
+        invoiceFrequency: program.invoiceFrequency,
+        customerNotes: program.notes,
+        staffNotes: "",
+        prices: ((Number(program.total_price)) + ((Number(program.total_price)) * 0.2)).toFixed(2),
+        unit_price: program.unit_price,
+        salesperson: "445566778899112233003579",
+        idSchool: program.school_id,
+        vehicleType: program.vehiculeType,
+        journeyType: program.journeyType,
+        luggageDetails: program.luggage,
+        contractStatus: "Pending",
+        contractRef: contractRef,
+        accountPhone: school.phone,
+        accountEmail: school.email,
+        accountName: school.name,
+        accountRef: school.name,
+        effectiveDate: "",
+        within_payment_days: program.within_payment_days,
+        contract_number: "",
+        subTotal: program.total_price,
+        tva: (Number(program.total_price) * 0.2).toFixed(2)
+      });
+      res.status(201).send("Converted Successfully");
+    }
+    
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

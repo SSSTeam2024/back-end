@@ -18,6 +18,14 @@ const getContracts = async () => {
 const getContractById = async (id) => {
   return await contractDao.getContractById(id);
 };
+const updateContractStatusToApproved = async (contractData) => {
+  console.log("Services", contractData)
+  let id = contractData.contract_id;
+  console.log("Services id", id)
+  let effectiveDate = contractData.effectiveDate;
+  await contractDao.updateContractStatus(id, effectiveDate);
+  return "Contract Status Up to date!!";
+};
 
 module.exports = {
   getContractById,
@@ -25,4 +33,5 @@ module.exports = {
   updateContract,
   deleteContract,
   getContracts,
+  updateContractStatusToApproved
 };
