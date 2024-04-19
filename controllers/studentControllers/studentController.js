@@ -30,7 +30,8 @@ const registerStudent = async (req, res) => {
       pickUp_date,
       pickUp_time,
       pickUp_station,
-      group
+      group,
+      idSchool
     } = req.body;
 
     const id_filePath= 'files/studentFiles/img/'
@@ -87,7 +88,8 @@ const registerStudent = async (req, res) => {
         pickUp_time,
         pickUp_station,
         group,
-        photo_id
+        photo_id,
+        idSchool
       },
       documents
     );
@@ -374,6 +376,31 @@ const deleteStudent = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const getStudentByIdSchool = async (req, res) => {
+  try {
+    const idSchool = req.body.idSchool;
+    const getStudentsByIdSchool =
+      await studentService.getStudentByIdSchool(idSchool);
+    if (!getStudentsByIdSchool) {
+      res.status(404).send("student not found");
+    }
+    res.json({ getStudentsByIdSchool });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const removeStudentFromGroup = async (req,res)=>{
+  try {
+    const { studentId, groupId } = req.params;
+    const result = await studentService.removeStudentFromGroup(groupId,studentId)
+      res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 module.exports = {
   registerStudent,
   login,
@@ -386,4 +413,6 @@ module.exports = {
   getStudentByEmail,
   updatePassword,
   getStudentByIdParent,
+  getStudentByIdSchool,
+  removeStudentFromGroup
 };

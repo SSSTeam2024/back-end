@@ -3,6 +3,9 @@ const Parent = require("../models/parentsModel/parents");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const Student = require ("../models/studentModels/student")
+const GroupMigration = require ("../models/groupStudent/groupMigration")
+const GroupStudent = require ("../models/groupStudent/groupStudent")
 
 // register a new student and update parent profile
 const registerStudent = async (studentData, documents) => {
@@ -112,6 +115,44 @@ const updatePassword = async (id, password) => {
   return await studentDao.updatePassword(id, hashedPassword);
 };
 
+const getStudentByIdSchool= async (idSchool) => {
+  return await studentDao.getStudentByIdSchool(idSchool);
+};
+
+async function removeStudentFromGroup(studentId, groupId) {
+  const student = await Student.findById(studentId);
+
+  if (!student) {
+    throw new Error('Student not found');
+  }
+
+  const group = await GroupStudent.findById(studentId).populate('students');
+
+  if (!group) {
+    throw new Error('Group not found');
+  }
+
+  // Create a GroupMigration document first
+  const leavingDate = new Date().toISOString();
+  const joiningDate = student.groupJoiningDate 
+  const migration = await new GroupMigration({
+    studentId,
+    groupId,
+    joiningDate,
+    leftDate: leavingDate
+  }).save(); 
+
+  // Remove employee from group's employees array and update employee
+  group.students.pull(studentId);
+  student.studentId = null;
+  student.groupJoiningDate = null;
+
+  await Promise.all([student.save(), group.save()]); // Update employee and group
+
+  return { student, group, migration };
+}
+
+
 module.exports = {
   registerStudent,
   getStudents,
@@ -123,4 +164,7 @@ module.exports = {
   getStudentByEmail,
   updatePassword,
   getStudentsByParentId,
+  removeStudentFromGroup,
+  getStudentByIdSchool
+  
 };

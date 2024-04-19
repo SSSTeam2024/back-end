@@ -21,6 +21,7 @@ const authCentralAppRoutes= require("./authCentralAppRoutes/authCentralAppRoutes
 const authTeamRoutes= require("./teamRoutes/teamRoutes")
 const programmRoutes= require("./programmRoutes/programmRoutes")
 const contractRoutes = require("./contractRoutes/contractRoutes")
+const groupRoutes = require("./groupSchoolRoutes/groupSchoolRoutes")
 
 router.use('/authSchool',schoolRoutes);
 router.use('/team',authTeamRoutes);
@@ -47,5 +48,6 @@ router.use('/quote', quoteRoutes);
 router.use('/note', noteRoutes);
 router.use('/programm', programmRoutes);
 router.use("/contract", contractRoutes);
+router.use("/groupStudent", groupRoutes);
 
 module.exports = router;

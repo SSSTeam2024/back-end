@@ -19,11 +19,14 @@ const updateNote = async (id, updateData) => {
 const deleteNote = async (id) => {
   return await Note.findByIdAndDelete(id);
 };
-
+const getNotesByIdCompany = async (id_corporate) => {
+  return await Note.find({id_corporate});
+}
 module.exports = {
   createNote,
   getNotes,
   getNoteById,
   updateNote,
   deleteNote,
+  getNotesByIdCompany
 };

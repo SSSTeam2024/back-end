@@ -15,9 +15,14 @@ const contractSchema = new mongoose.Schema({
   contractStatus: String,
   accountRef: String,
   accountName: String,
+  contractRef:String,
   accountEmail: String,
   accountPhone: String,
-  
+  effectiveDate: String,
+  within_payment_days: String,
+  contract_number: String,
+  subTotal: String,
+  tva: String,
 },
 {
   timestamps: true,

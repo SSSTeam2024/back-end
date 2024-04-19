@@ -94,6 +94,23 @@ const updatePassword = async (id, password) => {
     }
   );
 };
+const getStudentByIdSchool = async (idSchool) => {
+  return await Student.find({idSchool});
+}
+
+const updateStudentGroupId = async (id, group, date) => {
+  return await Student.findByIdAndUpdate({ _id:id }, {
+    $set: {
+      studentId: group,
+      groupJoiningDate:date
+    }
+  });
+}
+
+const getStudent= async () => {
+
+  return await Student.find().populate("groupId")
+};
 
 module.exports = {
   createStudent,
@@ -104,5 +121,8 @@ module.exports = {
   deleteStudent,
   updateStudent,
   getStudentEmail,
-  getStudentByParentId
+  getStudentByParentId,
+  updateStudentGroupId,
+  getStudentByIdSchool,
+  getStudent
 };
