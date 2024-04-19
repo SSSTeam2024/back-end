@@ -8,10 +8,10 @@ const quoteSchema = new mongoose.Schema(
     school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     owner: String,
     handled_by: Number,
-    id_driver: { type: Schema.Types.ObjectId, ref: "Driver" },
-    id_vehicle: { type: Schema.Types.ObjectId, ref: "Vehicle" },
+    id_driver: { type: Schema.Types.ObjectId, ref: "Driver", default: null },
+    id_vehicle: { type: Schema.Types.ObjectId, ref: "Vehicle", default: null },
     handled_by_subcontractor: String, //id of subcontractor
-    id_visitor: { type: Schema.Types.ObjectId, ref: "Visitor" },
+    id_visitor: { type: Schema.Types.ObjectId, ref: "Visitor", default: null },
     vehicle_type: String,
     passengers_number: Number,
     luggage_details: String,

@@ -2,6 +2,9 @@ const programmService = require("../../services/programmServices/programmService
 const authShool = require("../../services/schoolServices/authSchool");
 const companyService = require("../../services/companyServices/companyService");
 const Contract = require("../../models/contractModel/contract");
+const VehicleTypeService = require("../../services/vehicleTypeServices/vehicleTypeService");
+const journeyService = require('../../services/journeyServices/journeyService');
+const luggageService = require('../../services/luggageServices/luggageService');
 
 const getProgramms = async (req, res) => {
   try {
@@ -39,8 +42,10 @@ const createProgramm = async (req, res) => {
       program_status,
       vehiculeType,
       luggage,
+      within_payment_days,
       journeyType,
     } = req.body;
+    console.log(req.body)
    if(company_id === "") {
     const newProgramm = await programmService.createProgramm({
       notes,
@@ -66,6 +71,7 @@ const createProgramm = async (req, res) => {
       program_status,
       vehiculeType,
       luggage,
+      within_payment_days,
       journeyType,
     });
     res.status(201).json(newProgramm);
@@ -94,6 +100,7 @@ const createProgramm = async (req, res) => {
       program_status,
       vehiculeType,
       luggage,
+      within_payment_days,
       journeyType,
     });
     res.status(201).json(newProgramm);
@@ -228,27 +235,58 @@ const convertToQuoteAPI = async (req, res) => {
   try {
     const { id_schedule } = req.body;
     let program = await programmService.getProgrammById(id_schedule);
+    let vehicleType = await VehicleTypeService.getVehicleTypeById(program.vehiculeType);
+    let journey = await journeyService.getJourneyById(program.journeyType);
+    let luggage = await luggageService.getLuagggeById(program.luggage);
     for (let i = 0; i < program.workDates.length; i++) {
-      const sentResult = await programmService.convertToQuote({
-        id_schedule: id_schedule,
-        id_corporate: program.clientID,
-        passengers_number: Number(program.recommanded_capacity),
-        start_point: program.origin_point,
-        mid_stations: program.stops,
-        return_time: program.dropOff_time,
-        date: program.workDates[i],
-        return_date: program.workDates[i],
-        destination_point: program.destination_point,
-        pickup_time: program.pickUp_Time,
-        progress: "Booked",
-        status: "Booked",
-        category:"Regular",
-        manual_cost: program.unit_price,
-        id_driver: "112233445566778899002587",
-        id_vehicle: "998877665544332211009854",
-        id_invoice: "",
-        enquiryDate: new Date()
-      });
+      if(program.school_id === null) {
+        const sentResult = await programmService.convertToQuote({
+          id_schedule: id_schedule,
+          company_id: program.company_id,
+          passengers_number: Number(program.recommanded_capacity),
+          start_point: program.origin_point,
+          mid_stations: program.stops,
+          dropoff_time: program.dropOff_time,
+          date: program.workDates[i],
+          dropoff_date: program.workDates[i],
+          destination_point: program.destination_point,
+          pickup_time: program.pickUp_Time,
+          notes: program.notes,
+          progress: "Booked",
+          status: "Booked",
+          category:"Regular",
+          vehicle_type: vehicleType.type,
+          journey_type: journey.type,
+          luggage_details: luggage.description,
+          manual_cost: program.unit_price,
+          id_invoice: "",
+          enquiryDate: new Date()
+        });
+      }
+      else {
+        const sentResult = await programmService.convertToQuote({
+          id_schedule: id_schedule,
+          school_id: program.school_id,
+          passengers_number: Number(program.recommanded_capacity),
+          start_point: program.origin_point,
+          mid_stations: program.stops,
+          dropoff_time: program.dropOff_time,
+          date: program.workDates[i],
+          dropoff_date: program.workDates[i],
+          destination_point: program.destination_point,
+          pickup_time: program.pickUp_Time,
+          notes: program.notes,
+          progress: "Booked",
+          status: "Booked",
+          category:"Regular",
+          vehicle_type: vehicleType.type,
+          journey_type: journey.type,
+          luggage_details: luggage.description,
+          manual_cost: program.unit_price,
+          id_invoice: "",
+          enquiryDate: new Date()
+        });
+      }
     }
     res.status(201).send("Converted Successfully");
   } catch (error) {

@@ -69,22 +69,36 @@ const updateQuoteDriver = async (id, price, diver, vehicle) => {
         balance: price,
         id_vehicle: vehicle,
         id_driver: diver,
-        progress: "Allocated",
+        status: "Allocated",
       },
     }
   );
 };
 
 const updateDriver = async (id, diver) => {
-  return await Quote.findByIdAndUpdate(
-    { _id: id },
-    {
-      $set: {
-        id_driver: diver,
-        progress: "Driver Allocated",
-      },
-    }
-  );
+  const quote = await Quote.findById(id)
+  if(quote.id_vehicle === null) {
+    return await Quote.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          id_driver: diver,
+          status: "Driver Allocated",
+        },
+      }
+    );
+  }
+  else {
+    return await Quote.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          id_driver: diver,
+          status: "Allocated",
+        },
+      }
+    );
+  }
 };
 
 const updateProgress = async (id, progress) => {
@@ -111,15 +125,29 @@ const updateStatusToCancel = async (id, status) => {
 };
 
 const updateVehicle = async (id, vehicle) => {
+  const quote = await Quote.findById(id)
+  if(quote.id_driver === null) {
   return await Quote.findByIdAndUpdate(
     { _id: id },
     {
       $set: {
         id_vehicle: vehicle,
-        progress: "Vehicle Allocated",
+        status: "Vehicle Allocated",
       },
     }
   );
+}
+else {
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        id_vehicle: vehicle,
+        status: "Allocated",
+      },
+    }
+  );
+}
 };
 
 const getQuotesByDriverID = async (id, date) => {
@@ -133,7 +161,7 @@ const query = {
 };
 
 // Execute the query
-const quotes = await Quote.find(query).populate("id_visitor").populate("checklist_id")
+const quotes = await Quote.find(query).populate("id_visitor").populate("checklist_id").populate("company_id").populate("school_id")
 
   return quotes;
 };
@@ -161,7 +189,7 @@ const assignDriverAndVehicleToQuoteDao = async (id, driver_ID, vehicle_ID) => {
       $set: {
         id_vehicle: vehicle_ID,
         id_driver: driver_ID,
-        progress: "Allocated",
+        status: "Allocated",
       },
     }
   );
