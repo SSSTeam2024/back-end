@@ -44,7 +44,7 @@ const createQuote = async (quoteData, distance) => {
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+    let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
     console.log("55", quote);
     email = await prepareQuoteBookingEmail(
       id,
@@ -93,7 +93,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
@@ -152,7 +152,7 @@ const sendPaymentEmail = async (paymentData) => {
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
   let url =
-    "https://bouden.uk.oxa.cloud/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
+    "http://localhost:3000/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";

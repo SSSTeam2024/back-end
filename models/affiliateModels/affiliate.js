@@ -8,7 +8,7 @@ const affiliateSchema = new mongoose.Schema({
   category: String,
   region: String,
   service_date: String,
-  status: String,
+  statusAffiliate: String,
   account_name: String,
   sort_code: Number,
   account_number: Number,
@@ -21,7 +21,10 @@ const affiliateSchema = new mongoose.Schema({
   license_id: String,
   license_date: String,
   license_file: String,
+  notes: String,
   vehicles: [],
+  fleetNumber: String,
+  enquiryDate:String
 });
 
 module.exports = mongoose.model('Affiliate', affiliateSchema);

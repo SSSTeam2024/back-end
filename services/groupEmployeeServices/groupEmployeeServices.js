@@ -1,6 +1,10 @@
 const groupEmployeeDao = require("../../dao/groupEmployeeDao/groupEmployeeDao");
 const employeeDao = require("../../dao/employeeDao/employeeDao");
 const groupMigrationDao = require('../../dao/groupEmployeeDao/groupMigrationDao');
+const GroupMigration = require ("../../models/groupEmployee/groupMigration")
+const Employee = require("../../models/employeeSchema/employeeSchema");
+
+
 
 async function createGroupAndAssignEmployees(groupData, employeeIds) {
   try {
@@ -56,6 +60,47 @@ async function updateEmployees(employees, group, date) {
   });
 }
 
+// async function addEmployeesToGroup(_id, employees) {
+//   try {
+   
+//     if (!_id) {
+//       throw new Error("group Id is required");
+//     }
+
+    
+//     const UpdatedGroupEmployees = await groupEmployeeDao.addEmployeesToGroup(
+//       _id,
+//       employees
+//     );
+//     return UpdatedGroupEmployees;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+async function addEmployeesToGroup(_id, employees) {
+  try {
+    if (!_id) {
+      throw new Error("Group ID is required");
+    }
+
+    const updatedGroup = await groupEmployeeDao.addEmployeesToGroup(_id, employees);
+
+    // Update each employee with groupId and joining date
+    const updatedEmployees = await Promise.all(
+      employees.map(async (employeeId) => {
+        return await Employee.findByIdAndUpdate(employeeId, {
+          groupId: _id,
+          groupJoiningDate: new Date().toISOString(),
+        });
+      })
+    );
+
+    return { updatedGroup, updatedEmployees }; // Return both updated group and employees
+  } catch (error) {
+    throw error;
+  }
+}
+
 const getallGroupEmployee = async () => {
   return await groupEmployeeDao.getallGroupEmployee();
 };
@@ -78,25 +123,32 @@ const getGroupByIdCompany = async (id_company) => {
 const deleteGroupEmployee = async (id) => {
   return await groupEmployeeDao.deleteGroupEmployee(id);
 };
+
+
+
+
+
 async function removeEmployeeFromGroup(groupId, employeeId) {
   try {
-    // Get employee information
-    const employeeInfo = await groupEmployeeDao.getEmployeeInfo(groupId, employeeId);
+      const employeeInfo = await groupEmployeeDao.getEmployeeInfo(groupId, employeeId);
+      if (!employeeInfo) {
+          throw new Error('Employee information not found.');
+      }
 
-    if (!employeeInfo) {
-      throw new Error('Employee information not found.');
-    }
+      // Register employee movement
+      await groupMigrationDao.registerEmployeeMovement(employeeInfo);
 
-    // Register employee movement
-    await groupMigrationDao.registerEmployeeMovement(employeeInfo);
-
-    // Remove employee from the group
-    await groupEmployeeDao.removeEmployeeFromGroup(groupId, employeeId);
+      // Remove employee from the group
+      await groupEmployeeDao.removeEmployeeFromGroup(groupId, employeeId);
   } catch (error) {
-    console.error('Error removing employee from group:', error);
-    throw error;
+      throw new Error('Error removing employee from group: ' + error.message);
   }
 }
+
+
+
+
+
 module.exports = {
   getAllGroups,
   createGroupAndAssignEmployees,
@@ -108,4 +160,5 @@ module.exports = {
   deleteGroupEmployee,
   getGroupByIdCompany,
   removeEmployeeFromGroup,
+  addEmployeesToGroup
 };

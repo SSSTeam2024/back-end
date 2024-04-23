@@ -11,7 +11,7 @@ const register = async (req, res) => {
       category,
       region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
@@ -25,7 +25,9 @@ const register = async (req, res) => {
       license_id,
       license_date,
       licenseIdBase64String,
-      licenseIdExtension 
+      licenseIdExtension ,
+      notes,
+      fleetNumber
     } = req.body;
 
     let id_file = globalFunctions.generateUniqueFilename(cardIdExtension,'cardId');
@@ -52,7 +54,7 @@ const register = async (req, res) => {
       category,
       region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
@@ -64,7 +66,9 @@ const register = async (req, res) => {
       id_file,
       license_id,
       license_date,
-      license_file
+      license_file,
+      notes,
+      fleetNumber
      },documents);
     res.sendStatus(201);
   } catch (error) {

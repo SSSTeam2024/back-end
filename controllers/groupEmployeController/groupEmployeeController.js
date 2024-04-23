@@ -174,17 +174,32 @@ const deleteGroupEmployee = async (req, res) => {
 async function removeEmployeeFromGroup(req, res) {
   try {
     const groupId = req.params.groupId;
-   
     const employeeId = req.params.employeeId;
-    console.log('groupId:', groupId);
-console.log('employeeId:', employeeId);
 
     await groupEmployeeService.removeEmployeeFromGroup(groupId, employeeId);
 
     res.status(204).send(); // No content - Employee successfully removed from group
+} catch (error) {
+    console.error('Error removing employee from group:', error);
+    res.status(500).send(error.message);
+}
+}
+
+async function addEmployeesToGroup(req, res) {
+  try {
+    const { _id } = req.body;
+    const { employees } = req.body;
+
+    if (!(_id && Array.isArray(employees) && employees.length > 0)) {
+      // Improved validation (check if employees array is not empty)
+      return res.status(400).json({ message: "Invalid request parameters" });
+    }
+
+    const updatedEmployeeGroup = await groupEmployeeService.addEmployeesToGroup(_id, employees);
+    return res.status(200).json(updatedEmployeeGroup);
   } catch (error) {
     console.error(error);
-    res.status(500).send(error.message);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 
@@ -198,4 +213,5 @@ module.exports = {
   deleteGroupEmployee,
   getGroupByIdCompany,
   removeEmployeeFromGroup,
+  addEmployeesToGroup
 };

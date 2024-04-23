@@ -12,6 +12,7 @@ router.delete("/deleteEmployee/:id",employeeController.deleteEmployee)
 router.put("/updateEmployee/:id",employeeController.updateEmployee)
 router.post("/loginEmployee",employeeController.loginEmployee)
 router.post("/logoutEmployee",employeeController.logoutEmployee)
+router.delete("/employees/:employeeId/groups/:groupId",employeeController.removeEmployeeFromGroup)
 
 
 module.exports = router;

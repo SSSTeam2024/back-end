@@ -2,7 +2,9 @@ const employeeDao =require("../../dao/employeeDao/employeeDao")
 const fs = require("fs").promises;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const Employee = require ("../../models/employeeSchema/employeeSchema")
+const GroupMigration = require ("../../models/groupEmployee/groupMigration")
+const GroupEmployee = require ("../../models/groupEmployee/groupEmployeeSchema")
 
 async function saveMediaToServer(documents){
   let counter = 0;
@@ -74,6 +76,39 @@ const getEmployees = async () => {
     return await employeeDao.updateEmployee(id, updateData);
   };
 
+
+  async function removeEmployeeFromGroup(employeeId, groupId) {
+    const employee = await Employee.findById(employeeId);
+  
+    if (!employee) {
+      throw new Error('Employee not found');
+    }
+  
+    const group = await GroupEmployee.findById(groupId).populate('employees');
+  
+    if (!group) {
+      throw new Error('Group not found');
+    }
+  
+    // Create a GroupMigration document first
+    const leavingDate = new Date().toISOString();
+    const joiningDate = employee.groupJoiningDate 
+    const migration = await new GroupMigration({
+      employeeId,
+      groupId,
+      joiningDate,
+      leftDate: leavingDate
+    }).save(); 
+  
+    // Remove employee from group's employees array and update employee
+    group.employees.pull(employeeId);
+    employee.groupId = null;
+    employee.groupJoiningDate = null;
+  
+    await Promise.all([employee.save(), group.save()]); // Update employee and group
+  
+    return { employee, group, migration };
+  }
  
 
-  module.exports = {createEmployee,getEmployeeByEmail,getEmployees,deleteEmployee,getEmployeeById, updateEmployee, loginEmployee, getEmployeeByIdCompany}
+  module.exports = {createEmployee,getEmployeeByEmail,getEmployees,deleteEmployee,getEmployeeById, updateEmployee, loginEmployee, getEmployeeByIdCompany, removeEmployeeFromGroup}

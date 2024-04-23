@@ -1,11 +1,49 @@
 const checkTypeDao = require("../../dao/checkTypeDao/checkTypeDao");
+const globalFunctions = require("../../utils/globalFunctions");
+const fs = require("fs");
 
-const createCheckType = async (checkTypeData, documents) => {
-  console.log(checkTypeData);
-  console.log(documents);
-  let saveResult = await saveDocumentsToServer(documents);
+const createCheckType = async (checkTypeData) => {
+  console.log("Request Data", checkTypeData);
+
+  const chechTypeFilesPath = "files/checkTypeFiles/";
+
+  let typesArray = checkTypeData.type;
+
+  let imagesArray = [];
+
+  let validCheckTypeData = {
+    type: [],
+    duration: checkTypeData.duration,
+  };
+
+  for (let type of typesArray) {
+    let imageName = globalFunctions.generateUniqueFilename(
+      type.checkType_image_extension,
+      type.category + "Image"
+    );
+
+    imagesArray.push({
+      base64String: type.checkType_image_base64_string,
+      name: imageName,
+      path: chechTypeFilesPath,
+    });
+
+    validCheckTypeData.type.push({
+      category: type.category,
+      message: type.message,
+      title: type.title,
+      checkType_image: imageName,
+    });
+  }
+
+  console.log("Images To Server", imagesArray);
+
+  console.log("Data To DB", validCheckTypeData);
+
+  let saveResult = await saveDocumentsToServer(imagesArray);
   console.log(saveResult);
-  return await checkTypeDao.createCheckType(checkTypeData);
+
+  return await checkTypeDao.createCheckType(validCheckTypeData);
 };
 
 async function saveDocumentsToServer(documents) {
@@ -20,10 +58,9 @@ async function saveDocumentsToServer(documents) {
 }
 
 async function saveFile(base64String, fileName, file_path) {
-  //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
-  console.log(filePath)
+  console.log(filePath);
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);
