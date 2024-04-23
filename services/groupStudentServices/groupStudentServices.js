@@ -1,6 +1,6 @@
 const groupStudentDao = require("../../dao/groupStudentDao/groupStudentDao");
 const studentDao = require("../../dao/studentDao/studentDao");
-const groupMigrationDao = require('../../dao/groupStudentDao/groupMigrationDao');
+// const groupMigrationDao = require('../../dao/groupStudentDao/groupMigrationDao');
 const Student = require("../../models/studentModels/student");
 
 
@@ -96,22 +96,23 @@ const deleteGroupStudent = async (id) => {
 
 
 
-async function removeStudentFromGroup(groupId, studentId) {
-  try {
-      const studentInfo = await groupStudentDao.getStudentInfo(groupId, studentId);
-      if (!studentInfo) {
-          throw new Error('Student information not found.');
-      }
+// async function removeStudentFromGroup(groupId, studentId) {
+//   try {
+//       const studentInfo = await groupStudentDao.getStudentInfo(groupId, studentId);
+//       if (!studentInfo) {
+//           throw new Error('student information not found.');
+//       }
 
-      // Register student movement
-      await groupMigrationDao.registerStudentMovement(studentInfo);
+//       // Register employee movement
+//       await groupMigrationDao.registerStudentMovement(studentInfo);
 
-      // Remove student from the group
-      await groupStudentDao.removeStudentFromGroup(groupId, studentId);
-  } catch (error) {
-      throw new Error('Error removing student from group: ' + error.message);
-  }
-}
+//       // Remove employee from the group
+//       await groupStudentDao.removeStudentFromGroup(groupId, studentId);
+//   } catch (error) {
+//       throw new Error('Error removing student from group: ' + error.message);
+//   }
+// }
+
 
 
 
@@ -127,6 +128,6 @@ module.exports = {
   getallGroupStudents,
   deleteGroupStudent,
   getGroupByIdSchool,
-  removeStudentFromGroup,
+  // removeStudentFromGroup,
   addStudentToGroup
 };

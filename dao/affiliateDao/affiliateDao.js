@@ -1,49 +1,78 @@
 const Affiliate = require('../../models/affiliateModels/affiliate');
 
-const createAffiliate = async (affiliate) => {
-  return await Affiliate.create(affiliate);
+//create affiliate
+const createAffiliate = async (affiliateData) => {
+  return await Affiliate.create(affiliateData);
+};
+// find affiliate by login
+const findAffiliateByUsername = async (login) => {
+  return await Affiliate.findOne({ login });
 };
 
-const getAffiliates = async () => {
-  return await Affiliate.find();
+// find affiliate by token
+const findAffiliateByToken = async (token) => {
+  let api_token = token;
+  return await Affiliate.findOne({ api_token });
 };
 
-const updateAffiliate = async (id, updateData) => {
-  return await Affiliate.findByIdAndUpdate(id, updateData, { new: true });
-};
+
+// delete affiliate 
 
 const deleteAffiliate = async (id) => {
   return await Affiliate.findByIdAndDelete(id);
 };
 
-const findAffiliateByLogin = async (login) => {
-  return await Affiliate.findOne({ login });
+// updateAffiliate profile
+const updateAffiliate= async (id, updateData) => {
+  return await Affiliate.findByIdAndUpdate(id, updateData, { new: true });
 };
 
+// get Affiliate by id
 const getAffiliateById = async (id) => {
   return await Affiliate.findById(id);
 }
 
-const getAffiliateByEmail = async (email) => {
-  return await Affiliate.findOne({ email });
-}
-
-const updatePassword = async (id, password) => {
-  console.log('Hashed pwd: '+password);
+// get all Affiliates
+const getAllAffiliates = async () => {
+  return await Affiliate.find({});
+};
+const updateJwtToken = async (id, token) => {
   return await Affiliate.findByIdAndUpdate({ _id:id }, {
     $set: {
-      password: password
+      api_token: token
     }
   });
 }
 
+  // update password
+  const updatePassword = async (id, password) => {
+    console.log('Hashed pwd: '+password);
+    return await Affiliate.findByIdAndUpdate({ _id:id }, {
+      $set: {
+        password: password
+      }
+    });
+  }
+
+    // logout
+    const logout = async (id) => {
+      return await Affiliate.findByIdAndUpdate({ _id:id }, {
+        $set: {
+          api_token: ""
+        }
+      });
+    }
+
+
 module.exports = {
-  createAffiliate,
-  getAffiliates,
-  updateAffiliate,
-  deleteAffiliate,
-  findAffiliateByLogin,
-  getAffiliateById,
-  getAffiliateByEmail,
-  updatePassword
+    getAllAffiliates,
+    getAffiliateById,
+    updateAffiliate,
+    deleteAffiliate,
+    findAffiliateByToken,
+    findAffiliateByUsername,
+    updateJwtToken,
+    updatePassword,
+    createAffiliate,
+    logout
 };

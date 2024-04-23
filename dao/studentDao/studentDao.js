@@ -101,7 +101,7 @@ const getStudentByIdSchool = async (idSchool) => {
 const updateStudentGroupId = async (id, group, date) => {
   return await Student.findByIdAndUpdate({ _id:id }, {
     $set: {
-      studentId: group,
+      groupId: group,
       groupJoiningDate:date
     }
   });

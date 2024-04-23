@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const groupStudentSchema = new mongoose.Schema({
+const groupSchoolSchema = new mongoose.Schema({
     groupName: String,
     note:String,
     startPoint: String,
@@ -15,4 +15,4 @@ const groupStudentSchema = new mongoose.Schema({
     program: { type: mongoose.Schema.Types.ObjectId, ref: 'Programm',required:false  },
 });
 
-module.exports = mongoose.model('groupStudent', groupStudentSchema);
+module.exports = mongoose.model('groupStudent', groupSchoolSchema);

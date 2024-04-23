@@ -11,7 +11,7 @@ router.get("/getGroupStudentById/:id",groupStudentController.getGroupStudentById
 router.put("/updateGroupById/:id",groupStudentController.updateGroupEmployee)
 
 router.post('/createGroupAndAssignStudent', groupStudentController.createGroupAndAssignStudents);
-router.delete('/groups/:groupId/students/:studentId', groupStudentController.removeStudentFromGroup)
+// router.delete('/groups/:groupId/students/:studentId', groupStudentController.removeStudentFromGroup)
 
 router.get('/getgroups',groupStudentController.getGroups)
 router.post('/addStudentToGroup',groupStudentController.addStudentsToGroup)

@@ -117,7 +117,7 @@ async function getStudentInfo(groupId, studentId) {
       const studentInfo = await Student.findOne({ _id: studentId, groupId: groupId });
 
       if (!studentInfo) {
-          throw new Error('Student not found in the group.');
+          throw new Error('student not found in the group.');
       }
 
       return studentInfo;
@@ -125,6 +125,7 @@ async function getStudentInfo(groupId, studentId) {
       throw new Error('Error fetching student information: ' + error.message);
   }
 }
+
 
 
   

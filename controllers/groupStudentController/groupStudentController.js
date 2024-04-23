@@ -51,7 +51,6 @@ const addNewGroup = async (req, res) => {
       status,
       id_school,
       program,
-
       students,
     } = req.body;
     console.log(req.body);
@@ -185,6 +184,8 @@ const deleteGroupStudent = async (req, res) => {
         groupStudentId
     );
 
+    // await groupStudentService.removeStudentFromGroup()
+
     if (!deletedGroupStudent) {
       return res.status(404).send("Group student not found");
     }
@@ -196,23 +197,23 @@ const deleteGroupStudent = async (req, res) => {
 };
 
 
-async function removeStudentFromGroup(req, res) {
-  try {
-      const groupId = req.params.groupId;
-      const studentId = req.params.studentId;
+// async function removeStudentFromGroup(req, res) {
+//   try {
+//       const groupId = req.params.groupId;
+//       const studentId = req.params.studentId;
 
-      await groupStudentService.removeStudentFromGroup(groupId, studentId);
+//       await groupStudentService.removeStudentFromGroup(groupId, studentId);
 
-      res.status(204).send(); // No content - student successfully removed from group
-  } catch (error) {
-      console.error('Error removing student from group:', error);
-      res.status(500).send(error.message);
-  }
-}
+//       res.status(204).send(); // No content - Employee successfully removed from group
+//   } catch (error) {
+//       console.error('Error removing STUDENT from group:', error);
+//       res.status(500).send(error.message);
+//   }
+// }
 
 module.exports = {
   getGroups,
-  removeStudentFromGroup,
+  // removeStudentFromGroup,
   addNewGroup,
   getAllGroups,
   deleteGroupStudent,

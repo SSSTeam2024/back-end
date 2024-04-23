@@ -25,7 +25,7 @@ const studentSchema = new mongoose.Schema(
     DropOff_time: String,
     DropOff_date: String,
     photo_id:String,
-    groupId: { type: Schema.Types.ObjectId, ref: 'groupStudent' ,defaultValue:null },
+    groupId: { type: Schema.Types.ObjectId, ref: 'groupStudent' ,required:false },
     groupJoiningDate:String,
     idSchool: String,
     group:String,

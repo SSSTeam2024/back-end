@@ -31,11 +31,13 @@ const registerStudent = async (req, res) => {
       pickUp_time,
       pickUp_station,
       group,
-      idSchool
+    
+      groupJoiningDate,
+      idSchool,
     } = req.body;
 
-    const id_filePath= 'files/studentFiles/img/'
-    const photo_idPath= 'files/studentFiles/pdf/'
+    const id_filePath = "files/studentFiles/img/";
+    const photo_idPath = "files/studentFiles/pdf/";
 
     let id_file = globalFunctions.generateUniqueFilename(
       IdFileExtension,
@@ -48,17 +50,16 @@ const registerStudent = async (req, res) => {
 
     let documents = [
       {
-        base64String:IdFileBase64String,
+        base64String: IdFileBase64String,
         extension: IdFileExtension,
         name: id_file,
-        path:id_filePath
+        path: id_filePath,
       },
       {
         base64String: PhotoIdBase64String,
         extension: PhotoIdExtension,
         name: photo_id,
-        path: photo_idPath
-
+        path: photo_idPath,
       },
     ];
 
@@ -89,7 +90,8 @@ const registerStudent = async (req, res) => {
         pickUp_station,
         group,
         photo_id,
-        idSchool
+        idSchool,
+        groupJoiningDate,
       },
       documents
     );
@@ -237,7 +239,7 @@ const updateProfile = async (req, res) => {
       DropOff_station,
       pickUp_date,
       pickUp_time,
-      pickUp_station
+      pickUp_station,
     } = req.body;
     let id_file;
     if (IdFileBase64String && IdFileExtension) {
@@ -276,7 +278,7 @@ const updateProfile = async (req, res) => {
           DropOff_station,
           pickUp_date,
           pickUp_time,
-          pickUp_station
+          pickUp_station,
         },
         documents
       );
@@ -302,7 +304,7 @@ const updateProfile = async (req, res) => {
         DropOff_station,
         pickUp_date,
         pickUp_time,
-        pickUp_station
+        pickUp_station,
       });
     }
 
@@ -380,8 +382,9 @@ const deleteStudent = async (req, res) => {
 const getStudentByIdSchool = async (req, res) => {
   try {
     const idSchool = req.body.idSchool;
-    const getStudentsByIdSchool =
-      await studentService.getStudentByIdSchool(idSchool);
+    const getStudentsByIdSchool = await studentService.getStudentByIdSchool(
+      idSchool
+    );
     if (!getStudentsByIdSchool) {
       res.status(404).send("student not found");
     }
@@ -395,12 +398,13 @@ const getStudentByIdSchool = async (req, res) => {
 const removeStudentFromGroup = async (req,res)=>{
   try {
     const { studentId, groupId } = req.params;
-    const result = await studentService.removeStudentFromGroup(groupId,studentId)
+    const result = await studentService.removeStudentFromGroup(studentId, groupId);
       res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+  
+  }
 module.exports = {
   registerStudent,
   login,
@@ -414,5 +418,5 @@ module.exports = {
   updatePassword,
   getStudentByIdParent,
   getStudentByIdSchool,
-  removeStudentFromGroup
+  removeStudentFromGroup,
 };

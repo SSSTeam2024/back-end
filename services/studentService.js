@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const Student = require ("../models/studentModels/student")
-const GroupMigration = require ("../models/groupStudent/groupMigration")
+const GroupMigrationStudent = require ("../models/groupStudent/groupMigrationStudent")
 const GroupStudent = require ("../models/groupStudent/groupStudent")
 
 // register a new student and update parent profile
@@ -123,10 +123,10 @@ async function removeStudentFromGroup(studentId, groupId) {
   const student = await Student.findById(studentId);
 
   if (!student) {
-    throw new Error('Student not found');
+    throw new Error('student not found');
   }
 
-  const group = await GroupStudent.findById(studentId).populate('students');
+  const group = await GroupStudent.findById(groupId).populate('students');
 
   if (!group) {
     throw new Error('Group not found');
@@ -135,7 +135,7 @@ async function removeStudentFromGroup(studentId, groupId) {
   // Create a GroupMigration document first
   const leavingDate = new Date().toISOString();
   const joiningDate = student.groupJoiningDate 
-  const migration = await new GroupMigration({
+  const migration = await new GroupMigrationStudent({
     studentId,
     groupId,
     joiningDate,
@@ -144,13 +144,14 @@ async function removeStudentFromGroup(studentId, groupId) {
 
   // Remove employee from group's employees array and update employee
   group.students.pull(studentId);
-  student.studentId = null;
+  student.groupId = null;
   student.groupJoiningDate = null;
 
   await Promise.all([student.save(), group.save()]); // Update employee and group
 
   return { student, group, migration };
 }
+
 
 
 module.exports = {

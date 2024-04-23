@@ -10,8 +10,8 @@ const affiliateSchema = new mongoose.Schema({
   service_date: String,
   status: String,
   account_name: String,
-  sort_code: Number,
-  account_number: Number,
+  sort_code: String,
+  account_number: String,
   bank_name: String,
   login: String,
   password: String,
@@ -21,6 +21,7 @@ const affiliateSchema = new mongoose.Schema({
   license_id: String,
   license_date: String,
   license_file: String,
+  api_token:String,
   vehicles: [],
 });
 

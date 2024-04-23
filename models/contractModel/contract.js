@@ -23,6 +23,7 @@ const contractSchema = new mongoose.Schema({
   contract_number: String,
   subTotal: String,
   tva: String,
+
 },
 {
   timestamps: true,
