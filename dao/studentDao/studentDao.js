@@ -28,8 +28,8 @@ const createStudent = async (studentData) => {
 };
 
 // find student by login
-const findStudentByLogin = async (login) => {
-  return await Student.findOne({ login });
+const findStudentByLogin = async (email) => {
+  return await Student.findOne({ email });
 };
 // get all students
 const getAllStudents = async () => {
@@ -112,6 +112,28 @@ const getStudent= async () => {
   return await Student.find().populate("groupId")
 };
 
+const updateJwtToken = async (id, token) => {
+  return await Student.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: token,
+      },
+    }
+  );
+};
+
+const logout = async (id) => {
+  return await Student.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: "",
+      },
+    }
+  );
+};
+
 module.exports = {
   createStudent,
   getAllStudents,
@@ -124,5 +146,7 @@ module.exports = {
   getStudentByParentId,
   updateStudentGroupId,
   getStudentByIdSchool,
-  getStudent
+  getStudent,
+  updateJwtToken,
+  logout
 };

@@ -46,16 +46,18 @@ const getStudentsByParentId = async (studentId) => {
 };
 
 // login student account
-const loginStudent = async (login, password) => {
-  const student = await studentDao.findStudentByLogin(login);
+const loginStudent = async (email, password) => {
+  const student = await studentDao.findStudentByLogin(email);
 
   if (!student) {
     throw new Error("Student not found");
   }
 
   if (await bcrypt.compare(password, student.password)) {
-    const accessToken = jwt.sign({ login: student.login }, "yourSecretKey");
-    return { accessToken };
+    const accessToken = jwt.sign({ student: student.username }, "yourSecretKey");
+    await studentDao.updateJwtToken(student._id, String(accessToken));
+    let updatedStudent = await studentDao.getStudentById(student._id);
+    return updatedStudent;
   } else {
     throw new Error("Incorrect password");
   }
@@ -151,7 +153,9 @@ async function removeStudentFromGroup(studentId, groupId) {
 
   return { student, group, migration };
 }
-
+const logout = async (id) => {
+  return await studentDao.logout(id);
+};
 
 
 module.exports = {
@@ -166,6 +170,7 @@ module.exports = {
   updatePassword,
   getStudentsByParentId,
   removeStudentFromGroup,
-  getStudentByIdSchool
+  getStudentByIdSchool,
+  logout
   
 };

@@ -22,6 +22,8 @@ const authTeamRoutes= require("./teamRoutes/teamRoutes")
 const programmRoutes= require("./programmRoutes/programmRoutes")
 const contractRoutes = require("./contractRoutes/contractRoutes")
 const groupRoutes = require("./groupSchoolRoutes/groupSchoolRoutes")
+const affiliateVehicleRoutes = require("./affiliateVehicleRoutes/affiliateVehicleRoutes")
+const affiliateDriverRoutes=require("./affiliateDriverRoutes/affiliateDriverRoutes")
 
 router.use('/authSchool',schoolRoutes);
 router.use('/team',authTeamRoutes);
@@ -49,5 +51,6 @@ router.use('/note', noteRoutes);
 router.use('/programm', programmRoutes);
 router.use("/contract", contractRoutes);
 router.use("/groupStudent", groupRoutes);
-
+router.use("/affiliateVehicle", affiliateVehicleRoutes);
+router.use("/affiliateDriver", affiliateDriverRoutes);
 module.exports = router;

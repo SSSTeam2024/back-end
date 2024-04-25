@@ -29,6 +29,7 @@ const studentSchema = new mongoose.Schema(
     groupJoiningDate:String,
     idSchool: String,
     group:String,
+    api_token: String,
     // school_id: {
     //   type: Schema.Types.ObjectId,
     //   ref: "School",

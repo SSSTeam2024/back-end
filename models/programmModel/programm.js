@@ -14,7 +14,13 @@ const programmSchema = new mongoose.Schema(
     stops: [
       {
         id: String,
-        address: String,
+        address: {
+          placeName: String,
+          coordinates: {
+            lat: Number,
+            lng: Number,
+          },
+        },
         time: String,
       },
     ],
@@ -38,7 +44,7 @@ const programmSchema = new mongoose.Schema(
     pickUp_Time: String,
     dropOff_time: String,
     workDates: [String],
-    clientID: String,
+    school_id: String,
     notes_for_client: [
       {
         msg: String,
