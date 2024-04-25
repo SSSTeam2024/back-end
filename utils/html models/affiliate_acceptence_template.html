@@ -1,0 +1,263 @@
+<html>
+
+<body style="
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    ">
+    <table style="
+        width: 600px;
+        height: 96px;
+        margin: 0 auto;
+        border: none;
+        text-align: center;
+        padding: 0;
+        border-collapse: collapse;
+        color: #000;
+      ">
+        <tbody style="font-family: 'Roboto'; font-size: 1rem;">
+            <tr>
+                <td>
+                    <a href="">
+                        <img src="cid:unique-image-id" alt="" />
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left">
+                    <p>Dear ` + visitor.name + `</p>
+                    <p>I hope this email finds you well.</p>
+                    <p>
+                        We are pleased to inform you that your request to become a partner with us has been
+                        successfully processed, and we are excited to assist you with your
+                        arrangements.
+                    </p>
+                    <!-- <p>
+            As per your request, the total price for the journey is <strong style="font-size: 1rem;">` + price
+              +`</strong>.
+          </p> -->
+                    <!-- <p>
+            To proceed with confirming your booking, please click on the button
+            below: 
+            <a href="` + url + `" style="display: inline-block;
+                                padding: 10px 20px;
+                                margin: 10px;
+                                text-align: center;
+                                text-decoration: none;
+                                font-size: 16px;
+                                cursor: pointer;
+                                color: #fff;
+                                background-color: #e67e22;
+                                border: 2px solid #d6731d;
+                                border-radius: 17px;">Confirm Your Booking</a>
+          </p> -->
+                    <p>
+                        Congrats, you got this email with link and crediantilas to complete
+                        your profile in order to view jobs and have the ability to accepte them.
+                    <p>
+                        If you have any questions or need further
+                        assistance, please do not hesitate to reach out to our dedicated
+                        team at Bouden Coach Travel.
+                    </p>
+                    </p>
+                    <p>
+                        Thank you once again for choosing us. We look forward to provide you
+                        with an exceptional experience.
+                    </p>
+                    <p>Warm regards,</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <fieldset style="
+      width: 600px;
+      margin: auto;
+    ">
+        <legend style="margin-left: 20%">
+            <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
+            quote.enquiryDate +`
+        </legend>
+        <table style="
+          width: 600px;
+          border: none;
+          text-align: center;
+          padding: 8px;
+        ">
+            <tbody>
+                <tr>
+                    <td colspan="2" style="color: #000;">
+                        <b>BECOME PARTNER REQUEST RECEIVED</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Name</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>` + quote.name + ` </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Email</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ quote.email +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Phone</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ quote.phone +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Address</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ quote.address +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Fleet Number</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ quote.fleetNumber +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Region</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label> `+ quote.region +` </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+            width: 200px;
+            text-align: right;
+            vertical-align: top;
+            padding-right: 15px;
+            background-color: #555;
+            color: #ffe605;
+          "></td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+                        <span style="color: #000">`+ url +`</span> <a href="">Log in Now</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset style="
+      width: 400px;
+      margin: auto;
+    ">
+        <legend style="margin-left: 20%">
+            <strong>Crediantilas</strong>
+        </legend>
+        <table style="
+          width: 400px;
+          border: none;
+          text-align: center;
+          padding: 8px;
+        ">
+            <tbody>
+                <tr>
+                    <td style="
+                  width: 200px;
+                  text-align: right;
+                  vertical-align: top;
+                  padding-right: 15px;
+                  background-color: #555;
+                  color: #ffe605;
+                ">
+                        <b>Username</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+                        £`+ login +`
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Password</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ password +` </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Click to Login</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <a href="#">Login NOW</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+
+</html>

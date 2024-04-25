@@ -2,17 +2,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const affiliateDao = require("../../dao/affiliateDao/affiliateDao");
+const emailService = require("../quoteServices/emailService");
+const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 
-const registerAffilate = async (userData, documents) => {
-  console.log(userData);
-  console.log(documents);
-  let saveResult = await saveDocumentsToServer(documents);
-  console.log(saveResult);
-  const hashedPassword = await bcrypt.hash(userData.password, 10);
-  return await affiliateDao.createAffiliate({
-    ...userData,
-    password: hashedPassword,
-  });
+const registerAffilate = async (userData) => {
+  let affiliate = await affiliateDao.createAffiliate(
+    userData)
+  let email = await prepareAfterDemandBecomeParnterEmail(affiliate)
+  await emailService.sendEmail(email);
+  return affiliate;
 };
 
 async function saveDocumentsToServer(documents) {
@@ -83,6 +81,80 @@ const updatePassword = async (id, password) => {
   return await affiliateDao.updatePassword(id, hashedPassword);
 };
 
+const updateAffiliateStatus = async (id) => {
+  return await affiliateDao.updateAffiliateStatus(id);
+};
+
+const sendAcceptenceEmail = async (acceptenceData) => {
+  let id = acceptenceData.id;
+ let login = acceptenceData.login
+ let password = acceptenceData.password
+ let service_date = acceptenceData.service_date
+  await affiliateDao.updateAffiliateStatus(
+    id,
+    login,
+    password,
+    service_date
+  );
+  let affiliate = await affiliateDao.getAffiliateById(id);
+  let url = "https://affiliate_dashboard.uk/login";
+  let email = await prepareAffiliateAcceptenceEmail(
+    id,
+    login,
+    password,
+    url,
+    affiliate,
+    service_date,
+  );
+  await emailService.sendEmail(email);
+  return "Acceptence Email sent!";
+};
+
+async function prepareAffiliateAcceptenceEmail(
+  id,
+  login,
+  password,
+  url,
+  affiliate,
+  service_date,
+) {
+  console.log("Services 122: affiliate", affiliate)
+  let recipient = affiliate.email;
+
+  let emailBody = emailTemplatesStructure.emailTemplates.affiliateAcceptence(
+    id,
+    login,
+    password,
+    url,
+    affiliate,
+    service_date
+  );
+  let emailSubject = "Demand Accepted";
+  let fullEmailObject = {
+    to: recipient,
+    subject: emailSubject,
+    body: emailBody,
+  };
+  return fullEmailObject;
+}
+
+async function prepareAfterDemandBecomeParnterEmail(affiliate) {
+  let recipient = affiliate.email;
+  let selectedTemplate =
+  emailTemplatesStructure.emailTemplates.becomePartnerDemand(
+    affiliate,
+  )
+
+  let emailBody = selectedTemplate;
+  let emailSubject = "Become Partner Demand Received";
+  let fullEmailObject = {
+    to: recipient,
+    subject: emailSubject,
+    body: emailBody,
+  };
+  return fullEmailObject;
+}
+
 module.exports = {
   registerAffilate,
   loginAffiliate,
@@ -93,4 +165,6 @@ module.exports = {
   deleteAffiliate,
   getAffiliateByEmail,
   updatePassword,
+  updateAffiliateStatus,
+  sendAcceptenceEmail
 };

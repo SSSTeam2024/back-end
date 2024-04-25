@@ -3,6 +3,9 @@ const Parent = require("../../models/parentsModel/parents");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const Student = require ("../../models/studentModels/student")
+// const GroupMigrationStudent = require ("../../models/g")
+// const GroupStudent = require ("../models/groupStudent/groupStudent")
 
 // register a new student and update parent profile
 const registerStudent = async (studentData, documents) => {
@@ -23,19 +26,19 @@ const registerStudent = async (studentData, documents) => {
     await updateParentWithStudentId(studentData.parent_id, studentId);
     console.log("Parent updated with student ID.");
 
-    return newStudent;
+    return newStudent; 
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
+
 // update the parent's profile with the student's ID
 const updateParentWithStudentId = async (parentId, studentId) => {
-  await Parent.findByIdAndUpdate(parentId, {
-    $push: { student_id: studentId },
-  });
+  await Parent.findByIdAndUpdate(parentId, { $push: { student_id: studentId } });
 };
+
 
 // get student by id parent
 const getStudentsByParentId = async (studentId) => {
@@ -43,16 +46,18 @@ const getStudentsByParentId = async (studentId) => {
 };
 
 // login student account
-const loginStudent = async (login, password) => {
-  const student = await studentDao.findStudentByLogin(login);
+const loginStudent = async (email, password) => {
+  const student = await studentDao.findStudentByLogin(email);
 
   if (!student) {
     throw new Error("Student not found");
   }
 
   if (await bcrypt.compare(password, student.password)) {
-    const accessToken = jwt.sign({ login: student.login }, "yourSecretKey");
-    return { accessToken };
+    const accessToken = jwt.sign({ student: student.username }, "yourSecretKey");
+    await studentDao.updateJwtToken(student._id, String(accessToken));
+    let updatedStudent = await studentDao.getStudentById(student._id);
+    return updatedStudent;
   } else {
     throw new Error("Incorrect password");
   }
@@ -61,27 +66,29 @@ const loginStudent = async (login, password) => {
 // function saveDocumentToServer
 async function saveDocumentToServer(documents) {
   let counter = 0;
-  for (const file of documents) {
+  for (const file of documents){
     console.log(file);
-    await saveAdministrativeFile(file.base64String, file.name, file.path);
-    counter++;
-    console.log("File number " + counter + " saved");
+      await saveAdministrativeFile(file.base64String, file.name, file.path);
+      counter++;
+      console.log('File number '+counter+' saved');
   }
-  if (counter == documents.length) return true;
-}
+  if(counter == documents.length) return true;
+  }
 
-async function saveAdministrativeFile(base64String, fileName, filePath) {
-  //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
-  const binaryData = Buffer.from(base64String, "base64");
-  const fullFilePath = filePath + fileName;
-  fs.writeFile(fullFilePath, binaryData, "binary", (err) => {
-    if (err) {
-      console.error("Error saving the file:", err);
-    } else {
-      console.log("File saved successfully!");
-    }
-  });
-}
+
+  async function saveAdministrativeFile(base64String, fileName, filePath) {
+    //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
+    const binaryData = Buffer.from(base64String, 'base64');
+    const fullFilePath = filePath + fileName;
+    fs.writeFile(fullFilePath, binaryData, 'binary', (err) => {
+      if (err) {
+        console.error('Error saving the file:', err);
+      } else {
+        console.log('File saved successfully!');
+      }
+    });
+  }
+  
 
 // get all students
 const getStudents = async () => {
@@ -110,6 +117,15 @@ const updatePassword = async (id, password) => {
   return await studentDao.updatePassword(id, hashedPassword);
 };
 
+const getStudentByIdSchool= async (idSchool) => {
+  return await studentDao.getStudentByIdSchool(idSchool);
+};
+
+const logout = async (id) => {
+  return await studentDao.logout(id);
+};
+
+
 module.exports = {
   registerStudent,
   getStudents,
@@ -121,4 +137,7 @@ module.exports = {
   getStudentByEmail,
   updatePassword,
   getStudentsByParentId,
+  getStudentByIdSchool,
+  logout
+  
 };

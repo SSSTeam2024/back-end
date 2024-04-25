@@ -13,7 +13,13 @@ const programmSchema = new mongoose.Schema(
     stops: [
       {
         id: String,
-        address: String,
+        address: {
+          placeName: String,
+          coordinates: {
+            lat: String,
+            lng: String
+          }
+        },
         time: String,
       },
     ],

@@ -31,6 +31,9 @@ const registerStudent = async (req, res) => {
       pickUp_time,
       pickUp_station,
       group,
+      api_token,
+      groupJoiningDate,
+      idSchool,
     } = req.body;
 
     const id_filePath = "files/studentFiles/img/";
@@ -87,6 +90,9 @@ const registerStudent = async (req, res) => {
         pickUp_station,
         group,
         photo_id,
+        idSchool,
+        groupJoiningDate,
+        api_token
       },
       documents
     );
@@ -122,12 +128,9 @@ const getStudentByIdParent = async (req, res) => {
 // login student
 const login = async (req, res) => {
   try {
-    const { login, password } = req.body;
-    const result = await studentService.loginStudent(login, password);
-    res.cookie("access_token", result.accessToken, {
-      httpOnly: true,
-      secure: true,
-    });
+    const { email, password } = req.body;
+    const result = await studentService.loginStudent(email, password);
+
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -184,9 +187,10 @@ const getStudentByEmail = async (req, res) => {
   }
 };
 // logout
-const logout = (req, res) => {
-  res.clearCookie("access_token");
-  res.sendStatus(200);
+const logout = async (req, res) => {
+  let id = req.params.id;
+  await studentService.logout(id);
+  res.send({ result: "Successfully logged out" });
 };
 // update password student account
 const updatePassword = async (req, res) => {
@@ -278,7 +282,8 @@ const updateProfile = async (req, res) => {
         documents
       );
     } else {
-      await studentService.updatedStudent(studentId, {
+
+      let updatedStudent = await studentService.updatedStudent(studentId, {
         firstName,
         lastName,
         nameParent,
@@ -301,9 +306,10 @@ const updateProfile = async (req, res) => {
         pickUp_time,
         pickUp_station,
       });
+      res.json(updatedStudent);
     }
 
-    res.sendStatus(200);
+   
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -373,6 +379,23 @@ const deleteStudent = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const getStudentByIdSchool = async (req, res) => {
+  try {
+    const idSchool = req.body.idSchool;
+    const getStudentsByIdSchool = await studentService.getStudentByIdSchool(
+      idSchool
+    );
+    if (!getStudentsByIdSchool) {
+      res.status(404).send("student not found");
+    }
+    res.json({ getStudentsByIdSchool });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   registerStudent,
   login,
@@ -385,4 +408,5 @@ module.exports = {
   getStudentByEmail,
   updatePassword,
   getStudentByIdParent,
+  getStudentByIdSchool,
 };

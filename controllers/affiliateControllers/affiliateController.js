@@ -20,32 +20,11 @@ const register = async (req, res) => {
       password,
       id_number,
       id_creation_date,
-      cardIdBase64String,
-      cardIdExtension,
-      license_id,
-      license_date,
-      licenseIdBase64String,
-      licenseIdExtension ,
       notes,
-      fleetNumber
+      fleetNumber,
+      vehicles,
+      enquiryDate
     } = req.body;
-
-    let id_file = globalFunctions.generateUniqueFilename(cardIdExtension,'cardId');
-    let license_file = globalFunctions.generateUniqueFilename(licenseIdExtension,'licenseId');
-
-    let documents = [
-      {
-        base64String: cardIdBase64String,
-        extension: cardIdExtension,
-        name: id_file
-      },
-      {
-        base64String: licenseIdBase64String,
-        extension: licenseIdExtension,
-        name: license_file
-      }
-    ];
-    
     await affiliateService.registerAffilate({ 
       name,
       address,
@@ -63,13 +42,11 @@ const register = async (req, res) => {
       password,
       id_number,
       id_creation_date,
-      id_file,
-      license_id,
-      license_date,
-      license_file,
       notes,
-      fleetNumber
-     },documents);
+      fleetNumber,
+      vehicles,
+      enquiryDate
+     });
     res.sendStatus(201);
   } catch (error) {
     console.error(error);
@@ -115,6 +92,7 @@ const updateProfile = async (req, res) => {
       id_creation_date,
       license_id,
       license_date,
+      enquiryDate
      } = req.body;
 
     const updateAffiliate = await affiliateService.updateAffiliate(affiliateId, { 
@@ -135,6 +113,7 @@ const updateProfile = async (req, res) => {
       id_creation_date,
       license_id,
       license_date,
+      enquiryDate
      });
 
     if (!updateAffiliate) {
@@ -226,6 +205,28 @@ const updatePassword = async (req, res) => {
   }
 };
 
+const sendAcceptenceEmail = async (req, res) => {
+  try {
+    const {
+      id,
+      login,
+      password,
+      service_date,
+    } = req.body;
+    console.log(req.body)
+    const sentResult = await affiliateService.sendAcceptenceEmail({
+      id,
+      login,
+      password,
+      service_date,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -235,5 +236,6 @@ module.exports = {
   getAffiliates,
   deleteAffilate,
   getByEmail,
-  updatePassword
+  updatePassword,
+  sendAcceptenceEmail
 };

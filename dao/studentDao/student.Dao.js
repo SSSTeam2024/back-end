@@ -1,5 +1,5 @@
 const Student = require("../../models/studentModels/student");
-const Parent = require("../../models/parentsModel/parents");
+const Parent=require ("../../models/parentsModel/parents")
 
 // Update the parent's profile with the student's ID
 const updateParentWithStudentId = async (parentId, studentId) => {
@@ -10,7 +10,7 @@ const removeStudentFromParent = async (parentId, studentId) => {
   await Parent.findByIdAndUpdate(
     parentId,
     { $pull: { students: studentId } },
-    { new: true }
+    { new: true } 
   );
 };
 
@@ -28,13 +28,14 @@ const createStudent = async (studentData) => {
 };
 
 // find student by login
-const findStudentByLogin = async (login) => {
-  return await Student.findOne({ login });
+const findStudentByLogin = async (email) => {
+  return await Student.findOne({ email });
 };
 // get all students
 const getAllStudents = async () => {
   return await Student.find({});
 };
+
 
 // get student by id
 const getStudentById = async (id) => {
@@ -76,7 +77,7 @@ const getStudentByParentId = async (parentId) => {
     const student = await Student.find({ parent_id: parentId }).exec();
     return student;
   } catch (error) {
-    console.error("Error in getStudentByParentId:", error);
+    console.error('Error in getStudentByParentId:', error);
     throw error;
   }
 };
@@ -93,6 +94,45 @@ const updatePassword = async (id, password) => {
     }
   );
 };
+const getStudentByIdSchool = async (idSchool) => {
+  return await Student.find({idSchool});
+}
+
+const updateStudentGroupId = async (id, group, date) => {
+  return await Student.findByIdAndUpdate({ _id:id }, {
+    $set: {
+      groupId: group,
+      groupJoiningDate:date
+    }
+  });
+}
+
+const getStudent= async () => {
+
+  return await Student.find().populate("groupId")
+};
+
+const updateJwtToken = async (id, token) => {
+  return await Student.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: token,
+      },
+    }
+  );
+};
+
+const logout = async (id) => {
+  return await Student.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: "",
+      },
+    }
+  );
+};
 
 module.exports = {
   createStudent,
@@ -104,4 +144,9 @@ module.exports = {
   updateStudent,
   getStudentEmail,
   getStudentByParentId,
+  updateStudentGroupId,
+  getStudentByIdSchool,
+  getStudent,
+  updateJwtToken,
+  logout
 };

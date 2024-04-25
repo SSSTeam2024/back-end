@@ -425,6 +425,20 @@ const assignDriverAndVehicleToQuoteAPI = async (req, res) => {
   }
 };
 
+const assignAffiliateToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_id, id_vehicle } = req.body;
+    const sentResult = await quoteService.assignVehicle({
+      quote_id,
+      id_vehicle,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,

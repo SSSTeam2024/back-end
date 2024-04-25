@@ -6,7 +6,7 @@ const affiliateSchema = new mongoose.Schema({
   email: String,
   phone: String,
   category: String,
-  region: String,
+  region: [String],
   service_date: String,
   statusAffiliate: String,
   account_name: String,
@@ -22,7 +22,7 @@ const affiliateSchema = new mongoose.Schema({
   license_date: String,
   license_file: String,
   notes: String,
-  vehicles: [],
+  vehicles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'VehiculeType'}],
   fleetNumber: String,
   enquiryDate:String
 });

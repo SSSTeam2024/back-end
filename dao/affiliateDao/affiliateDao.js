@@ -37,6 +37,25 @@ const updatePassword = async (id, password) => {
   });
 }
 
+const updateAffiliateStatus = async (id,login, password, service_date) => {
+  let affiliateStatus = "Accepted";
+  console.log("DAO: id", id)
+  console.log("DAO: login", login)
+  console.log("DAO: password", password)
+  console.log("DAO: service_date", service_date)
+  return await Affiliate.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        statusAffiliate: affiliateStatus,
+        login:login,
+        password:password,
+        service_date:service_date
+      },
+    }
+  );
+};
+
 module.exports = {
   createAffiliate,
   getAffiliates,
@@ -45,5 +64,6 @@ module.exports = {
   findAffiliateByLogin,
   getAffiliateById,
   getAffiliateByEmail,
-  updatePassword
+  updatePassword,
+  updateAffiliateStatus
 };

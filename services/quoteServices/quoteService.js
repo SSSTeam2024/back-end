@@ -212,7 +212,6 @@ async function prepareQuoteBookingEmail(
 ) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
-  console.log("206", quote);
   const creationDate = quote.createdAt;
 
   const formattedCreationDate = creationDate.toLocaleString("en-GB", {

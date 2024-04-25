@@ -1562,6 +1562,438 @@ const emailTemplates = {
 </html>
 
   `,
+  becomePartnerDemand: (affiliate) =>
+  `
+  <html>
+<body style="
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
+  ">
+  <table style="
+      width: 600px;
+      height: 96px;
+      margin: 0 auto;
+      border: none;
+      text-align: center;
+      padding: 0;
+      border-collapse: collapse;
+      color: #000;
+    ">
+      <tbody style="font-family: 'Roboto'; font-size: 1rem;">
+          <tr>
+              <td>
+                  <a href="">
+                      <img src="cid:unique-image-id" alt="" />
+                  </a>
+              </td>
+          </tr>
+          <tr>
+              <td style="text-align: left">
+                  <p>Dear ` + affiliate.name + `</p>
+                  <p>I hope this email finds you well.We have received your request to become a partner with us. We appreciate your interest in collaborating with our company</p>
+                  <p>
+                  Your partnership request has been received successfully, and we are currently reviewing the details you provided. We understand the importance of this opportunity and assure you that your request will be given the utmost attention it deserves.
+                  </p>
+                  <!-- <p>
+                  Rest assured, our sales team is already in the process of reviewing your request thoroughly. They will be reaching out to you as soon as possible to discuss the potential partnership further and explore how we can mutually benefit from this collaboration.
+        </p> -->
+                  <!-- <p>
+                  <p>
+                  In the meantime, if you have any additional questions or need further assistance, please feel free to reach out to us at Bouden Coach Travel.
+                  </p>
+                  </p>
+                  <p>
+                  Once again, thank you for considering a partnership with us. We look forward to the possibility of working together and achieving mutual success.
+                  </p>
+                  <p>Warm regards,</p>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <br />
+  <fieldset style="
+    width: 600px;
+    margin: auto;
+  ">
+      <legend style="margin-left: 20%">
+          <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
+          affiliate.enquiryDate +`
+      </legend>
+      <table style="
+        width: 600px;
+        border: none;
+        text-align: center;
+        padding: 8px;
+      ">
+          <tbody>
+              <tr>
+                  <td colspan="2" style="color: #000;">
+                      <b>BECOME PARTNER REQUEST RECEIVED</b>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Name</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>` + affiliate.name + ` </label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Email</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.email +`</label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Phone</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.phone +`</label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Address</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.address +`</label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Fleet Number</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.fleetNumber +`</label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Region</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label> `+ affiliate.region +` </label>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </fieldset>
+</body>
+
+</html>
+`,
+  affiliateAcceptence: (id, login, password, url, affiliate, service_date) =>
+    `
+    <html>
+
+<body style="
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    ">
+    <table style="
+        width: 600px;
+        height: 96px;
+        margin: 0 auto;
+        border: none;
+        text-align: center;
+        padding: 0;
+        border-collapse: collapse;
+        color: #000;
+      ">
+        <tbody style="font-family: 'Roboto'; font-size: 1rem;">
+            <tr>
+                <td>
+                    <a href="">
+                        <img src="cid:unique-image-id" alt="" />
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: left">
+                    <p>Dear ` + affiliate.name + `</p>
+                    <p>I hope this email finds you well.</p>
+                    <p>
+                    We are thrilled to inform you that your request to become a partner with us has been accepted.
+                    </p>
+                    <strong style="font-size: 1rem;">Congratulations and welcome aboard!</strong>.
+                    <!-- <p>
+          </p> -->
+                    <!-- <p>
+            To proceed with confirming your booking, please click on the button
+            below: 
+            <a href="` + url + `" style="display: inline-block;
+                                padding: 10px 20px;
+                                margin: 10px;
+                                text-align: center;
+                                text-decoration: none;
+                                font-size: 16px;
+                                cursor: pointer;
+                                color: #fff;
+                                background-color: #e67e22;
+                                border: 2px solid #d6731d;
+                                border-radius: 17px;">Confirm Your Booking</a>
+          </p> -->
+                    <p>
+                    As a valued partner, you now have access to our partnership portal, where you can manage your account, access resources, and stay updated on relevant information.
+                    <p>
+                    Please note that for security purposes, we recommend changing your password upon your first login. Your portal provides a comprehensive platform where you can track your partnership activities, access marketing materials, and collaborate with our team seamlessly.
+                    </p>
+                    </p>
+                    <p>
+                    We believe that our partnership holds great potential for both parties, and we are excited to embark on this journey together. Our team is dedicated to supporting you every step of the way to ensure our mutual success.
+                    </p>
+                    <p>
+                    If you have any questions or need assistance navigating the portal, please don't hesitate to contact us
+                    </p>
+                    <p>
+                    Once again, congratulations on becoming our partner! We look forward to a fruitful collaboration ahead.
+                    </p>
+                    <p>Warm regards,</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <fieldset style="
+      width: 600px;
+      margin: auto;
+    ">
+        <legend style="margin-left: 20%">
+            <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
+            affiliate.enquiryDate +`
+        </legend>
+        <table style="
+          width: 600px;
+          border: none;
+          text-align: center;
+          padding: 8px;
+        ">
+            <tbody>
+                <tr>
+                    <td colspan="2" style="color: #000;">
+                        <b>BECOME PARTNER REQUEST RECEIVED</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Name</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>` + affiliate.name + ` </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Email</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ affiliate.email +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Phone</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ affiliate.phone +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Address</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ affiliate.address +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Fleet Number</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ affiliate.fleetNumber +`</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Region</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label> `+ affiliate.region +` </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+            width: 200px;
+            text-align: right;
+            vertical-align: top;
+            padding-right: 15px;
+            background-color: #555;
+            color: #ffe605;
+          "></td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+                        <a href="` + url + `">Log in Now</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset style="
+      width: 400px;
+      margin: auto;
+    ">
+        <legend style="margin-left: 20%">
+            <strong>Crediantilas</strong>
+        </legend>
+        <table style="
+          width: 400px;
+          border: none;
+          text-align: center;
+          padding: 8px;
+        ">
+            <tbody>
+                <tr>
+                    <td style="
+                  width: 200px;
+                  text-align: right;
+                  vertical-align: top;
+                  padding-right: 15px;
+                  background-color: #555;
+                  color: #ffe605;
+                ">
+                        <b>Username</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+                        `+ login +`
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Password</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label>`+ password +` </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Click to Login</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <a href="` + url + `">Login NOW</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+
+</html>
+  `,
 };
 
 module.exports = {
