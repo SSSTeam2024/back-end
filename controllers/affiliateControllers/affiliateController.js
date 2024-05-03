@@ -9,7 +9,6 @@ const register = async (req, res) => {
       email,
       phone,
       category,
-      region,
       service_date,
       statusAffiliate,
       account_name,
@@ -23,15 +22,19 @@ const register = async (req, res) => {
       notes,
       fleetNumber,
       vehicles,
-      enquiryDate
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website
     } = req.body;
+    console.log(req.body)
     await affiliateService.registerAffilate({ 
       name,
       address,
       email,
       phone,
       category,
-      region,
       service_date,
       statusAffiliate,
       account_name,
@@ -45,7 +48,11 @@ const register = async (req, res) => {
       notes,
       fleetNumber,
       vehicles,
-      enquiryDate
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website
      });
     res.sendStatus(201);
   } catch (error) {
@@ -227,6 +234,22 @@ const sendAcceptenceEmail = async (req, res) => {
   }
 };
 
+const sendRefuseEmail = async (req, res) => {
+  try {
+    const {
+      id_aff,
+    } = req.body;
+    console.log(req.body)
+    const sentResult = await affiliateService.sendRefuseEmail({
+      id_aff,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -237,5 +260,6 @@ module.exports = {
   deleteAffilate,
   getByEmail,
   updatePassword,
-  sendAcceptenceEmail
+  sendAcceptenceEmail,
+  sendRefuseEmail
 };

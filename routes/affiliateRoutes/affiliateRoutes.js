@@ -13,4 +13,5 @@ router.delete('/deleteAffiliate/:id', affiliateController.deleteAffilate);
 router.post('/getAffiliateByEmail', affiliateController.getByEmail);
 router.put('/updateAffiliatePassword/:id', affiliateController.updatePassword);
 router.post("/acceptenceEmail", affiliateController.sendAcceptenceEmail);
+router.post("/refuseEmail", affiliateController.sendRefuseEmail);
 module.exports = router;

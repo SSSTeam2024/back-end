@@ -53,7 +53,6 @@ const createQuote = async (req, res) => {
       enquiryDate,
       category
     } = req.body;
-    console.log(req.body)
     const quote = await quoteService.createQuote(
       {
         id_schedule,
@@ -427,10 +426,12 @@ const assignDriverAndVehicleToQuoteAPI = async (req, res) => {
 
 const assignAffiliateToQuoteAPI = async (req, res) => {
   try {
-    const { quote_id, id_vehicle } = req.body;
-    const sentResult = await quoteService.assignVehicle({
-      quote_id,
-      id_vehicle,
+    const { idQuote, white_list, pushedDate, pushed_price } = req.body;
+    const sentResult = await quoteService.assignAffiliateToQuote({
+      idQuote,
+      white_list,
+      pushedDate,
+      pushed_price
     });
     res.json({ success: sentResult });
   } catch (error) {
@@ -438,6 +439,22 @@ const assignAffiliateToQuoteAPI = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const surveyAffiliate = async (req, res) => {
+  try {
+    const { id_Quote, white_list } = req.body;
+    console.log(req.body)
+    const sentResult = await quoteService.surveyAffiliate({
+      id_Quote,
+      white_list,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 
 module.exports = {
   createQuote,
@@ -455,5 +472,7 @@ module.exports = {
   getQuotesByDriver,
   updateProgress,
   getQuoteByIdSchedule,
-  assignDriverAndVehicleToQuoteAPI
+  assignDriverAndVehicleToQuoteAPI,
+  assignAffiliateToQuoteAPI,
+  surveyAffiliate
 };

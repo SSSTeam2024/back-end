@@ -19,5 +19,6 @@ router.post("/sendPaymentEmail", quoteController.sendPaymentEmail);
 router.post("/updateProgress", quoteController.updateProgress);
 router.post("/getQuoteByIdSchedule", quoteController.getQuoteByIdSchedule);
 router.post("/assignDriverAndVehicleToQuote", quoteController.assignDriverAndVehicleToQuoteAPI);
-
+router.post("/assignAffiliate", quoteController.assignAffiliateToQuoteAPI);
+router.post("/surveyAffiliate", quoteController.surveyAffiliate);
 module.exports = router;

@@ -110,6 +110,20 @@ const sendAcceptenceEmail = async (acceptenceData) => {
   return "Acceptence Email sent!";
 };
 
+const sendRefuseEmail = async (acceptenceData) => {
+  let id_aff = acceptenceData.id_aff;
+
+  await affiliateDao.refuseAffiliate(
+    id_aff,
+  );
+  let affiliate = await affiliateDao.getAffiliateById(id_aff);
+  let email = await prepareRefuseDemandBecomeParnterEmail(
+    affiliate,
+  );
+  await emailService.sendEmail(email);
+  return "Refuse Email sent!";
+};
+
 async function prepareAffiliateAcceptenceEmail(
   id,
   login,
@@ -155,6 +169,23 @@ async function prepareAfterDemandBecomeParnterEmail(affiliate) {
   return fullEmailObject;
 }
 
+async function prepareRefuseDemandBecomeParnterEmail(affiliate) {
+  let recipient = affiliate.email;
+  let selectedTemplate =
+  emailTemplatesStructure.emailTemplates.becomePartnerDemandRefused(
+    affiliate,
+  )
+
+  let emailBody = selectedTemplate;
+  let emailSubject = "Become Partner Demand Refused";
+  let fullEmailObject = {
+    to: recipient,
+    subject: emailSubject,
+    body: emailBody,
+  };
+  return fullEmailObject;
+}
+
 module.exports = {
   registerAffilate,
   loginAffiliate,
@@ -166,5 +197,6 @@ module.exports = {
   getAffiliateByEmail,
   updatePassword,
   updateAffiliateStatus,
-  sendAcceptenceEmail
+  sendAcceptenceEmail,
+  sendRefuseEmail
 };

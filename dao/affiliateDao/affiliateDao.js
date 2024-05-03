@@ -5,7 +5,7 @@ const createAffiliate = async (affiliate) => {
 };
 
 const getAffiliates = async () => {
-  return await Affiliate.find();
+  return await Affiliate.find().populate("vehicles")
 };
 
 const updateAffiliate = async (id, updateData) => {
@@ -21,7 +21,7 @@ const findAffiliateByLogin = async (login) => {
 };
 
 const getAffiliateById = async (id) => {
-  return await Affiliate.findById(id);
+  return await Affiliate.findById(id).populate("vehicles")
 }
 
 const getAffiliateByEmail = async (email) => {
@@ -56,6 +56,19 @@ const updateAffiliateStatus = async (id,login, password, service_date) => {
   );
 };
 
+const refuseAffiliate = async (id) => {
+  let affiliateStatus = "Refused";
+  console.log("DAO: id", id)
+  return await Affiliate.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        statusAffiliate: affiliateStatus,
+      },
+    }
+  );
+};
+
 module.exports = {
   createAffiliate,
   getAffiliates,
@@ -65,5 +78,6 @@ module.exports = {
   getAffiliateById,
   getAffiliateByEmail,
   updatePassword,
-  updateAffiliateStatus
+  updateAffiliateStatus,
+  refuseAffiliate
 };

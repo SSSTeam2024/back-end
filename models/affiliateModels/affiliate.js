@@ -6,7 +6,6 @@ const affiliateSchema = new mongoose.Schema({
   email: String,
   phone: String,
   category: String,
-  region: [String],
   service_date: String,
   statusAffiliate: String,
   account_name: String,
@@ -24,7 +23,17 @@ const affiliateSchema = new mongoose.Schema({
   notes: String,
   vehicles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'VehiculeType'}],
   fleetNumber: String,
-  enquiryDate:String
+  enquiryDate:String,
+  coverageDistance : String,
+  coverageArea: [{
+    placeName: String,
+    coordinates: {
+      lat: String,
+      lng: String
+    }
+  }],
+  years_experience: String,
+  website: String
 });
 
 module.exports = mongoose.model('Affiliate', affiliateSchema);

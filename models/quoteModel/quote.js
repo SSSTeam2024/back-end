@@ -8,6 +8,10 @@ const quoteSchema = new mongoose.Schema(
     school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     owner: String,
     handled_by: Number,
+    id_affiliate: { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
+    white_list: [
+     { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
+      ],
     id_driver: { type: Schema.Types.ObjectId, ref: "Driver", default: null },
     id_vehicle: { type: Schema.Types.ObjectId, ref: "Vehicle", default: null },
     handled_by_subcontractor: String, //id of subcontractor
@@ -70,7 +74,8 @@ const quoteSchema = new mongoose.Schema(
     return_date: String,
     return_time: String,
     category: String, //TODO: private_hire_job or regular NB: TO ADD TO CONTROLLER
-    enquiryDate: String
+    enquiryDate: String,
+    pushedDate: String
   },
   {
     timestamps: true,

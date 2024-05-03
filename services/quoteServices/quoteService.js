@@ -285,6 +285,23 @@ const assignDriverAndVehicleToQuoteService = async (bookingData) => {
   return "Driver and Vehicle Assigned!!";
 };
 
+const assignAffiliateToQuote = async (bookingData) => {
+  let idQuote = bookingData.idQuote;
+  let affiliate = bookingData.white_list;
+  let pushedDate = bookingData.pushedDate;
+  let pushed_price = bookingData.pushed_price;
+  console.log("Services",pushed_price)
+  await quoteDao.assignAffiliate(idQuote, affiliate, pushedDate, pushed_price);
+  return "Affiliate Assigned!!";
+};
+
+const surveyAffiliate = async (bookingData) => {
+  let id_Quote = bookingData.id_Quote;
+  let affiliate = bookingData.white_list;
+  await quoteDao.assignAffiliate(id_Quote, affiliate);
+  return "Affiliate Assigned!!";
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -301,5 +318,7 @@ module.exports = {
   getQuotesByDriverID,
   updateProgress,
   getQuoteByIdSchedule,
-  assignDriverAndVehicleToQuoteService
+  assignDriverAndVehicleToQuoteService,
+  assignAffiliateToQuote,
+  surveyAffiliate
 };

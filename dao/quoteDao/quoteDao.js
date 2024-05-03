@@ -11,6 +11,36 @@ const getQuotes = async () => {
     .populate("id_vehicle")
     .populate("company_id")
     .populate("school_id")
+    .populate("id_affiliate")
+    .populate({
+      path: "white_list",
+      populate: {
+        path: "vehicles",
+      }
+    })
+};
+
+const getQuotesOfSpecificPeriod = async (date) => {
+  let currentDate = new Date()
+ let specificDate = currentDate.setDate(currentDate.getDate() + date);
+  console.log(currentDate.toLocaleDateString());
+  return await Quote.find()
+    .populate("id_visitor")
+    .populate("id_driver")
+    .populate("id_vehicle")
+    .populate("company_id")
+    .populate("school_id")
+    .populate("id_affiliate")
+    .populate({
+      path: "white_list",
+      populate: {
+        path: "vehicles",
+      }
+    }).then(quotes => {
+      return Quote.
+      find({ enquiryDate: { $gte: currentDate, $lte: specificDate } }).
+      sort({ enquiryDate: 1 });
+    })
 };
 
 const updateQuote = async (id, updateData) => {
@@ -18,7 +48,12 @@ const updateQuote = async (id, updateData) => {
 };
 
 const getQuoteById = async (id) => {
-  return await Quote.findById(id);
+  return await Quote.findById(id).populate({
+    path: "white_list",
+    populate: {
+      path: "vehicles",
+    }
+  })
 };
 
 const deleteQuote = async (id) => {
@@ -195,6 +230,32 @@ const assignDriverAndVehicleToQuoteDao = async (id, driver_ID, vehicle_ID) => {
   );
 };
 
+const assignAffiliate = async (id, affiliate, pushedDate, pushed_price) => {
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        white_list: affiliate,
+        status: "Pushed",
+        handled_by: 1,
+        pushedDate: pushedDate,
+        pushed_price : pushed_price
+      },
+    }
+  );
+};
+
+const surveyAffiliate = async (id, affiliate) => {
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        white_list: affiliate,
+      },
+    }
+  );
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -211,5 +272,7 @@ module.exports = {
   updateCheckList,
   updateProgress,
   getQuoteByIdSchedule,
-  assignDriverAndVehicleToQuoteDao
+  assignDriverAndVehicleToQuoteDao,
+  assignAffiliate,
+  surveyAffiliate
 };

@@ -1701,6 +1701,160 @@ const emailTemplates = {
               background-color: #555;
               color: #ffe605;
             ">
+                      <b>Website</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.website +`</label>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </fieldset>
+</body>
+
+</html>
+`,
+becomePartnerDemandRefused: (affiliate) =>
+  `
+  <html>
+<body style="
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
+  ">
+  <table style="
+      width: 600px;
+      height: 96px;
+      margin: 0 auto;
+      border: none;
+      text-align: center;
+      padding: 0;
+      border-collapse: collapse;
+      color: #000;
+    ">
+      <tbody style="font-family: 'Roboto'; font-size: 1rem;">
+          <tr>
+              <td>
+                  <a href="">
+                      <img src="cid:unique-image-id" alt="" />
+                  </a>
+              </td>
+          </tr>
+          <tr>
+              <td style="text-align: left">
+                  <p>Dear ` + affiliate.name + `</p>
+                  <p>I hope this email finds you well. First of all, We appreciate your interest in collaborating with our company</p>
+                  <p>
+                  After careful consideration, we regret to inform you that we are unable to accept your partnership request at this time. Please know that this decision was not made lightly, and we genuinely appreciate the time and effort you put into your application.
+                  </p>
+                  <!-- <p>
+                  Rest assured, our sales team is already in the process of reviewing your request thoroughly. They will be reaching out to you as soon as possible to discuss the potential partnership further and explore how we can mutually benefit from this collaboration.
+        </p> -->
+                  <!-- <p>
+                  <p>
+                  We understand that this news may be disappointing, and we want to assure you that your interest in partnering with us is valued. However, we are unable to move forward with your request at this time.
+                  </p>
+                  </p>
+                  <p>We encourage you to continue exploring partnership opportunities that align more closely with your goals and objectives. While we may not be able to collaborate at this moment, we wish you all the best in your future endeavors.</p>
+                  <pThank you for considering a partnership with us, and we sincerely apologize for any inconvenience this may cause. If you have any questions or would like further clarification on our decision, please feel free to reach out to us</p>
+                  <p>
+                  Once again, thank you for considering a partnership with us. We look forward to the possibility of working together and achieving mutual success.
+                  </p>
+                  <p>Warm regards,</p>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <br />
+  <fieldset style="
+    width: 600px;
+    margin: auto;
+  ">
+      <legend style="margin-left: 20%">
+          <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
+          affiliate.enquiryDate +`
+      </legend>
+      <table style="
+        width: 600px;
+        border: none;
+        text-align: center;
+        padding: 8px;
+      ">
+          <tbody>
+              <tr>
+                  <td colspan="2" style="color: #000;">
+                      <b>BECOME PARTNER REQUEST RECEIVED</b>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Name</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>` + affiliate.name + ` </label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Email</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.email +`</label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Phone</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.phone +`</label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
+                      <b>Address</b>
+                  </td>
+                  <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                      <label>`+ affiliate.address +`</label>
+                  </td>
+              </tr>
+              <tr>
+                  <td style="
+              width: 200px;
+              text-align: right;
+              vertical-align: top;
+              padding-right: 15px;
+              background-color: #555;
+              color: #ffe605;
+            ">
                       <b>Fleet Number</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
@@ -1732,7 +1886,6 @@ const emailTemplates = {
   affiliateAcceptence: (id, login, password, url, affiliate, service_date) =>
     `
     <html>
-
 <body style="
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
         Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
@@ -1906,10 +2059,25 @@ const emailTemplates = {
                 background-color: #555;
                 color: #ffe605;
               ">
-                        <b>Region</b>
+                        <b>Depot Address</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label> `+ affiliate.region +` </label>
+                        <label> `+ affiliate.depotAddress.placeName +` </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              ">
+                        <b>Coverage Zone</b>
+                    </td>
+                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                        <label> `+ affiliate.coverageDistance +` miles </label>
                     </td>
                 </tr>
                 <tr>
