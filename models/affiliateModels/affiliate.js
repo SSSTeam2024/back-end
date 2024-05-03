@@ -18,11 +18,22 @@ const affiliateSchema = new mongoose.Schema({
   id_number: String,
   id_creation_date: String,
   id_file: String,
+  number_file: String,
   license_id: String,
   license_date: String,
   license_file: String,
   api_token:String,
+  contact_information: String,
+  website:String,
+  insurance_number:String,
+  insurance_date:String,
+  insurance_file:String,
+  years_operation:String,
+  operator_address:String,
   vehicles: [],
+  progress: String,
+
+
 });
 
 module.exports = mongoose.model('Affiliate', affiliateSchema);

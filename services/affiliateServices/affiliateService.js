@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const affiliateDao = require("../../dao/affiliateDao/affiliateDao");
 const fs = require("fs");
+const { calculateProgress } = require("../../utils/calculateProgress");
 
 
 // register affiliate service acccount
@@ -73,8 +74,16 @@ const deleteAffiliate = async (id) => {
 
 // update affilite account
 
+// const updatedAffiliate = async (id, updateData) => {
+//   return await affiliateDao.updateAffiliate(id, updateData);
+// };
+
 const updatedAffiliate = async (id, updateData) => {
-  return await affiliateDao.updateAffiliate(id, updateData);
+  const updatedAffiliateData = await affiliateDao.updateAffiliate(id, updateData);
+  console.log("Services", updatedAffiliateData)
+  // const progress = calculateProgress(updatedAffiliateData);
+  // await affiliateDao.updateAffiliate(id, { progress });
+  return updatedAffiliateData;
 };
 // get school by id
 const getAffiliateById = async (id) => {

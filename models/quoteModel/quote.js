@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 const quoteSchema = new mongoose.Schema(
   {
     id_schedule: String,
-    id_affiliate_driver: String,
-    id_affiliate_vehicle: String,
+    id_affiliate_driver: { type: Schema.Types.ObjectId, ref: "DriverAffiliate", default: null },
+    id_affiliate_vehicle: { type: Schema.Types.ObjectId, ref: "VehicleAffiliate", default: null },
+    affiliate_id: { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
     company_id: { type: Schema.Types.ObjectId, ref: "Company", default: null },
     school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     owner: String,

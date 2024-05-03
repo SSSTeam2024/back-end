@@ -24,6 +24,7 @@ const deleteAffiliate = async (id) => {
 
 // updateAffiliate profile
 const updateAffiliate= async (id, updateData) => {
+  console.log("DAO", updateData)
   return await Affiliate.findByIdAndUpdate(id, updateData, { new: true });
 };
 

@@ -7,7 +7,7 @@ const studentRoutes= require("./studentRoutes/studentRoutes")
 const parentRoutes= require("./parentRoutes/parentRoutes")
 const journeyRoutes= require("./journeyRoutes/journeyRoutes")
 const luggageRoutes= require("./luggageRoutes/luggageRoutes")
-const vehicleTypeRoutes= require("./vehiculeTyoeRoutes/vehiculeTypeRoutes")
+const vehicleTypeRoutes= require("./vehiculeTypeRoutes/vehiculeTypeRoutes")
 const passengerLuggageLimitsIdRoutes= require("./passengerLuggageLimitsRoutes/passengerLuggageLimitsRoutes")
 const affiliateRoutes = require('./affiliateRoutes/affiliateRoutes');
 const complainRoutes = require('./complainRoutes/complainRoutes');
@@ -24,6 +24,11 @@ const contractRoutes = require("./contractRoutes/contractRoutes")
 const groupRoutes = require("./groupSchoolRoutes/groupSchoolRoutes")
 const affiliateVehicleRoutes = require("./affiliateVehicleRoutes/affiliateVehicleRoutes")
 const affiliateDriverRoutes=require("./affiliateDriverRoutes/affiliateDriverRoutes")
+const modeRoutes = require("./modeRoutes/modeRoutes");
+const driverRoutes=require("../routes/driverRoutes/driverRoutes");
+const vehicleRoutes = require("./vehicleRoutes/vehicleRoutes");
+const companyRoutes = require("./companyRoutes/companyRoutes");
+
 
 router.use('/authSchool',schoolRoutes);
 router.use('/team',authTeamRoutes);
@@ -34,6 +39,7 @@ router.use('/journey',journeyRoutes)
 router.use('/luggage',luggageRoutes)
 router.use('/vehicleType',vehicleTypeRoutes)
 router.use('/passengerLuggageLimit',passengerLuggageLimitsIdRoutes)
+
 
 /// FOR TEST ONLY ///
 router.use('/auth', authRoutes);
@@ -53,4 +59,8 @@ router.use("/contract", contractRoutes);
 router.use("/groupStudent", groupRoutes);
 router.use("/affiliateVehicle", affiliateVehicleRoutes);
 router.use("/affiliateDriver", affiliateDriverRoutes);
+router.use("/mode", modeRoutes);
+router.use("/driver", driverRoutes);
+router.use("/vehicle", vehicleRoutes);
+router.use("/company", companyRoutes);
 module.exports = router;

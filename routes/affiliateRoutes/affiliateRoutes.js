@@ -3,7 +3,7 @@ const authAffiliate = require('../../controllers/affiliateControllers/affiliateA
 
 const router = express.Router();
 
-router.post('/registerAffiliate', authAffiliate.registerAffiliate);
+router.post('/register', authAffiliate.registerAffiliate);
 router.post('/loginAffiliate', authAffiliate.loginAffiliate);
 router.post('/logoutAffiliate', authAffiliate.logout);
 router.delete('/deleteAffiliate/:id', authAffiliate.deleteAffiliate);
