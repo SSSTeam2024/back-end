@@ -1,17 +1,19 @@
 const express = require('express');
-const affiliateController = require('../../controllers/affiliateControllers/affiliateController');
+const authAffiliate = require('../../controllers/affiliateControllers/affiliateAuthController');
 
 const router = express.Router();
 
-router.post('/register', affiliateController.register);
-router.post('/login', affiliateController.login);
-router.post('/logout', affiliateController.logout);
-router.put('/updateProfileAffiliate/:id', affiliateController.updateProfile);
-router.get('/getAffiliate/:id', affiliateController.getById);
-router.get('/getAllAffiliates', affiliateController.getAffiliates);
-router.delete('/deleteAffiliate/:id', affiliateController.deleteAffilate);
-router.post('/getAffiliateByEmail', affiliateController.getByEmail);
-router.put('/updateAffiliatePassword/:id', affiliateController.updatePassword);
-router.post("/acceptenceEmail", affiliateController.sendAcceptenceEmail);
-router.post("/refuseEmail", affiliateController.sendRefuseEmail);
+router.post('/register', authAffiliate.registerAffiliate);
+router.post('/loginAffiliate', authAffiliate.loginAffiliate);
+router.post('/logoutAffiliate', authAffiliate.logout);
+router.delete('/deleteAffiliate/:id', authAffiliate.deleteAffiliate);
+router.put('/updateAffiliate/:id', authAffiliate.updateAffiliate);
+router.get('/getAffiliate/:id', authAffiliate.getAffiliateById);
+router.get('/getAllAffiliates', authAffiliate.getAffiliates);
+router.put('/updatePassword/:id', authAffiliate.updatePassword);
+router.post('/logout/:id', authAffiliate.logout);
+router.post('/getAffiliateByToken', authAffiliate.getAffiliateByJwtToken);
+router.post("/acceptenceEmail", authAffiliate.sendAcceptenceEmail);
+router.post("/refuseEmail", authAffiliate.sendRefuseEmail);
+
 module.exports = router;

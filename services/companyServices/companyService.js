@@ -4,10 +4,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
 const createCompany = async (companyData, documents) => {
-  console.log(companyData);
-  console.log(documents);
   let saveResult = await saveDocumentsToServer(documents);
-  console.log(saveResult);
   const hashedPassword = await bcrypt.hash(companyData.password, 10);
   return await companyDao.createCompany({
     ...companyData,
@@ -18,10 +15,8 @@ const createCompany = async (companyData, documents) => {
 async function saveDocumentsToServer(documents) {
   let counter = 0;
   for (const file of documents) {
-    console.log(file);
     await saveFile(file.base64String, file.name, file.path);
     counter++;
-    console.log("File number " + counter + " saved");
   }
   if (counter == documents.length) return true;
 }

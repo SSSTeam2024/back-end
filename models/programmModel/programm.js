@@ -53,8 +53,6 @@ const programmSchema = new mongoose.Schema(
     unit_price: String,
     total_price: String,
     journeyType:String,
-    luggage:String,
-    vehiculeType:String,
     program_status: [
       {
         status: String,
@@ -63,7 +61,9 @@ const programmSchema = new mongoose.Schema(
     ],
     invoiceFrequency: String,
     status: String,
-    within_payment_days: String
+    within_payment_days: String,
+    students_groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupStudent'}],
+    employees_groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupEmployee'}],
   },
   {
     timestamps: true,

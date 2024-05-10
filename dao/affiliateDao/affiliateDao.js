@@ -29,7 +29,6 @@ const getAffiliateByEmail = async (email) => {
 }
 
 const updatePassword = async (id, password) => {
-  console.log('Hashed pwd: '+password);
   return await Affiliate.findByIdAndUpdate({ _id:id }, {
     $set: {
       password: password
@@ -39,10 +38,6 @@ const updatePassword = async (id, password) => {
 
 const updateAffiliateStatus = async (id,login, password, service_date) => {
   let affiliateStatus = "Accepted";
-  console.log("DAO: id", id)
-  console.log("DAO: login", login)
-  console.log("DAO: password", password)
-  console.log("DAO: service_date", service_date)
   return await Affiliate.findByIdAndUpdate(
     { _id: id },
     {
@@ -58,7 +53,6 @@ const updateAffiliateStatus = async (id,login, password, service_date) => {
 
 const refuseAffiliate = async (id) => {
   let affiliateStatus = "Refused";
-  console.log("DAO: id", id)
   return await Affiliate.findByIdAndUpdate(
     { _id: id },
     {
@@ -68,6 +62,21 @@ const refuseAffiliate = async (id) => {
     }
   );
 };
+
+// find affiliate by token
+const findAffiliateByToken = async (token) => {
+  let api_token = token;
+  return await Affiliate.findOne({ api_token });
+};
+
+ // logout
+ const logout = async (id) => {
+  return await Affiliate.findByIdAndUpdate({ _id:id }, {
+    $set: {
+      api_token: ""
+    }
+  });
+}
 
 module.exports = {
   createAffiliate,
@@ -79,5 +88,7 @@ module.exports = {
   getAffiliateByEmail,
   updatePassword,
   updateAffiliateStatus,
-  refuseAffiliate
+  refuseAffiliate,
+  logout,
+  findAffiliateByToken
 };

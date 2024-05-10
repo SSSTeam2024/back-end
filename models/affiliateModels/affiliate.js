@@ -14,12 +14,13 @@ const affiliateSchema = new mongoose.Schema({
   bank_name: String,
   login: String,
   password: String,
-  id_number: String,
+  api_token:String,
   id_creation_date: String,
   id_file: String,
-  license_id: String,
-  license_date: String,
-  license_file: String,
+  number_file: String,
+  insurance_number:String,
+  insurance_date:String,
+  insurance_file:String,
   notes: String,
   vehicles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'VehiculeType'}],
   fleetNumber: String,
@@ -33,7 +34,10 @@ const affiliateSchema = new mongoose.Schema({
     }
   }],
   years_experience: String,
-  website: String
+  website: String,
+  progress: String,
+  price: String,
+  jobStatus: String
 });
 
 module.exports = mongoose.model('Affiliate', affiliateSchema);

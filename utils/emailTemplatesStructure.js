@@ -2059,21 +2059,6 @@ becomePartnerDemandRefused: (affiliate) =>
                 background-color: #555;
                 color: #ffe605;
               ">
-                        <b>Depot Address</b>
-                    </td>
-                    <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label> `+ affiliate.depotAddress.placeName +` </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="
-                width: 200px;
-                text-align: right;
-                vertical-align: top;
-                padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
-              ">
                         <b>Coverage Zone</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">

@@ -51,7 +51,7 @@ const addNewGroup = async (req, res) => {
       status,
       id_company,
       program,
-
+      passenger_number,
       employees,
     } = req.body;
     console.log(req.body);
@@ -67,7 +67,7 @@ const addNewGroup = async (req, res) => {
       status,
       id_company,
       program,
-
+      passenger_number,
       employees,
     });
     res.json(group);
@@ -89,6 +89,7 @@ const updateGroupEmployee = async (req, res) => {
       dateEnd,
       timeEnd,
       status,
+      passenger_number,
       id_company,
     } = req.body;
 
@@ -102,6 +103,7 @@ const updateGroupEmployee = async (req, res) => {
       dateEnd,
       timeEnd,
       status,
+      passenger_number,
       id_company,
     });
     res.json(updatedgroup);

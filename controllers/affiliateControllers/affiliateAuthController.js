@@ -1,142 +1,305 @@
-const authService = require('../services/affiliateAuthService');
+const authAffiliate = require("../../services/affiliateServices/affiliateService");
+const globalFunctions = require("../../utils/globalFunction");
 
-const register = async (req, res) => {
+// register affiliate account
+const registerAffiliate = async (req, res) => {
   try {
-    const { 
+    const {
       name,
       address,
       email,
       phone,
       category,
-      region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
       bank_name,
       login,
       password,
-      id_number,
+      api_token,
       id_creation_date,
-      cardIdBase64String,
-      cardIdExtension,
-      license_id,
-      license_date,
-      licenseIdBase64String,
-      licenseIdExtension 
+     // id_file
+     number_file,
+     insurance_number,
+     insurance_date,
+     insuranceFileBase64String,
+      InsuranceFileExtension,
+      notes,
+      //insurance_file
+      vehicles, 
+      fleetNumber,
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website,
+      progress,
+      IdFileBase64String,
+      IdFileExtension,
     } = req.body;
 
-    let id_file = globalFunctions.generateUniqueFilename(cardIdExtension,'cardId');
-    let license_file = globalFunctions.generateUniqueFilename(licenseIdExtension,'licenseId');
-
+    const licenceFilesPath = 'files/affiliateFiles/licenceFiles/';
+    const insuranceFilesPath = 'files/affiliateFiles/insuranceFiles/';
+    let id_file = globalFunctions.generateUniqueFilename(
+      IdFileExtension,
+      "licenceAffiliate"
+    );
+    let insurance_file = globalFunctions.generateUniqueFilename(
+      InsuranceFileExtension,
+      "insuranceAffiliate"
+    );
     let documents = [
       {
-        base64String: cardIdBase64String,
-        extension: cardIdExtension,
-        name: id_file
+        base64String: IdFileBase64String,
+        extension: IdFileExtension,
+        name: id_file,
+        path: licenceFilesPath
       },
       {
-        base64String: licenseIdBase64String,
-        extension: licenseIdExtension,
-        name: license_file
-      }
+        base64String: insuranceFileBase64String,
+        extension: InsuranceFileExtension,
+        name: insurance_file,
+        path: insuranceFilesPath
+      },
     ];
-    
-    await affiliateService.registerAffilate({ 
-      name,
+
+    await authAffiliate.registerAffilate(
+      {
+        name,
       address,
       email,
       phone,
       category,
-      region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
       bank_name,
       login,
       password,
-      id_number,
+      api_token,
       id_creation_date,
-      id_file,
-      license_id,
-      license_date,
-      license_file
-     },documents);
+     // id_file
+     number_file,
+     insurance_number,
+     insurance_date,
+      notes,
+      //insurance_file
+      vehicles, 
+      fleetNumber,
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website,
+      progress,
+      },
+      documents
+    );
     res.sendStatus(201);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
   }
 };
-const login = async (req, res) => {
+
+//Login Affiliate
+const loginAffiliate = async (req, res) => {
   try {
     const { login, password } = req.body;
-    const result = await authService.loginUser(login, password);
-    res.cookie('access_token', result.accessToken, { httpOnly: true, secure: true });
-    res.json(result);
+    const result = await authAffiliate.loginAffiliate(login, password);
+
+    res.json({ affiliate: result });
   } catch (error) {
     console.error(error);
     res.status(401).send(error.message);
   }
 };
 
-const logout = (req, res) => {
-  res.clearCookie('access_token');
+//logout affiliate account
+const logout = async (req, res) => {
+  let id = req.params.id;
+
+  await authAffiliate.logout(id);
+
   res.sendStatus(200);
 };
 
-
-
-const updateProfile = async (req, res) => {
+//delete affiliate account
+const deleteAffiliate = async (req, res) => {
   try {
     const affiliateId = req.params.id;
-    const { 
-      name, 
-      address,
-      email,
-      phone,
-      category,
-      region,
-      service_date,
-      status,
-      account_name,
-      sort_code,
-      account_number,
-      bank_name,
-      login,
-      password,
-      id_number,
-      id_creation_date,
-      license_id,
-      license_date,
-     } = req.body;
 
-    const updateAffiliate = await affiliateService.updateAffiliate(affiliateId, { 
-      name, 
+    const deletedAffiliate = await authAffiliate.deleteAffiliate(affiliateId);
+
+    if (!deletedAffiliate) {
+      return res.status(404).send("Affiliate not found");
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const updateAffiliate = async (req, res) => {
+  try {
+    const affiliateId = req.params.id;
+    const {
+      name,
       address,
       email,
       phone,
       category,
-      region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
       bank_name,
       login,
       password,
-      id_number,
+      api_token,
       id_creation_date,
-      license_id,
-      license_date,
-     });
+     // id_file
+     number_file,
+     insurance_number,
+     insurance_date,
+     insuranceFileBase64String,
+      InsuranceFileExtension,
+      notes,
+      //insurance_file
+      vehicles, 
+      fleetNumber,
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website,
+      progress,
+      IdFileBase64String,
+      IdFileExtension,
+    } = req.body;
+
+    const licenceFilesPath = 'files/affiliateFiles/licenceFiles/';
+    const insuranceFilesPath = 'files/affiliateFiles/insuranceFiles/';
+
+    let insurance_file = globalFunctions.generateUniqueFilename(InsuranceFileExtension,'AffiliateInsurance');
+    let id_file = globalFunctions.generateUniqueFilename(IdFileExtension,'AffiliateImages');
+
+    let documents = [
+      {
+        base64String: IdFileBase64String,
+        extension: IdFileExtension,
+        name: id_file,
+        path: licenceFilesPath
+      },
+      {
+        base64String: InsuranceFileBase64String,
+        extension: InsuranceFileExtension,
+        name: insurance_file,
+        path: insuranceFilesPath
+      },
+   
+    ];
+    const affiliate = await authAffiliate.updateAffiliate(affiliateId, {
+      name,
+      address,
+      email,
+      phone,
+      category,
+      service_date,
+      statusAffiliate,
+      account_name,
+      sort_code,
+      account_number,
+      bank_name,
+      login,
+      password,
+      api_token,
+      id_creation_date,
+     // id_file
+     number_file,
+     insurance_number,
+     insurance_date,
+      notes,
+      //insurance_file
+      vehicles, 
+      fleetNumber,
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website,
+      progress,
+    },documents);
+    res.status(200).json(affiliate);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// get affiliate by id
+const getAffiliateById = async (req, res) => {
+  try {
+    const affiliateId = req.params.id;
+
+    const getAffiliate = await authAffiliate.getAffiliateById(affiliateId);
+
+    if (!getAffiliate) {
+      return res.status(404).send("Affiliate not found");
+    }
+    res.json(getAffiliate);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// get affiliate by token
+const getAffiliateByJwtToken = async (req, res) => {
+  try {
+    const token = req.body.token;
+
+    const getAffiliate = await authAffiliate.getAffiliateByToken(token);
+
+    if (!getAffiliate) {
+      return res.status(404).send("Affiliate not found");
+    }
+    res.json({ affiliate: getAffiliate });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// get all affiliates
+const getAffiliates = async (req, res) => {
+  try {
+    const affiliates = await authAffiliate.getAffiliates();
+    res.json( affiliates );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+// update password school account
+const updatePassword = async (req, res) => {
+  try {
+    const affiliateId = req.params.id;
+    const { password } = req.body;
+
+    const updateAffiliate = await authAffiliate.updatePassword(affiliateId, {
+      password,
+    });
 
     if (!updateAffiliate) {
-      return res.status(404).send('Affiliate not found!');
+      return res.status(404).send("Affiliate not found!");
     }
     res.json(updateAffiliate);
   } catch (error) {
@@ -145,9 +308,54 @@ const updateProfile = async (req, res) => {
   }
 };
 
+
+const sendAcceptenceEmail = async (req, res) => {
+  try {
+    const {
+      id,
+      login,
+      password,
+      service_date,
+    } = req.body;
+    const sentResult = await authAffiliate.sendAcceptenceEmail({
+      id,
+      login,
+      password,
+      service_date,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const sendRefuseEmail = async (req, res) => {
+  try {
+    const {
+      id_aff,
+    } = req.body;
+    console.log(req.body)
+    const sentResult = await authAffiliate.sendRefuseEmail({
+      id_aff,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
-  register,
-  login,
+  getAffiliates,
+  getAffiliateByJwtToken,
   logout,
-  updateProfile
+  getAffiliateById,
+  updateAffiliate,
+  deleteAffiliate,
+  loginAffiliate,
+  updatePassword,
+  registerAffiliate,
+  sendAcceptenceEmail,
+  sendRefuseEmail
 };

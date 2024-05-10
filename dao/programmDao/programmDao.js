@@ -43,6 +43,34 @@ const updateStatus = async (
   );
 };
 
+const updateSchoolGroups = async (
+  id,
+  groups
+) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        students_groups: groups,
+      },
+    }
+  );
+};
+
+const updateCompanyGroups = async (
+  id,
+  groups
+) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        employees_groups: groups,
+      },
+    }
+  );
+};
+
 const convert_to_contract = async (programData) => {
   return await Contract.create(programData);
 };
@@ -70,5 +98,7 @@ module.exports = {
   convert_to_contract,
   updateToQuote,
   deleteProgramm,
-  updateStatusToConverted
+  updateStatusToConverted,
+  updateCompanyGroups,
+  updateSchoolGroups
 };

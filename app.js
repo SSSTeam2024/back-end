@@ -4,14 +4,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const http = require('http');
-
+const { Server } = require("socket.io");
 const AppRouter = require('./routes/appRouter');
 
 const app = express();
 
 const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 app.use(compression())
 app.use(cors());
@@ -30,8 +34,12 @@ app.all('*', (req, res) => {
   res.status(404).send('404 - Not Found');
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
+io.on("connection", (socket) => {
+  console.log("hello socket");
+  socket.on("live-tracking-driver-emit", (arg) => {
+    console.log(arg);
+    io.emit("live-tracking-companies-listening", arg);
+  });
 });
 
 app.listen(port, () => {

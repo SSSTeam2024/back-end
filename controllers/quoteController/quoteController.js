@@ -455,6 +455,19 @@ const surveyAffiliate = async (req, res) => {
   }
 };
 
+const acceptAssignedAffiliateToQuoteAPI = async (req, res) => {
+  try {
+    const { idQuote, id_affiliate} = req.body;
+    const sentResult = await quoteService.acceptAssignedAffiliateToQuote({
+      idQuote,
+      id_affiliate,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
 
 module.exports = {
   createQuote,
@@ -474,5 +487,6 @@ module.exports = {
   getQuoteByIdSchedule,
   assignDriverAndVehicleToQuoteAPI,
   assignAffiliateToQuoteAPI,
-  surveyAffiliate
+  surveyAffiliate,
+  acceptAssignedAffiliateToQuoteAPI
 };

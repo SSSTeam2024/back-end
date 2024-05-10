@@ -5,6 +5,7 @@ const Contract = require("../../models/contractModel/contract");
 const VehicleTypeService = require("../../services/vehicleTypeServices/vehicleTypeService");
 const journeyService = require('../../services/journeyServices/journeyService');
 const luggageService = require('../../services/luggageServices/luggageService');
+const groupStudentDAO = require('../../dao/groupStudentDao/groupStudentDao');
 
 const getProgramms = async (req, res) => {
   try {
@@ -18,93 +19,29 @@ const getProgramms = async (req, res) => {
 const createProgramm = async (req, res) => {
   try {
     const {
-      notes,
-      extra,
-      recommanded_capacity,
-      invoiceFrequency,
-      exceptDays,
-      freeDays_date,
-      droppOff_date,
-      pickUp_date,
-      destination_point,
-      stops,
-      origin_point,
-      programName,
-      dropOff_time,
-      pickUp_Time,
-      workDates,
-      company_id,
-      school_id,
-      notes_for_client,
-      notes_for_admin,
-      unit_price,
-      total_price,
-      program_status,
-      vehiculeType,
-      luggage,
-      within_payment_days,
-      journeyType,
+      programDetails,
+      groups
     } = req.body;
-    console.log(req.body)
-   if(company_id === "") {
-    const newProgramm = await programmService.createProgramm({
-      notes,
-      extra,
-      recommanded_capacity,
-      invoiceFrequency,
-      exceptDays,
-      freeDays_date,
-      droppOff_date,
-      pickUp_date,
-      destination_point,
-      stops,
-      origin_point,
-      programName,
-      dropOff_time,
-      pickUp_Time,
-      workDates,
-      school_id,
-      notes_for_client,
-      notes_for_admin,
-      unit_price,
-      total_price,
-      program_status,
-      vehiculeType,
-      luggage,
-      within_payment_days,
-      journeyType,
-    });
+
+   if(programDetails.company_id === "") {
+   
+    delete programDetails.company_id;
+   
+    const newProgramm = await programmService.createProgramm(
+      programDetails,
+      groups
+    );
     res.status(201).json(newProgramm);
    } else {
-    const newProgramm = await programmService.createProgramm({
-      notes,
-      extra,
-      recommanded_capacity,
-      invoiceFrequency,
-      exceptDays,
-      freeDays_date,
-      droppOff_date,
-      pickUp_date,
-      destination_point,
-      stops,
-      origin_point,
-      programName,
-      dropOff_time,
-      pickUp_Time,
-      workDates,
-      company_id,
-      notes_for_client,
-      notes_for_admin,
-      unit_price,
-      total_price,
-      program_status,
-      vehiculeType,
-      luggage,
-      within_payment_days,
-      journeyType,
-    });
+    
+    delete programDetails.school_id;
+    
+    const newProgramm = await programmService.createProgramm(
+      programDetails,
+      groups
+    );
     res.status(201).json(newProgramm);
-   }
+  }
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -235,35 +172,47 @@ const convertToQuoteAPI = async (req, res) => {
   try {
     const { id_schedule } = req.body;
     let program = await programmService.getProgrammById(id_schedule);
-    let vehicleType = await VehicleTypeService.getVehicleTypeById(program.vehiculeType);
+    //?let vehicleType = await VehicleTypeService.getVehicleTypeById(program.vehiculeType);
     let journey = await journeyService.getJourneyById(program.journeyType);
     let luggage = await luggageService.getLuagggeById(program.luggage);
-    for (let i = 0; i < program.workDates.length; i++) {
+    
       if(program.school_id === null) {
-        const sentResult = await programmService.convertToQuote({
-          id_schedule: id_schedule,
-          company_id: program.company_id,
-          passengers_number: Number(program.recommanded_capacity),
-          start_point: program.origin_point,
-          mid_stations: program.stops,
-          dropoff_time: program.dropOff_time,
-          date: program.workDates[i],
-          dropoff_date: program.workDates[i],
-          destination_point: program.destination_point,
-          pickup_time: program.pickUp_Time,
-          notes: program.notes,
-          progress: "Booked",
-          status: "Booked",
-          category:"Regular",
-          vehicle_type: vehicleType.type,
-          journey_type: journey.type,
-          luggage_details: luggage.description,
-          manual_cost: program.unit_price,
-          id_invoice: "",
-          enquiryDate: new Date()
-        });
+        for (let i = 0; i < program.employees_groups.length; i++) {
+          const groupID = program.employees_groups[i];
+          const group = await groupStudentDAO.getGroupStudentById(groupID)
+          for (let index = 0; index < program.workDates.length; index++) {
+            const sentResult = await programmService.convertToQuote({
+              id_schedule: id_schedule,
+              company_id: program.company_id,
+              passengers_number: Number(program.recommanded_capacity),
+              start_point: program.origin_point,
+              mid_stations: program.stops,
+              dropoff_time: program.dropOff_time,
+              date: program.workDates[index],
+              dropoff_date: program.workDates[index],
+              destination_point: program.destination_point,
+              pickup_time: program.pickUp_Time,
+              notes: program.notes,
+              progress: "Booked",
+              status: "Booked",
+              category:"Regular",
+              vehicle_type: group.vehicle_type,
+              journey_type: journey.type,
+              luggage_details: group.luggage_details,
+              manual_cost: program.unit_price,
+              id_invoice: "",
+              enquiryDate: new Date(),
+              id_group_employee : groupID
+            });
+          }
+      }
       }
       else {
+        for (let i = 0; i < program.students_groups.length; i++) {
+          const groupID = program.students_groups[i];
+          const group = await groupStudentDAO.getGroupStudentById(groupID)
+          console.log(group)
+        for (let index = 0; index < program.workDates.length; index++) {
         const sentResult = await programmService.convertToQuote({
           id_schedule: id_schedule,
           school_id: program.school_id,
@@ -271,22 +220,24 @@ const convertToQuoteAPI = async (req, res) => {
           start_point: program.origin_point,
           mid_stations: program.stops,
           dropoff_time: program.dropOff_time,
-          date: program.workDates[i],
-          dropoff_date: program.workDates[i],
+          date: program.workDates[index],
+          dropoff_date: program.workDates[index],
           destination_point: program.destination_point,
           pickup_time: program.pickUp_Time,
           notes: program.notes,
           progress: "Booked",
           status: "Booked",
           category:"Regular",
-          vehicle_type: vehicleType.type,
+          vehicle_type: group.vehicle_type,
           journey_type: journey.type,
-          luggage_details: luggage.description,
+          luggage_details: group.luggage_details,
           manual_cost: program.unit_price,
           id_invoice: "",
-          enquiryDate: new Date()
+          enquiryDate: new Date(),
+          id_group_student: groupID
         });
       }
+    }
     }
     res.status(201).send("Converted Successfully");
   } catch (error) {

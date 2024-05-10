@@ -90,10 +90,11 @@ const sendAcceptenceEmail = async (acceptenceData) => {
  let login = acceptenceData.login
  let password = acceptenceData.password
  let service_date = acceptenceData.service_date
+ const hashedPassword = await bcrypt.hash(password, 10);
   await affiliateDao.updateAffiliateStatus(
     id,
     login,
-    password,
+    hashedPassword,
     service_date
   );
   let affiliate = await affiliateDao.getAffiliateById(id);
@@ -186,6 +187,17 @@ async function prepareRefuseDemandBecomeParnterEmail(affiliate) {
   return fullEmailObject;
 }
 
+//logout
+const logout = async (id) => {
+  return await affiliateDao.logout(id);
+};
+
+// get affiliate by token
+const getAffiliateByToken = async (token) => {
+  return await affiliateDao.findAffiliateByToken(token);
+}
+
+
 module.exports = {
   registerAffilate,
   loginAffiliate,
@@ -198,5 +210,7 @@ module.exports = {
   updatePassword,
   updateAffiliateStatus,
   sendAcceptenceEmail,
-  sendRefuseEmail
+  sendRefuseEmail,
+  logout,
+  getAffiliateByToken
 };

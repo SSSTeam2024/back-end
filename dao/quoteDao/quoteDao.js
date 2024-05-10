@@ -20,29 +20,6 @@ const getQuotes = async () => {
     })
 };
 
-const getQuotesOfSpecificPeriod = async (date) => {
-  let currentDate = new Date()
- let specificDate = currentDate.setDate(currentDate.getDate() + date);
-  console.log(currentDate.toLocaleDateString());
-  return await Quote.find()
-    .populate("id_visitor")
-    .populate("id_driver")
-    .populate("id_vehicle")
-    .populate("company_id")
-    .populate("school_id")
-    .populate("id_affiliate")
-    .populate({
-      path: "white_list",
-      populate: {
-        path: "vehicles",
-      }
-    }).then(quotes => {
-      return Quote.
-      find({ enquiryDate: { $gte: currentDate, $lte: specificDate } }).
-      sort({ enquiryDate: 1 });
-    })
-};
-
 const updateQuote = async (id, updateData) => {
   return await Quote.findByIdAndUpdate(id, updateData, { new: true });
 };
@@ -236,10 +213,10 @@ const assignAffiliate = async (id, affiliate, pushedDate, pushed_price) => {
     {
       $set: {
         white_list: affiliate,
+        pushedDate: pushedDate,
+        pushed_price : pushed_price,
         status: "Pushed",
         handled_by: 1,
-        pushedDate: pushedDate,
-        pushed_price : pushed_price
       },
     }
   );
@@ -256,6 +233,19 @@ const surveyAffiliate = async (id, affiliate) => {
   );
 };
 
+const acceptAssignedAffiliate = async (id, id_affiliate) => {
+  console.log("DAO", id_affiliate)
+  console.log("DAO", id)
+  return await Quote.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        white_list: null,
+        id_affiliate: id_affiliate
+      },
+    }
+  );
+};
 module.exports = {
   createQuote,
   getQuotes,
@@ -274,5 +264,6 @@ module.exports = {
   getQuoteByIdSchedule,
   assignDriverAndVehicleToQuoteDao,
   assignAffiliate,
-  surveyAffiliate
+  surveyAffiliate,
+  acceptAssignedAffiliate
 };

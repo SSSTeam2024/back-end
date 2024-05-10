@@ -8,6 +8,8 @@ const quoteSchema = new mongoose.Schema(
     school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     owner: String,
     handled_by: Number,
+    id_group_employee : { type: Schema.Types.ObjectId, ref: "groupEmployee", default: null },
+    id_group_student : { type: Schema.Types.ObjectId, ref: "groupStudent", default: null },
     id_affiliate: { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
     white_list: [
      { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },

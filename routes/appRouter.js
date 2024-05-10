@@ -41,6 +41,8 @@ const programmRoutes = require("./programmRoutes/programmRoutes");
 const contractRoutes = require("./contractRoutes/contractRoutes");
 const checkTypeRoutes = require("./checkTypeRoutes/checkTypeRoutes");
 const checkListRoutes = require("./checkListRoutes/checkListRoutes");
+const affiliateVehicleRoutes = require("./affiliateVehicleRoutes/affiliateVehicleRoutes")
+const affiliateDriverRoutes=require("./affiliateDriverRoutes/affiliateDriverRoutes")
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -91,5 +93,7 @@ router.use("/programm", programmRoutes);
 router.use("/contract", contractRoutes);
 router.use("/duty-check", checkTypeRoutes);
 router.use("/check-list", checkListRoutes);
+router.use("/affiliateVehicle", affiliateVehicleRoutes);
+router.use("/affiliateDriver", affiliateDriverRoutes);
 
 module.exports = router;

@@ -21,4 +21,5 @@ router.post("/getQuoteByIdSchedule", quoteController.getQuoteByIdSchedule);
 router.post("/assignDriverAndVehicleToQuote", quoteController.assignDriverAndVehicleToQuoteAPI);
 router.post("/assignAffiliate", quoteController.assignAffiliateToQuoteAPI);
 router.post("/surveyAffiliate", quoteController.surveyAffiliate);
+router.post("/acceptAssignedAffiliate", quoteController.acceptAssignedAffiliateToQuoteAPI);
 module.exports = router;

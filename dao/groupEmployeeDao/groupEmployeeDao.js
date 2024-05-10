@@ -80,7 +80,7 @@ async function addEmployeesToGroup(groupId, employees) {
 }
 
 const getGroupEmployeeById = async (id) => {
-  return await groupEmployee.findById(id);
+  return await groupEmployee.findById(id)
 };
 
 const getGroupByIdEmployee = async (id_employee) => {

@@ -1,7 +1,38 @@
 const programmDao = require("../../dao/programmDao/programmDao");
+const groupEmployeeDao = require("../../dao/groupEmployeeDao/groupEmployeeDao");
+const groupStudentDao = require("../../dao/groupStudentDao/groupStudentDao");
 
-const createProgramm = async (programmData) => {
-  return await programmDao.createProgramm(programmData);
+const createProgramm = async (programmData, groupsData) => {
+
+  let program = await programmDao.createProgramm(programmData);
+  let groups = [];
+
+  let updatedProgram;
+
+  if(groupsData.type === "School"){
+    for(let group of groupsData.groupCollection){
+      group.program = program._id;
+     let createdGroup = await groupStudentDao.addNewGroup(group);
+    
+     groups.push(createdGroup._id);
+    }
+    
+    updatedProgram = await programmDao.updateSchoolGroups(program._id, groups);
+  
+    return updatedProgram
+  }
+
+  if(groupsData.type === "Company"){
+    for(let group of groupsData.groupCollection){
+      group.program = program._id;
+      let createdGroup = await groupEmployeeDao.addNewGroup(group);
+      groups.push(createdGroup._id);
+     }
+     updatedProgram = await programmDao.updateCompanyGroups(program._id, groups);
+     return updatedProgram
+  }
+
+
 };
 
 const getProgramms = async () => {

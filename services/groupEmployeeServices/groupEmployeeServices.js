@@ -43,13 +43,9 @@ async function getAllGroups() {
 // };
 
 const addNewGroup = async (groupData) => {
-  console.log(groupData);
-
   let group = await groupEmployeeDao.addNewGroup(groupData);
   let employees = groupData.employees;
   let date = new Date();
-  console.log(employees);
-  console.log(typeof employees);
   await updateEmployees(employees, group, date);
   return group;
 };
