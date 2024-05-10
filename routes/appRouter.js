@@ -76,7 +76,7 @@ router.use("/mileageBand", mileageBandRoutes);
 router.use("/hourlyBand", hourlyBandRoutes);
 router.use("/waitingBand", waitingBandRoutes);
 router.use("/stop", stopRoutes);
-router.use("/company", companyRoutes);
+router.use("/companies", companyRoutes);
 router.use("/team", teamRoutes);
 router.use("/authCentralApp", authCentralAppRoutes);
 router.use("/employees", employeesRoutes);

@@ -36,6 +36,7 @@ const affiliateSchema = new mongoose.Schema({
   years_experience: String,
   website: String,
   progress: String,
+  noteAcceptJob:String,
   price: String,
   jobStatus: String
 });

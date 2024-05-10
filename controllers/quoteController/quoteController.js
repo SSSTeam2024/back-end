@@ -469,6 +469,104 @@ const acceptAssignedAffiliateToQuoteAPI = async (req, res) => {
   }
 };
 
+//getQuotesByIdAffiliate
+
+async function getQuotesByIdAffiliateAPI(req, res) {
+  try {
+    const { id } = req.params;
+    console.log(id)
+    const quote = await quoteService.getQuotesByIdAffiliate(id);
+    return res.json(quote);
+  } catch (error) {
+    console.error("Error in getQuotesByIdAffiliateController:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+const updateAffiliateQuoteStatusToCancel = async (req, res) => {
+  try {
+    const { quoteId, status } = req.body;
+    const sentResult = await quoteService.updateToCancelAffiliate({
+      quoteId,
+      status,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+//delete affiliate quote 
+const deleteAffiliateQuote = async (req, res) => {
+  try {
+    const quoteId = req.params.id;
+
+    const deletedQuote = await quoteService.deleteAffiliateQuote(quoteId);
+
+    if (!deletedQuote) {
+      return res.status(404).send("Affiliate's Quote not found");
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+const updateAffiliateQuoteProgress = async (req, res) => {
+  try {
+    const { id_quote, progress } = req.body;
+    const sentResult = await quoteService.updateAffiliateProgress({
+      id_quote,
+      progress,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const updateAffiliateQuoteStatusToRefuse = async (req, res) => {
+  try {
+    const { quoteId, affiliateId } = req.body;
+    const status = `Refused by affiliate ${affiliateId}`;
+
+    if (!quoteId || !affiliateId) {
+      return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
+    }
+
+    const updatedQuote = await quoteService.updateToRefuseAffiliateQuote(quoteId, status, affiliateId);
+    await updateAffiliateStatus(affiliateId, {
+      statusJob: `Refused the quote ${quoteId}`,
+      priceJob: "",
+      noteAcceptJob: "", 
+    }); 
+
+    res.json({ success: true, updatedQuote });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const updateAffiliateQuoteStatusToAccept = async (req, res) => {
+  try {
+    const { quoteId, priceJob, noteAcceptJob, affiliateId } = req.body;
+
+    if (!quoteId || !affiliateId) {
+      return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
+    }
+
+    const status = `Accepted by affiliate ${affiliateId}`;
+    const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({ quoteId, status, priceJob, noteAcceptJob, affiliateId });
+
+    res.json({ success: true, updatedQuote });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -488,5 +586,11 @@ module.exports = {
   assignDriverAndVehicleToQuoteAPI,
   assignAffiliateToQuoteAPI,
   surveyAffiliate,
-  acceptAssignedAffiliateToQuoteAPI
+  acceptAssignedAffiliateToQuoteAPI,
+  getQuotesByIdAffiliateAPI,
+  updateAffiliateQuoteStatusToCancel,
+  deleteAffiliateQuote,
+  updateAffiliateQuoteProgress,
+  updateAffiliateQuoteStatusToRefuse,
+  updateAffiliateQuoteStatusToAccept
 };

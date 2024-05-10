@@ -22,4 +22,14 @@ router.post("/assignDriverAndVehicleToQuote", quoteController.assignDriverAndVeh
 router.post("/assignAffiliate", quoteController.assignAffiliateToQuoteAPI);
 router.post("/surveyAffiliate", quoteController.surveyAffiliate);
 router.post("/acceptAssignedAffiliate", quoteController.acceptAssignedAffiliateToQuoteAPI);
+router.post("/assignAffiliateDriver", quoteController.assignDriverAndVehicleToQuoteAPI);
+router.post("/assignAffiliateVehicle", quoteController.assignVehicleToQuoteAPI);
+router.post("/assignAffiliateVehicleAndDriver", quoteController.assignDriverAndVehicleToQuoteAPI);
+router.get("/getQuotesByIdAffiliate/:id", quoteController.getQuotesByIdAffiliateAPI);
+router.get("/getAffiliateQuotes",quoteController.getQuotes)
+router.post("/cancelAffiliateQuote", quoteController.updateAffiliateQuoteStatusToCancel);
+router.delete("/deleteAffiliateQuote/:id", quoteController.deleteAffiliateQuote);
+router.post("/updateAffiliateQuoteProgress", quoteController.updateAffiliateQuoteProgress);
+router.post("/updateAffiliateQuoteRefuse", quoteController.updateAffiliateQuoteStatusToRefuse);
+router.post("/updateAffiliateQuoteAccept", quoteController.updateAffiliateQuoteStatusToAccept);
 module.exports = router;

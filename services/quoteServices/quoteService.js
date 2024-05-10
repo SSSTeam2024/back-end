@@ -44,7 +44,7 @@ const createQuote = async (quoteData, distance) => {
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
+    let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
     console.log("55", quote);
     email = await prepareQuoteBookingEmail(
       id,
@@ -93,7 +93,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
+  let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
@@ -152,7 +152,7 @@ const sendPaymentEmail = async (paymentData) => {
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
   let url =
-    "http://localhost:3000/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
+    "https://bouden.uk.oxa.cloud/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
@@ -310,6 +310,102 @@ console.log(id_affiliate)
   return "Assigne Affiliate Accepted!!";
 };
 
+//add affiliate driver and vehicle
+const addAffiliateDriveAndVehicleToQuote= async(bookingData)=>{
+  let quote_id = bookingData.quote_ID;
+  let driver = bookingData.affiliateDriver_ID;
+  let vehicle = bookingData.affiliateVehicle_ID;
+  console.log("quote_id",quote_id)
+  console.log("driver",driver)
+  console.log("vehicle",vehicle)
+  await quoteDao.assignAffiliateDriverAndVehicleToQuoteDao(quote_id, vehicle, driver);
+  return "Driver and Vehicle Assigned!!";
+}
+
+//add driver affiliate to quote
+const addAffiliateDriverToQuote= async(bookingData)=>{
+  let quote_id = bookingData.quote_ID;
+  let driver = bookingData.affiliateDriver_ID;
+  await quoteDao.addAffiliateDriverToQuoteDao(quote_id, driver);
+  return "Driver Assigned!!";
+}
+
+//add vehicle affiliate to quote
+const addAffiliateVehicleToQuote= async(bookingData)=>{
+  let quote_id = bookingData.quote_ID;
+  let vehicle = bookingData.affiliateVehicle_ID;
+  await quoteDao.addAffiliateVehicleToQuote(quote_id, vehicle);
+  return "Vehicle Assigned!!";
+}
+
+// get quotes by id aafiliate
+async function getQuotesByIdAffiliate(id) {
+  try {
+    const quotes = await quoteDao.getQuotesByIdAffiliate(id);
+    console.log(id)
+    return quotes;
+  } catch (error) {
+    console.error("Error in getQuotesByIdAffiliate service:", error);
+    throw error; 
+  }
+}
+
+const updateAffiliateProgress = async (updateData) => {
+  let id_quote = updateData.id_quote;
+  let progress = updateData.progress;
+  await quoteDao.updateAffiliateProgress(id_quote, progress);
+  return "Progress Updated!!";
+};
+
+const updateToCancelAffiliate = async (updateData) => {
+  let quoteId = updateData.quoteId;
+  let status = updateData.status;
+  await quoteDao.updateStatusAffiliateQuoteToCancel(quoteId, status);
+  return "Quote Canceled!!";
+};
+
+const assignAffiliateVehicle = async (bookingData) => {
+  let quote_id = bookingData.quote_id;
+  let vehicle = bookingData.id_affiliate_vehicle;
+  await quoteDao.updateAffiliateVehicle(quote_id, vehicle);
+  return "Vehicle Assigned!!";
+};
+
+const updateStatusAffiliateQuoteToCancel = async (id) => {
+  return await quoteDao.updateStatusAffiliateQuoteToCancel(id);
+};
+
+const deleteAffiliateQuote = async (id) => {
+  return await quoteDao.deleteAffiliateQuote(id);
+};
+
+
+const updateToRefuseAffiliateQuote = async (quoteId, status, affiliateId) => {
+  try {
+    await quoteDao.updateStatusAffiliateQuoteToRefuse(quoteId, status, affiliateId);
+    return "Quote Refused!!";
+  } catch (error) {
+    throw new Error("Failed to update quote status to refuse: " + error.message);
+  }
+};
+
+const updateToAcceptAffiliateQuote = async ({ quoteId, status, priceJob, noteAcceptJob, affiliateId }) => {
+  try {
+    const quote = await quoteDao.getById(quoteId);
+    const proposedPrice = quote.proposed_price;
+
+    await quoteDao.updateStatusAffiliateQuoteToAccept(quoteId, status, priceJob || proposedPrice, noteAcceptJob);
+    await updateAffiliateStatus(affiliateId, {
+      statusJob: `Affiliate accepts the quote ${quoteId}`,
+      priceJob: priceJob || proposedPrice,
+      noteAcceptJob: noteAcceptJob,
+    });
+    return "Quote Accepted!!";
+  } catch (error) {
+    throw new Error("Failed to update quote status to accept: " + error.message);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -329,5 +425,16 @@ module.exports = {
   assignDriverAndVehicleToQuoteService,
   assignAffiliateToQuote,
   surveyAffiliate, 
-  acceptAssignedAffiliateToQuote
+  acceptAssignedAffiliateToQuote,
+  addAffiliateDriveAndVehicleToQuote,
+  addAffiliateDriverToQuote,
+  addAffiliateVehicleToQuote,
+  getQuotesByIdAffiliate,
+  updateAffiliateProgress,
+  updateToCancelAffiliate,
+  assignAffiliateVehicle,
+  updateStatusAffiliateQuoteToCancel,
+  deleteAffiliateQuote,
+  updateToRefuseAffiliateQuote,
+  updateToAcceptAffiliateQuote,
 };
