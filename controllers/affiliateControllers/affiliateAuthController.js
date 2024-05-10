@@ -11,22 +11,27 @@ const registerAffiliate = async (req, res) => {
       email,
       phone,
       category,
-      region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
       bank_name,
       login,
       password,
-      id_number,
       api_token,
       license_id,
       license_date,
       license_file,
       vehicles, 
       progress,
+      fleetNumber,
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website,
+      notes,
 
       insurance_date,
       insurance_number,
@@ -72,16 +77,13 @@ const registerAffiliate = async (req, res) => {
         email,
         phone,
         category,
-        region,
         service_date,
-        status,
         account_name,
         sort_code,
         account_number,
         bank_name,
         login,
         password,
-        id_number,
         id_creation_date,
         license_id,
         api_token,
@@ -92,6 +94,14 @@ const registerAffiliate = async (req, res) => {
         insurance_date,
         number_file,     
         insurance_number,
+        fleetNumber,
+        enquiryDate,
+        coverageDistance,
+        coverageArea,
+        years_experience,
+        website,
+        notes,
+        statusAffiliate,
       },
       documents
     );
@@ -250,34 +260,41 @@ const updateAffiliate = async (req, res) => {
       email,
       phone,
       category,
-      region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
       bank_name,
       login,
       password,
-      id_number,
       api_token,
-      license_id,
-      license_date,
-      license_file,
       vehicles, 
       progress,
+      notes,
+      fleetNumber,
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website,
+
       insurance_date,
       insurance_number,
       id_creation_date,
       number_file,
+      
       IdFileBase64String,
       IdFileExtension,
       InsuranceFileBase64String,
       InsuranceFileExtension,
+      priceJob,
+      noteAcceptJob,
+      statusJob
     } = req.body;
 
-    const licenceFilesPath = 'files/affiliateFiles/licenceFiles/';
-    const insuranceFilesPath = 'files/affiliateFiles/insuranceFiles/';
+    const licenceFiles = 'files/affiliateFiles/licenceFiles/';
+    const insuranceFiles = 'files/affiliateFiles/insuranceFiles/';
 
     let insurance_file = globalFunctions.generateUniqueFilename(InsuranceFileExtension,'AffiliateInsurance');
     let id_file = globalFunctions.generateUniqueFilename(IdFileExtension,'AffiliateImages');
@@ -287,46 +304,51 @@ const updateAffiliate = async (req, res) => {
         base64String: IdFileBase64String,
         extension: IdFileExtension,
         name: id_file,
-        path: licenceFilesPath
+        path: licenceFiles
       },
       {
         base64String: InsuranceFileBase64String,
         extension: InsuranceFileExtension,
         name: insurance_file,
-        path: insuranceFilesPath
+        path: insuranceFiles
       },
    
     ];
     console.log("extension id",IdFileExtension)
     console.log("extension insurance",InsuranceFileExtension)
-    const affiliate = await authAffiliate.updatedAffiliate(affiliateId, {
+    const affiliate = await authAffiliate.updateAffiliateStatus(affiliateId, {
       name,
       address,
       email,
       phone,
       category,
-      region,
       service_date,
-      status,
+      statusAffiliate,
       account_name,
       sort_code,
       account_number,
       bank_name,
       login,
       password,
-      id_number,
       id_creation_date,
-      license_id,
       api_token,
-      license_date,
-      license_file,
+      notes,
+      fleetNumber,
+      enquiryDate,
+      coverageDistance,
+      coverageArea,
+      years_experience,
+      website,
       vehicles,
       progress,
       insurance_date,
       insurance_number,     
       number_file,
       insurance_file,
-      id_file
+      id_file,
+      priceJob,
+      noteAcceptJob,
+      statusJob
     },documents);
     console.log("affiliate controller",affiliate)
     res.json(affiliate);
@@ -412,6 +434,10 @@ const updatePassword = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+
+
+
 
 module.exports = {
   getAffiliates,

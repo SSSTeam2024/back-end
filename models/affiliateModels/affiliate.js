@@ -6,34 +6,39 @@ const affiliateSchema = new mongoose.Schema({
   email: String,
   phone: String,
   category: String,
-  region: String,
   service_date: String,
-  status: String,
+  statusAffiliate: String,
   account_name: String,
-  sort_code: String,
-  account_number: String,
+  sort_code: Number,
+  account_number: Number,
   bank_name: String,
   login: String,
   password: String,
-  id_number: String,
+  api_token:String,
   id_creation_date: String,
   id_file: String,
   number_file: String,
-  license_id: String,
-  license_date: String,
-  license_file: String,
-  api_token:String,
-  contact_information: String,
-  website:String,
   insurance_number:String,
   insurance_date:String,
   insurance_file:String,
-  years_operation:String,
-  operator_address:String,
-  vehicles: [],
+  notes: String,
+  vehicles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'VehiculeType'}],
+  fleetNumber: String,
+  enquiryDate:String,
+  coverageDistance : String,
+  coverageArea: [{
+    placeName: String,
+    coordinates: {
+      lat: String,
+      lng: String
+    }
+  }],
+  years_experience: String,
+  website: String,
   progress: String,
-
-
+  noteAcceptJob:String,
+  priceJob:String,
+  statusJob:String
 });
 
 module.exports = mongoose.model('Affiliate', affiliateSchema);

@@ -9,6 +9,9 @@ const quoteSchema = new mongoose.Schema(
     affiliate_id: { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
     company_id: { type: Schema.Types.ObjectId, ref: "Company", default: null },
     school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
+    white_list: [
+      { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
+       ],
     owner: String,
     handled_by: Number,
     id_driver: { type: Schema.Types.ObjectId, ref: "Driver", default: null },
@@ -22,6 +25,7 @@ const quoteSchema = new mongoose.Schema(
     notes: String,
     heard_of_us: String,
     pushed_price: String,
+    proposedPrice:String,
     id_invoice: String,
     paid_by_client: Boolean,
     paid_by_bouden: Boolean,

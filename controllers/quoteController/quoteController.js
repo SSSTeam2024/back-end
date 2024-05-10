@@ -1,6 +1,7 @@
 const quoteService = require("../../services/quoteServices/quoteService");
 const programService = require("../../services/programmServices/programmServices");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
+const { updateAffiliateStatus } = require("../../services/affiliateServices/affiliateService");
 
 const createQuote = async (req, res) => {
   try {
@@ -554,28 +555,62 @@ const updateAffiliateQuoteProgress = async (req, res) => {
   }
 };
 
+
 const updateAffiliateQuoteStatusToRefuse = async (req, res) => {
   try {
-    const { quoteId, status } = req.body;
-    const sentResult = await quoteService.updateToRefuseAffiliateQuote({
-      quoteId,
-      status,
-    });
-    res.json({ success: sentResult });
+    const { quoteId, affiliateId } = req.body;
+    const status = `Refused by affiliate ${affiliateId}`;
+
+    if (!quoteId || !affiliateId) {
+      return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
+    }
+
+    const updatedQuote = await quoteService.updateToRefuseAffiliateQuote(quoteId, status, affiliateId);
+    await updateAffiliateStatus(affiliateId, {
+      statusJob: `Refused the quote ${quoteId}`,
+      priceJob: "",
+      noteAcceptJob: "", 
+    }); 
+
+    res.json({ success: true, updatedQuote });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
   }
 };
+
+
+// const updateAffiliateQuoteStatusToAccept = async (req, res) => {
+//   try {
+//     const { quoteId, priceJob, noteAcceptJob,affiliateId } = req.body;
+
+//     if (!quoteId  || !affiliateId) {
+//       return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
+//     }
+
+//     const status = `Accepted by affiliate ${affiliateId}`
+
+//     const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({ quoteId, status, priceJob, noteAcceptJob,  affiliateId });
+
+//     res.json({ success: true, updatedQuote });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send(error.message);
+//   }
+// };
+
 const updateAffiliateQuoteStatusToAccept = async (req, res) => {
   try {
-    const { quoteId, status } = req.body;
-    console.log("req.body controller",req.body)
-    const sentResult = await quoteService.updateToAcceptAffiliateQuote({
-      quoteId,
-      status,
-    });
-    res.json({ success: sentResult });
+    const { quoteId, priceJob, noteAcceptJob, affiliateId } = req.body;
+
+    if (!quoteId || !affiliateId) {
+      return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
+    }
+
+    const status = `Accepted by affiliate ${affiliateId}`;
+    const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({ quoteId, status, priceJob, noteAcceptJob, affiliateId });
+
+    res.json({ success: true, updatedQuote });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

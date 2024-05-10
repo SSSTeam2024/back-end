@@ -4,6 +4,7 @@ const emailService = require("./emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 const modeDao = require("../../dao/modeDao/modeDao");
 const mileageBandDao = require("../../dao/mileageBandDao/mileageBandDao");
+const { updateAffiliateStatus } = require("../affiliateServices/affiliateService");
 
 const convertMeterToMiles = (m) => {
   return m * 0.000621371;
@@ -362,23 +363,47 @@ const deleteAffiliateQuote = async (id) => {
 };
 
 
-
-
-const updateToRefuseAffiliateQuote = async (updateData) => {
-  let quoteId = updateData.quoteId;
-
-  let status = updateData.status;
-  await quoteDao.updateStatusAffiliateQuoteToRefuse(quoteId, status);
-  return "Quote Refused!!";
+const updateToRefuseAffiliateQuote = async (quoteId, status, affiliateId) => {
+  try {
+    await quoteDao.updateStatusAffiliateQuoteToRefuse(quoteId, status, affiliateId);
+    return "Quote Refused!!";
+  } catch (error) {
+    throw new Error("Failed to update quote status to refuse: " + error.message);
+  }
 };
 
-const updateToAcceptAffiliateQuote = async (updateData) => {
-  let quoteId = updateData.quoteId;
-  console.log(quoteId)
-  let status = updateData.status;
-  await quoteDao.updateStatusAffiliateQuoteToAccept(quoteId, status);
-  return "Quote Accepted!!";
+// const updateToAcceptAffiliateQuote = async ({ quoteId, status, priceJob, noteAcceptJob, affiliateId }) => {
+//   try {
+//     await quoteDao.updateStatusAffiliateQuoteToAccept(quoteId, status, priceJob, noteAcceptJob);
+//     await updateAffiliateStatus(affiliateId, {
+//       statusJob: `Affiliate accepts the quote  ${quoteId}`,
+//       priceJob: priceJob,
+//       noteAcceptJob: noteAcceptJob,
+//     });
+//     return "Quote Accepted!!";
+//   } catch (error) {
+//     throw new Error("Failed to update quote status to accept: " + error.message);
+//   }
+// };
+
+const updateToAcceptAffiliateQuote = async ({ quoteId, status, priceJob, noteAcceptJob, affiliateId }) => {
+  try {
+    const quote = await quoteDao.getById(quoteId);
+    const proposedPrice = quote.proposed_price;
+
+    await quoteDao.updateStatusAffiliateQuoteToAccept(quoteId, status, priceJob || proposedPrice, noteAcceptJob);
+    await updateAffiliateStatus(affiliateId, {
+      statusJob: `Affiliate accepts the quote ${quoteId}`,
+      priceJob: priceJob || proposedPrice,
+      noteAcceptJob: noteAcceptJob,
+    });
+    return "Quote Accepted!!";
+  } catch (error) {
+    throw new Error("Failed to update quote status to accept: " + error.message);
+  }
 };
+
+
 
 module.exports = {
   createQuote,

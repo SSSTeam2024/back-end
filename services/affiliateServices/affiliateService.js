@@ -85,6 +85,17 @@ const updatedAffiliate = async (id, updateData) => {
   // await affiliateDao.updateAffiliate(id, { progress });
   return updatedAffiliateData;
 };
+
+const updateAffiliateStatus = async (affiliateId, updateData) => {
+  try {
+    const updatedAffiliateData = await affiliateDao.updateAffiliate(affiliateId, updateData);
+    return updatedAffiliateData;
+  } catch (error) {
+    throw new Error("Failed to update affiliate status: " + error.message);
+  }
+};
+
+
 // get school by id
 const getAffiliateById = async (id) => {
   return await affiliateDao.getAffiliateById(id);
@@ -115,5 +126,6 @@ module.exports = {
   loginAffiliate,
   registerAffiliate,
   getAffiliates,
-  logout
+  logout,
+  updateAffiliateStatus
 };
