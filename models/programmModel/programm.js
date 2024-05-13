@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-
+const Schema = mongoose.Schema;
 const programmSchema = new mongoose.Schema(
   {
     programName: String,
-    note:String,
     origin_point: {
       placeName: String,
       coordinates: {
@@ -17,9 +16,9 @@ const programmSchema = new mongoose.Schema(
         address: {
           placeName: String,
           coordinates: {
-            lat: Number,
-            lng: Number,
-          },
+            lat: String,
+            lng: String
+          }
         },
         time: String,
       },
@@ -33,9 +32,6 @@ const programmSchema = new mongoose.Schema(
     },
     pickUp_date: String,
     droppOff_date: String,
-    journeyType:String,
-    luggage:String,
-    vehiculeType:String,
     freeDays_date: [String],
     exceptDays: [String],
     recommanded_capacity: String,
@@ -44,7 +40,8 @@ const programmSchema = new mongoose.Schema(
     pickUp_Time: String,
     dropOff_time: String,
     workDates: [String],
-    school_id: String,
+    company_id: { type: Schema.Types.ObjectId, ref: "Company", default: null },
+    school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     notes_for_client: [
       {
         msg: String,
@@ -52,22 +49,21 @@ const programmSchema = new mongoose.Schema(
         sender: String,
       },
     ],
-    notes_for_admin: [
-      {
-        msg: String,
-        date: String,
-        sender: String,
-      },
-    ],
+    notes_for_admin: [String],
     unit_price: String,
     total_price: String,
+    journeyType:String,
     program_status: [
       {
         status: String,
         date_status: String,
       },
-      
     ],
+    invoiceFrequency: String,
+    status: String,
+    within_payment_days: String,
+    students_groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupStudent'}],
+    employees_groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupEmployee'}],
   },
   {
     timestamps: true,

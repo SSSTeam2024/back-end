@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const groupSchoolSchema = new mongoose.Schema({
+const groupEmployeeSchema = new mongoose.Schema({
     groupName: String,
     note:String,
     startPoint: String,
@@ -10,12 +10,12 @@ const groupSchoolSchema = new mongoose.Schema({
     dateEnd: String,
     timeEnd: String,
     status: String,
-    student_number: String,
-    id_school: String,
+    passenger_number: String,
+    id_company: String,
     luggage_details:String,
     vehicle_type:String,
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' , default: null}],
+    employees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Employee' }],
     program: { type: mongoose.Schema.Types.ObjectId, ref: 'Programm',required:false  },
 });
 
-module.exports = mongoose.model('groupStudent', groupSchoolSchema);
+module.exports = mongoose.model('groupEmployee', groupEmployeeSchema);

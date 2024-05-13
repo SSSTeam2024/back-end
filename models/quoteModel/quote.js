@@ -4,16 +4,18 @@ const Schema = mongoose.Schema;
 const quoteSchema = new mongoose.Schema(
   {
     id_schedule: String,
-    id_affiliate_driver: { type: Schema.Types.ObjectId, ref: "DriverAffiliate", default: null },
-    id_affiliate_vehicle: { type: Schema.Types.ObjectId, ref: "VehicleAffiliate", default: null },
-    affiliate_id: { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
     company_id: { type: Schema.Types.ObjectId, ref: "Company", default: null },
     school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
-    white_list: [
-      { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
-       ],
+    id_affiliate_driver: { type: Schema.Types.ObjectId, ref: "DriverAffiliate", default: null },
+    id_affiliate_vehicle: { type: Schema.Types.ObjectId, ref: "VehicleAffiliate", default: null },
     owner: String,
     handled_by: Number,
+    id_group_employee : { type: Schema.Types.ObjectId, ref: "groupEmployee", default: null },
+    id_group_student : { type: Schema.Types.ObjectId, ref: "groupStudent", default: null },
+    affiliate_id: { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
+    white_list: [
+     { type: Schema.Types.ObjectId, ref: "Affiliate", default: null },
+      ],
     id_driver: { type: Schema.Types.ObjectId, ref: "Driver", default: null },
     id_vehicle: { type: Schema.Types.ObjectId, ref: "Vehicle", default: null },
     handled_by_subcontractor: String, //id of subcontractor
@@ -77,7 +79,8 @@ const quoteSchema = new mongoose.Schema(
     return_date: String,
     return_time: String,
     category: String, //TODO: private_hire_job or regular NB: TO ADD TO CONTROLLER
-    enquiryDate: String
+    enquiryDate: String,
+    pushedDate: String
   },
   {
     timestamps: true,

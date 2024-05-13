@@ -5,7 +5,13 @@ const createProgramm = async (programmData) => {
 };
 
 const getProgramms = async () => {
-  return await Programm.find();
+  return await Programm.find().populate("company_id")
+  .populate("school_id").populate("school_id").populate({
+    path: "students_groups",
+    populate: {
+      path: "students",
+    }
+  })/* .populate("employees_groups") */;
 };
 
 // const updateQuote = async (id, updateData) => {
