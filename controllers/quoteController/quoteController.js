@@ -557,10 +557,60 @@ const updateAffiliateQuoteStatusToAccept = async (req, res) => {
       return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
     }
 
-    const status = `Accepted by affiliate ${affiliateId}`;
+    const status = `Accepted by affiliate`;
     const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({ quoteId, status, priceJob, noteAcceptJob, affiliateId });
 
     res.json({ success: true, updatedQuote });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+
+//add driver affiliate
+const assignAffiliateDriverToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_id, id_affiliate_driver } = req.body;
+    console.log(" req.body",  req.body)
+    const sentResult = await quoteService.assignAffiliateDriver({
+      quote_id,
+      id_affiliate_driver,
+    });
+    console.log(req.body)
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+//add vehicle affiliate
+const assignAffiliateVehicleToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_id, id_affiliate_vehicle } = req.body;
+    const sentResult = await quoteService.assignAffiliateVehicle({
+      quote_id,
+      id_affiliate_vehicle,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// add driver and vehicle affiliate 
+const assignAffiliateDriverAndVehicleToQuoteAPI = async (req, res) => {
+  try {
+    const { quote_ID, affiliateVehicle_ID, affiliateDriver_ID } = req.body;
+    const sentResult = await quoteService.addAffiliateDriveAndVehicleToQuote({
+      quote_ID,
+      affiliateVehicle_ID,
+      affiliateDriver_ID,
+    });
+    console.log("req.body quote controller",req.body)
+    res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -592,5 +642,8 @@ module.exports = {
   deleteAffiliateQuote,
   updateAffiliateQuoteProgress,
   updateAffiliateQuoteStatusToRefuse,
-  updateAffiliateQuoteStatusToAccept
+  updateAffiliateQuoteStatusToAccept,
+  assignAffiliateVehicleToQuoteAPI,
+  assignAffiliateDriverAndVehicleToQuoteAPI,
+  assignAffiliateDriverToQuoteAPI
 };

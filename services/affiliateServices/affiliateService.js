@@ -38,18 +38,18 @@ async function saveAdministrativeFile(base64String, fileName) {
 }
 
 const loginAffiliate = async (login, password) => {
-  const affiliate = await affiliateDao.findAffiliateByLogin(login);
+  const affiliate = await affiliateDao.findAffiliateByUsername(login);
 
   if (!affiliate) {
     throw new Error("Affiliate not found");
   }
 
   if (await bcrypt.compare(password, affiliate.password)) {
-    const accessToken = jwt.sign(
-      { affiliate: affiliate.login },
-      "yourSecretKey"
-    );
-    return { accessToken };
+    const accessToken = jwt.sign({ login: affiliate.login }, "yourSecretKey");
+    console.log(typeof accessToken);
+    await affiliateDao.updateJwtToken(affiliate._id, String(accessToken));
+    let updatedAffiliate = await affiliateDao.getAffiliateById(affiliate._id);
+    return updatedAffiliate;
   } else {
     throw new Error("Incorrect password");
   }
@@ -133,16 +133,24 @@ async function prepareAffiliateAcceptenceEmail(
   affiliate,
   service_date,
 ) {
-  console.log("Services 122: affiliate", affiliate)
   let recipient = affiliate.email;
-
+let vehicle_type = []
+affiliate.vehicles.map((vehicle)=> 
+  vehicle_type.push(vehicle.type)
+)
+let coverageArea = []
+affiliate.coverageArea.map((area)=> 
+  coverageArea.push(area.placeName)
+)
   let emailBody = emailTemplatesStructure.emailTemplates.affiliateAcceptence(
     id,
     login,
     password,
     url,
     affiliate,
-    service_date
+    service_date,
+    vehicle_type,
+    coverageArea
   );
   let emailSubject = "Demand Accepted";
   let fullEmailObject = {

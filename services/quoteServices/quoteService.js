@@ -4,6 +4,7 @@ const emailService = require("./emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 const modeDao = require("../../dao/modeDao/modeDao");
 const mileageBandDao = require("../../dao/mileageBandDao/mileageBandDao");
+const { updateAffiliateStatus } = require("../affiliateServices/affiliateService");
 
 const convertMeterToMiles = (m) => {
   return m * 0.000621371;
@@ -322,9 +323,18 @@ const addAffiliateDriveAndVehicleToQuote= async(bookingData)=>{
   return "Driver and Vehicle Assigned!!";
 }
 
+const assignAffiliateDriver = async (bookingData) => {
+  let quote_id = bookingData.quote_id;
+  let driver = bookingData.id_affiliate_driver;
+  console.log("Services", quote_id, driver)
+  await quoteDao.addAffiliateDriverToQuoteDao(quote_id, driver);
+  return "Driver Assigned!!";
+};
+
 //add driver affiliate to quote
 const addAffiliateDriverToQuote= async(bookingData)=>{
   let quote_id = bookingData.quote_ID;
+  console.log("quote_id",  quote_id)
   let driver = bookingData.affiliateDriver_ID;
   await quoteDao.addAffiliateDriverToQuoteDao(quote_id, driver);
   return "Driver Assigned!!";
@@ -391,7 +401,7 @@ const updateToRefuseAffiliateQuote = async (quoteId, status, affiliateId) => {
 
 const updateToAcceptAffiliateQuote = async ({ quoteId, status, priceJob, noteAcceptJob, affiliateId }) => {
   try {
-    const quote = await quoteDao.getById(quoteId);
+    const quote = await quoteDao.getQuoteById(quoteId);
     const proposedPrice = quote.proposed_price;
 
     await quoteDao.updateStatusAffiliateQuoteToAccept(quoteId, status, priceJob || proposedPrice, noteAcceptJob);
@@ -437,4 +447,5 @@ module.exports = {
   deleteAffiliateQuote,
   updateToRefuseAffiliateQuote,
   updateToAcceptAffiliateQuote,
+  assignAffiliateDriver,
 };

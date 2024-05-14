@@ -1883,7 +1883,7 @@ becomePartnerDemandRefused: (affiliate) =>
 
 </html>
 `,
-  affiliateAcceptence: (id, login, password, url, affiliate, service_date) =>
+  affiliateAcceptence: (id, login, password, url, affiliate, service_date, vehicle_type, coverageArea) =>
     `
     <html>
 <body style="
@@ -2044,10 +2044,10 @@ becomePartnerDemandRefused: (affiliate) =>
                 background-color: #555;
                 color: #ffe605;
               ">
-                        <b>Fleet Number</b>
+                        <b>Vehicle Type</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label>`+ affiliate.fleetNumber +`</label>
+                        <label>`+ vehicle_type.join(" , ") +`</label>
                     </td>
                 </tr>
                 <tr>
@@ -2059,10 +2059,10 @@ becomePartnerDemandRefused: (affiliate) =>
                 background-color: #555;
                 color: #ffe605;
               ">
-                        <b>Coverage Zone</b>
+                        <b>Coverage Area</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label> `+ affiliate.coverageDistance +` miles </label>
+                        <label> `+ coverageArea.join(" , ") +`</label>
                     </td>
                 </tr>
                 <tr>

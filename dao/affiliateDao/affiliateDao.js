@@ -78,6 +78,19 @@ const findAffiliateByToken = async (token) => {
   });
 }
 
+const updateJwtToken = async (id, token) => {
+  return await Affiliate.findByIdAndUpdate({ _id:id }, {
+    $set: {
+      api_token: token
+    }
+  });
+}
+
+// find affiliate by login
+const findAffiliateByUsername = async (login) => {
+  return await Affiliate.findOne({ login });
+};
+
 module.exports = {
   createAffiliate,
   getAffiliates,
@@ -90,5 +103,7 @@ module.exports = {
   updateAffiliateStatus,
   refuseAffiliate,
   logout,
-  findAffiliateByToken
+  findAffiliateByToken,
+  updateJwtToken, 
+  findAffiliateByUsername
 };

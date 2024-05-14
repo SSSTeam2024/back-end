@@ -22,7 +22,6 @@ const createProgramm = async (req, res) => {
       programDetails,
       groups
     } = req.body;
-
    if(programDetails.company_id === "") {
    
     delete programDetails.company_id;

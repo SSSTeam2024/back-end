@@ -275,7 +275,7 @@ const deleteAffiliateVehicleById = async (req, res) => {
   try {
     const vehicleAffiliateId = req.params.id;
 
-    const deletedVehicleAffiliate = await vehicleService.deleteVehicleAffiliate(vehicleAffiliateId);
+    const deletedVehicleAffiliate = await vehicleAffiliateService.deleteVehicleAffiliate(vehicleAffiliateId);
 
     if (!deletedVehicleAffiliate) {
       return res.status(404).send('Affiliates Vehicle not found');

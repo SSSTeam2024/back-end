@@ -29,13 +29,14 @@ const updateQuote = async (id, updateData) => {
 };
 
 const getQuoteById = async (id) => {
-  return await Quote.findById(id).populate({
+  return await Quote.findById(id).populate("id_affiliate_driver")
+  .populate("id_affiliate_vehicle")
+  .populate({
     path: "white_list",
     populate: {
       path: "vehicles",
     }
-  }).populate("id_affiliate_driver")
-  .populate("id_affiliate_vehicle")
+  })
   .populate("affiliate_id");
 };
 
@@ -255,6 +256,7 @@ const acceptAssignedAffiliate = async (id, id_affiliate) => {
 
 // add driver to affiliate's quotes
 const addAffiliateDriverToQuoteDao = async (id, affiliateDriver_ID) => {
+  console.log("DAO", id, affiliateDriver_ID);
   return await Quote.findByIdAndUpdate(
     { _id: id },
     {
@@ -285,9 +287,6 @@ const assignAffiliateDriverAndVehicleToQuoteDao = async (
   affiliateVehicle_ID,
   affiliateDriver_ID
 ) => {
-  console.log("id", id);
-  console.log("affiliateVehicle_ID", affiliateVehicle_ID);
-  console.log("affiliateDriver_ID", affiliateDriver_ID);
   return await Quote.findByIdAndUpdate(id, {
     $set: {
       id_affiliate_vehicle: affiliateVehicle_ID,

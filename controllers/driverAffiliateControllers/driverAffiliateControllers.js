@@ -46,7 +46,7 @@ const registerDriverAffiliate = async (req, res) => {
       deposti_held,
       notes,
     } = req.body;
-
+console.log(req.body)
     const licenseFilesPath = "files/driverAffiliateFiles/licenseFiles/";
     const dqcFilesPath = "files/driverAffiliateFiles/dqcFiles/";
     const dbsCheckFilesPath = "files/driverAffiliateFiles/dbsCheckFiles/";
