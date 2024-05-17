@@ -8,6 +8,10 @@ const getProgramms = async () => {
   return await programmDao.getProgramms();
 };
 
+const getProgramStudentGroups = async (id) => {
+  return await programmDao.getProgramStudentGroups(id);
+};
+
 // const updateQuote = async (id, updateData) => {
 //   return await quoteDao.updateQuote(id, updateData);
 // };
@@ -49,11 +53,13 @@ const sendAdminRespond = async (respondData) => {
 };
 
 
+
 module.exports = {
 createProgramm,
 getProgramms,
 deleteProgram,
 sendRespond,
-sendAdminRespond
+sendAdminRespond,
+getProgramStudentGroups
 };
 

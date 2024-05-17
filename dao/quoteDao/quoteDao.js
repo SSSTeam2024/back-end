@@ -13,7 +13,13 @@ const getQuotes = async () => {
     .populate("id_driver")
     .populate("id_vehicle")
     .populate("company_id")
-    .populate("school_id");
+    .populate("school_id")
+    .populate({
+      path: "white_list",
+      populate: {
+        path: "vehicles",
+      }
+    });
 };
 
 const updateQuote = async (id, updateData) => {

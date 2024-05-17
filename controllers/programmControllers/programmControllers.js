@@ -122,10 +122,27 @@ const sendResponseNoteAPI = async (req, res) => {
   }
 };
 
+// get ProgramStudentGroups By programId
+
+const getProgramStudentGroups = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const groups = await programmService.getProgramStudentGroups(id);
+    res.json(groups);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+//get tAssignedStops
+
+
 module.exports = {
   getProgramms,
   createProgramm,
   deleteProgram,
   sendResponseAPI,
-  sendResponseNoteAPI
+  sendResponseNoteAPI,
+  getProgramStudentGroups
 };

@@ -35,7 +35,16 @@ const studentSchema = new mongoose.Schema(
     //   ref: "School",
     // },
     // parent_id: { type: Schema.Types.ObjectId, ref: "Parent" },
-    //stop
+    stop_point: {
+      type: {
+        coordinates: {
+          lat: String,
+          lng: String
+        }, 
+        placeName: String,
+      },
+      default: null
+    },
   },
   { timestamps: true }
 );

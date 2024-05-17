@@ -134,6 +134,21 @@ const logout = async (id) => {
   );
 };
 
+
+const updateStudentStop = async (data) => {
+  console.log("Student id: " + data.student);
+  console.log("Student stop: " + data.stop);
+  return await Student.findByIdAndUpdate(
+    { _id: data.student },
+    {
+      $set: {
+        stop_point: data.stop,
+      },
+    },
+    { new: true }
+  );
+};
+
 module.exports = {
   createStudent,
   getAllStudents,
@@ -148,5 +163,6 @@ module.exports = {
   getStudentByIdSchool,
   getStudent,
   updateJwtToken,
-  logout
+  logout,
+  updateStudentStop
 };

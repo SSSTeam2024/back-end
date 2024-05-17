@@ -158,6 +158,24 @@ const logout = async (id) => {
 };
 
 
+
+  const updateStudentStops = async (studentList) => {
+    console.log("studentList service",studentList);
+
+    let completionCounter = 0;
+
+    let updatedStudents = [];
+    for(let student of studentList){
+      let updatedStudent = await studentDao.updateStudentStop(student);
+      completionCounter++;
+      updatedStudents.push(updatedStudent);
+    }
+
+    if(completionCounter === studentList.length){
+      return updatedStudents;
+    }
+  };
+
 module.exports = {
   registerStudent,
   getStudents,
@@ -171,6 +189,7 @@ module.exports = {
   getStudentsByParentId,
   removeStudentFromGroup,
   getStudentByIdSchool,
-  logout
+  logout,
+  updateStudentStops
   
 };

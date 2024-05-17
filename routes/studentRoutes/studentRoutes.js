@@ -15,4 +15,5 @@ router.get('/getStudentByIdParent/:id', studentController.getStudentByIdParent);
 router.post("/logout/:id", studentController.logout);
 router.delete("/student/:studentId/groups/:groupId",studentController.removeStudentFromGroup)
 router.post("/getStudentbyIdSchool",studentController.getStudentByIdSchool)
+router.post("/update-students-stops",studentController.updateStudentStops)
 module.exports = router;

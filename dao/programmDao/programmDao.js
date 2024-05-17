@@ -14,6 +14,15 @@ const getProgramms = async () => {
   })/* .populate("employees_groups") */;
 };
 
+const getProgramStudentGroups = async (id) => {
+  let program = await Programm.findOne({ _id: id }).populate({
+    path: "students_groups",
+    populate: {
+      path: "students",
+    }});
+  return program.students_groups;
+};
+
 // const updateQuote = async (id, updateData) => {
 //   return await Quote.findByIdAndUpdate(id, updateData, { new: true });
 // };
@@ -69,5 +78,6 @@ createProgramm,
 getProgramms,
 deleteProgram,
 updateStatus,
-updateNotesAdmin
+updateNotesAdmin,
+getProgramStudentGroups
 };

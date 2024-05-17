@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post('/newProgramm', programmController.createProgramm);
 router.get('/getAllProgramms', programmController.getProgramms);
+router.get('/get-program-groups-students/:id', programmController.getProgramStudentGroups);
 // router.put('/updateQuote/:id', quoteController.updateQuote);
 router.delete('/deleteProgram/:id', programmController.deleteProgram);
 router.post("/sendResponse", programmController.sendResponseAPI);
