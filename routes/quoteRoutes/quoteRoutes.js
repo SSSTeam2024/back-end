@@ -32,4 +32,8 @@ router.post("/updateAffiliateQuoteAccept", quoteController.updateAffiliateQuoteS
 router.post("/assignAffiliateDriver", quoteController.assignAffiliateDriverToQuoteAPI);
 router.post("/assignAffiliateVehicle", quoteController.assignAffiliateVehicleToQuoteAPI);
 router.post("/assignAffiliateVehicleAndDriver", quoteController.assignAffiliateDriverAndVehicleToQuoteAPI);
+
+router.post("/sendPriceAndNotes", quoteController.sendPriceAndNotes);
+router.post("/sendAcceptJobStatus", quoteController.sendJobStatus);
+router.post("/sendRefuseJobStatus", quoteController.sendRefuseJobStatus);
 module.exports = router;

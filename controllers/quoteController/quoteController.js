@@ -367,7 +367,6 @@ const updateQuoteStatus = async (req, res) => {
     res.end(bookingSuccessPageContent);
   } catch (error) {
     console.error(error);
-    //res.status(500).send(error.message);
     res.end(
       "<div><p>Quote not booked due to an internal error , please try again!<p></div>"
     );
@@ -470,7 +469,6 @@ const acceptAssignedAffiliateToQuoteAPI = async (req, res) => {
 };
 
 //getQuotesByIdAffiliate
-
 async function getQuotesByIdAffiliateAPI(req, res) {
   try {
     const { id } = req.params;
@@ -551,14 +549,14 @@ const updateAffiliateQuoteStatusToRefuse = async (req, res) => {
 
 const updateAffiliateQuoteStatusToAccept = async (req, res) => {
   try {
-    const { quoteId, priceJob, noteAcceptJob, affiliateId } = req.body;
+    const { priceJob, noteAcceptJob, affiliateId } = req.body;
 
-    if (!quoteId || !affiliateId) {
-      return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
+    if (!affiliateId) {
+      return res.status(400).json({ success: false, message: "Affiliate ID are required." });
     }
 
     const status = `Accepted by affiliate`;
-    const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({ quoteId, status, priceJob, noteAcceptJob, affiliateId });
+    const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({ status, priceJob, noteAcceptJob, affiliateId });
 
     res.json({ success: true, updatedQuote });
   } catch (error) {
@@ -617,6 +615,57 @@ const assignAffiliateDriverAndVehicleToQuoteAPI = async (req, res) => {
   }
 };
 
+// Send Price And Notes
+const sendPriceAndNotes = async (req, res) => {
+  try {
+    const { idAffiliate, price, noteAcceptJob } = req.body;
+    const sentResult = await quoteService.sendPriceandNotes({
+      idAffiliate,
+      price,
+      noteAcceptJob,
+    });
+    console.log("req.body quote controller",req.body)
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// Send Accept Job Status
+const sendJobStatus = async (req, res) => {
+  try {
+    const { idAffiliate, jobStatus, idQuote } = req.body;
+    const sentResult = await quoteService.sendJobStatus({
+      idAffiliate,
+      jobStatus,
+      idQuote
+    });
+    console.log("req.body quote controller",req.body)
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// Send Refuse Job Status
+const sendRefuseJobStatus = async (req, res) => {
+  try {
+    const { id_Affiliate, job_Status, id_quote } = req.body;
+    const sentResult = await quoteService.sendRefuseJobStatus({
+      id_Affiliate,
+      job_Status,
+      id_quote
+    });
+    console.log("req.body quote controller",req.body)
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -645,5 +694,8 @@ module.exports = {
   updateAffiliateQuoteStatusToAccept,
   assignAffiliateVehicleToQuoteAPI,
   assignAffiliateDriverAndVehicleToQuoteAPI,
-  assignAffiliateDriverToQuoteAPI
+  assignAffiliateDriverToQuoteAPI, 
+  sendPriceAndNotes,
+  sendJobStatus,
+  sendRefuseJobStatus
 };

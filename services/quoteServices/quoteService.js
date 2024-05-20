@@ -4,6 +4,7 @@ const emailService = require("./emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 const modeDao = require("../../dao/modeDao/modeDao");
 const mileageBandDao = require("../../dao/mileageBandDao/mileageBandDao");
+
 const { updateAffiliateStatus } = require("../affiliateServices/affiliateService");
 
 const convertMeterToMiles = (m) => {
@@ -45,7 +46,7 @@ const createQuote = async (quoteData, distance) => {
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+    let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
     console.log("55", quote);
     email = await prepareQuoteBookingEmail(
       id,
@@ -94,7 +95,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
@@ -153,7 +154,7 @@ const sendPaymentEmail = async (paymentData) => {
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
   let url =
-    "https://bouden.uk.oxa.cloud/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
+    "http://localhost:3000/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
@@ -305,8 +306,6 @@ const surveyAffiliate = async (bookingData) => {
 const acceptAssignedAffiliateToQuote = async (acceptData) => {
   let idQuote = acceptData.idQuote;
   let id_affiliate = acceptData.id_affiliate;
-console.log(idQuote)
-console.log(id_affiliate)
   await quoteDao.acceptAssignedAffiliate(idQuote, id_affiliate);
   return "Assigne Affiliate Accepted!!";
 };
@@ -416,6 +415,39 @@ const updateToAcceptAffiliateQuote = async ({ quoteId, status, priceJob, noteAcc
   }
 };
 
+const sendPriceandNotes = async (acceptData) => {
+  let idAffiliate = acceptData.idAffiliate;
+  let price = acceptData.price;
+  let noteAcceptJob = acceptData.noteAcceptJob;
+ 
+  await quoteDao.sendPriceAndNotes(idAffiliate, price, noteAcceptJob);
+  return "Success Send Price!!";
+};
+
+const sendJobStatus = async (acceptData) => {
+  let idAffiliate = acceptData.idAffiliate;
+  let jobStatus = acceptData.jobStatus;
+  let idQuote = acceptData.idQuote;
+
+  console.log("Serices",idAffiliate)
+  console.log("Serices",jobStatus)
+
+  await quoteDao.sendJobStatus(idAffiliate, jobStatus, idQuote);
+  return "Success Send Price!!";
+};
+
+const sendRefuseJobStatus = async (acceptData) => {
+  let id_Affiliate = acceptData.id_Affiliate;
+  let job_Status = acceptData.job_Status;
+  let id_quote = acceptData.id_quote;
+
+  console.log("Serices",id_Affiliate)
+  console.log("Serices",job_Status)
+  console.log("Serices",id_quote)
+
+  await quoteDao.sendRefuseJobStatus(id_Affiliate, job_Status, id_quote);
+  return "Success Send Price!!";
+};
 module.exports = {
   createQuote,
   getQuotes,
@@ -448,4 +480,7 @@ module.exports = {
   updateToRefuseAffiliateQuote,
   updateToAcceptAffiliateQuote,
   assignAffiliateDriver,
+  sendPriceandNotes,
+  sendJobStatus,
+  sendRefuseJobStatus
 };

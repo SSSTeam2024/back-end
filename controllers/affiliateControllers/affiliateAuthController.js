@@ -21,11 +21,11 @@ const registerAffiliate = async (req, res) => {
       api_token,
       id_creation_date,
      // id_file
-     number_file,
-     insurance_number,
-     insurance_date,
-     insuranceFileBase64String,
-      InsuranceFileExtension,
+    //  number_file,
+    //  insurance_number,
+    //  insurance_date,
+    //  insuranceFileBase64String,
+    //   InsuranceFileExtension,
       notes,
       //insurance_file
       vehicles, 
@@ -39,17 +39,17 @@ const registerAffiliate = async (req, res) => {
       IdFileBase64String,
       IdFileExtension,
     } = req.body;
-
+console.log(req.body)
     const licenceFilesPath = 'files/affiliateFiles/licenceFiles/';
-    const insuranceFilesPath = 'files/affiliateFiles/insuranceFiles/';
+    // const insuranceFilesPath = 'files/affiliateFiles/insuranceFiles/';
     let id_file = globalFunctions.generateUniqueFilename(
       IdFileExtension,
       "licenceAffiliate"
     );
-    let insurance_file = globalFunctions.generateUniqueFilename(
-      InsuranceFileExtension,
-      "insuranceAffiliate"
-    );
+    // let insurance_file = globalFunctions.generateUniqueFilename(
+    //   InsuranceFileExtension,
+    //   "insuranceAffiliate"
+    // );
     let documents = [
       {
         base64String: IdFileBase64String,
@@ -57,17 +57,17 @@ const registerAffiliate = async (req, res) => {
         name: id_file,
         path: licenceFilesPath
       },
-      {
-        base64String: insuranceFileBase64String,
-        extension: InsuranceFileExtension,
-        name: insurance_file,
-        path: insuranceFilesPath
-      },
+      // {
+      //   base64String: insuranceFileBase64String,
+      //   extension: InsuranceFileExtension,
+      //   name: insurance_file,
+      //   path: insuranceFilesPath
+      // },
     ];
 
     await authAffiliate.registerAffilate(
       {
-        name,
+      name,
       address,
       email,
       phone,
@@ -83,9 +83,9 @@ const registerAffiliate = async (req, res) => {
       api_token,
       id_creation_date,
      // id_file
-     number_file,
-     insurance_number,
-     insurance_date,
+    //  number_file,
+    //  insurance_number,
+    //  insurance_date,
       notes,
       //insurance_file
       vehicles, 
@@ -183,7 +183,7 @@ const updateAffiliate = async (req, res) => {
       IdFileBase64String,
       IdFileExtension,
     } = req.body;
-
+console.log(req.body)
     const licenceFilesPath = 'files/affiliateFiles/licenceFiles/';
     const insuranceFilesPath = 'files/affiliateFiles/insuranceFiles/';
 
@@ -198,7 +198,7 @@ const updateAffiliate = async (req, res) => {
         path: licenceFilesPath
       },
       {
-        base64String: InsuranceFileBase64String,
+        base64String: insuranceFileBase64String,
         extension: InsuranceFileExtension,
         name: insurance_file,
         path: insuranceFilesPath

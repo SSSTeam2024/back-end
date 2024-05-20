@@ -7,7 +7,7 @@ router.post('/register', authAffiliate.registerAffiliate);
 router.post('/loginAffiliate', authAffiliate.loginAffiliate);
 router.post('/logoutAffiliate', authAffiliate.logout);
 router.delete('/deleteAffiliate/:id', authAffiliate.deleteAffiliate);
-router.put('/updateAffiliate/:id', authAffiliate.updateAffiliate);
+router.post('/updateAffiliate/:id', authAffiliate.updateAffiliate);
 router.get('/getAffiliate/:id', authAffiliate.getAffiliateById);
 router.get('/getAllAffiliates', authAffiliate.getAffiliates);
 router.put('/updatePassword/:id', authAffiliate.updatePassword);

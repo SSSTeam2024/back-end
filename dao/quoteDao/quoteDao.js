@@ -1,4 +1,5 @@
 const Quote = require("../../models/quoteModel/quote");
+const Affiliate = require('../../models/affiliateModels/affiliate');
 
 const createQuote = async (quoteData) => {
   return await Quote.create(quoteData);
@@ -37,7 +38,8 @@ const getQuoteById = async (id) => {
       path: "vehicles",
     }
   })
-  .populate("affiliate_id");
+  .populate("affiliate_id")
+  .populate("id_affiliate")
 };
 
 const deleteQuote = async (id) => {
@@ -51,6 +53,7 @@ const updateQuoteStatus = async (id) => {
     {
       $set: {
         status: bookedStatus,
+        progress: "Booked"
       },
     }
   );
@@ -241,9 +244,7 @@ const surveyAffiliate = async (id, affiliate) => {
 };
 
 const acceptAssignedAffiliate = async (id, id_affiliate) => {
-  console.log("DAO", id_affiliate)
-  console.log("DAO", id)
-  return await Quote.findByIdAndUpdate(
+  const updateQuote = await Quote.findByIdAndUpdate(
     { _id: id },
     {
       $set: {
@@ -252,6 +253,7 @@ const acceptAssignedAffiliate = async (id, id_affiliate) => {
       },
     }
   );
+  return updateQuote
 };
 
 // add driver to affiliate's quotes
@@ -439,6 +441,99 @@ const updateStatusAffiliateQuoteToAccept = async (
   }
 };
 
+//send Price and Notes
+const sendPriceAndNotes = async (
+  idAffiliate,
+  price,
+  noteAcceptJob,
+) => {
+  try {
+    const updatedAffiliate = await Affiliate.findByIdAndUpdate(
+      { _id: idAffiliate },
+      {
+        $set: {
+          price: price,
+          noteAcceptJob: noteAcceptJob,
+        },
+      },
+      { new: true }
+    );
+    return updatedAffiliate;
+  } catch (error) {
+    throw new Error(
+      "Failed to update affiliate: " + error.message
+    );
+  }
+};
+
+//send Accept Job Status
+const sendJobStatus = async (
+  idAffiliate,
+  jobStatus,
+  idQuote
+) => {
+  try {
+    const updatedAffiliate = await Affiliate.findByIdAndUpdate(
+      { _id: idAffiliate },
+      {
+        $set: {
+          jobStatus: jobStatus,
+        },
+      },
+      { new: true }
+    );
+    const updatedQuote = await Quote.findByIdAndUpdate(
+      { _id: idQuote },
+      {
+        $set: {
+          progress: "Accepted",
+        },
+      },
+      { new: true }
+    );
+    return updatedAffiliate;
+  } catch (error) {
+    throw new Error(
+      "Failed to update affiliate: " + error.message
+    );
+  }
+};
+
+//send Refuse Job Status
+const sendRefuseJobStatus = async (
+  id_Affiliate,
+  job_Status,
+  id_quote
+) => {
+  try {
+    console.log(id_quote)
+    const updatedAffiliate = await Affiliate.findByIdAndUpdate(
+      { _id: id_Affiliate },
+      {
+        $set: {
+          jobStatus: job_Status,
+        },
+      },
+      { new: true }
+    );
+    const updatedQuote = await Quote.findByIdAndUpdate(
+      { _id: id_quote },
+      {
+        $set: {
+          status: "Booked",
+          id_affiliate: null
+        },
+      },
+      { new: true }
+    );
+    return updatedAffiliate;
+  } catch (error) {
+    throw new Error(
+      "Failed to update affiliate: " + error.message
+    );
+  }
+};
+
 module.exports = {
   createQuote,
   getQuotes,
@@ -469,4 +564,7 @@ module.exports = {
   assignAffiliateDriverAndVehicleToQuoteDao,
   addAffiliateVehicleToQuote,
   addAffiliateDriverToQuoteDao,
+  sendPriceAndNotes,
+  sendJobStatus,
+  sendRefuseJobStatus
 };

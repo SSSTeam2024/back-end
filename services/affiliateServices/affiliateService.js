@@ -5,9 +5,10 @@ const affiliateDao = require("../../dao/affiliateDao/affiliateDao");
 const emailService = require("../quoteServices/emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 
-const registerAffilate = async (userData) => {
+const registerAffilate = async (userData, documents) => {
   let affiliate = await affiliateDao.createAffiliate(
     userData)
+    let saveResult = await saveDocumentsToServer(documents);
   let email = await prepareAfterDemandBecomeParnterEmail(affiliate)
   await emailService.sendEmail(email);
   return affiliate;
@@ -27,7 +28,7 @@ async function saveDocumentsToServer(documents) {
 async function saveAdministrativeFile(base64String, fileName) {
   const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
   const binaryData = Buffer.from(base64Data, "base64");
-  const filePath = "files/affiliateFiles/administrativeFiles/" + fileName;
+  const filePath = "files/affiliateFiles/licenceFiles/" + fileName;
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);

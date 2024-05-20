@@ -203,7 +203,7 @@ const emailTemplates = {
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
                 <label>` +
-    quote.estimated_return_start_time +
+                quote.date + `<strong> at </strong>` + quote.pickup_time +
     `</label>
               </td>
             </tr>
@@ -858,7 +858,7 @@ const emailTemplates = {
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
               <label>` +
-    quote.estimated_start_time +
+              quote.date + `<strong> at </strong>` + quote.pickup_time +
     ` </label>
             </td>
           </tr>
@@ -1188,25 +1188,6 @@ const emailTemplates = {
                 color: #ffe605;
               "
             >
-              <b>Balance Due Date</b>
-            </td>
-            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-              <label>` +
-    quote.estimated_start_time +
-    `</label>
-            </td>
-          </tr>
-          <tr>
-            <td
-              style="
-                width: 200px;
-                text-align: right;
-                vertical-align: top;
-                padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
-              "
-            >
               <b>Click to Book</b>
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
@@ -1373,7 +1354,7 @@ const emailTemplates = {
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
               <label>` +
-    quote.estimated_start_time +
+    quote.date  + `at` + quote.pickup_time +
     ` </label>
             </td>
           </tr>

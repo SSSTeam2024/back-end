@@ -28,7 +28,11 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 mongoose.connect('mongodb+srv://sssteam2024:ogA6KY9XssmX4q6y@testbct.qxx75ys.mongodb.net/bctdb', { });
 
 app.use('/api', AppRouter);
-
+app.use('/test', (req, res) => {
+  res.end(
+    "<div><p>Hello We are at test API!!!<p></div>"
+  );
+});
 app.all('*', (req, res) => {
   res.status(404).send('404 - Not Found');
 });
