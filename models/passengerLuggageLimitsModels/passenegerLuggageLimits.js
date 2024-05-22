@@ -1,13 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const passengerLuggageLimitsSchema = new Schema({
-  max_passengers: Number,
-  max_luggage: Number,
+  max_passengers: String,
+  max_luggage: {
+    type: Schema.Types.ObjectId,
+    ref: "Luggage",
+  },
   vehicle_type: {
     type: Schema.Types.ObjectId,
-    ref: 'VehiculeType'
-  }
+    ref: "VehiculeType",
+  },
 });
 
-module.exports = mongoose.model('PassengerLuggageLimits', passengerLuggageLimitsSchema);
+module.exports = mongoose.model(
+  "PassengerLuggageLimits",
+  passengerLuggageLimitsSchema
+);

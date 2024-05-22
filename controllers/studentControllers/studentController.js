@@ -405,18 +405,29 @@ const getStudentByIdSchool = async (req, res) => {
   }
 };
 
+// const removeStudentFromGroup = async (req, res) => {
+//   try {
+//     const { studentId, groupId } = req.params;
+//     const result = await studentService.removeStudentFromGroup(
+//       studentId,
+//       groupId
+//     );
+//     res.json(result);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 const removeStudentFromGroup = async (req, res) => {
   try {
     const { studentId, groupId } = req.params;
-    const result = await studentService.removeStudentFromGroup(
-      studentId,
-      groupId
-    );
+    const result = await studentService.removeStudentFromGroup(studentId, groupId);
     res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 module.exports = {
   registerStudent,
   login,

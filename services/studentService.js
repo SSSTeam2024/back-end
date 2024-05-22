@@ -121,6 +121,42 @@ const getStudentByIdSchool= async (idSchool) => {
   return await studentDao.getStudentByIdSchool(idSchool);
 };
 
+// async function removeStudentFromGroup(studentId, groupId) {
+//   const student = await Student.findById(studentId);
+
+//   if (!student) {
+//     throw new Error('student not found');
+//   }
+
+//   const group = await GroupStudent.findById(groupId).populate('students');
+
+//   if (!group) {
+//     throw new Error('Group not found');
+//   }
+
+//   // Create a GroupMigration document first
+//   const leavingDate = new Date().toISOString();
+//   const joiningDate = student.groupJoiningDate 
+//   const migration = await new GroupMigrationStudent({
+//     studentId,
+//     groupId,
+//     joiningDate,
+//     leftDate: leavingDate
+//   }).save(); 
+
+
+
+  
+//   // Remove employee from group's employees array and update employee
+//   group.students.pull(studentId);
+//   student.groupId = null;
+//   student.groupJoiningDate = null;
+
+//   await Promise.all([student.save(), group.save()]); // Update employee and group
+
+//   return { student, group, migration };
+// }
+
 async function removeStudentFromGroup(studentId, groupId) {
   const student = await Student.findById(studentId);
 
@@ -136,23 +172,33 @@ async function removeStudentFromGroup(studentId, groupId) {
 
   // Create a GroupMigration document first
   const leavingDate = new Date().toISOString();
-  const joiningDate = student.groupJoiningDate 
+  const joiningDate = student.groupJoiningDate;
   const migration = await new GroupMigrationStudent({
     studentId,
     groupId,
     joiningDate,
-    leftDate: leavingDate
-  }).save(); 
+    leftDate: leavingDate,
+  }).save();
 
-  // Remove employee from group's employees array and update employee
+  // Remove the student from the group's students array
   group.students.pull(studentId);
-  student.groupId = null;
-  student.groupJoiningDate = null;
 
-  await Promise.all([student.save(), group.save()]); // Update employee and group
+  // Set the student's groupId and stop_point to null
+  student.groupId = null;
+  student.stop_point = null;  // Assuming stop_point should also be null
+
+  // Save the updated student and group documents
+  await Promise.all([student.save(), group.save()]);
 
   return { student, group, migration };
 }
+
+
+
+
+
+
+
 const logout = async (id) => {
   return await studentDao.logout(id);
 };

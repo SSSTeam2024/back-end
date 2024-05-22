@@ -8,5 +8,4 @@ router.post('/newPassengerLuggageLimit', passengerLuggageLimitsController.create
 router.put('/updatePassengerLuggageLimit/:id', passengerLuggageLimitsController.updatePassengerLuggageLimits);
 router.delete('/deletePassengerLuggageLimit/:id', passengerLuggageLimitsController.deletePassengerLuggageLimits);
 router.get('/getAllPassengerLuggageLimits', passengerLuggageLimitsController.getPassengerLuggageLimits);
-router.get('/getPassengerLuggageLimitsById/:id', passengerLuggageLimitsController.getPassengerLuggageLimitsById);
 module.exports = router;

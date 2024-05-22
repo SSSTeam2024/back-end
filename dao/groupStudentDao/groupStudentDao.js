@@ -1,5 +1,5 @@
 const groupStudent = require("../../models/groupStudent/groupStudent");
-const Student = require("../../models/studentModels/student");
+const Student = require("../../models/groupStudent/groupStudent");
 
 async function createGroupAndAssignStudent(groupData, studentIds) {
   try {
@@ -71,7 +71,7 @@ async function addStudentsToGroup(groupId, students) {
 }
 
 const getGroupStudentById = async (id) => {
-  return await groupStudent.findById(id);
+  return await groupStudent.findById(id)
 };
 
 const getGroupByIdStudent = async (id_student) => {

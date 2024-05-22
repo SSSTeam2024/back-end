@@ -1,17 +1,20 @@
-const Programm = require('../../models/programmModel/programm');
+const Programm = require("../../models/programmModel/programm");
 
 const createProgramm = async (programmData) => {
   return await Programm.create(programmData);
 };
 
 const getProgramms = async () => {
-  return await Programm.find().populate("company_id")
-  .populate("school_id").populate("school_id").populate({
-    path: "students_groups",
-    populate: {
-      path: "students",
-    }
-  })/* .populate("employees_groups") */;
+  return await Programm.find()
+    .populate("company_id")
+    .populate("school_id")
+    .populate("school_id")
+    .populate({
+      path: "students_groups",
+      populate: {
+        path: "students",
+      },
+    }) /* .populate("employees_groups") */;
 };
 
 const getProgramStudentGroups = async (id) => {
@@ -19,7 +22,8 @@ const getProgramStudentGroups = async (id) => {
     path: "students_groups",
     populate: {
       path: "students",
-    }});
+    },
+  });
   return program.students_groups;
 };
 
@@ -27,7 +31,7 @@ const getProgramStudentGroups = async (id) => {
 //   return await Quote.findByIdAndUpdate(id, updateData, { new: true });
 // };
 
-// delete Program 
+// delete Program
 
 const deleteProgram = async (id) => {
   return await Programm.findByIdAndDelete(id);
@@ -48,6 +52,31 @@ const updateStatus = async (
         unit_price: unit_price,
         total_price: total_price,
         program_status: program_status,
+        invoiceFrequency: invoiceFrequency,
+        within_payment_days: within_payment_days,
+      },
+    }
+  );
+};
+const updateSchoolGroups = async (id, groups) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        students_groups: groups,
+      },
+    }
+  );
+};
+const getProgrammById = async (id) => {
+  return await Programm.findById(id);
+};
+const updateCompanyGroups = async (id, groups) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        employees_groups: groups,
       },
     }
   );
@@ -72,12 +101,35 @@ const updateNotesAdmin = async (
     }
   );
 };
+const convert_to_contract = async (programData) => {
+  return await Contract.create(programData);
+};
 
+const updateToQuote = async (id_schedule, programData) => {
+  return await Quote.create(programData);
+};
+
+const updateStatusToConverted = async (id, status) => {
+  return await Programm.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        status: status
+      },
+    }
+  );
+};
 module.exports = {
-createProgramm,
-getProgramms,
-deleteProgram,
-updateStatus,
-updateNotesAdmin,
-getProgramStudentGroups
+  createProgramm,
+  getProgramms,
+  deleteProgram,
+  updateStatus,
+  updateNotesAdmin,
+  getProgramStudentGroups,
+  updateSchoolGroups,
+  updateCompanyGroups,
+  getProgrammById,
+  convert_to_contract,
+  updateToQuote,
+  updateStatusToConverted,
 };

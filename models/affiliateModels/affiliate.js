@@ -37,8 +37,8 @@ const affiliateSchema = new mongoose.Schema({
   website: String,
   progress: String,
   noteAcceptJob:String,
-  priceJob:String,
-  statusJob:String
+  price: String,
+  jobStatus: String
 });
 
 module.exports = mongoose.model('Affiliate', affiliateSchema);
