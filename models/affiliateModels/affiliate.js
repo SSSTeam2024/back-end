@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const affiliateSchema = new mongoose.Schema({
   name: String,
@@ -14,31 +14,38 @@ const affiliateSchema = new mongoose.Schema({
   bank_name: String,
   login: String,
   password: String,
-  api_token:String,
+  api_token: String,
   id_creation_date: String,
   id_file: String,
   number_file: String,
-  insurance_number:String,
-  insurance_date:String,
-  insurance_file:String,
+  insurance_number: String,
+  insurance_date: String,
+  insurance_file: String,
+  avatar: String,
   notes: String,
-  vehicles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'VehiculeType'}],
+  // vehicles: [
+  //   {
+  //     type: String,
+  //     qty: String,
+  //   },
+  // ],
+  vehicles: [],
   fleetNumber: String,
-  enquiryDate:String,
-  coverageDistance : String,
-  coverageArea: [{
-    placeName: String,
-    coordinates: {
-      lat: String,
-      lng: String
-    }
-  }],
+  enquiryDate: String,
+  coverageDistance: String,
+  coverageArea: [
+    {
+      placeName: String,
+      coordinates: {
+        lat: String,
+        lng: String,
+      },
+      raduis: String,
+    },
+  ],
   years_experience: String,
   website: String,
   progress: String,
-  noteAcceptJob:String,
-  price: String,
-  jobStatus: String
 });
 
-module.exports = mongoose.model('Affiliate', affiliateSchema);
+module.exports = mongoose.model("Affiliate", affiliateSchema);

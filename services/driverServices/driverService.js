@@ -4,10 +4,7 @@ const fs = require("fs");
 const driverDao = require("../../dao/driverDao/driverDao");
 
 const registerDriver = async (userData, documents) => {
-  console.log(userData);
-  console.log(documents);
   let saveResult = await saveDocumentsToServer(documents);
-  console.log(saveResult);
   const hashedPassword = await bcrypt.hash(userData.password, 10);
   return await driverDao.createDriver({
     ...userData,
@@ -18,7 +15,6 @@ const registerDriver = async (userData, documents) => {
 async function saveDocumentsToServer(documents) {
   let counter = 0;
   for (const file of documents) {
-    console.log(file);
     await saveFile(file.base64String, file.name, file.path);
     counter++;
     console.log("File number " + counter + " saved");
@@ -27,7 +23,6 @@ async function saveDocumentsToServer(documents) {
 }
 
 async function saveFile(base64String, fileName, file_path) {
-  //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
   fs.writeFile(filePath, binaryData, "binary", (err) => {

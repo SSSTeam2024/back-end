@@ -6,10 +6,9 @@ const emailService = require("../quoteServices/emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 
 const registerAffilate = async (userData, documents) => {
-  let affiliate = await affiliateDao.createAffiliate(
-    userData)
-    let saveResult = await saveDocumentsToServer(documents);
-  let email = await prepareAfterDemandBecomeParnterEmail(affiliate)
+  let affiliate = await affiliateDao.createAffiliate(userData);
+  let saveResult = await saveDocumentsToServer(documents);
+  let email = await prepareAfterDemandBecomeParnterEmail(affiliate);
   await emailService.sendEmail(email);
   return affiliate;
 };
@@ -38,6 +37,29 @@ async function saveAdministrativeFile(base64String, fileName) {
   });
 }
 
+async function saveUpdateDocumentsToServer(documents) {
+  let counter = 0;
+  for (const file of documents) {
+    await saveFile(file.base64String, file.name, file.path);
+    counter++;
+  }
+  if (counter == documents.length) return true;
+}
+
+async function saveFile(base64String, fileName, file_path) {
+  if (base64String != undefined) {
+    const binaryData = Buffer.from(base64String, "base64");
+    const filePath = file_path + fileName;
+    fs.writeFile(filePath, binaryData, "binary", (err) => {
+      if (err) {
+        console.error("Error saving the file:", err);
+      } else {
+        console.log("File saved successfully!");
+      }
+    });
+  }
+}
+
 const loginAffiliate = async (login, password) => {
   const affiliate = await affiliateDao.findAffiliateByUsername(login);
 
@@ -56,8 +78,10 @@ const loginAffiliate = async (login, password) => {
   }
 };
 
-const updateAffiliate = async (id, updateData) => {
-  return await affiliateDao.updateAffiliate(id, updateData);
+const updateAffiliate = async (id, updateData, documents) => {
+  let saveResult = await saveUpdateDocumentsToServer(documents);
+  let affiliate = await affiliateDao.updateAffiliate(id, updateData);
+  return affiliate;
 };
 
 const getAffiliateById = async (id) => {
@@ -88,10 +112,10 @@ const updateAffiliateStatus = async (id) => {
 
 const sendAcceptenceEmail = async (acceptenceData) => {
   let id = acceptenceData.id;
- let login = acceptenceData.login
- let password = acceptenceData.password
- let service_date = acceptenceData.service_date
- const hashedPassword = await bcrypt.hash(password, 10);
+  let login = acceptenceData.login;
+  let password = acceptenceData.password;
+  let service_date = acceptenceData.service_date;
+  const hashedPassword = await bcrypt.hash(password, 10);
   await affiliateDao.updateAffiliateStatus(
     id,
     login,
@@ -106,7 +130,7 @@ const sendAcceptenceEmail = async (acceptenceData) => {
     password,
     url,
     affiliate,
-    service_date,
+    service_date
   );
   await emailService.sendEmail(email);
   return "Acceptence Email sent!";
@@ -115,15 +139,17 @@ const sendAcceptenceEmail = async (acceptenceData) => {
 const sendRefuseEmail = async (acceptenceData) => {
   let id_aff = acceptenceData.id_aff;
 
-  await affiliateDao.refuseAffiliate(
-    id_aff,
-  );
+  await affiliateDao.refuseAffiliate(id_aff);
   let affiliate = await affiliateDao.getAffiliateById(id_aff);
-  let email = await prepareRefuseDemandBecomeParnterEmail(
-    affiliate,
-  );
+  let email = await prepareRefuseDemandBecomeParnterEmail(affiliate);
   await emailService.sendEmail(email);
   return "Refuse Email sent!";
+};
+
+const blockAffiliate = async (acceptenceData) => {
+  let id_Affiliate = acceptenceData.id_Affiliate;
+  await affiliateDao.blockAffiliate(id_Affiliate);
+  return "Affiliate Blocked!";
 };
 
 async function prepareAffiliateAcceptenceEmail(
@@ -132,17 +158,13 @@ async function prepareAffiliateAcceptenceEmail(
   password,
   url,
   affiliate,
-  service_date,
+  service_date
 ) {
   let recipient = affiliate.email;
-let vehicle_type = []
-affiliate.vehicles.map((vehicle)=> 
-  vehicle_type.push(vehicle.type)
-)
-let coverageArea = []
-affiliate.coverageArea.map((area)=> 
-  coverageArea.push(area.placeName)
-)
+  let vehicle_type = [];
+  affiliate.vehicles.map((vehicle) => vehicle_type.push(vehicle.type));
+  let coverageArea = [];
+  affiliate.coverageArea.map((area) => coverageArea.push(area.placeName));
   let emailBody = emailTemplatesStructure.emailTemplates.affiliateAcceptence(
     id,
     login,
@@ -165,9 +187,7 @@ affiliate.coverageArea.map((area)=>
 async function prepareAfterDemandBecomeParnterEmail(affiliate) {
   let recipient = affiliate.email;
   let selectedTemplate =
-  emailTemplatesStructure.emailTemplates.becomePartnerDemand(
-    affiliate,
-  )
+    emailTemplatesStructure.emailTemplates.becomePartnerDemand(affiliate);
 
   let emailBody = selectedTemplate;
   let emailSubject = "Become Partner Demand Received";
@@ -182,9 +202,9 @@ async function prepareAfterDemandBecomeParnterEmail(affiliate) {
 async function prepareRefuseDemandBecomeParnterEmail(affiliate) {
   let recipient = affiliate.email;
   let selectedTemplate =
-  emailTemplatesStructure.emailTemplates.becomePartnerDemandRefused(
-    affiliate,
-  )
+    emailTemplatesStructure.emailTemplates.becomePartnerDemandRefused(
+      affiliate
+    );
 
   let emailBody = selectedTemplate;
   let emailSubject = "Become Partner Demand Refused";
@@ -204,8 +224,7 @@ const logout = async (id) => {
 // get affiliate by token
 const getAffiliateByToken = async (token) => {
   return await affiliateDao.findAffiliateByToken(token);
-}
-
+};
 
 module.exports = {
   registerAffilate,
@@ -221,5 +240,6 @@ module.exports = {
   sendAcceptenceEmail,
   sendRefuseEmail,
   logout,
-  getAffiliateByToken
+  getAffiliateByToken,
+  blockAffiliate,
 };

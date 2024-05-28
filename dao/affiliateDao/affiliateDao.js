@@ -1,11 +1,11 @@
-const Affiliate = require('../../models/affiliateModels/affiliate');
+const Affiliate = require("../../models/affiliateModels/affiliate");
 
 const createAffiliate = async (affiliate) => {
   return await Affiliate.create(affiliate);
 };
 
 const getAffiliates = async () => {
-  return await Affiliate.find().populate("vehicles")
+  return await Affiliate.find().populate("vehicles");
 };
 
 const updateAffiliate = async (id, updateData) => {
@@ -21,31 +21,34 @@ const findAffiliateByLogin = async (login) => {
 };
 
 const getAffiliateById = async (id) => {
-  return await Affiliate.findById(id).populate("vehicles")
-}
+  return await Affiliate.findById(id).populate("vehicles");
+};
 
 const getAffiliateByEmail = async (email) => {
   return await Affiliate.findOne({ email });
-}
+};
 
 const updatePassword = async (id, password) => {
-  return await Affiliate.findByIdAndUpdate({ _id:id }, {
-    $set: {
-      password: password
+  return await Affiliate.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        password: password,
+      },
     }
-  });
-}
+  );
+};
 
-const updateAffiliateStatus = async (id,login, password, service_date) => {
+const updateAffiliateStatus = async (id, login, password, service_date) => {
   let affiliateStatus = "Accepted";
   return await Affiliate.findByIdAndUpdate(
     { _id: id },
     {
       $set: {
         statusAffiliate: affiliateStatus,
-        login:login,
-        password:password,
-        service_date:service_date
+        login: login,
+        password: password,
+        service_date: service_date,
       },
     }
   );
@@ -63,28 +66,47 @@ const refuseAffiliate = async (id) => {
   );
 };
 
+const blockAffiliate = async (id) => {
+  let affiliateStatus = "Blocked";
+
+  return await Affiliate.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        statusAffiliate: affiliateStatus,
+      },
+    }
+  );
+};
+
 // find affiliate by token
 const findAffiliateByToken = async (token) => {
   let api_token = token;
-  return await Affiliate.findOne({ api_token });
+  return await Affiliate.findOne({ api_token }).populate("vehicles");
 };
 
- // logout
- const logout = async (id) => {
-  return await Affiliate.findByIdAndUpdate({ _id:id }, {
-    $set: {
-      api_token: ""
+// logout
+const logout = async (id) => {
+  return await Affiliate.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: "",
+      },
     }
-  });
-}
+  );
+};
 
 const updateJwtToken = async (id, token) => {
-  return await Affiliate.findByIdAndUpdate({ _id:id }, {
-    $set: {
-      api_token: token
+  return await Affiliate.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: token,
+      },
     }
-  });
-}
+  );
+};
 
 // find affiliate by login
 const findAffiliateByUsername = async (login) => {
@@ -104,6 +126,7 @@ module.exports = {
   refuseAffiliate,
   logout,
   findAffiliateByToken,
-  updateJwtToken, 
-  findAffiliateByUsername
+  updateJwtToken,
+  findAffiliateByUsername,
+  blockAffiliate,
 };

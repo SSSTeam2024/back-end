@@ -51,13 +51,13 @@ const createQuote = async (req, res) => {
       return_time,
       return_date,
       enquiryDate,
-      category
+      category,
     } = req.body;
     const quote = await quoteService.createQuote(
       {
         id_schedule,
         company_id,
-      school_id,
+        school_id,
         owner,
         handled_by,
         id_driver,
@@ -97,11 +97,11 @@ const createQuote = async (req, res) => {
         checklist_id,
         date,
         return_date,
-      return_time,
-      enquiryDate,
-      category
+        return_time,
+        enquiryDate,
+        category,
       },
-      distance,
+      distance
       //duration,
     );
     res.json(quote);
@@ -223,9 +223,7 @@ const updateQuote = async (req, res) => {
 const deleteQuote = async (req, res) => {
   try {
     const quoteId = req.params.id;
-
     const deletedQuote = await quoteService.deleteQuote(quoteId);
-
     if (!deletedQuote) {
       return res.status(404).send("Quote not found");
     }
@@ -336,7 +334,6 @@ const updateQuoteStatusToCancel = async (req, res) => {
   }
 };
 
-
 const sendPaymentEmail = async (req, res) => {
   try {
     const { id_visitor, quote_id } = req.body;
@@ -360,7 +357,6 @@ const updateQuoteStatus = async (req, res) => {
     if (!updatedQuote) {
       return res.status(404).send("Quote not found");
     }
-    console.log(updatedQuote);
     let bookingSuccessPageContent =
       emailTemplatesStructure.emailTemplates.booking_success();
     res.writeHead(200, { "Content-Type": "text/html" });
@@ -393,10 +389,7 @@ const getQuotesByDriver = async (req, res) => {
 const getQuoteByIdSchedule = async (req, res) => {
   try {
     const id = req.body.id_schedule;
-    console.log("quote controller", id);
     const quote = await quoteService.getQuoteByIdSchedule(id);
-
-    console.log("quote controller", quote);
     if (!quote) {
       return res.status(404).json({ error: "Quote not found" });
     }
@@ -430,7 +423,7 @@ const assignAffiliateToQuoteAPI = async (req, res) => {
       idQuote,
       white_list,
       pushedDate,
-      pushed_price
+      pushed_price,
     });
     res.json({ success: sentResult });
   } catch (error) {
@@ -442,7 +435,6 @@ const assignAffiliateToQuoteAPI = async (req, res) => {
 const surveyAffiliate = async (req, res) => {
   try {
     const { id_Quote, white_list } = req.body;
-    console.log(req.body)
     const sentResult = await quoteService.surveyAffiliate({
       id_Quote,
       white_list,
@@ -456,7 +448,7 @@ const surveyAffiliate = async (req, res) => {
 
 const acceptAssignedAffiliateToQuoteAPI = async (req, res) => {
   try {
-    const { idQuote, id_affiliate} = req.body;
+    const { idQuote, id_affiliate } = req.body;
     const sentResult = await quoteService.acceptAssignedAffiliateToQuote({
       idQuote,
       id_affiliate,
@@ -472,7 +464,6 @@ const acceptAssignedAffiliateToQuoteAPI = async (req, res) => {
 async function getQuotesByIdAffiliateAPI(req, res) {
   try {
     const { id } = req.params;
-    console.log(id)
     const quote = await quoteService.getQuotesByIdAffiliate(id);
     return res.json(quote);
   } catch (error) {
@@ -480,6 +471,7 @@ async function getQuotesByIdAffiliateAPI(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
 const updateAffiliateQuoteStatusToCancel = async (req, res) => {
   try {
     const { quoteId, status } = req.body;
@@ -494,13 +486,11 @@ const updateAffiliateQuoteStatusToCancel = async (req, res) => {
   }
 };
 
-//delete affiliate quote 
+//delete affiliate quote
 const deleteAffiliateQuote = async (req, res) => {
   try {
     const quoteId = req.params.id;
-
     const deletedQuote = await quoteService.deleteAffiliateQuote(quoteId);
-
     if (!deletedQuote) {
       return res.status(404).send("Affiliate's Quote not found");
     }
@@ -510,6 +500,7 @@ const deleteAffiliateQuote = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
 const updateAffiliateQuoteProgress = async (req, res) => {
   try {
     const { id_quote, progress } = req.body;
@@ -528,17 +519,22 @@ const updateAffiliateQuoteStatusToRefuse = async (req, res) => {
   try {
     const { quoteId, affiliateId } = req.body;
     const status = `Refused by affiliate ${affiliateId}`;
-
     if (!quoteId || !affiliateId) {
-      return res.status(400).json({ success: false, message: "Quote ID and affiliate ID are required." });
+      return res.status(400).json({
+        success: false,
+        message: "Quote ID and affiliate ID are required.",
+      });
     }
-
-    const updatedQuote = await quoteService.updateToRefuseAffiliateQuote(quoteId, status, affiliateId);
+    const updatedQuote = await quoteService.updateToRefuseAffiliateQuote(
+      quoteId,
+      status,
+      affiliateId
+    );
     await updateAffiliateStatus(affiliateId, {
       statusJob: `Refused the quote ${quoteId}`,
       priceJob: "",
-      noteAcceptJob: "", 
-    }); 
+      noteAcceptJob: "",
+    });
 
     res.json({ success: true, updatedQuote });
   } catch (error) {
@@ -550,13 +546,18 @@ const updateAffiliateQuoteStatusToRefuse = async (req, res) => {
 const updateAffiliateQuoteStatusToAccept = async (req, res) => {
   try {
     const { priceJob, noteAcceptJob, affiliateId } = req.body;
-
     if (!affiliateId) {
-      return res.status(400).json({ success: false, message: "Affiliate ID are required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Affiliate ID are required." });
     }
-
     const status = `Accepted by affiliate`;
-    const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({ status, priceJob, noteAcceptJob, affiliateId });
+    const updatedQuote = await quoteService.updateToAcceptAffiliateQuote({
+      status,
+      priceJob,
+      noteAcceptJob,
+      affiliateId,
+    });
 
     res.json({ success: true, updatedQuote });
   } catch (error) {
@@ -565,17 +566,14 @@ const updateAffiliateQuoteStatusToAccept = async (req, res) => {
   }
 };
 
-
 //add driver affiliate
 const assignAffiliateDriverToQuoteAPI = async (req, res) => {
   try {
     const { quote_id, id_affiliate_driver } = req.body;
-    console.log(" req.body",  req.body)
     const sentResult = await quoteService.assignAffiliateDriver({
       quote_id,
       id_affiliate_driver,
     });
-    console.log(req.body)
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
@@ -598,7 +596,7 @@ const assignAffiliateVehicleToQuoteAPI = async (req, res) => {
   }
 };
 
-// add driver and vehicle affiliate 
+// add driver and vehicle affiliate
 const assignAffiliateDriverAndVehicleToQuoteAPI = async (req, res) => {
   try {
     const { quote_ID, affiliateVehicle_ID, affiliateDriver_ID } = req.body;
@@ -607,7 +605,6 @@ const assignAffiliateDriverAndVehicleToQuoteAPI = async (req, res) => {
       affiliateVehicle_ID,
       affiliateDriver_ID,
     });
-    console.log("req.body quote controller",req.body)
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
@@ -618,13 +615,56 @@ const assignAffiliateDriverAndVehicleToQuoteAPI = async (req, res) => {
 // Send Price And Notes
 const sendPriceAndNotes = async (req, res) => {
   try {
-    const { idAffiliate, price, noteAcceptJob } = req.body;
+    const { idQuote, white_list } = req.body;
     const sentResult = await quoteService.sendPriceandNotes({
-      idAffiliate,
-      price,
-      noteAcceptJob,
+      idQuote,
+      white_list,
     });
-    console.log("req.body quote controller",req.body)
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// Add Affiliate to existing white list
+const addAffiliateToExistingWhiteList = async (req, res) => {
+  try {
+    const { id_Quote, white_list } = req.body;
+    const sentResult = await quoteService.addAffiliateToExistingWhiteList({
+      id_Quote,
+      white_list,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// Delete Affiliate to existing white list
+const deleteAffiliateToExistingWhiteList = async (req, res) => {
+  try {
+    const { QuoteID, whiteListe } = req.body;
+    const sentResult = await quoteService.deleteAffiliateToExistingWhiteList({
+      QuoteID,
+      whiteListe,
+    });
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// Delete White List from Quote and Converted its status to Booked
+const deleteWhiteList = async (req, res) => {
+  try {
+    const { Quote_ID } = req.body;
+    console.log(req.body);
+    const sentResult = await quoteService.deleteWhiteList({
+      Quote_ID,
+    });
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
@@ -639,9 +679,8 @@ const sendJobStatus = async (req, res) => {
     const sentResult = await quoteService.sendJobStatus({
       idAffiliate,
       jobStatus,
-      idQuote
+      idQuote,
     });
-    console.log("req.body quote controller",req.body)
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
@@ -656,13 +695,70 @@ const sendRefuseJobStatus = async (req, res) => {
     const sentResult = await quoteService.sendRefuseJobStatus({
       id_Affiliate,
       job_Status,
-      id_quote
+      id_quote,
     });
-    console.log("req.body quote controller",req.body)
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
+  }
+};
+
+const getNewQuotesByDriver = async (req, res) => {
+  try {
+    const driver_id = req.params.id;
+    const quotesByDriver = await quoteService.getNewQuotesByDriverID(driver_id);
+    if (!quotesByDriver) {
+      return res.status(404).send("No New Jobs for this driver");
+    }
+    res.send(quotesByDriver);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getAcceptedQuotesByDriver = async (req, res) => {
+  try {
+    const driver_id = req.params.id;
+    const quotesByDriver = await quoteService.getAcceptedQuotesByDriverID(
+      driver_id
+    );
+    if (!quotesByDriver) {
+      return res.status(404).send("No Accepted Jobs for this driver");
+    }
+    res.send(quotesByDriver);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getRefusedQuotesByDriver = async (req, res) => {
+  try {
+    const driver_id = req.params.id;
+    const quotesByDriver = await quoteService.getRefusedQuotesByDriverID(
+      driver_id
+    );
+    if (!quotesByDriver) {
+      return res.status(404).send("No Refused Jobs for this driver");
+    }
+    res.send(quotesByDriver);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getCompletedQuotesByDriver = async (req, res) => {
+  try {
+    const driver_id = req.params.id;
+    const quotesByDriver = await quoteService.getCompletedQuotesByDriverID(
+      driver_id
+    );
+    if (!quotesByDriver) {
+      return res.status(404).send("No Completed Jobs for this driver");
+    }
+    res.send(quotesByDriver);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -694,8 +790,15 @@ module.exports = {
   updateAffiliateQuoteStatusToAccept,
   assignAffiliateVehicleToQuoteAPI,
   assignAffiliateDriverAndVehicleToQuoteAPI,
-  assignAffiliateDriverToQuoteAPI, 
+  assignAffiliateDriverToQuoteAPI,
   sendPriceAndNotes,
   sendJobStatus,
-  sendRefuseJobStatus
+  sendRefuseJobStatus,
+  addAffiliateToExistingWhiteList,
+  deleteAffiliateToExistingWhiteList,
+  deleteWhiteList,
+  getNewQuotesByDriver,
+  getAcceptedQuotesByDriver,
+  getRefusedQuotesByDriver,
+  getCompletedQuotesByDriver,
 };

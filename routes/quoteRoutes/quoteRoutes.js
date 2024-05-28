@@ -18,22 +18,80 @@ router.get("/confirm-booking/:id", quoteController.updateQuoteStatus);
 router.post("/sendPaymentEmail", quoteController.sendPaymentEmail);
 router.post("/updateProgress", quoteController.updateProgress);
 router.post("/getQuoteByIdSchedule", quoteController.getQuoteByIdSchedule);
-router.post("/assignDriverAndVehicleToQuote", quoteController.assignDriverAndVehicleToQuoteAPI);
+router.post(
+  "/assignDriverAndVehicleToQuote",
+  quoteController.assignDriverAndVehicleToQuoteAPI
+);
 router.post("/assignAffiliate", quoteController.assignAffiliateToQuoteAPI);
 router.post("/surveyAffiliate", quoteController.surveyAffiliate);
-router.post("/acceptAssignedAffiliate", quoteController.acceptAssignedAffiliateToQuoteAPI);
-router.get("/getQuotesByIdAffiliate/:id", quoteController.getQuotesByIdAffiliateAPI);
-router.get("/getAffiliateQuotes",quoteController.getQuotes)
-router.post("/cancelAffiliateQuote", quoteController.updateAffiliateQuoteStatusToCancel);
-router.delete("/deleteAffiliateQuote/:id", quoteController.deleteAffiliateQuote);
-router.post("/updateAffiliateQuoteProgress", quoteController.updateAffiliateQuoteProgress);
-router.post("/updateAffiliateQuoteRefuse", quoteController.updateAffiliateQuoteStatusToRefuse);
-router.post("/updateAffiliateQuoteAccept", quoteController.updateAffiliateQuoteStatusToAccept);
-router.post("/assignAffiliateDriver", quoteController.assignAffiliateDriverToQuoteAPI);
-router.post("/assignAffiliateVehicle", quoteController.assignAffiliateVehicleToQuoteAPI);
-router.post("/assignAffiliateVehicleAndDriver", quoteController.assignAffiliateDriverAndVehicleToQuoteAPI);
+router.post(
+  "/acceptAssignedAffiliate",
+  quoteController.acceptAssignedAffiliateToQuoteAPI
+);
+router.get(
+  "/getQuotesByIdAffiliate/:id",
+  quoteController.getQuotesByIdAffiliateAPI
+);
+router.get("/getAffiliateQuotes", quoteController.getQuotes);
+router.post(
+  "/cancelAffiliateQuote",
+  quoteController.updateAffiliateQuoteStatusToCancel
+);
+router.delete(
+  "/deleteAffiliateQuote/:id",
+  quoteController.deleteAffiliateQuote
+);
+router.post(
+  "/updateAffiliateQuoteProgress",
+  quoteController.updateAffiliateQuoteProgress
+);
+router.post(
+  "/updateAffiliateQuoteRefuse",
+  quoteController.updateAffiliateQuoteStatusToRefuse
+);
+router.post(
+  "/updateAffiliateQuoteAccept",
+  quoteController.updateAffiliateQuoteStatusToAccept
+);
+router.post(
+  "/assignAffiliateDriver",
+  quoteController.assignAffiliateDriverToQuoteAPI
+);
+router.post(
+  "/assignAffiliateVehicle",
+  quoteController.assignAffiliateVehicleToQuoteAPI
+);
+router.post(
+  "/assignAffiliateVehicleAndDriver",
+  quoteController.assignAffiliateDriverAndVehicleToQuoteAPI
+);
 
 router.post("/sendPriceAndNotes", quoteController.sendPriceAndNotes);
 router.post("/sendAcceptJobStatus", quoteController.sendJobStatus);
 router.post("/sendRefuseJobStatus", quoteController.sendRefuseJobStatus);
+router.post(
+  "/addAffiliateToWhiteList",
+  quoteController.addAffiliateToExistingWhiteList
+);
+router.post(
+  "/deleteAffiliateToWhiteList",
+  quoteController.deleteAffiliateToExistingWhiteList
+);
+router.post("/deleteWhiteList", quoteController.deleteWhiteList);
+router.get(
+  "/get-new-quotes-by-driver/:id",
+  quoteController.getNewQuotesByDriver
+);
+router.get(
+  "/get-accepted-quotes-by-driver/:id",
+  quoteController.getAcceptedQuotesByDriver
+);
+router.get(
+  "/get-refused-quotes-by-driver/:id",
+  quoteController.getRefusedQuotesByDriver
+);
+router.get(
+  "/get-completed-quotes-by-driver/:id",
+  quoteController.getCompletedQuotesByDriver
+);
 module.exports = router;

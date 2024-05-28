@@ -1,5 +1,5 @@
 const Quote = require("../../models/quoteModel/quote");
-const Affiliate = require('../../models/affiliateModels/affiliate');
+const Affiliate = require("../../models/affiliateModels/affiliate");
 
 const createQuote = async (quoteData) => {
   return await Quote.create(quoteData);
@@ -18,11 +18,11 @@ const getQuotes = async () => {
     .populate({
       path: "white_list",
       populate: {
-        path: "vehicles",
-      }
+        path: "id",
+      },
     })
     .populate("id_group_employee")
-    .populate("id_group_student")
+    .populate("id_group_student");
 };
 
 const updateQuote = async (id, updateData) => {
@@ -30,16 +30,17 @@ const updateQuote = async (id, updateData) => {
 };
 
 const getQuoteById = async (id) => {
-  return await Quote.findById(id).populate("id_affiliate_driver")
-  .populate("id_affiliate_vehicle")
-  .populate({
-    path: "white_list",
-    populate: {
-      path: "vehicles",
-    }
-  })
-  .populate("affiliate_id")
-  .populate("id_affiliate")
+  return await Quote.findById(id)
+    .populate("id_affiliate_driver")
+    .populate("id_affiliate_vehicle")
+    .populate({
+      path: "white_list",
+      populate: {
+        path: "vehicles",
+      },
+    })
+    .populate("affiliate_id")
+    .populate("id_affiliate");
 };
 
 const deleteQuote = async (id) => {
@@ -53,7 +54,7 @@ const updateQuoteStatus = async (id) => {
     {
       $set: {
         status: bookedStatus,
-        progress: "Booked"
+        progress: "Booked",
       },
     }
   );
@@ -98,8 +99,8 @@ const updateQuoteDriver = async (id, price, diver, vehicle) => {
 };
 
 const updateDriver = async (id, diver) => {
-  const quote = await Quote.findById(id)
-  if(quote.id_vehicle === null) {
+  const quote = await Quote.findById(id);
+  if (quote.id_vehicle === null) {
     return await Quote.findByIdAndUpdate(
       { _id: id },
       {
@@ -109,8 +110,7 @@ const updateDriver = async (id, diver) => {
         },
       }
     );
-  }
-  else {
+  } else {
     return await Quote.findByIdAndUpdate(
       { _id: id },
       {
@@ -128,7 +128,7 @@ const updateProgress = async (id, progress) => {
     { _id: id },
     {
       $set: {
-        progress: progress
+        progress: progress,
       },
     }
   );
@@ -147,43 +147,46 @@ const updateStatusToCancel = async (id, status) => {
 };
 
 const updateVehicle = async (id, vehicle) => {
-  const quote = await Quote.findById(id)
-  if(quote.id_driver === null) {
-  return await Quote.findByIdAndUpdate(
-    { _id: id },
-    {
-      $set: {
-        id_vehicle: vehicle,
-        status: "Vehicle Allocated",
-      },
-    }
-  );
-}
-else {
-  return await Quote.findByIdAndUpdate(
-    { _id: id },
-    {
-      $set: {
-        id_vehicle: vehicle,
-        status: "Allocated",
-      },
-    }
-  );
-}
+  const quote = await Quote.findById(id);
+  if (quote.id_driver === null) {
+    return await Quote.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          id_vehicle: vehicle,
+          status: "Vehicle Allocated",
+        },
+      }
+    );
+  } else {
+    return await Quote.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          id_vehicle: vehicle,
+          status: "Allocated",
+        },
+      }
+    );
+  }
 };
 
 const getQuotesByDriverID = async (id, date) => {
   // Construct the query
-const year = date.substring(0, 4);
-const month = date.substring(5, 7);
-const littleThanMonth = String(Number(month)+1).padStart(2,"0");
-const query = {
-    "date": { $gt: `${year}-${month}-00` , $lt: `${year}-${littleThanMonth}-00`},
-    "id_driver": id
-};
+  const year = date.substring(0, 4);
+  const month = date.substring(5, 7);
+  const littleThanMonth = String(Number(month) + 1).padStart(2, "0");
+  const query = {
+    date: { $gt: `${year}-${month}-00`, $lt: `${year}-${littleThanMonth}-00` },
+    id_driver: id,
+  };
 
-// Execute the query
-const quotes = await Quote.find(query).populate("id_visitor").populate("checklist_id").populate("company_id").populate("school_id")
+  // Execute the query
+  const quotes = await Quote.find(query)
+    .populate("id_visitor")
+    .populate("checklist_id")
+    .populate("company_id")
+    .populate("school_id");
 
   return quotes;
 };
@@ -193,15 +196,15 @@ const updateCheckList = async (quote_id, checkList_id) => {
     { _id: quote_id },
     {
       $set: {
-      checklist_id: checkList_id,
+        checklist_id: checkList_id,
       },
     }
   );
 };
 
 const getQuoteByIdSchedule = async (id) => {
-  const id_schedule= id
-  return await Quote.find({id_schedule});
+  const id_schedule = id;
+  return await Quote.find({ id_schedule });
 };
 
 const assignDriverAndVehicleToQuoteDao = async (id, driver_ID, vehicle_ID) => {
@@ -224,7 +227,7 @@ const assignAffiliate = async (id, affiliate, pushedDate, pushed_price) => {
       $set: {
         white_list: affiliate,
         pushedDate: pushedDate,
-        pushed_price : pushed_price,
+        pushed_price: pushed_price,
         status: "Pushed",
         handled_by: 1,
       },
@@ -249,11 +252,11 @@ const acceptAssignedAffiliate = async (id, id_affiliate) => {
     {
       $set: {
         white_list: null,
-        id_affiliate: id_affiliate
+        id_affiliate: id_affiliate,
       },
     }
   );
-  return updateQuote
+  return updateQuote;
 };
 
 // add driver to affiliate's quotes
@@ -442,36 +445,83 @@ const updateStatusAffiliateQuoteToAccept = async (
 };
 
 //send Price and Notes
-const sendPriceAndNotes = async (
-  idAffiliate,
-  price,
-  noteAcceptJob,
-) => {
+const sendPriceAndNotes = async (idQuote, white_list) => {
   try {
-    const updatedAffiliate = await Affiliate.findByIdAndUpdate(
-      { _id: idAffiliate },
+    const updatedAQuote = await Quote.findByIdAndUpdate(
+      { _id: idQuote },
       {
         $set: {
-          price: price,
-          noteAcceptJob: noteAcceptJob,
+          white_list: white_list,
         },
       },
       { new: true }
     );
-    return updatedAffiliate;
+    return updatedAQuote;
   } catch (error) {
-    throw new Error(
-      "Failed to update affiliate: " + error.message
+    throw new Error("Failed to update quote: " + error.message);
+  }
+};
+
+//DAO for Add Affiliate To Existing White List
+const addAffiliateToExistingWhiteList = async (id_Quote, white_list) => {
+  try {
+    const updatedAQuote = await Quote.findByIdAndUpdate(
+      { _id: id_Quote },
+      {
+        $set: {
+          white_list: white_list,
+        },
+      },
+      { new: true }
     );
+    return updatedAQuote;
+  } catch (error) {
+    throw new Error("Failed to update quote: " + error.message);
+  }
+};
+
+//DAO for Delete Affiliate To Existing White List
+const deleteAffiliateToExistingWhiteList = async (QuoteID, whiteListe) => {
+  try {
+    const updatedAQuote = await Quote.findByIdAndUpdate(
+      { _id: QuoteID },
+      {
+        $set: {
+          white_list: whiteListe,
+        },
+      },
+      { new: true }
+    );
+    return updatedAQuote;
+  } catch (error) {
+    throw new Error("Failed to update quote: " + error.message);
+  }
+};
+
+//DAO for Delete White List
+const deleteWhiteList = async (Quote_ID) => {
+  try {
+    const updatedAQuote = await Quote.findByIdAndUpdate(
+      { _id: Quote_ID },
+      {
+        $set: {
+          white_list: null,
+          status: "Booked",
+          handled_by: "0",
+          pushedDate: "",
+          pushed_price: "",
+        },
+      },
+      { new: true }
+    );
+    return updatedAQuote;
+  } catch (error) {
+    throw new Error("Failed to update quote: " + error.message);
   }
 };
 
 //send Accept Job Status
-const sendJobStatus = async (
-  idAffiliate,
-  jobStatus,
-  idQuote
-) => {
+const sendJobStatus = async (idAffiliate, jobStatus, idQuote) => {
   try {
     const updatedAffiliate = await Affiliate.findByIdAndUpdate(
       { _id: idAffiliate },
@@ -493,20 +543,14 @@ const sendJobStatus = async (
     );
     return updatedAffiliate;
   } catch (error) {
-    throw new Error(
-      "Failed to update affiliate: " + error.message
-    );
+    throw new Error("Failed to update affiliate: " + error.message);
   }
 };
 
 //send Refuse Job Status
-const sendRefuseJobStatus = async (
-  id_Affiliate,
-  job_Status,
-  id_quote
-) => {
+const sendRefuseJobStatus = async (id_Affiliate, job_Status, id_quote) => {
   try {
-    console.log(id_quote)
+    console.log(id_quote);
     const updatedAffiliate = await Affiliate.findByIdAndUpdate(
       { _id: id_Affiliate },
       {
@@ -521,17 +565,93 @@ const sendRefuseJobStatus = async (
       {
         $set: {
           status: "Booked",
-          id_affiliate: null
+          id_affiliate: null,
         },
       },
       { new: true }
     );
     return updatedAffiliate;
   } catch (error) {
-    throw new Error(
-      "Failed to update affiliate: " + error.message
-    );
+    throw new Error("Failed to update affiliate: " + error.message);
   }
+};
+
+const getNewQuotesByDriverID = async (id) => {
+  const query = {
+    progress: {
+      $in: [
+        "Driver Allocated",
+        "New",
+        "Booked",
+        "Vehicle Allocated",
+        "Allocated",
+      ],
+    },
+    id_driver: id,
+  };
+
+  // Execute the query
+  const quotes = await Quote.find(query)
+    .populate("id_visitor")
+    .populate("checklist_id")
+    .populate("company_id")
+    .populate("school_id");
+
+  return quotes;
+};
+
+const getAcceptedQuotesByDriverID = async (id) => {
+  const query = {
+    progress: {
+      $in: ["Accepted"],
+    },
+    id_driver: id,
+  };
+
+  // Execute the query
+  const quotes = await Quote.find(query)
+    .populate("id_visitor")
+    .populate("checklist_id")
+    .populate("company_id")
+    .populate("school_id");
+
+  return quotes;
+};
+
+const getRefusedQuotesByDriverID = async (id) => {
+  const query = {
+    progress: {
+      $in: ["Refused"],
+    },
+    id_driver: id,
+  };
+
+  // Execute the query
+  const quotes = await Quote.find(query)
+    .populate("id_visitor")
+    .populate("checklist_id")
+    .populate("company_id")
+    .populate("school_id");
+
+  return quotes;
+};
+
+const getCompletedQuotesByDriverID = async (id) => {
+  const query = {
+    progress: {
+      $in: ["Completed"],
+    },
+    id_driver: id,
+  };
+
+  // Execute the query
+  const quotes = await Quote.find(query)
+    .populate("id_visitor")
+    .populate("checklist_id")
+    .populate("company_id")
+    .populate("school_id");
+
+  return quotes;
 };
 
 module.exports = {
@@ -566,5 +686,12 @@ module.exports = {
   addAffiliateDriverToQuoteDao,
   sendPriceAndNotes,
   sendJobStatus,
-  sendRefuseJobStatus
+  sendRefuseJobStatus,
+  addAffiliateToExistingWhiteList,
+  deleteAffiliateToExistingWhiteList,
+  deleteWhiteList,
+  getNewQuotesByDriverID,
+  getAcceptedQuotesByDriverID,
+  getRefusedQuotesByDriverID,
+  getCompletedQuotesByDriverID,
 };

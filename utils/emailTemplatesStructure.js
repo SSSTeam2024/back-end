@@ -110,7 +110,9 @@ const emailTemplates = {
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
                 <label>` +
-    quote.date + `<strong> at </strong>` + quote.pickup_time +
+    quote.date +
+    `<strong> at </strong>` +
+    quote.pickup_time +
     ` </label>
               </td>
             </tr>
@@ -203,7 +205,9 @@ const emailTemplates = {
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
                 <label>` +
-                quote.date + `<strong> at </strong>` + quote.pickup_time +
+    quote.date +
+    `<strong> at </strong>` +
+    quote.pickup_time +
     `</label>
               </td>
             </tr>
@@ -530,7 +534,9 @@ const emailTemplates = {
               </td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
                 <label>` +
-                quote.date + `<strong> at </strong>` + quote.pickup_time +
+    quote.date +
+    `<strong> at </strong>` +
+    quote.pickup_time +
     ` </label>
               </td>
             </tr>
@@ -858,7 +864,9 @@ const emailTemplates = {
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
               <label>` +
-              quote.date + `<strong> at </strong>` + quote.pickup_time +
+    quote.date +
+    `<strong> at </strong>` +
+    quote.pickup_time +
     ` </label>
             </td>
           </tr>
@@ -1354,7 +1362,9 @@ const emailTemplates = {
             </td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
               <label>` +
-    quote.date  + `at` + quote.pickup_time +
+    quote.date +
+    `at` +
+    quote.pickup_time +
     ` </label>
             </td>
           </tr>
@@ -1544,7 +1554,7 @@ const emailTemplates = {
 
   `,
   becomePartnerDemand: (affiliate) =>
-  `
+    `
   <html>
 <body style="
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -1571,7 +1581,9 @@ const emailTemplates = {
           </tr>
           <tr>
               <td style="text-align: left">
-                  <p>Dear ` + affiliate.name + `</p>
+                  <p>Dear ` +
+    affiliate.name +
+    `</p>
                   <p>I hope this email finds you well.We have received your request to become a partner with us. We appreciate your interest in collaborating with our company</p>
                   <p>
                   Your partnership request has been received successfully, and we are currently reviewing the details you provided. We understand the importance of this opportunity and assure you that your request will be given the utmost attention it deserves.
@@ -1598,8 +1610,9 @@ const emailTemplates = {
     margin: auto;
   ">
       <legend style="margin-left: 20%">
-          <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
-          affiliate.enquiryDate +`
+          <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    affiliate.enquiryDate +
+    `
       </legend>
       <table style="
         width: 600px;
@@ -1625,7 +1638,9 @@ const emailTemplates = {
                       <b>Name</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>` + affiliate.name + ` </label>
+                      <label>` +
+    affiliate.name +
+    ` </label>
                   </td>
               </tr>
               <tr>
@@ -1640,7 +1655,9 @@ const emailTemplates = {
                       <b>Email</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.email +`</label>
+                      <label>` +
+    affiliate.email +
+    `</label>
                   </td>
               </tr>
               <tr>
@@ -1655,7 +1672,9 @@ const emailTemplates = {
                       <b>Phone</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.phone +`</label>
+                      <label>` +
+    affiliate.phone +
+    `</label>
                   </td>
               </tr>
               <tr>
@@ -1670,7 +1689,9 @@ const emailTemplates = {
                       <b>Address</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.address +`</label>
+                      <label>` +
+    affiliate.address +
+    `</label>
                   </td>
               </tr>
               <tr>
@@ -1685,7 +1706,9 @@ const emailTemplates = {
                       <b>Website</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.website +`</label>
+                      <label>` +
+    affiliate.website +
+    `</label>
                   </td>
               </tr>
           </tbody>
@@ -1695,8 +1718,8 @@ const emailTemplates = {
 
 </html>
 `,
-becomePartnerDemandRefused: (affiliate) =>
-  `
+  becomePartnerDemandRefused: (affiliate) =>
+    `
   <html>
 <body style="
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -1723,7 +1746,9 @@ becomePartnerDemandRefused: (affiliate) =>
           </tr>
           <tr>
               <td style="text-align: left">
-                  <p>Dear ` + affiliate.name + `</p>
+                  <p>Dear ` +
+    affiliate.name +
+    `</p>
                   <p>I hope this email finds you well. First of all, We appreciate your interest in collaborating with our company</p>
                   <p>
                   After careful consideration, we regret to inform you that we are unable to accept your partnership request at this time. Please know that this decision was not made lightly, and we genuinely appreciate the time and effort you put into your application.
@@ -1752,8 +1777,9 @@ becomePartnerDemandRefused: (affiliate) =>
     margin: auto;
   ">
       <legend style="margin-left: 20%">
-          <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
-          affiliate.enquiryDate +`
+          <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    affiliate.enquiryDate +
+    `
       </legend>
       <table style="
         width: 600px;
@@ -1779,7 +1805,9 @@ becomePartnerDemandRefused: (affiliate) =>
                       <b>Name</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>` + affiliate.name + ` </label>
+                      <label>` +
+    affiliate.name +
+    ` </label>
                   </td>
               </tr>
               <tr>
@@ -1794,7 +1822,9 @@ becomePartnerDemandRefused: (affiliate) =>
                       <b>Email</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.email +`</label>
+                      <label>` +
+    affiliate.email +
+    `</label>
                   </td>
               </tr>
               <tr>
@@ -1809,7 +1839,9 @@ becomePartnerDemandRefused: (affiliate) =>
                       <b>Phone</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.phone +`</label>
+                      <label>` +
+    affiliate.phone +
+    `</label>
                   </td>
               </tr>
               <tr>
@@ -1824,7 +1856,9 @@ becomePartnerDemandRefused: (affiliate) =>
                       <b>Address</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.address +`</label>
+                      <label>` +
+    affiliate.address +
+    `</label>
                   </td>
               </tr>
               <tr>
@@ -1839,7 +1873,9 @@ becomePartnerDemandRefused: (affiliate) =>
                       <b>Fleet Number</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label>`+ affiliate.fleetNumber +`</label>
+                      <label>` +
+    affiliate.fleetNumber +
+    `</label>
                   </td>
               </tr>
               <tr>
@@ -1854,7 +1890,9 @@ becomePartnerDemandRefused: (affiliate) =>
                       <b>Region</b>
                   </td>
                   <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                      <label> `+ affiliate.region +` </label>
+                      <label> ` +
+    affiliate.region +
+    ` </label>
                   </td>
               </tr>
           </tbody>
@@ -1864,7 +1902,16 @@ becomePartnerDemandRefused: (affiliate) =>
 
 </html>
 `,
-  affiliateAcceptence: (id, login, password, url, affiliate, service_date, vehicle_type, coverageArea) =>
+  affiliateAcceptence: (
+    id,
+    login,
+    password,
+    url,
+    affiliate,
+    service_date,
+    vehicle_type,
+    coverageArea
+  ) =>
     `
     <html>
 <body style="
@@ -1892,7 +1939,9 @@ becomePartnerDemandRefused: (affiliate) =>
             </tr>
             <tr>
                 <td style="text-align: left">
-                    <p>Dear ` + affiliate.name + `</p>
+                    <p>Dear ` +
+    affiliate.name +
+    `</p>
                     <p>I hope this email finds you well.</p>
                     <p>
                     We are thrilled to inform you that your request to become a partner with us has been accepted.
@@ -1903,7 +1952,9 @@ becomePartnerDemandRefused: (affiliate) =>
                     <!-- <p>
             To proceed with confirming your booking, please click on the button
             below: 
-            <a href="` + url + `" style="display: inline-block;
+            <a href="` +
+    url +
+    `" style="display: inline-block;
                                 padding: 10px 20px;
                                 margin: 10px;
                                 text-align: center;
@@ -1941,8 +1992,9 @@ becomePartnerDemandRefused: (affiliate) =>
       margin: auto;
     ">
         <legend style="margin-left: 20%">
-            <strong>Reference: </strong>02022024 <strong>Date: </strong>`+
-            affiliate.enquiryDate +`
+            <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    affiliate.enquiryDate +
+    `
         </legend>
         <table style="
           width: 600px;
@@ -1968,7 +2020,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Name</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label>` + affiliate.name + ` </label>
+                        <label>` +
+    affiliate.name +
+    ` </label>
                     </td>
                 </tr>
                 <tr>
@@ -1983,7 +2037,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Email</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label>`+ affiliate.email +`</label>
+                        <label>` +
+    affiliate.email +
+    `</label>
                     </td>
                 </tr>
                 <tr>
@@ -1998,7 +2054,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Phone</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label>`+ affiliate.phone +`</label>
+                        <label>` +
+    affiliate.phone +
+    `</label>
                     </td>
                 </tr>
                 <tr>
@@ -2013,7 +2071,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Address</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label>`+ affiliate.address +`</label>
+                        <label>` +
+    affiliate.address +
+    `</label>
                     </td>
                 </tr>
                 <tr>
@@ -2028,7 +2088,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Vehicle Type</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label>`+ vehicle_type.join(" , ") +`</label>
+                        <label>` +
+    vehicle_type.join(" , ") +
+    `</label>
                     </td>
                 </tr>
                 <tr>
@@ -2043,7 +2105,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Coverage Area</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label> `+ coverageArea.join(" , ") +`</label>
+                        <label> ` +
+    coverageArea.join(" , ") +
+    `</label>
                     </td>
                 </tr>
                 <tr>
@@ -2056,7 +2120,9 @@ becomePartnerDemandRefused: (affiliate) =>
             color: #ffe605;
           "></td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
-                        <a href="` + url + `">Log in Now</a>
+                        <a href="` +
+    url +
+    `">Log in Now</a>
                     </td>
                 </tr>
             </tbody>
@@ -2088,7 +2154,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Username</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
-                        `+ login +`
+                        ` +
+    login +
+    `
                     </td>
                 </tr>
                 <tr>
@@ -2103,7 +2171,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Password</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <label>`+ password +` </label>
+                        <label>` +
+    password +
+    ` </label>
                     </td>
                 </tr>
                 <tr>
@@ -2118,7 +2188,9 @@ becomePartnerDemandRefused: (affiliate) =>
                         <b>Click to Login</b>
                     </td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                        <a href="` + url + `">Login NOW</a>
+                        <a href="` +
+    url +
+    `">Login NOW</a>
                     </td>
                 </tr>
             </tbody>
@@ -2127,6 +2199,315 @@ becomePartnerDemandRefused: (affiliate) =>
 </body>
 
 </html>
+  `,
+  affiliateJobAcceptence: (
+    affiliate,
+    url,
+    quote,
+    on_site_before,
+    formattedCreationDate
+  ) =>
+    `
+    <html>
+  <body
+    style="
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    "
+  >
+  <table
+      style="
+        width: 600px;
+        height: 96px;
+        margin: 0 auto;
+        border: none;
+        text-align: center;
+        padding: 0;
+        border-collapse: collapse;
+        color: #000;
+      "
+    >
+    <tbody style="font-family: 'Roboto'; font-size: 1rem;">
+      <tr>
+        <td>
+          <a href="">
+            <img src="cid:unique-image-id" alt="" />
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <a href="" style="display: flex; justify-content: start; margin-bottom: 10px; font-size: larger; color: #555;">
+                Click here to take this job for £ ` +
+    quote.pushed_price +
+    `
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <a href="" style="display: flex; justify-content: start; margin-bottom: 10px; font-size: larger; color: #555;">
+                Click here to provide a quote for this job
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+            <a href="" style="display: flex; justify-content: start; margin-bottom: 20px; font-size: larger; color: #555;">
+                Click here if you are not available for this job.
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: left">
+          <p>Dear ` +
+    affiliate.name +
+    `</p>
+          <p>I hope this email finds you well.</p>
+          <p>
+            Please could you provide a quotation for our customer  who has the requirements set out below:
+          </p>
+          <p>
+            Please state the vehicle and the driver that the quotation is based on and please mention and extra vehicle features that may help us take your quote. 
+          <p>
+            Many thanks.
+          </p>  
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <fieldset
+    style="
+      width: 600px;
+      margin: auto;
+    "
+  >
+    <legend style="margin-left: 20%">
+      <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+    formattedCreationDate +
+    `
+    </legend>
+      <table
+        style="
+          width: 600px;
+          border: none;
+          text-align: center;
+          padding: 8px;
+        "
+      >
+        <tbody>
+          <tr>
+              <td colspan="2" style="color: #000;">
+                <b>Journey info</b>
+              </td>
+          </tr>
+          <tr>
+              <td
+                style="
+                  width: 200px;
+                  text-align: right;
+                  vertical-align: top;
+                  padding-right: 15px;
+                  background-color: #555;
+                  color: #ffe605;
+                "
+              >
+                <b>Journey 1</b>
+              </td>
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
+                <label></label>
+              </td>
+            </tr>
+            <tr>
+                <td
+                  style="
+                    width: 200px;
+                    text-align: right;
+                    vertical-align: top;
+                    padding-right: 15px;
+                    background-color: #555;
+                    color: #ffe605;
+                  "
+                >
+                  <b>On Site Before</b>
+                </td>
+                <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+                  <label>` +
+    on_site_before +
+    ` </label>
+                </td>
+              </tr>
+
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Date & Time</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +
+    quote.date +
+    ` at ` +
+    quote.pickup_time +
+    ` </label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Collection Address</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +
+    quote.start_point.placeName +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Destination Address</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +
+    quote.destination_point.placeName +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Luggage</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +
+    quote.luggage_details +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Number Of Passengers</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +
+    quote.passengers_number +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Vehicle Type</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label> ` +
+    quote.vehicle_type +
+    ` </label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Journey Type</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>` +
+    quote.journey_type +
+    `</label>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                width: 200px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 15px;
+                background-color: #555;
+                color: #ffe605;
+              "
+            >
+              <b>Extra Details</b>
+            </td>
+            <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <label>
+                <a
+                  style="
+                    text-decoration: none !important;
+                  "
+                  >` +
+    quote.notes +
+    `</a
+                >
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </fieldset>
+  </body>
+</html>
+
   `,
 };
 
