@@ -3,10 +3,28 @@ const driverAffiliateController = require("../../controllers/driverAffiliateCont
 
 const router = express.Router();
 
-router.post("/registerAffiliateDriver", driverAffiliateController.registerDriverAffiliate);
-router.put("/updateAffiliateDriver/:id", driverAffiliateController.updateDriverAffiliate);
-router.get("/getAffiliateDriver/:id", driverAffiliateController.getDiverAffiliateById);
-router.get("/getAllAffiliateDrivers", driverAffiliateController.getAffiliateDrivers);
-router.delete("/deleteAffiliateDriver/:id", driverAffiliateController.deleteAffiliateDriver);
-router.post("/getAffiliateDriverByEmail", driverAffiliateController.getAffiliateDriverByEmail);
+router.post(
+  "/registerAffiliateDriver",
+  driverAffiliateController.registerDriverAffiliate
+);
+router.put(
+  "/updateAffiliateDriver/:id",
+  driverAffiliateController.updateDriverAffiliate
+);
+router.get(
+  "/getAffiliateDriver/:id",
+  driverAffiliateController.getDiverAffiliateById
+);
+router.get(
+  "/getAllAffiliateDrivers/:id",
+  driverAffiliateController.getAffiliateDrivers
+);
+router.delete(
+  "/deleteAffiliateDriver/:id",
+  driverAffiliateController.deleteAffiliateDriver
+);
+router.post(
+  "/getAffiliateDriverByEmail",
+  driverAffiliateController.getAffiliateDriverByEmail
+);
 module.exports = router;

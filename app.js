@@ -1,10 +1,14 @@
-const compression = require('compression')
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const http = require('http');
+const compression = require("compression");
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const http = require("http");
 const { Server } = require("socket.io");
-const AppRouter = require('./routes/appRouter');
+const AppRouter = require("./routes/appRouter");
+const emailqueue = require("./services/emailQueueServices/emailQueueServices");
+const emailTemplateService = require("./services/emailTemplateServices/emailTemplateService");
+const cron = require("node-cron");
+const emailSentServices = require("./services/emailSentServices/emailSentServices");
 
 const app = express();
 
@@ -16,25 +20,50 @@ const io = new Server(server, {
   },
 });
 
-app.use(compression())
+app.use(compression());
 app.use(cors());
-app.use(express.static('files'));
+app.use(express.static("files"));
 const port = 3000;
 
 // Adjust the limit to accommodate larger payloads
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-mongoose.connect('mongodb+srv://sssteam2024:ogA6KY9XssmX4q6y@testbct.qxx75ys.mongodb.net/bctdb', { });
+mongoose.connect(
+  "mongodb+srv://sssteam2024:ogA6KY9XssmX4q6y@testbct.qxx75ys.mongodb.net/bctdb",
+  {}
+);
 
-app.use('/api', AppRouter);
-app.use('/test', (req, res) => {
-  res.end(
-    "<div><p>Hello We are at test API!!!<p></div>"
-  );
+app.use("/api", AppRouter);
+
+app.all("*", (req, res) => {
+  res.status(404).send("404 - Not Found");
 });
-app.all('*', (req, res) => {
-  res.status(404).send('404 - Not Found');
+
+// Schedule tasks to be run on the server
+cron.schedule("*/30 * * * * *", async () => {
+  // cron.schedule("0 * * * *", async () => {
+  console.log("hello cron");
+  const resultEmail = await emailqueue.getTheOldestEmailInQueue();
+  // Send an email
+  const mailOptions = {
+    newEmail: resultEmail.newEmail,
+    subject: resultEmail.subject,
+    body: resultEmail.body,
+    file: resultEmail.file,
+    name: resultEmail.name,
+  };
+  await emailTemplateService.sendNewEmail(mailOptions).then(async () => {
+    await emailqueue.deleteEmailQueue(resultEmail._id).then(async () => {
+      emailSentServices.createEmailSent({
+        date: resultEmail.date_email,
+        quoteID: resultEmail.quote_Id,
+        subjectEmail: resultEmail.subject,
+        from: resultEmail.sender,
+        to: resultEmail.newEmail,
+      });
+    });
+  });
 });
 
 io.on("connection", (socket) => {

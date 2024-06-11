@@ -1,31 +1,31 @@
 const driverAffiliateDao = require("../../dao/driverAffiliateDao/driverAffiliateDao");
 const fs = require("fs");
-
+const globalFunctions = require("../../utils/globalFunctions");
 
 const createDriverAffiliate = async (driverAffiliateData, documents) => {
-    console.log(driverAffiliateData);
-    console.log(documents);
-    let saveResult = await saveFilesToServer(documents);
-    console.log(saveResult);
+  console.log(driverAffiliateData);
+  console.log(documents);
+  let saveResult = await saveFilesToServer(documents);
+  console.log(saveResult);
   return await driverAffiliateDao.createDriverAffiliate(driverAffiliateData);
 };
 
 async function saveFilesToServer(documents) {
   let counter = 0;
-    for (const file of documents){
-      console.log(file);
-        await saveFile(file.base64String, file.name, file.path);
-        counter++;
-        console.log('File number '+counter+' saved');
-    }
-    if(counter == documents.length) return true;
+  for (const file of documents) {
+    console.log(file);
+    await saveFile(file.base64String, file.name, file.path);
+    counter++;
+    console.log("File number " + counter + " saved");
+  }
+  if (counter == documents.length) return true;
 }
 
 async function saveFile(base64String, fileName, file_path) {
- // const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
+  // const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
-  
+  await globalFunctions.ensureDirectoryExistence(file_path);
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);
@@ -43,8 +43,8 @@ const getAffiliateDriverById = async (id) => {
   return await driverAffiliateDao.getAffiliateDriverById(id);
 };
 
-const getAffiliateDrivers = async () => {
-  return await driverAffiliateDao.getAffiliateDrivers();
+const getAffiliateDrivers = async (id) => {
+  return await driverAffiliateDao.getAffiliateDrivers(id);
 };
 
 const deleteAffiliateDriver = async (id) => {

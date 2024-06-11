@@ -41,9 +41,15 @@ const programmRoutes = require("./programmRoutes/programmRoutes");
 const contractRoutes = require("./contractRoutes/contractRoutes");
 const checkTypeRoutes = require("./checkTypeRoutes/checkTypeRoutes");
 const checkListRoutes = require("./checkListRoutes/checkListRoutes");
-const affiliateVehicleRoutes = require("./affiliateVehicleRoutes/affiliateVehicleRoutes")
-const affiliateDriverRoutes=require("./affiliateDriverRoutes/affiliateDriverRoutes")
-
+const affiliateVehicleRoutes = require("./affiliateVehicleRoutes/affiliateVehicleRoutes");
+const affiliateDriverRoutes = require("./affiliateDriverRoutes/affiliateDriverRoutes");
+const attachmentRoutes = require("./attachmentRoutes/attachmentRoutes");
+const emailSentRoutes = require("./emailSentRoutes/emailSentRoutes");
+const driverFeedbackRoutes = require("./driverFeedbackRoutes/driverFeedbackRoutes");
+const shortCodeRoutes = require("./shortCodeRoutes/shortCodeRoutes");
+const emailQueueRoutes = require("./emailQueueRoutes/emailQueueRoutes");
+const groupRoutes = require("./groupSchoolRoutes/groupSchoolRoutes");
+const rejectedJobsRoutes = require("./rejectedJobsByAffiliateRoutes/rejectedJobsByAffiliateRoutes");
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
 router.use("/parent", parentRoutes);
@@ -61,6 +67,10 @@ router.use("/auth", authRoutes);
 router.use("/todos", todoRoutes);
 
 /// BCT APIS ///
+router.use("/emailQueue", emailQueueRoutes);
+router.use("/driver-feedback", driverFeedbackRoutes);
+router.use("/attachment", attachmentRoutes);
+router.use("/emailSent", emailSentRoutes);
 router.use("/affiliate", affiliateRoutes);
 router.use("/complains", complainRoutes);
 router.use("/source", sourceRoutes);
@@ -95,5 +105,7 @@ router.use("/duty-check", checkTypeRoutes);
 router.use("/check-list", checkListRoutes);
 router.use("/affiliateVehicle", affiliateVehicleRoutes);
 router.use("/affiliateDriver", affiliateDriverRoutes);
-
+router.use("/shortCode", shortCodeRoutes);
+router.use("/groupStudent", groupRoutes);
+router.use("/rejectedJobs", rejectedJobsRoutes);
 module.exports = router;

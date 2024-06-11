@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const driverAffiliateSchema = new mongoose.Schema(
   {
+    affilaite_reference_id: String,
     username: String,
     password: String,
     email: String,

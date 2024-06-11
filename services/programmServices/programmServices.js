@@ -3,40 +3,41 @@ const groupEmployeeDao = require("../../dao/groupEmployeeDao/groupEmployeeDao");
 const groupStudentDao = require("../../dao/groupStudentDao/groupStudentDao");
 
 const createProgramm = async (programmData, groupsData) => {
-
   let program = await programmDao.createProgramm(programmData);
   let groups = [];
 
   let updatedProgram;
 
-  if(groupsData.type === "School"){
-    for(let group of groupsData.groupCollection){
+  if (groupsData.type === "School") {
+    for (let group of groupsData.groupCollection) {
       group.program = program._id;
-     let createdGroup = await groupStudentDao.addNewGroup(group);
-    
-     groups.push(createdGroup._id);
+      let createdGroup = await groupStudentDao.addNewGroup(group);
+
+      groups.push(createdGroup._id);
     }
-    
+
     updatedProgram = await programmDao.updateSchoolGroups(program._id, groups);
-  
-    return updatedProgram
+
+    return updatedProgram;
   }
 
-  if(groupsData.type === "Company"){
-    for(let group of groupsData.groupCollection){
+  if (groupsData.type === "Company") {
+    for (let group of groupsData.groupCollection) {
       group.program = program._id;
       let createdGroup = await groupEmployeeDao.addNewGroup(group);
       groups.push(createdGroup._id);
-     }
-     updatedProgram = await programmDao.updateCompanyGroups(program._id, groups);
-     return updatedProgram
+    }
+    updatedProgram = await programmDao.updateCompanyGroups(program._id, groups);
+    return updatedProgram;
   }
-
-
 };
 
 const getProgramms = async () => {
   return await programmDao.getProgramms();
+};
+
+const getProgramStudentGroups = async (id) => {
+  return await programmDao.getProgramStudentGroups(id);
 };
 
 const deleteProgramm = async (id) => {
@@ -55,7 +56,7 @@ const sendRespond = async (respondData) => {
   let notes_for_client = respondData.notes_for_client;
   let invoiceFrequency = respondData.invoiceFrequency;
   let within_payment_days = respondData.within_payment_days;
-  console.log("From Services",respondData)
+  console.log("From Services", respondData);
   await programmDao.updateStatus(
     program_id,
     notes_for_client,
@@ -93,5 +94,6 @@ module.exports = {
   convertToContract,
   convertToQuote,
   deleteProgramm,
-  updateStatusToConverted
+  updateStatusToConverted,
+  getProgramStudentGroups,
 };

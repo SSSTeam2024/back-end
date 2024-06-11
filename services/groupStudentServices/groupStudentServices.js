@@ -1,9 +1,7 @@
 const groupStudentDao = require("../../dao/groupStudentDao/groupStudentDao");
-const studentDao = require("../../dao/studentDao/studentDao");
+const studentDao = require("../../dao/studentDao/student.Dao");
 // const groupMigrationDao = require('../../dao/groupStudentDao/groupMigrationDao');
 const Student = require("../../models/studentModels/student");
-
-
 
 async function createGroupAndAssignStudent(groupData, studentIds) {
   try {
@@ -30,7 +28,6 @@ async function updateStudent(students, group, date) {
   });
 }
 
-
 const addNewGroup = async (groupData) => {
   console.log(groupData);
 
@@ -43,15 +40,16 @@ const addNewGroup = async (groupData) => {
   return group;
 };
 
-
-
 async function addStudentToGroup(_id, students) {
   try {
     if (!_id) {
       throw new Error("Group ID is required");
     }
 
-    const updatedGroup = await groupStudentDao.addStudentsToGroup(_id, students);
+    const updatedGroup = await groupStudentDao.addStudentsToGroup(
+      _id,
+      students
+    );
 
     // Update each student with groupId and joining date
     const updatedStudents = await Promise.all(
@@ -63,7 +61,7 @@ async function addStudentToGroup(_id, students) {
       })
     );
 
-    return { updatedGroup, updatedStudents}; // Return both updated group and students
+    return { updatedGroup, updatedStudents }; // Return both updated group and students
   } catch (error) {
     throw error;
   }
@@ -73,7 +71,7 @@ const getallGroupStudents = async () => {
   return await groupStudentDao.getallGroupStudent();
 };
 
-const updateGroupStudent= async (id, updateData) => {
+const updateGroupStudent = async (id, updateData) => {
   return await groupStudentDao.updateGroupStudent(id, updateData);
 };
 
@@ -92,10 +90,6 @@ const deleteGroupStudent = async (id) => {
   return await groupStudentDao.deleteGroupStudent(id);
 };
 
-
-
-
-
 // async function removeStudentFromGroup(groupId, studentId) {
 //   try {
 //       const studentInfo = await groupStudentDao.getStudentInfo(groupId, studentId);
@@ -113,11 +107,6 @@ const deleteGroupStudent = async (id) => {
 //   }
 // }
 
-
-
-
-
-
 module.exports = {
   getAllGroups,
   createGroupAndAssignStudent,
@@ -129,5 +118,5 @@ module.exports = {
   deleteGroupStudent,
   getGroupByIdSchool,
   // removeStudentFromGroup,
-  addStudentToGroup
+  addStudentToGroup,
 };

@@ -1,5 +1,5 @@
 const authCentralApp = require("../../services/authCentralAppServices/authCentralAppServices");
-const globalFunctions = require("../../utils/globalFunction");
+const globalFunctions = require("../../utils/globalFunctions");
 
 // register CentralApp account
 const registerCentralApp = async (req, res) => {

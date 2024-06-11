@@ -1,5 +1,5 @@
 const authShool = require("../../services/schoolServices/authSchool");
-const globalFunctions = require("../../utils/globalFunction");
+const globalFunctions = require("../../utils/globalFunctions");
 
 // register school account
 const registerSchool = async (req, res) => {
@@ -244,7 +244,7 @@ const getSchoolByJwtToken = async (req, res) => {
 const getAllSchools = async (req, res) => {
   try {
     const schools = await authShool.getSchools();
-    res.json( schools );
+    res.json(schools);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

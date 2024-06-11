@@ -2,6 +2,7 @@ const teamDao = require("../../dao/teamDao/teamDao");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const globalFunctions = require("../../utils/globalFunctions");
 
 // register a new team
 const registerTeam = async (teamData, documents) => {
@@ -27,6 +28,7 @@ async function saveDocumentsToServer(documents) {
 async function saveAdministrativeFile(base64String, fileName, file_path) {
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
+  await globalFunctions.ensureDirectoryExistence(file_path);
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);

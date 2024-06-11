@@ -1,5 +1,5 @@
 const studentService = require("../../services/studentServices/studentService");
-const globalFunctions = require("../../utils/globalFunction");
+const globalFunctions = require("../../utils/globalFunctions");
 // register student
 const registerStudent = async (req, res) => {
   try {
@@ -92,12 +92,25 @@ const registerStudent = async (req, res) => {
         photo_id,
         idSchool,
         groupJoiningDate,
-        api_token
+        api_token,
       },
       documents
     );
 
     res.sendStatus(201);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// update Students STOPS
+const updateStudentStops = async (req, res) => {
+  try {
+    const { studentList } = req.body;
+    console.log("studentList controller", studentList);
+    let updatedStudents = await studentService.updateStudentStops(studentList);
+    res.status(200).send({ student_list: updatedStudents });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -282,7 +295,6 @@ const updateProfile = async (req, res) => {
         documents
       );
     } else {
-
       let updatedStudent = await studentService.updatedStudent(studentId, {
         firstName,
         lastName,
@@ -308,8 +320,6 @@ const updateProfile = async (req, res) => {
       });
       res.json(updatedStudent);
     }
-
-   
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -396,6 +406,19 @@ const getStudentByIdSchool = async (req, res) => {
   }
 };
 
+const removeStudentFromGroup = async (req, res) => {
+  try {
+    const { studentId, groupId } = req.params;
+    const result = await studentService.removeStudentFromGroup(
+      studentId,
+      groupId
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerStudent,
   login,
@@ -409,4 +432,6 @@ module.exports = {
   updatePassword,
   getStudentByIdParent,
   getStudentByIdSchool,
+  updateStudentStops,
+  removeStudentFromGroup,
 };

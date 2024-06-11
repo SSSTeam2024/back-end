@@ -53,8 +53,11 @@ const createQuote = async (req, res) => {
       enquiryDate,
       category,
     } = req.body;
+
+    let quote_ref = "";
     const quote = await quoteService.createQuote(
       {
+        quote_ref,
         id_schedule,
         company_id,
         school_id,
@@ -616,6 +619,7 @@ const assignAffiliateDriverAndVehicleToQuoteAPI = async (req, res) => {
 const sendPriceAndNotes = async (req, res) => {
   try {
     const { idQuote, white_list } = req.body;
+    console.log("sendPriceAndNotes", req.body);
     const sentResult = await quoteService.sendPriceandNotes({
       idQuote,
       white_list,
@@ -676,6 +680,7 @@ const deleteWhiteList = async (req, res) => {
 const sendJobStatus = async (req, res) => {
   try {
     const { idAffiliate, jobStatus, idQuote } = req.body;
+    console.log(req.body);
     const sentResult = await quoteService.sendJobStatus({
       idAffiliate,
       jobStatus,
@@ -762,7 +767,33 @@ const getCompletedQuotesByDriver = async (req, res) => {
   }
 };
 
+// get all quote by id company
+const getAllQuotesByCompanyID = async (req, res) => {
+  try {
+    const company_id = req.params.id;
+    const quotes = await quoteService.getAllQuotesByCompanyID(company_id);
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// get all quote by id school
+const getAllQuotesBySchoolID = async (req, res) => {
+  try {
+    const school_id = req.params.id;
+    const quotes = await quoteService.getAllQuotesBySchoolID(school_id);
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
+  getAllQuotesByCompanyID,
+  getAllQuotesBySchoolID,
   createQuote,
   getQuotes,
   updateQuote,

@@ -39,7 +39,6 @@ const getQuoteById = async (id) => {
         path: "vehicles",
       },
     })
-    .populate("affiliate_id")
     .populate("id_affiliate");
 };
 
@@ -654,7 +653,29 @@ const getCompletedQuotesByDriverID = async (id) => {
   return quotes;
 };
 
+const getLatestQuote = async () => {
+  return await Quote.findOne({}, {}, { sort: { _id: -1 } });
+};
+
+const getAllQuotesBySchoolID = async (id) => {
+  const query = {
+    school_id: id,
+  };
+
+  return await Quote.find(query).populate("id_visitor");
+};
+
+const getAllQuotesByCompanyID = async (id) => {
+  const query = {
+    company_id: id,
+  };
+
+  return await Quote.find(query).populate("id_visitor");
+};
+
 module.exports = {
+  getAllQuotesByCompanyID,
+  getAllQuotesBySchoolID,
   createQuote,
   getQuotes,
   updateQuote,
@@ -694,4 +715,5 @@ module.exports = {
   getAcceptedQuotesByDriverID,
   getRefusedQuotesByDriverID,
   getCompletedQuotesByDriverID,
+  getLatestQuote,
 };

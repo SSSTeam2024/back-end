@@ -6,6 +6,8 @@ const VehicleTypeService = require("../../services/vehicleTypeServices/vehicleTy
 const journeyService = require("../../services/journeyServices/journeyService");
 const luggageService = require("../../services/luggageServices/luggageService");
 const groupStudentDAO = require("../../dao/groupStudentDao/groupStudentDao");
+const groupEmployeeDAO = require("../../dao/groupEmployeeDao/groupEmployeeDao");
+const quoteDao = require("../../dao/quoteDao/quoteDao");
 
 const getProgramms = async (req, res) => {
   try {
@@ -16,6 +18,18 @@ const getProgramms = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const getProgramStudentGroups = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const groups = await programmService.getProgramStudentGroups(id);
+    res.json(groups);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const createProgramm = async (req, res) => {
   try {
     const { programDetails, groups } = req.body;
@@ -183,8 +197,15 @@ const convertToQuoteAPI = async (req, res) => {
     if (program.school_id === null) {
       for (let i = 0; i < program.employees_groups.length; i++) {
         const groupID = program.employees_groups[i];
-        const group = await groupStudentDAO.getGroupStudentById(groupID);
+        const group = await groupEmployeeDAO.getGroupEmployeeById(groupID);
         for (let index = 0; index < program.workDates.length; index++) {
+          let latestQuote = await quoteDao.getLatestQuote();
+          let newQuoteRef;
+          if (!latestQuote) {
+            newQuoteRef = "000001";
+          } else {
+            newQuoteRef = Number(latestQuote.quote_ref) + 1;
+          }
           const sentResult = await programmService.convertToQuote({
             id_schedule: id_schedule,
             company_id: program.company_id,
@@ -207,6 +228,7 @@ const convertToQuoteAPI = async (req, res) => {
             id_invoice: "",
             enquiryDate: new Date(),
             id_group_employee: groupID,
+            quote_ref: newQuoteRef,
           });
         }
       }
@@ -216,6 +238,13 @@ const convertToQuoteAPI = async (req, res) => {
         const group = await groupStudentDAO.getGroupStudentById(groupID);
         console.log(group);
         for (let index = 0; index < program.workDates.length; index++) {
+          let latestQuote = await quoteDao.getLatestQuote();
+          let newQuoteRef;
+          if (!latestQuote) {
+            newQuoteRef = "000001";
+          } else {
+            newQuoteRef = Number(latestQuote.quote_ref) + 1;
+          }
           const sentResult = await programmService.convertToQuote({
             id_schedule: id_schedule,
             school_id: program.school_id,
@@ -238,6 +267,7 @@ const convertToQuoteAPI = async (req, res) => {
             id_invoice: "",
             enquiryDate: new Date(),
             id_group_student: groupID,
+            quote_ref: newQuoteRef,
           });
         }
       }
@@ -290,4 +320,5 @@ module.exports = {
   convertedToContract,
   deleteProgramm,
   updateStatusToConvertedAPI,
+  getProgramStudentGroups,
 };

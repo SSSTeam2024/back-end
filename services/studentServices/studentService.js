@@ -3,9 +3,10 @@ const Parent = require("../../models/parentsModel/parents");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const Student = require ("../../models/studentModels/student")
-// const GroupMigrationStudent = require ("../../models/g")
-// const GroupStudent = require ("../models/groupStudent/groupStudent")
+const Student = require("../../models/studentModels/student");
+const GroupMigrationStudent = require("../../models/groupStudent/groupMigrationStudent");
+const GroupStudent = require("../../models/groupStudent/groupStudent");
+const globalFunctions = require("../../utils/globalFunctions");
 
 // register a new student and update parent profile
 const registerStudent = async (studentData, documents) => {
@@ -26,19 +27,19 @@ const registerStudent = async (studentData, documents) => {
     await updateParentWithStudentId(studentData.parent_id, studentId);
     console.log("Parent updated with student ID.");
 
-    return newStudent; 
+    return newStudent;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-
 // update the parent's profile with the student's ID
 const updateParentWithStudentId = async (parentId, studentId) => {
-  await Parent.findByIdAndUpdate(parentId, { $push: { student_id: studentId } });
+  await Parent.findByIdAndUpdate(parentId, {
+    $push: { student_id: studentId },
+  });
 };
-
 
 // get student by id parent
 const getStudentsByParentId = async (studentId) => {
@@ -54,7 +55,10 @@ const loginStudent = async (email, password) => {
   }
 
   if (await bcrypt.compare(password, student.password)) {
-    const accessToken = jwt.sign({ student: student.username }, "yourSecretKey");
+    const accessToken = jwt.sign(
+      { student: student.username },
+      "yourSecretKey"
+    );
     await studentDao.updateJwtToken(student._id, String(accessToken));
     let updatedStudent = await studentDao.getStudentById(student._id);
     return updatedStudent;
@@ -66,29 +70,28 @@ const loginStudent = async (email, password) => {
 // function saveDocumentToServer
 async function saveDocumentToServer(documents) {
   let counter = 0;
-  for (const file of documents){
+  for (const file of documents) {
     console.log(file);
-      await saveAdministrativeFile(file.base64String, file.name, file.path);
-      counter++;
-      console.log('File number '+counter+' saved');
+    await saveAdministrativeFile(file.base64String, file.name, file.path);
+    counter++;
+    console.log("File number " + counter + " saved");
   }
-  if(counter == documents.length) return true;
-  }
+  if (counter == documents.length) return true;
+}
 
-
-  async function saveAdministrativeFile(base64String, fileName, filePath) {
-    //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
-    const binaryData = Buffer.from(base64String, 'base64');
-    const fullFilePath = filePath + fileName;
-    fs.writeFile(fullFilePath, binaryData, 'binary', (err) => {
-      if (err) {
-        console.error('Error saving the file:', err);
-      } else {
-        console.log('File saved successfully!');
-      }
-    });
-  }
-  
+async function saveAdministrativeFile(base64String, fileName, filePath) {
+  //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
+  const binaryData = Buffer.from(base64String, "base64");
+  const fullFilePath = filePath + fileName;
+  await globalFunctions.ensureDirectoryExistence(filePath);
+  fs.writeFile(fullFilePath, binaryData, "binary", (err) => {
+    if (err) {
+      console.error("Error saving the file:", err);
+    } else {
+      console.log("File saved successfully!");
+    }
+  });
+}
 
 // get all students
 const getStudents = async () => {
@@ -117,7 +120,7 @@ const updatePassword = async (id, password) => {
   return await studentDao.updatePassword(id, hashedPassword);
 };
 
-const getStudentByIdSchool= async (idSchool) => {
+const getStudentByIdSchool = async (idSchool) => {
   return await studentDao.getStudentByIdSchool(idSchool);
 };
 
@@ -125,6 +128,58 @@ const logout = async (id) => {
   return await studentDao.logout(id);
 };
 
+const updateStudentStops = async (studentList) => {
+  console.log("studentList service", studentList);
+
+  let completionCounter = 0;
+
+  let updatedStudents = [];
+  for (let student of studentList) {
+    let updatedStudent = await studentDao.updateStudentStop(student);
+    completionCounter++;
+    updatedStudents.push(updatedStudent);
+  }
+
+  if (completionCounter === studentList.length) {
+    return updatedStudents;
+  }
+};
+
+async function removeStudentFromGroup(studentId, groupId) {
+  const student = await Student.findById(studentId);
+
+  if (!student) {
+    throw new Error("student not found");
+  }
+
+  const group = await GroupStudent.findById(groupId).populate("students");
+
+  if (!group) {
+    throw new Error("Group not found");
+  }
+
+  // Create a GroupMigration document first
+  const leavingDate = new Date().toISOString();
+  const joiningDate = student.groupJoiningDate;
+  const migration = await new GroupMigrationStudent({
+    studentId,
+    groupId,
+    joiningDate,
+    leftDate: leavingDate,
+  }).save();
+
+  // Remove the student from the group's students array
+  group.students.pull(studentId);
+
+  // Set the student's groupId and stop_point to null
+  student.groupId = null;
+  student.stop_point = null; // Assuming stop_point should also be null
+
+  // Save the updated student and group documents
+  await Promise.all([student.save(), group.save()]);
+
+  return { student, group, migration };
+}
 
 module.exports = {
   registerStudent,
@@ -138,6 +193,7 @@ module.exports = {
   updatePassword,
   getStudentsByParentId,
   getStudentByIdSchool,
-  logout
-  
+  logout,
+  updateStudentStops,
+  removeStudentFromGroup,
 };

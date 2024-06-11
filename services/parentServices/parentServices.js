@@ -2,6 +2,7 @@ const parentDao = require("../../dao/parentDao/parentDao");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const globalFunctions = require("../../utils/globalFunctions");
 
 const createParent = async (studentData) => {
   return await parentDao.createParent(studentData);
@@ -44,6 +45,7 @@ async function saveAdministrativeFile(base64String, fileName) {
   const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
   const binaryData = Buffer.from(base64Data, "base64");
   const filePath = "files/parentFiles/" + fileName;
+  await globalFunctions.ensureDirectoryExistence("files/parentFiles/");
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);

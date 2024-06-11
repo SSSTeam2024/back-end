@@ -1,5 +1,5 @@
 const authAffiliate = require("../../services/affiliateServices/affiliateService");
-const globalFunctions = require("../../utils/globalFunction");
+const globalFunctions = require("../../utils/globalFunctions");
 
 // register affiliate account
 const registerAffiliate = async (req, res) => {
@@ -324,7 +324,7 @@ const getAffiliates = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
-// update password school account
+// update password Affiliate account
 const updatePassword = async (req, res) => {
   try {
     const affiliateId = req.params.id;
@@ -386,6 +386,33 @@ const blockAffiliate = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+// get all quote by id affiliate
+const getAllQuotesByAffiliateID = async (req, res) => {
+  try {
+    const affiliate_id = req.params.id;
+    const quotes = await authAffiliate.getAllQuotesByAffiliateID(affiliate_id);
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// get all quote by id affiliate
+const getAllSuggestedQuotesByAffiliateID = async (req, res) => {
+  try {
+    const affiliate_id = req.params.id;
+    const quotes = await authAffiliate.getAllSuggestedQuotesByAffiliateID(
+      affiliate_id
+    );
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getAffiliates,
   getAffiliateByJwtToken,
@@ -399,4 +426,6 @@ module.exports = {
   sendAcceptenceEmail,
   sendRefuseEmail,
   blockAffiliate,
+  getAllQuotesByAffiliateID,
+  getAllSuggestedQuotesByAffiliateID,
 };

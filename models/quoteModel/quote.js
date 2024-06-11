@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const quoteSchema = new mongoose.Schema(
   {
+    quote_ref: String,
     id_schedule: String,
     id_affiliate_driver: {
       type: Schema.Types.ObjectId,
@@ -14,11 +15,11 @@ const quoteSchema = new mongoose.Schema(
       ref: "VehicleAffiliate",
       default: null,
     },
-    affiliate_id: {
-      type: Schema.Types.ObjectId,
-      ref: "Affiliate",
-      default: null,
-    },
+    // affiliate_id: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Affiliate",
+    //   default: null,
+    // },
     company_id: { type: Schema.Types.ObjectId, ref: "Company", default: null },
     school_id: { type: Schema.Types.ObjectId, ref: "School", default: null },
     owner: String,

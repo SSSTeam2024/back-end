@@ -1,5 +1,6 @@
 const complainDao = require("../../dao/complainDao/complainDao");
 const fs = require("fs").promises;
+const globalFunctions = require("../../utils/globalFunctions");
 
 async function saveMediaToServer(documents) {
   try {
@@ -26,6 +27,7 @@ async function saveFile(base64String, fileName, file_path) {
   // const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
+  await globalFunctions.ensureDirectoryExistence(file_path);
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);
@@ -37,7 +39,7 @@ async function saveFile(base64String, fileName, file_path) {
 
 const createComplain = async (complainData, documents) => {
   complainData.status = "pending";
-  complainData.archived = "no"
+  complainData.archived = "no";
 
   let saveResult = await saveMediaToServer(documents);
 
@@ -63,7 +65,7 @@ const respondToComplaint = async (data, documents) => {
       data.responseAuthor,
       currentDate,
       data.resPhoto,
-      data.resVideo,
+      data.resVideo
     );
   } catch (error) {
     console.error("Error responding to complaint:", error);
@@ -139,5 +141,5 @@ module.exports = {
   respondToComplaint,
   updateComplainToPushed,
   updateComplainToArchived,
-  getComplainByIdCompany
+  getComplainByIdCompany,
 };

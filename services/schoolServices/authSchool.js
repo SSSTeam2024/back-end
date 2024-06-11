@@ -2,9 +2,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const schoolDao = require("../../dao/schoolDao/schoolDao");
 const fs = require("fs");
+const globalFunctions = require("../../utils/globalFunctions");
 
 // register school service acccount
-const registerSchool = async (schoolDaoData,documents) => {
+const registerSchool = async (schoolDaoData, documents) => {
   console.log("schoolDaoData:", schoolDaoData);
   let saveResult = await saveDocumentToServer(documents);
   console.log(saveResult);
@@ -43,6 +44,7 @@ async function saveAdministrativeFile(base64String, fileName) {
   const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
   const binaryData = Buffer.from(base64Data, "base64");
   const filePath = "files/schoolFiles/" + fileName;
+  await globalFunctions.ensureDirectoryExistence("files/schoolFiles/");
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);
@@ -72,12 +74,12 @@ const updatedSchool = async (id, updateData) => {
 // get school by id
 const getSchoolById = async (id) => {
   return await schoolDao.getSchoolById(id);
-}
+};
 
 // get school by token
 const getSchoolByToken = async (token) => {
   return await schoolDao.findSchoolByToken(token);
-}
+};
 
 // get all schools
 const getSchools = async () => {
@@ -99,5 +101,5 @@ module.exports = {
   getSchoolById,
   getSchools,
   getSchoolByToken,
-  logout
+  logout,
 };

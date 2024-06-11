@@ -1,4 +1,6 @@
 const Affiliate = require("../../models/affiliateModels/affiliate");
+const Quote = require("../../models/quoteModel/quote");
+const mongoose = require("mongoose");
 
 const createAffiliate = async (affiliate) => {
   return await Affiliate.create(affiliate);
@@ -113,6 +115,25 @@ const findAffiliateByUsername = async (login) => {
   return await Affiliate.findOne({ login });
 };
 
+const getAllQuotesByAffiliateID = async (id) => {
+  const query = {
+    id_affiliate: id,
+  };
+
+  return await Quote.find(query)
+    .populate("id_visitor")
+    .populate("school_id")
+    .populate("company_id");
+};
+
+const getAllSuggestedQuotesByAffiliateID = async (id) => {
+  return await Quote.find({ "white_list.id": id })
+    .populate("id_visitor")
+    .populate("school_id")
+    .populate("company_id");
+  //.populate("white_list.id");
+};
+
 module.exports = {
   createAffiliate,
   getAffiliates,
@@ -129,4 +150,6 @@ module.exports = {
   updateJwtToken,
   findAffiliateByUsername,
   blockAffiliate,
+  getAllQuotesByAffiliateID,
+  getAllSuggestedQuotesByAffiliateID,
 };

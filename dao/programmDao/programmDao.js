@@ -7,8 +7,25 @@ const createProgramm = async (programmData) => {
 };
 
 const getProgramms = async () => {
-  return await Programm.find().populate("company_id")
-  .populate("school_id")
+  return await Programm.find()
+    .populate("company_id")
+    .populate("school_id")
+    .populate({
+      path: "students_groups",
+      populate: {
+        path: "students",
+      },
+    }) /* .populate("employees_groups") */;
+};
+
+const getProgramStudentGroups = async (id) => {
+  let program = await Programm.findOne({ _id: id }).populate({
+    path: "students_groups",
+    populate: {
+      path: "students",
+    },
+  });
+  return program.students_groups;
 };
 
 const deleteProgramm = async (id) => {
@@ -37,16 +54,13 @@ const updateStatus = async (
         total_price: total_price,
         program_status: program_status,
         invoiceFrequency: invoiceFrequency,
-        within_payment_days: within_payment_days
+        within_payment_days: within_payment_days,
       },
     }
   );
 };
 
-const updateSchoolGroups = async (
-  id,
-  groups
-) => {
+const updateSchoolGroups = async (id, groups) => {
   return await Programm.findByIdAndUpdate(
     { _id: id },
     {
@@ -57,10 +71,7 @@ const updateSchoolGroups = async (
   );
 };
 
-const updateCompanyGroups = async (
-  id,
-  groups
-) => {
+const updateCompanyGroups = async (id, groups) => {
   return await Programm.findByIdAndUpdate(
     { _id: id },
     {
@@ -84,7 +95,7 @@ const updateStatusToConverted = async (id, status) => {
     { _id: id },
     {
       $set: {
-        status: status
+        status: status,
       },
     }
   );
@@ -100,5 +111,6 @@ module.exports = {
   deleteProgramm,
   updateStatusToConverted,
   updateCompanyGroups,
-  updateSchoolGroups
+  updateSchoolGroups,
+  getProgramStudentGroups,
 };

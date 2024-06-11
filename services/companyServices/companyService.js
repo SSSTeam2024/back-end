@@ -2,6 +2,7 @@ const companyDao = require("../../dao/companyDao/companyDao");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const globalFunctions = require("../../utils/globalFunctions");
 
 const createCompany = async (companyData, documents) => {
   let saveResult = await saveDocumentsToServer(documents);
@@ -25,6 +26,7 @@ async function saveFile(base64String, fileName, file_path) {
   //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
+  await globalFunctions.ensureDirectoryExistence(file_path);
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);
@@ -33,7 +35,6 @@ async function saveFile(base64String, fileName, file_path) {
     }
   });
 }
-
 
 // login school service acccount
 const loginCompany = async (login, password) => {
@@ -72,7 +73,6 @@ const loginCompany = async (login, password) => {
 //   });
 // }
 
-
 //forgot password
 const updatePassword = async (id, password) => {
   console.log(password);
@@ -81,23 +81,23 @@ const updatePassword = async (id, password) => {
 };
 
 const getCompanyById = async (id) => {
-    return await companyDao.getCompanyById(id);
-  };
+  return await companyDao.getCompanyById(id);
+};
 const getCompanies = async () => {
-    return await companyDao.getCompanies();
-  };
-  
-  const deleteCompany = async (id) => {
-    return await companyDao.deleteCompany(id);
-  };
-  
-  const getCompanyByEmail = async (email) => {
-    return await companyDao.getCompanyByEmail(email);
-  };
+  return await companyDao.getCompanies();
+};
 
-  const updateCompany = async (id, updateData) => {
-    return await companyDao.updateCompany(id, updateData);
-  };
+const deleteCompany = async (id) => {
+  return await companyDao.deleteCompany(id);
+};
+
+const getCompanyByEmail = async (email) => {
+  return await companyDao.getCompanyByEmail(email);
+};
+
+const updateCompany = async (id, updateData) => {
+  return await companyDao.updateCompany(id, updateData);
+};
 // get Company by token
 const getCompanyByToken = async (token) => {
   return await companyDao.findCompanyByToken(token);
@@ -107,6 +107,15 @@ const logout = async (id) => {
   return await companyDao.logout(id);
 };
 
- 
-
-  module.exports = {createCompany,getCompanyByToken, logout, getCompanyByEmail,getCompanies,deleteCompany,getCompanyById, updateCompany, loginCompany, updatePassword}
+module.exports = {
+  createCompany,
+  getCompanyByToken,
+  logout,
+  getCompanyByEmail,
+  getCompanies,
+  deleteCompany,
+  getCompanyById,
+  updateCompany,
+  loginCompany,
+  updatePassword,
+};

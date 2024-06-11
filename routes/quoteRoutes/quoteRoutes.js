@@ -94,4 +94,12 @@ router.get(
   "/get-completed-quotes-by-driver/:id",
   quoteController.getCompletedQuotesByDriver
 );
+router.get(
+  "/getAllQuotesByCompanyID/:id",
+  quoteController.getAllQuotesByCompanyID
+);
+router.get(
+  "/getAllQuotesBySchoolID/:id",
+  quoteController.getAllQuotesBySchoolID
+);
 module.exports = router;

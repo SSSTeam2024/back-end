@@ -1,5 +1,5 @@
 const Student = require("../../models/studentModels/student");
-const Parent=require ("../../models/parentsModel/parents")
+const Parent = require("../../models/parentsModel/parents");
 
 // Update the parent's profile with the student's ID
 const updateParentWithStudentId = async (parentId, studentId) => {
@@ -10,7 +10,7 @@ const removeStudentFromParent = async (parentId, studentId) => {
   await Parent.findByIdAndUpdate(
     parentId,
     { $pull: { students: studentId } },
-    { new: true } 
+    { new: true }
   );
 };
 
@@ -35,7 +35,6 @@ const findStudentByLogin = async (email) => {
 const getAllStudents = async () => {
   return await Student.find({});
 };
-
 
 // get student by id
 const getStudentById = async (id) => {
@@ -77,7 +76,7 @@ const getStudentByParentId = async (parentId) => {
     const student = await Student.find({ parent_id: parentId }).exec();
     return student;
   } catch (error) {
-    console.error('Error in getStudentByParentId:', error);
+    console.error("Error in getStudentByParentId:", error);
     throw error;
   }
 };
@@ -95,21 +94,23 @@ const updatePassword = async (id, password) => {
   );
 };
 const getStudentByIdSchool = async (idSchool) => {
-  return await Student.find({idSchool});
-}
+  return await Student.find({ idSchool });
+};
 
 const updateStudentGroupId = async (id, group, date) => {
-  return await Student.findByIdAndUpdate({ _id:id }, {
-    $set: {
-      groupId: group,
-      groupJoiningDate:date
+  return await Student.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        groupId: group,
+        groupJoiningDate: date,
+      },
     }
-  });
-}
+  );
+};
 
-const getStudent= async () => {
-
-  return await Student.find().populate("groupId")
+const getStudent = async () => {
+  return await Student.find().populate("groupId");
 };
 
 const updateJwtToken = async (id, token) => {
@@ -134,6 +135,18 @@ const logout = async (id) => {
   );
 };
 
+const updateStudentStop = async (data) => {
+  return await Student.findByIdAndUpdate(
+    { _id: data.student },
+    {
+      $set: {
+        stop_point: data.stop,
+      },
+    },
+    { new: true }
+  );
+};
+
 module.exports = {
   createStudent,
   getAllStudents,
@@ -148,5 +161,6 @@ module.exports = {
   getStudentByIdSchool,
   getStudent,
   updateJwtToken,
-  logout
+  logout,
+  updateStudentStop,
 };

@@ -8,4 +8,5 @@ router.get("/getAllVisitors", visitorController.getVisitors);
 router.get("/getVisitor/:id", visitorController.getVisitorById);
 router.delete("/deleteVisitor/:id", visitorController.deleteVisitor);
 router.post("/updateStatus", visitorController.updateVisitorStatusAPI);
+router.get("/getVisitorByEmail/:email", visitorController.getVisitorByEmail);
 module.exports = router;

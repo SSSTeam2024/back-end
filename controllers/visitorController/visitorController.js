@@ -58,6 +58,22 @@ const getVisitorById = async (req, res) => {
   }
 };
 
+const getVisitorByEmail = async (req, res) => {
+  try {
+    const visitorEmail = req.params.email;
+
+    const getVisitor = await visitorService.getVisitorByEmail(visitorEmail);
+
+    if (!getVisitor) {
+      return res.status(404).send("Visitor not found");
+    }
+    res.json(getVisitor);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 // delete visitor account
 const deleteVisitor = async (req, res) => {
   try {
@@ -94,5 +110,6 @@ module.exports = {
   getVisitors,
   getVisitorById,
   deleteVisitor,
-  updateVisitorStatusAPI
+  updateVisitorStatusAPI,
+  getVisitorByEmail,
 };

@@ -1,41 +1,43 @@
 const noteDao = require("../../dao/noteDao/noteDao");
-const fs = require('fs');
+const fs = require("fs");
+const globalFunctions = require("../../utils/globalFunctions");
 
-async function saveMediaToServer(documents){
+async function saveMediaToServer(documents) {
   let counter = 0;
-  for (const file of documents){
+  for (const file of documents) {
     console.log(file);
-      await saveFile(file.base64String, file.name, file.path);
-      counter++;
-      console.log('File number '+counter+' saved');
+    await saveFile(file.base64String, file.name, file.path);
+    counter++;
+    console.log("File number " + counter + " saved");
   }
-  if(counter == documents.length) return true;
+  if (counter == documents.length) return true;
 }
 
-async function saveFile(base64String, fileName, file_path){
+async function saveFile(base64String, fileName, file_path) {
   // const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
-  const binaryData = Buffer.from(base64String, 'base64');
-  const filePath = file_path +fileName;
-  fs.writeFile(filePath, binaryData, 'binary', (err) => {
+  const binaryData = Buffer.from(base64String, "base64");
+  const filePath = file_path + fileName;
+  await globalFunctions.ensureDirectoryExistence(file_path);
+  fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
-      console.error('Error saving the file:', err);
+      console.error("Error saving the file:", err);
     } else {
-      console.log('File saved successfully!');
+      console.log("File saved successfully!");
     }
   });
 }
 
 const createNote = async (noteData, documents) => {
-    console.log(noteData);
-    let saveResult = await saveMediaToServer(documents);
-    console.log(saveResult);
-    
+  console.log(noteData);
+  let saveResult = await saveMediaToServer(documents);
+  console.log(saveResult);
+
   return await noteDao.createNote(noteData);
 };
 
 const getNoteById = async (id) => {
   return await noteDao.getNoteById(id);
-}
+};
 
 const getNotes = async () => {
   return await noteDao.getNotes();
@@ -57,5 +59,5 @@ module.exports = {
   getNoteById,
   updateNote,
   deleteNote,
-  getNotesByIdCompany
+  getNotesByIdCompany,
 };

@@ -17,7 +17,7 @@ const addNewEmployee = async (req, res) => {
       photosExtension,
       dateOfBirth,
       username,
-      groupId,
+      //      groupId,
       positionTitle,
       legalcardBase64String,
       legalcardExtension,
@@ -27,13 +27,17 @@ const addNewEmployee = async (req, res) => {
       status,
     } = req.body;
 
-  
-   
     const legalcardPath = "files/employeeFiles/";
     const photoPath = "files/employeeFiles/";
 
-    let legalcard = globalFunctions.generateUniqueFilename( legalcardExtension,  "employeeMedia" );
-    let photos = globalFunctions.generateUniqueFilename( photosExtension, "employeePhotos" );
+    let legalcard = globalFunctions.generateUniqueFilename(
+      legalcardExtension,
+      "employeeMedia"
+    );
+    let photos = globalFunctions.generateUniqueFilename(
+      photosExtension,
+      "employeePhotos"
+    );
 
     let documents = [
       {
@@ -63,7 +67,7 @@ const addNewEmployee = async (req, res) => {
         email,
         dateOfBirth,
         username,
-        groupId,
+        //groupId,
         login,
         password,
         photos,
@@ -230,15 +234,18 @@ const getEmployeeByIdCompany = async (req, res) => {
   }
 };
 
-const removeEmployeeFromGroup = async (req,res)=>{
+const removeEmployeeFromGroup = async (req, res) => {
   try {
     const { employeeId, groupId } = req.params;
-    const result = await employeeService.removeEmployeeFromGroup(employeeId, groupId);
-      res.json(result);
+    const result = await employeeService.removeEmployeeFromGroup(
+      employeeId,
+      groupId
+    );
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 module.exports = {
   addNewEmployee,
@@ -250,5 +257,5 @@ module.exports = {
   loginEmployee,
   logoutEmployee,
   getEmployeeByIdCompany,
-  removeEmployeeFromGroup
+  removeEmployeeFromGroup,
 };

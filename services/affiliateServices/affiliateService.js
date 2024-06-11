@@ -4,6 +4,7 @@ const fs = require("fs");
 const affiliateDao = require("../../dao/affiliateDao/affiliateDao");
 const emailService = require("../quoteServices/emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
+const globalFunctions = require("../../utils/globalFunctions");
 
 const registerAffilate = async (userData, documents) => {
   let affiliate = await affiliateDao.createAffiliate(userData);
@@ -28,6 +29,9 @@ async function saveAdministrativeFile(base64String, fileName) {
   const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
   const binaryData = Buffer.from(base64Data, "base64");
   const filePath = "files/affiliateFiles/licenceFiles/" + fileName;
+  await globalFunctions.ensureDirectoryExistence(
+    "files/affiliateFiles/licenceFiles/"
+  );
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);
@@ -50,6 +54,7 @@ async function saveFile(base64String, fileName, file_path) {
   if (base64String != undefined) {
     const binaryData = Buffer.from(base64String, "base64");
     const filePath = file_path + fileName;
+    await globalFunctions.ensureDirectoryExistence(file_path);
     fs.writeFile(filePath, binaryData, "binary", (err) => {
       if (err) {
         console.error("Error saving the file:", err);
@@ -226,6 +231,14 @@ const getAffiliateByToken = async (token) => {
   return await affiliateDao.findAffiliateByToken(token);
 };
 
+const getAllQuotesByAffiliateID = async (id) => {
+  return await affiliateDao.getAllQuotesByAffiliateID(id);
+};
+
+const getAllSuggestedQuotesByAffiliateID = async (id) => {
+  return await affiliateDao.getAllSuggestedQuotesByAffiliateID(id);
+};
+
 module.exports = {
   registerAffilate,
   loginAffiliate,
@@ -242,4 +255,6 @@ module.exports = {
   logout,
   getAffiliateByToken,
   blockAffiliate,
+  getAllQuotesByAffiliateID,
+  getAllSuggestedQuotesByAffiliateID,
 };

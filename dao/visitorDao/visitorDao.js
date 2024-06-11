@@ -12,6 +12,10 @@ const getVisitorById = async (id) => {
   return await Visitor.findById(id);
 };
 
+const getVisitorByEmail = async (email) => {
+  return await Visitor.findOne({ email });
+};
+
 // delete Visitor profile
 const deleteVisitor = async (id) => {
   return await Visitor.findByIdAndDelete(id);
@@ -33,5 +37,6 @@ module.exports = {
   getVisitors,
   getVisitorById,
   deleteVisitor,
-  updateStatus
+  updateStatus,
+  getVisitorByEmail,
 };

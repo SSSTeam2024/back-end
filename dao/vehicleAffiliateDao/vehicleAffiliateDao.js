@@ -4,8 +4,12 @@ const createVehicleAffiliate = async (vehicleAffiliateData) => {
   return await VehicleAffiliate.create(vehicleAffiliateData);
 };
 
-const getVehiclesAffiliate = async () => {
-  return await VehicleAffiliate.find();
+const getVehiclesAffiliate = async (id) => {
+  const query = {
+    create_by: id,
+  };
+
+  return await VehicleAffiliate.find(query);
 };
 
 const getVehicleAffiliateById = async (id) => {

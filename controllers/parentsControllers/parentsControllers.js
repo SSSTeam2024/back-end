@@ -1,5 +1,5 @@
 const parentService = require("../../services/parentServices/parentServices");
-const globalFunctions = require("../../utils/globalFunction");
+const globalFunctions = require("../../utils/globalFunctions");
 // register parent
 const registerParent = async (req, res) => {
   try {
@@ -78,16 +78,16 @@ const login = async (req, res) => {
 // get parent by id
 const getParentById = async (req, res) => {
   try {
-    console.log(req)
+    console.log(req);
     const parentId = req.params.id;
-    console.log('Parent ID:', parentId);
+    console.log("Parent ID:", parentId);
 
     const getParent = await parentService.getParentById(parentId);
-    console.log('Result from service:', getParent);
+    console.log("Result from service:", getParent);
 
     if (!getParent) {
-      console.log('Parent not found');
-      return res.status(404).send('Parent not found');
+      console.log("Parent not found");
+      return res.status(404).send("Parent not found");
     }
 
     res.json(getParent);
@@ -95,12 +95,12 @@ const getParentById = async (req, res) => {
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 // get all parents
 const getAllParents = async (req, res) => {
   try {
     const parents = await parentService.getParents();
-    res.json( parents );
+    res.json(parents);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -289,14 +289,14 @@ const deleteParent = async (req, res) => {
 const getParentByStudentId = async (req, res) => {
   try {
     const studentId = req.params.id;
-    console.log('Student ID:', studentId);
+    console.log("Student ID:", studentId);
 
     const parents = await parentService.getParentByStudentId(studentId);
-    console.log('Result from service:', parents);
+    console.log("Result from service:", parents);
 
     if (!parents || parents.length === 0) {
-      console.log('No parents found for the given student ID');
-      return res.status(404).send('No parents found for the given student ID');
+      console.log("No parents found for the given student ID");
+      return res.status(404).send("No parents found for the given student ID");
     }
 
     // Assuming one parent for multiple children
@@ -315,7 +315,6 @@ const getParentByStudentId = async (req, res) => {
   }
 };
 
-
 module.exports = {
   registerParent,
   login,
@@ -327,5 +326,5 @@ module.exports = {
   getAllParents,
   getParentById,
   updatePassword,
-  getParentByStudentId
+  getParentByStudentId,
 };

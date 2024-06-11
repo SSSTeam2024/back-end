@@ -4,8 +4,12 @@ const createDriverAffiliate = async (driver) => {
   return await DriverAffiliate.create(driver);
 };
 
-const getAffiliateDrivers = async () => {
-  return await DriverAffiliate.find();
+const getAffiliateDrivers = async (id) => {
+  const query = {
+    affilaite_reference_id: id,
+  };
+
+  return await DriverAffiliate.find(query);
 };
 
 const updateAffiliateDriver = async (id, updateData) => {
@@ -16,7 +20,6 @@ const deleteAffiliateDriver = async (id) => {
   return await DriverAffiliate.findByIdAndDelete(id);
 };
 
-
 const getAffiliateDriverById = async (id) => {
   return await DriverAffiliate.findById(id);
 };
@@ -25,12 +28,11 @@ const getAffiliateDriverByEmail = async (email) => {
   return await DriverAffiliate.findOne({ email });
 };
 
-
 module.exports = {
-    getAffiliateDriverByEmail,
-    getAffiliateDriverById,
-    deleteAffiliateDriver,
-    updateAffiliateDriver,
-    getAffiliateDrivers,
-    createDriverAffiliate,
+  getAffiliateDriverByEmail,
+  getAffiliateDriverById,
+  deleteAffiliateDriver,
+  updateAffiliateDriver,
+  getAffiliateDrivers,
+  createDriverAffiliate,
 };

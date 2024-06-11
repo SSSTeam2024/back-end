@@ -1,5 +1,5 @@
 const teamService = require("../../services/teamServices/teamServices");
-const globalFunctions = require("../../utils/globalFunction");
+const globalFunctions = require("../../utils/globalFunctions");
 // register team
 const registerTeam = async (req, res) => {
   try {
@@ -33,8 +33,8 @@ const registerTeam = async (req, res) => {
       avatarExtension,
     } = req.body;
 
-    const FilesPath = 'files/driverFiles/idsFiles/';
-    const profilePath = 'files/driverFiles/avatarImages/';
+    const FilesPath = "files/driverFiles/idsFiles/";
+    const profilePath = "files/driverFiles/avatarImages/";
 
     let id_file = globalFunctions.generateUniqueFilename(
       IdFileExtension,
@@ -51,13 +51,13 @@ const registerTeam = async (req, res) => {
         base64String: IdFileBase64String,
         extension: IdFileExtension,
         name: id_file,
-        path: FilesPath
+        path: FilesPath,
       },
       {
         base64String: avatarBase64String,
         extension: avatarExtension,
         name: avatar,
-        path: profilePath
+        path: profilePath,
       },
     ];
 
@@ -87,7 +87,7 @@ const registerTeam = async (req, res) => {
         salary,
         id_card_date,
         id_file,
-        avatar
+        avatar,
       },
       documents
     );
@@ -249,16 +249,16 @@ const updatePassword = async (req, res) => {
 // get parent by id
 const getTeamById = async (req, res) => {
   try {
-    console.log(req)
+    console.log(req);
     const teamId = req.params.id;
-    console.log('Team ID:', teamId);
+    console.log("Team ID:", teamId);
 
     const getTeam = await teamService.getTeamById(teamId);
-    console.log('Result from service:', getTeam);
+    console.log("Result from service:", getTeam);
 
     if (!getTeam) {
-      console.log('Team not found');
-      return res.status(404).send('Team not found');
+      console.log("Team not found");
+      return res.status(404).send("Team not found");
     }
 
     res.json(getTeam);
@@ -266,7 +266,7 @@ const getTeamById = async (req, res) => {
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 
 // get all teams
 const getAllTeams = async (req, res) => {
@@ -303,5 +303,5 @@ module.exports = {
   updatePassword,
   getTeamById,
   getTeamByEmail,
-  getAllTeams
+  getAllTeams,
 };

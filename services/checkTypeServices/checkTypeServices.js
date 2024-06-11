@@ -60,7 +60,7 @@ async function saveDocumentsToServer(documents) {
 async function saveFile(base64String, fileName, file_path) {
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
-  console.log(filePath);
+  await globalFunctions.ensureDirectoryExistence(file_path);
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);

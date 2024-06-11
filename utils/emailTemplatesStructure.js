@@ -2509,6 +2509,23 @@ const emailTemplates = {
 </html>
 
   `,
+  newEmail: (body) =>
+    `
+    <html>
+  <body
+    style="
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    "
+  >
+  ` +
+    body +
+    `
+  </body>
+</html>
+
+  `,
 };
 
 module.exports = {

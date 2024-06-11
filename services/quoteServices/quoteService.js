@@ -16,7 +16,19 @@ const convertMeterToMiles = (m) => {
 
 const createQuote = async (quoteData, distance) => {
   let id = quoteData.id_visitor;
-  let quote = await quoteDao.createQuote(quoteData);
+
+  let latestQuote = await quoteDao.getLatestQuote();
+  let newQuoteRef;
+  if (!latestQuote) {
+    newQuoteRef = "000001";
+  } else {
+    newQuoteRef = Number(latestQuote.quote_ref) + 1;
+  }
+
+  let quote = await quoteDao.createQuote({
+    ...quoteData,
+    quote_ref: newQuoteRef,
+  });
   let modes = await modeDao.getModes();
   let priceMode = modes[0].type;
   let email = "";
@@ -49,8 +61,7 @@ const createQuote = async (quoteData, distance) => {
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url =
-      "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+    let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
     console.log("55", quote);
     email = await prepareQuoteBookingEmail(
       id,
@@ -99,7 +110,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "https://bouden.uk.oxa.cloud/api/quote/confirm-booking/" + quote_id;
+  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
@@ -158,7 +169,7 @@ const sendPaymentEmail = async (paymentData) => {
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
   let url =
-    "https://bouden.uk.oxa.cloud/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
+    "http://localhost:3000/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
@@ -312,7 +323,7 @@ const acceptAssignedAffiliateToQuote = async (acceptData) => {
   await quoteDao.acceptAssignedAffiliate(idQuote, id_affiliate);
   let affiliate = await affiliateDao.getAffiliateById(id_affiliate);
   let quote = await quoteDao.getQuoteById(idQuote);
-  let url = "https://bouden.uk.oxa.cloud/api/quote/job-accepted/" + idQuote;
+  let url = "http://localhost:3000/api/quote/job-accepted/" + idQuote;
   let email = await prepareQuoteAffiliateAcceptence(affiliate, url, quote);
   await emailService.sendEmail(email);
   return "Quote Pushed To Affiliate Acceptence Email sent!";
@@ -559,7 +570,17 @@ const getCompletedQuotesByDriverID = async (id) => {
   return await quoteDao.getCompletedQuotesByDriverID(id);
 };
 
+const getAllQuotesByCompanyID = async (id) => {
+  return await quoteDao.getAllQuotesByCompanyID(id);
+};
+
+const getAllQuotesBySchoolID = async (id) => {
+  return await quoteDao.getAllQuotesBySchoolID(id);
+};
+
 module.exports = {
+  getAllQuotesByCompanyID,
+  getAllQuotesBySchoolID,
   createQuote,
   getQuotes,
   updateQuote,

@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 
 const sendEmail = async (email) => {
-  console.log(email);
   try {
     // Create a transporter with desired email service configuration
     const transporter = nodemailer.createTransport({

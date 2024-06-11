@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/register", authAffiliate.registerAffiliate);
 router.post("/loginAffiliate", authAffiliate.loginAffiliate);
-router.post("/logoutAffiliate", authAffiliate.logout);
+// router.post("/logoutAffiliate", authAffiliate.logout);
 router.delete("/deleteAffiliate/:id", authAffiliate.deleteAffiliate);
 router.patch("/updateAffiliate/:id", authAffiliate.updateAffiliate);
 router.get("/getAffiliate/:id", authAffiliate.getAffiliateById);
@@ -16,4 +16,12 @@ router.post("/getAffiliateByToken", authAffiliate.getAffiliateByJwtToken);
 router.post("/acceptenceEmail", authAffiliate.sendAcceptenceEmail);
 router.post("/refuseEmail", authAffiliate.sendRefuseEmail);
 router.post("/block", authAffiliate.blockAffiliate);
+router.get(
+  "/getAllQuotesByAffiliateID/:id",
+  authAffiliate.getAllQuotesByAffiliateID
+);
+router.get(
+  "/getAllSuggestedQuotesByAffiliateID/:id",
+  authAffiliate.getAllSuggestedQuotesByAffiliateID
+);
 module.exports = router;

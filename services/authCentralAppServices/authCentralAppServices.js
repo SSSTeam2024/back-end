@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const centralAppDao = require("../../dao/authCentralAppDao/authCentralAppDao");
 const fs = require("fs");
+const globalFunctions = require("../../utils/globalFunctions");
 
 // register CentralApp service acccount
 const registerCentralApp = async (centralAppData, documents) => {
@@ -42,6 +43,7 @@ async function saveAdministrativeFile(base64String, fileName) {
   const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
   const binaryData = Buffer.from(base64Data, "base64");
   const filePath = "files/centralAppFiles/" + fileName;
+  await globalFunctions.ensureDirectoryExistence("files/centralAppFiles/");
   fs.writeFile(filePath, binaryData, "binary", (err) => {
     if (err) {
       console.error("Error saving the file:", err);

@@ -1,10 +1,10 @@
-const vehicleAffiliateService = require('../../services/vehicleAffiliateServices/vehicleAffiliateServices');
-const globalFunctions = require('../../utils/globalFunctions');
+const vehicleAffiliateService = require("../../services/vehicleAffiliateServices/vehicleAffiliateServices");
+const globalFunctions = require("../../utils/globalFunctions");
 
 const addNewVehicleAffiliate = async (req, res) => {
   try {
     // Destructure req.body
-    const { 
+    const {
       registration_number,
       model,
       color,
@@ -50,21 +50,32 @@ const addNewVehicleAffiliate = async (req, res) => {
       hp_reference_no,
       monthly_repayment_amount,
       hp_company,
+      create_by,
     } = req.body;
-    
-    console.log(req.body);
-    
+
     // Define file paths
-    const motFilesPath = 'files/VehicleAffiliateFiles/motFiles/';
-    const taxFilesPath = 'files/VehicleAffiliateFiles/taxFiles/';
-    const insuranceFilesPath = 'files/VehicleAffiliateFiles/insuranceFiles/';
-    const vehicleImagesPath = 'files/VehicleAffiliateFiles/vehicleImages/';
+    const motFilesPath = "files/VehicleAffiliateFiles/motFiles/";
+    const taxFilesPath = "files/VehicleAffiliateFiles/taxFiles/";
+    const insuranceFilesPath = "files/VehicleAffiliateFiles/insuranceFiles/";
+    const vehicleImagesPath = "files/VehicleAffiliateFiles/vehicleImages/";
 
     // Generate unique filenames
-    let mot_file = globalFunctions.generateUniqueFilename(mot_file_extension, 'VehicleMot');
-    let tax_file = globalFunctions.generateUniqueFilename(tax_file_extension, 'VehicleTax');
-    let insurance_file = globalFunctions.generateUniqueFilename(insurance_file_extension, 'VehicleInsurance');
-    let vehicle_images = globalFunctions.generateUniqueFilename(vehicle_images_extension, 'VehicleImages');
+    let mot_file = globalFunctions.generateUniqueFilename(
+      mot_file_extension,
+      "VehicleMot"
+    );
+    let tax_file = globalFunctions.generateUniqueFilename(
+      tax_file_extension,
+      "VehicleTax"
+    );
+    let insurance_file = globalFunctions.generateUniqueFilename(
+      insurance_file_extension,
+      "VehicleInsurance"
+    );
+    let vehicle_images = globalFunctions.generateUniqueFilename(
+      vehicle_images_extension,
+      "VehicleImages"
+    );
 
     // Create documents array with file data
     let documents = [
@@ -72,75 +83,81 @@ const addNewVehicleAffiliate = async (req, res) => {
         base64String: vehicle_images_base64_string,
         extension: vehicle_images_extension,
         name: vehicle_images,
-        path: vehicleImagesPath
+        path: vehicleImagesPath,
       },
       {
         base64String: mot_file_base64_string,
         extension: mot_file_extension,
         name: mot_file,
-        path: motFilesPath
+        path: motFilesPath,
       },
       {
         base64String: tax_file_base64_string,
         extension: tax_file_extension,
         name: tax_file,
-        path: taxFilesPath
+        path: taxFilesPath,
       },
       {
         base64String: insurance_file_base64_string,
         extension: insurance_file_extension,
         name: insurance_file,
-        path: insuranceFilesPath
-      }
+        path: insuranceFilesPath,
+      },
     ];
 
     // Filter out undefined documents
-    documents = documents.filter(doc => doc.base64String !== undefined && doc.extension !== undefined);
+    documents = documents.filter(
+      (doc) => doc.base64String !== undefined && doc.extension !== undefined
+    );
 
     // Call the service function with filtered documents
-    const vehicle = await vehicleAffiliateService.createVehicleAffiliate({ 
-      registration_number,
-      model,
-      color,
-      type,
-      max_passengers,
-      fleet_number,
-      engine_number,
-      mileage,
-      registration_date,
-      depot_name,
-      purchase_date,
-      purchase_price,
-      sale_date,
-      statusVehicle,
-      manufacturer,
-      engine_size,
-      fuel_type,
-      speed_limit,
-      insurance_type,
-      insurance_policy_number,
-      ownership,
-      owner_name,
-      note,
-      extra,
-      mot_expiry,
-      mot_file, // File
-      tax_expiry,
-      tax_file, // File
-      insurance_expiry,
-      insurance_file, // File
-      inspection_due,
-      service_due,
-      tacho_calibration_due,
-      coif_certificate_number,
-      coif_certificate_date,
-      hp_start_date,
-      hp_end_date,
-      hp_reference_no,
-      monthly_repayment_amount,
-      hp_company,
-      vehicle_images
-    }, documents);
+    const vehicle = await vehicleAffiliateService.createVehicleAffiliate(
+      {
+        registration_number,
+        model,
+        color,
+        type,
+        max_passengers,
+        fleet_number,
+        engine_number,
+        mileage,
+        registration_date,
+        depot_name,
+        purchase_date,
+        purchase_price,
+        sale_date,
+        statusVehicle,
+        manufacturer,
+        engine_size,
+        fuel_type,
+        speed_limit,
+        insurance_type,
+        insurance_policy_number,
+        ownership,
+        owner_name,
+        note,
+        extra,
+        mot_expiry,
+        mot_file, // File
+        tax_expiry,
+        tax_file, // File
+        insurance_expiry,
+        insurance_file, // File
+        inspection_due,
+        service_due,
+        tacho_calibration_due,
+        coif_certificate_number,
+        coif_certificate_date,
+        hp_start_date,
+        hp_end_date,
+        hp_reference_no,
+        monthly_repayment_amount,
+        hp_company,
+        vehicle_images,
+        create_by,
+      },
+      documents
+    );
 
     res.json(vehicle);
   } catch (error) {
@@ -149,11 +166,10 @@ const addNewVehicleAffiliate = async (req, res) => {
   }
 };
 
-
 const updateVehicleAffiliateById = async (req, res) => {
   try {
     const vehicleAffiliateId = req.params.id;
-    const { 
+    const {
       registration_number,
       model,
       color,
@@ -192,51 +208,52 @@ const updateVehicleAffiliateById = async (req, res) => {
       hp_reference_no,
       monthly_repayment_amount,
       hp_company,
-     } = req.body;
+    } = req.body;
 
-    const updatedVehicleAffiliate = await vehicleAffiliateService.updateVehicleAffiliate(vehicleAffiliateId, { 
-      registration_number,
-      model,
-      color,
-      type,
-      max_passengers,
-      fleet_number,
-      engine_number,
-      mileage,
-      registration_date,
-      depot_name,
-      purchase_date,
-      purchase_price,
-      sale_date,
-      statusVehicle,
-      manufacturer,
-      engine_size,
-      fuel_type,
-      speed_limit,
-      insurance_type,
-      insurance_policy_number,
-      ownership,
-      owner_name,
-      note,
-      extra,
-      vehicle_images,
-      mot_expiry,
-      tax_expiry,
-      insurance_expiry,
-      inspection_due,
-      service_due,
-      tacho_calibration_due,
-      coif_certificate_number,
-      coif_certificate_date,
-      hp_start_date,
-      hp_end_date,
-      hp_reference_no,
-      monthly_repayment_amount,
-      hp_company,
-     });
+    const updatedVehicleAffiliate =
+      await vehicleAffiliateService.updateVehicleAffiliate(vehicleAffiliateId, {
+        registration_number,
+        model,
+        color,
+        type,
+        max_passengers,
+        fleet_number,
+        engine_number,
+        mileage,
+        registration_date,
+        depot_name,
+        purchase_date,
+        purchase_price,
+        sale_date,
+        statusVehicle,
+        manufacturer,
+        engine_size,
+        fuel_type,
+        speed_limit,
+        insurance_type,
+        insurance_policy_number,
+        ownership,
+        owner_name,
+        note,
+        extra,
+        vehicle_images,
+        mot_expiry,
+        tax_expiry,
+        insurance_expiry,
+        inspection_due,
+        service_due,
+        tacho_calibration_due,
+        coif_certificate_number,
+        coif_certificate_date,
+        hp_start_date,
+        hp_end_date,
+        hp_reference_no,
+        monthly_repayment_amount,
+        hp_company,
+      });
 
     if (!updatedVehicleAffiliate) {
-      return res.status(404).send('Affaliates Vehicle not found!');
+      return res.status(404).send("Affaliates Vehicle not found!");
     }
     res.json(updatedVehicleAffiliate);
   } catch (error) {
@@ -249,22 +266,27 @@ const getVehicleAffiliateById = async (req, res) => {
   try {
     const vehicleAffiliateId = req.params.id;
 
-    const getVehicleAffiliate = await vehicleService.getVehicleById(vehicleAffiliateId);
+    const getVehicleAffiliate = await vehicleService.getVehicleById(
+      vehicleAffiliateId
+    );
 
     if (!getVehicleAffiliate) {
-      return res.status(404).send('Affiliate Vehicle not found');
+      return res.status(404).send("Affiliate Vehicle not found");
     }
     res.json(getVehicleAffiliate);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
 
 const getAllAffiliateVehicles = async (req, res) => {
   try {
-    const affiliateVehicles = await vehicleAffiliateService.getAffiliateVehicles();
-    res.json( affiliateVehicles );
+    const affiliate_id = req.params.id;
+
+    const affiliateVehicles =
+      await vehicleAffiliateService.getAffiliateVehicles(affiliate_id);
+    res.json(affiliateVehicles);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -275,10 +297,11 @@ const deleteAffiliateVehicleById = async (req, res) => {
   try {
     const vehicleAffiliateId = req.params.id;
 
-    const deletedVehicleAffiliate = await vehicleAffiliateService.deleteVehicleAffiliate(vehicleAffiliateId);
+    const deletedVehicleAffiliate =
+      await vehicleAffiliateService.deleteVehicleAffiliate(vehicleAffiliateId);
 
     if (!deletedVehicleAffiliate) {
-      return res.status(404).send('Affiliates Vehicle not found');
+      return res.status(404).send("Affiliates Vehicle not found");
     }
     res.sendStatus(200);
   } catch (error) {
@@ -288,9 +311,9 @@ const deleteAffiliateVehicleById = async (req, res) => {
 };
 
 module.exports = {
-    deleteAffiliateVehicleById,
-    getAllAffiliateVehicles,
-    getVehicleAffiliateById,
-    addNewVehicleAffiliate,
-    updateVehicleAffiliateById
+  deleteAffiliateVehicleById,
+  getAllAffiliateVehicles,
+  getVehicleAffiliateById,
+  addNewVehicleAffiliate,
+  updateVehicleAffiliateById,
 };

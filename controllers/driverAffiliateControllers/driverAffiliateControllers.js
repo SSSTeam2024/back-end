@@ -45,8 +45,9 @@ const registerDriverAffiliate = async (req, res) => {
       contract_extension,
       deposti_held,
       notes,
+      affilaite_reference_id,
     } = req.body;
-console.log(req.body)
+
     const licenseFilesPath = "files/driverAffiliateFiles/licenseFiles/";
     const dqcFilesPath = "files/driverAffiliateFiles/dqcFiles/";
     const dbsCheckFilesPath = "files/driverAffiliateFiles/dbsCheckFiles/";
@@ -142,6 +143,7 @@ console.log(req.body)
         contract,
         deposti_held,
         notes,
+        affilaite_reference_id,
       },
       documents
     );
@@ -249,7 +251,10 @@ const getDiverAffiliateById = async (req, res) => {
 
 const getAffiliateDrivers = async (req, res) => {
   try {
-    const drivers = await driverAffiliateService.getAffiliateDrivers();
+    const affiliate_id = req.params.id;
+    const drivers = await driverAffiliateService.getAffiliateDrivers(
+      affiliate_id
+    );
     res.json(drivers);
   } catch (error) {
     console.error(error);

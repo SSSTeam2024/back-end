@@ -12,6 +12,10 @@ const getVisitorById = async (id) => {
   return await visitorDao.getVisitorById(id);
 };
 
+const getVisitorByEmail = async (email) => {
+  return await visitorDao.getVisitorByEmail(email);
+};
+
 //delete Visitor
 const deleteVisitor = async (id) => {
   return await visitorDao.deleteVisitor(id);
@@ -28,5 +32,6 @@ module.exports = {
   getVisitors,
   getVisitorById,
   deleteVisitor,
-  updateToPending
+  updateToPending,
+  getVisitorByEmail,
 };
