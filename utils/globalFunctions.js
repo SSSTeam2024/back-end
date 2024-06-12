@@ -9,7 +9,7 @@ const deleteFileFromServer = (filePath) => {
   try {
     fs.unlinkSync(filePath);
 
-    console.log("Delete File successfully.");
+    console.log("File Deleted successfully.");
   } catch (error) {
     console.log(error);
   }
@@ -23,7 +23,15 @@ async function ensureDirectoryExistence(dirPath) {
   }
 }
 
+const createDateFromStrings = (YyyyMmDd, HhMmSs) => {
+  //*var d1 = new Date('2020-03-10, 10:10:10'); //
+  let date = new Date(YyyyMmDd + ", " + HhMmSs);
+  return date;
+};
+
 module.exports = {
   generateUniqueFilename,
   ensureDirectoryExistence,
+  deleteFileFromServer,
+  createDateFromStrings,
 };

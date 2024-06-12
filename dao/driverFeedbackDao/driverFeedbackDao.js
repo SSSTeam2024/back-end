@@ -1,5 +1,7 @@
 const DriverFeedback = require("../../models/driverFeedbackModel/driverFeedbackModel");
 
+const globalFunctions = require("../../utils/globalFunctions");
+
 const createDriverFeedback = async (feedbackData) => {
   let feedback = await DriverFeedback.create(feedbackData);
   return await DriverFeedback.findById(feedback._id).populate("quote_id");
@@ -17,6 +19,12 @@ const getDriverFeedbacksByDriverId = async (id) => {
 };
 
 const deleteFeedback = async (id) => {
+  let folderPath = "files/driverFiles/feedback/";
+  let toBeDeletedFeedback = await DriverFeedback.findById(id);
+  if (toBeDeletedFeedback.image !== "") {
+    let fullImagePath = folderPath + toBeDeletedFeedback.image;
+    await globalFunctions.deleteFileFromServer(fullImagePath);
+  }
   return await DriverFeedback.findByIdAndDelete(id);
 };
 

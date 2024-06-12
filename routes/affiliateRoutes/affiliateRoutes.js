@@ -20,8 +20,4 @@ router.get(
   "/getAllQuotesByAffiliateID/:id",
   authAffiliate.getAllQuotesByAffiliateID
 );
-router.get(
-  "/getAllSuggestedQuotesByAffiliateID/:id",
-  authAffiliate.getAllSuggestedQuotesByAffiliateID
-);
 module.exports = router;

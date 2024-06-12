@@ -791,6 +791,39 @@ const getAllQuotesBySchoolID = async (req, res) => {
   }
 };
 
+// get all quote by id affiliate in white_list
+const getAllSuggestedQuotesByAffiliateID = async (req, res) => {
+  try {
+    const affiliate_id = req.params.id;
+    const quotes = await quoteService.getAllSuggestedQuotesByAffiliateID(
+      affiliate_id
+    );
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getCompletedJobsFromLast7Days = async (req, res) => {
+  try {
+    const driver_id = req.params.id;
+    const { currentDate } = req.body;
+    const last7DaysJobs = await quoteService.getCompletedJobsFromLast7Days(
+      driver_id,
+      currentDate
+    );
+    if (!last7DaysJobs) {
+      return res
+        .status(404)
+        .send("No Completed Jobs for the last days from " + currentDate);
+    }
+    res.send(last7DaysJobs);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -832,4 +865,6 @@ module.exports = {
   getAcceptedQuotesByDriver,
   getRefusedQuotesByDriver,
   getCompletedQuotesByDriver,
+  getAllSuggestedQuotesByAffiliateID,
+  getCompletedJobsFromLast7Days,
 };

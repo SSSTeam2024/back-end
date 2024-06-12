@@ -50,6 +50,8 @@ const shortCodeRoutes = require("./shortCodeRoutes/shortCodeRoutes");
 const emailQueueRoutes = require("./emailQueueRoutes/emailQueueRoutes");
 const groupRoutes = require("./groupSchoolRoutes/groupSchoolRoutes");
 const rejectedJobsRoutes = require("./rejectedJobsByAffiliateRoutes/rejectedJobsByAffiliateRoutes");
+const passwordResetVerifCodeRoutes = require("./passwordResetVerificationCodeRoutes/passwordResetVerificationCodeRoutes");
+
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
 router.use("/parent", parentRoutes);
@@ -108,4 +110,5 @@ router.use("/affiliateDriver", affiliateDriverRoutes);
 router.use("/shortCode", shortCodeRoutes);
 router.use("/groupStudent", groupRoutes);
 router.use("/rejectedJobs", rejectedJobsRoutes);
+router.use("/password", passwordResetVerifCodeRoutes);
 module.exports = router;

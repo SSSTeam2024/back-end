@@ -87,6 +87,49 @@ const getDriverByToken = async (token) => {
   return await driverDao.findDriverByToken(token);
 };
 
+const generateCodeAndSendEmail = async (
+  driverId,
+  expires_at_date,
+  expires_at_time
+) => {
+  //let driver = await driverDao.getDriverById(driverId);
+
+  let verificationCode = Math.floor(100000 + Math.random() * 900000);
+  console.log("verificationCode", verificationCode);
+
+  let verifCode = {
+    user_id: driverId,
+    user_role: "Driver",
+    verification_code: verificationCode,
+    expires_at_date: expires_at_date,
+    expires_at_time: expires_at_time,
+    verification_status: "Not verified",
+  };
+
+  let code = await PasswordResetVerificationDao.createPasswordVerificationCode(
+    verifCode
+  );
+  console.log("created code", code);
+
+  let emailBody =
+    driverEmailTemplates.driverEmailTemplates.reset_password_verification_code(
+      /* driver.account_name */ "Carter",
+      verificationCode
+    );
+  let emailSubject = "Reset your password";
+  let fullEmailObject = {
+    to: /* driver.email */ "mouafekhedfi@gmail.com",
+    subject: emailSubject,
+    body: emailBody,
+  };
+
+  let result = await driverEmailService.sendVerificationCodeEmail(
+    fullEmailObject
+  );
+
+  return result;
+};
+
 module.exports = {
   registerDriver,
   loginDriver,
@@ -99,4 +142,5 @@ module.exports = {
   updatePassword,
   logout,
   getDriverByToken,
+  generateCodeAndSendEmail,
 };

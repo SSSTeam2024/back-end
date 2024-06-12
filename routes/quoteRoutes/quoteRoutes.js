@@ -102,4 +102,12 @@ router.get(
   "/getAllQuotesBySchoolID/:id",
   quoteController.getAllQuotesBySchoolID
 );
+router.get(
+  "/getAllSuggestedQuotesByAffiliateID/:id",
+  quoteController.getAllSuggestedQuotesByAffiliateID
+);
+router.post(
+  "/get-completed-quotes-from-last-7-days-by-driver/:id",
+  quoteController.getCompletedJobsFromLast7Days
+);
 module.exports = router;

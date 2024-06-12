@@ -342,6 +342,28 @@ const updatePassword = async (req, res) => {
   }
 };
 
+const generateVerificationCodeAndSendViaEmail = async (req, res) => {
+  try {
+    const { driverId, expires_at_date, expires_at_time } = req.body;
+    console.log(req.body);
+    const result = await driverService.generateCodeAndSendEmail(
+      driverId,
+      expires_at_date,
+      expires_at_time
+    );
+
+    if (!result) {
+      return res
+        .status(404)
+        .send("Error when generating code! please try later!");
+    }
+    res.send({ msg: "email sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -353,4 +375,5 @@ module.exports = {
   getByEmail,
   updatePassword,
   getDriverByJwtToken,
+  generateVerificationCodeAndSendViaEmail,
 };

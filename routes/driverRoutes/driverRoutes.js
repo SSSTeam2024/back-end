@@ -13,4 +13,8 @@ router.get("/getAllDrivers", driverController.getDrivers);
 router.delete("/deleteDriver/:id", driverController.deleteDriver);
 router.post("/getDriverByEmail", driverController.getByEmail);
 router.put("/updateDriverPassword/:id", driverController.updatePassword);
+router.post(
+  "/send-verification-code",
+  driverController.generateVerificationCodeAndSendViaEmail
+);
 module.exports = router;

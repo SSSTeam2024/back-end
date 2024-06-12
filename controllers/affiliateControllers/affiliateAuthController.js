@@ -387,25 +387,11 @@ const blockAffiliate = async (req, res) => {
   }
 };
 
-// get all quote by id affiliate
+// get all quotes by id affiliate
 const getAllQuotesByAffiliateID = async (req, res) => {
   try {
     const affiliate_id = req.params.id;
     const quotes = await authAffiliate.getAllQuotesByAffiliateID(affiliate_id);
-    res.json(quotes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
-};
-
-// get all quote by id affiliate
-const getAllSuggestedQuotesByAffiliateID = async (req, res) => {
-  try {
-    const affiliate_id = req.params.id;
-    const quotes = await authAffiliate.getAllSuggestedQuotesByAffiliateID(
-      affiliate_id
-    );
     res.json(quotes);
   } catch (error) {
     console.error(error);
@@ -427,5 +413,4 @@ module.exports = {
   sendRefuseEmail,
   blockAffiliate,
   getAllQuotesByAffiliateID,
-  getAllSuggestedQuotesByAffiliateID,
 };

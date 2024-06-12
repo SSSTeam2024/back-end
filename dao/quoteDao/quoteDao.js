@@ -673,6 +673,47 @@ const getAllQuotesByCompanyID = async (id) => {
   return await Quote.find(query).populate("id_visitor");
 };
 
+const getAllSuggestedQuotesByAffiliateID = async (id) => {
+  return await Quote.find({ "white_list.id": id })
+    .populate("id_visitor")
+    .populate("school_id")
+    .populate("company_id");
+  //.populate("white_list.id");
+};
+
+const getCompletedJobsFromLast7Days = async (driver_id, currentDateStr) => {
+  try {
+    const currentDate = new Date(currentDateStr);
+
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - 6);
+
+    const currentDateISO = currentDate.toISOString().split("T")[0];
+    const startDateISO = startDate.toISOString().split("T")[0];
+
+    const query = {
+      date: {
+        $gte: startDateISO,
+        $lte: currentDateISO,
+      },
+      progress: {
+        $in: ["Completed"],
+      },
+      id_driver: driver_id,
+    };
+
+    const result = await Quote.find(query)
+      .populate("id_visitor")
+      .populate("checklist_id")
+      .populate("company_id")
+      .populate("school_id");
+
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -716,4 +757,6 @@ module.exports = {
   getRefusedQuotesByDriverID,
   getCompletedQuotesByDriverID,
   getLatestQuote,
+  getAllSuggestedQuotesByAffiliateID,
+  getCompletedJobsFromLast7Days,
 };

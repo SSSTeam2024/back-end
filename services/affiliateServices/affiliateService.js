@@ -235,10 +235,6 @@ const getAllQuotesByAffiliateID = async (id) => {
   return await affiliateDao.getAllQuotesByAffiliateID(id);
 };
 
-const getAllSuggestedQuotesByAffiliateID = async (id) => {
-  return await affiliateDao.getAllSuggestedQuotesByAffiliateID(id);
-};
-
 module.exports = {
   registerAffilate,
   loginAffiliate,
@@ -256,5 +252,4 @@ module.exports = {
   getAffiliateByToken,
   blockAffiliate,
   getAllQuotesByAffiliateID,
-  getAllSuggestedQuotesByAffiliateID,
 };

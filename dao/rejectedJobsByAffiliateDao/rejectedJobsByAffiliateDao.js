@@ -1,4 +1,4 @@
-const affiliate = require("../../models/affiliateModels/affiliate");
+const Quote = require("../../models/quoteModel/quote");
 const RejectedJobs = require("../../models/rejectedJobsByAffiliateModel/rejectedJobsByAffiliateModel");
 
 const createRejectedJobs = async (sourceData) => {
@@ -6,7 +6,10 @@ const createRejectedJobs = async (sourceData) => {
 };
 
 const getRejectedJobs = async (id) => {
-  return await Quote.find({ "white_list.jobStatus": "Refused", affiliate: id })
+  return await Quote.find({
+    "white_list.id": id,
+    "white_list.jobStatus": "Refused",
+  })
     .populate("id_visitor")
     .populate("school_id")
     .populate("company_id");

@@ -9,6 +9,7 @@ const driverFeedbackSchema = new mongoose.Schema(
     description: String,
     status: String,
     answer: String,
+    image: String,
   },
   {
     timestamps: true,

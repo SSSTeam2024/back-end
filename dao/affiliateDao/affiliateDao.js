@@ -126,14 +126,6 @@ const getAllQuotesByAffiliateID = async (id) => {
     .populate("company_id");
 };
 
-const getAllSuggestedQuotesByAffiliateID = async (id) => {
-  return await Quote.find({ "white_list.id": id })
-    .populate("id_visitor")
-    .populate("school_id")
-    .populate("company_id");
-  //.populate("white_list.id");
-};
-
 module.exports = {
   createAffiliate,
   getAffiliates,
@@ -151,5 +143,4 @@ module.exports = {
   findAffiliateByUsername,
   blockAffiliate,
   getAllQuotesByAffiliateID,
-  getAllSuggestedQuotesByAffiliateID,
 };

@@ -578,6 +578,14 @@ const getAllQuotesBySchoolID = async (id) => {
   return await quoteDao.getAllQuotesBySchoolID(id);
 };
 
+const getAllSuggestedQuotesByAffiliateID = async (id) => {
+  return await quoteDao.getAllSuggestedQuotesByAffiliateID(id);
+};
+
+const getCompletedJobsFromLast7Days = async (driver_id, currentDate) => {
+  return await quoteDao.getCompletedJobsFromLast7Days(driver_id, currentDate);
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -622,4 +630,6 @@ module.exports = {
   getAcceptedQuotesByDriverID,
   getRefusedQuotesByDriverID,
   getCompletedQuotesByDriverID,
+  getAllSuggestedQuotesByAffiliateID,
+  getCompletedJobsFromLast7Days,
 };

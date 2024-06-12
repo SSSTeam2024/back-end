@@ -1,18 +1,51 @@
 const driverFeedbackService = require("../../services/driverFeedbackServices/driverFeedbackServices");
+const globalFunctions = require("../../utils/globalFunctions");
 
 const createDriverFeedback = async (req, res) => {
   try {
-    const { driver_id, category, quote_id, description, status, answer } =
-      req.body;
-
-    let createdFeedback = await driverFeedbackService.createDriverFeedback({
+    const {
       driver_id,
       category,
       quote_id,
       description,
       status,
       answer,
-    });
+      imageBase64,
+      imageExtension,
+    } = req.body;
+
+    let image = "";
+    const imagePath = "files/driverFiles/feedback/";
+
+    if (imageBase64 !== "" && imageExtension !== "") {
+      image = globalFunctions.generateUniqueFilename(
+        imageExtension,
+        "Feedback"
+      );
+    }
+
+    let toBeSavedData = {
+      driver_id,
+      category,
+      quote_id,
+      description,
+      status,
+      answer,
+      image,
+    };
+
+    let documents = [
+      {
+        base64String: imageBase64,
+        name: image,
+        path: imagePath,
+      },
+    ];
+
+    let createdFeedback = await driverFeedbackService.createDriverFeedback(
+      toBeSavedData,
+      documents
+    );
     res.json(createdFeedback);
   } catch (error) {
     console.error(error);
