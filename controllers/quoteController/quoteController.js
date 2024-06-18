@@ -50,6 +50,8 @@ const createQuote = async (req, res) => {
       date,
       return_time,
       return_date,
+      return_dropoff_time,
+      return_dropoff_date,
       enquiryDate,
       category,
     } = req.body;
@@ -94,7 +96,7 @@ const createQuote = async (req, res) => {
         dropoff_time,
         dropoff_date,
         destination_point,
-        type,
+        type: "",
         // estimated_return_start_time,
         total_price,
         checklist_id,
@@ -104,7 +106,10 @@ const createQuote = async (req, res) => {
         enquiryDate,
         category,
       },
-      distance
+      distance,
+      type,
+      return_dropoff_time,
+      return_dropoff_date
       //duration,
     );
     res.json(quote);

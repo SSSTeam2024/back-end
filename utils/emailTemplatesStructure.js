@@ -60,7 +60,9 @@ const emailTemplates = {
       "
     >
       <legend style="margin-left: 20%">
-        <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+        <strong>Reference: </strong>` +
+    quote.quote_ref +
+    `<strong>Date: </strong>` +
     creationDate +
     `
       </legend>
@@ -484,7 +486,9 @@ const emailTemplates = {
       "
     >
       <legend style="margin-left: 20%">
-        <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+        <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
     creationDate +
     `
       </legend>
@@ -814,7 +818,9 @@ const emailTemplates = {
     "
   >
     <legend style="margin-left: 20%">
-      <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+      <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
     creationDate +
     `
     </legend>
@@ -1312,7 +1318,9 @@ const emailTemplates = {
     "
   >
     <legend style="margin-left: 20%">
-      <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+      <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
     creationDate +
     `
     </legend>
@@ -1610,7 +1618,9 @@ const emailTemplates = {
     margin: auto;
   ">
       <legend style="margin-left: 20%">
-          <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+          <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
     affiliate.enquiryDate +
     `
       </legend>
@@ -1777,7 +1787,9 @@ const emailTemplates = {
     margin: auto;
   ">
       <legend style="margin-left: 20%">
-          <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+          <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
     affiliate.enquiryDate +
     `
       </legend>
@@ -1992,7 +2004,9 @@ const emailTemplates = {
       margin: auto;
     ">
         <legend style="margin-left: 20%">
-            <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+            <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
     affiliate.enquiryDate +
     `
         </legend>
@@ -2286,7 +2300,9 @@ const emailTemplates = {
     "
   >
     <legend style="margin-left: 20%">
-      <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+      <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
     formattedCreationDate +
     `
     </legend>

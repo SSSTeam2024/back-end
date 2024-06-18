@@ -14,7 +14,13 @@ const convertMeterToMiles = (m) => {
   return m * 0.000621371;
 };
 
-const createQuote = async (quoteData, distance) => {
+const createQuote = async (
+  quoteData,
+  distance,
+  type,
+  return_dropoff_time,
+  return_dropoff_date
+) => {
   let id = quoteData.id_visitor;
 
   let latestQuote = await quoteDao.getLatestQuote();
@@ -28,7 +34,24 @@ const createQuote = async (quoteData, distance) => {
   let quote = await quoteDao.createQuote({
     ...quoteData,
     quote_ref: newQuoteRef,
+    type: "One way",
   });
+
+  let quote_two;
+  if (type === "Return") {
+    quote_two = await quoteDao.createQuote({
+      ...quoteData,
+      quote_ref: newQuoteRef,
+      type: "Return",
+      pickup_time: quoteData.return_time,
+      date: quoteData.return_date,
+      dropoff_time: return_dropoff_time,
+      dropoff_date: return_dropoff_date,
+      start_point: quoteData.destination_point,
+      destination_point: quoteData.start_point,
+    });
+  }
+
   let modes = await modeDao.getModes();
   let priceMode = modes[0].type;
   let email = "";
@@ -61,7 +84,8 @@ const createQuote = async (quoteData, distance) => {
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
+    let url =
+      `http://${process.env.DOMAIN_NAME}/api/quote/confirm-booking/` + quote_id;
     console.log("55", quote);
     email = await prepareQuoteBookingEmail(
       id,
@@ -110,7 +134,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
+  let url = "http:///api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
@@ -168,8 +192,7 @@ const sendPaymentEmail = async (paymentData) => {
   let id = paymentData.id_visitor;
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url =
-    "http://localhost:3000/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty";
+  let url = `http://${process.env.DOMAIN_NAME}/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty`;
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
@@ -323,7 +346,8 @@ const acceptAssignedAffiliateToQuote = async (acceptData) => {
   await quoteDao.acceptAssignedAffiliate(idQuote, id_affiliate);
   let affiliate = await affiliateDao.getAffiliateById(id_affiliate);
   let quote = await quoteDao.getQuoteById(idQuote);
-  let url = "http://localhost:3000/api/quote/job-accepted/" + idQuote;
+  let url =
+    `http://${process.env.DOMAIN_NAME}/api/quote/job-accepted/` + idQuote;
   let email = await prepareQuoteAffiliateAcceptence(affiliate, url, quote);
   await emailService.sendEmail(email);
   return "Quote Pushed To Affiliate Acceptence Email sent!";

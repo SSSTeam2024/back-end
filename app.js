@@ -1,4 +1,6 @@
 const compression = require("compression");
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -29,10 +31,7 @@ const port = 3000;
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-mongoose.connect(
-  "mongodb://localhost:27017/bct", //mongodb+srv://sssteam2024:ogA6KY9XssmX4q6y@testbct.qxx75ys.mongodb.net/bctdb
-  {}
-);
+mongoose.connect(process.env.MONGO_ATLAS_URL);
 
 app.use("/api", AppRouter);
 
