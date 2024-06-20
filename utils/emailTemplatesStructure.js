@@ -1618,9 +1618,7 @@ const emailTemplates = {
     margin: auto;
   ">
       <legend style="margin-left: 20%">
-          <strong>Reference: </strong>` +
-    quote.quote_ref +
-    ` <strong>Date: </strong>` +
+        <strong>Date: </strong>` +
     affiliate.enquiryDate +
     `
       </legend>
@@ -1787,9 +1785,7 @@ const emailTemplates = {
     margin: auto;
   ">
       <legend style="margin-left: 20%">
-          <strong>Reference: </strong>` +
-    quote.quote_ref +
-    ` <strong>Date: </strong>` +
+        <strong>Date: </strong>` +
     affiliate.enquiryDate +
     `
       </legend>
@@ -2004,9 +2000,7 @@ const emailTemplates = {
       margin: auto;
     ">
         <legend style="margin-left: 20%">
-            <strong>Reference: </strong>` +
-    quote.quote_ref +
-    ` <strong>Date: </strong>` +
+         <strong>Date: </strong>` +
     affiliate.enquiryDate +
     `
         </legend>
