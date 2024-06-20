@@ -128,7 +128,7 @@ const sendAcceptenceEmail = async (acceptenceData) => {
     service_date
   );
   let affiliate = await affiliateDao.getAffiliateById(id);
-  let url = "https://affiliate_dashboard.uk/login";
+  let url = "http://affiliate.chercheinfo.net";
   let email = await prepareAffiliateAcceptenceEmail(
     id,
     login,

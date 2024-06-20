@@ -30,6 +30,17 @@ const createEmailQueue = async (req, res) => {
   }
 };
 
+const createMultipleEmailQueue = async (req, res) => {
+  try {
+    const { emails } = req.body;
+    const result = await emailQueueService.createMultipleEmailQueue(emails);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const deleteEmailQueue = async (req, res) => {
   try {
     const emailQueueId = req.params.id;
@@ -80,4 +91,5 @@ module.exports = {
   getEmailQueues,
   deleteEmailQueue,
   deleteEmailQueues,
+  createMultipleEmailQueue,
 };

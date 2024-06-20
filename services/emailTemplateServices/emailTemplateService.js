@@ -1,12 +1,54 @@
 const emailTemplateDao = require("../../dao/emailTemplateDao/emailTemplateDao");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 const emailService = require("./emailTemplateSendEmail");
+const emailQueueService = require("../emailQueueServices/emailQueueServices");
+const emailSentServices = require("../emailSentServices/emailSentServices");
+const LocalStorage = require("node-localstorage").LocalStorage;
+const localStorage = new LocalStorage("./scratch");
+
 const createEmailTemplate = async (emailTemplateData) => {
   return await emailTemplateDao.createEmailTemplate(emailTemplateData);
 };
 
 const getEmailTemplates = async () => {
   return await emailTemplateDao.getEmailTemplates();
+};
+
+const sendAllQueueEmails = async () => {
+  let queueEmails = await emailQueueService.getEmailQueues();
+  localStorage.setItem("isSendingAllQueueEmails", "true");
+  async function sendWithDelay(arr, index = 0) {
+    if (index < arr.length) {
+      let email = await prepareNewEmail(
+        arr[index].newEmail,
+        arr[index].subject,
+        arr[index].body,
+        arr[index].name
+      );
+      await emailService.sendEmail(email, arr[index].file).then(async () => {
+        await emailQueueService
+          .deleteEmailQueue(arr[index]._id)
+          .then(async () => {
+            await emailSentServices.createEmailSent({
+              date: arr[index].date_email,
+              quoteID: arr[index].quote_Id,
+              subjectEmail: arr[index].subject,
+              from: arr[index].sender,
+              to: arr[index].newEmail,
+            });
+          });
+      });
+
+      setTimeout(() => {
+        sendWithDelay(arr, index + 1);
+      }, 2000);
+    } else {
+      localStorage.setItem("isSendingAllQueueEmails", "false");
+      return "All Emails Sent With Success!!!";
+    }
+  }
+
+  await sendWithDelay(queueEmails);
 };
 
 const getEmailTemplateById = async (id) => {
@@ -55,4 +97,5 @@ module.exports = {
   updateEmailTemplate,
   deleteEmailTemplate,
   sendNewEmail,
+  sendAllQueueEmails,
 };

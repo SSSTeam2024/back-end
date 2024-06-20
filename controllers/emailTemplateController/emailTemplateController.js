@@ -96,6 +96,16 @@ const sendNewEmail = async (req, res) => {
   }
 };
 
+const sendAllQueueEmails = async (req, res) => {
+  try {
+    const sentResult = await emailTemplateService.sendAllQueueEmails();
+    res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createEmailTemplate,
   getEmailTemplates,
@@ -103,4 +113,5 @@ module.exports = {
   updateEmailTemplate,
   deleteEmailTemplate,
   sendNewEmail,
+  sendAllQueueEmails,
 };

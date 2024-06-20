@@ -13,7 +13,7 @@ const createVisitor = async (req, res) => {
       status,
       enquiryDate,
     } = req.body;
-
+    console.log(req.body);
     const visitor = await visitorService.createVisitor({
       email,
       name,

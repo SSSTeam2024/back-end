@@ -11,9 +11,12 @@ const emailqueue = require("./services/emailQueueServices/emailQueueServices");
 const emailTemplateService = require("./services/emailTemplateServices/emailTemplateService");
 const cron = require("node-cron");
 const emailSentServices = require("./services/emailSentServices/emailSentServices");
+const LocalStorage = require("node-localstorage").LocalStorage;
+const localStorage = new LocalStorage("./scratch");
 
 const app = express();
 
+localStorage.setItem("isSendingAllQueueEmails", "false");
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -38,31 +41,31 @@ app.use("/api", AppRouter);
 app.all("*", (req, res) => {
   res.status(404).send("404 - Not Found");
 });
-
 // Schedule tasks to be run on the server
-cron.schedule("*/30 * * * * *", async () => {
+cron.schedule("*/25 * * * * *", async () => {
   // cron.schedule("0 * * * *", async () => {
-  console.log("hello cron");
-  const resultEmail = await emailqueue.getTheOldestEmailInQueue();
-  // Send an email
-  const mailOptions = {
-    newEmail: resultEmail.newEmail,
-    subject: resultEmail.subject,
-    body: resultEmail.body,
-    file: resultEmail.file,
-    name: resultEmail.name,
-  };
-  await emailTemplateService.sendNewEmail(mailOptions).then(async () => {
-    await emailqueue.deleteEmailQueue(resultEmail._id).then(async () => {
-      emailSentServices.createEmailSent({
-        date: resultEmail.date_email,
-        quoteID: resultEmail.quote_Id,
-        subjectEmail: resultEmail.subject,
-        from: resultEmail.sender,
-        to: resultEmail.newEmail,
+  if (localStorage.getItem("isSendingAllQueueEmails") === "false") {
+    const resultEmail = await emailqueue.getTheOldestEmailInQueue();
+    // Send an email
+    const mailOptions = {
+      newEmail: resultEmail.newEmail,
+      subject: resultEmail.subject,
+      body: resultEmail.body,
+      file: resultEmail.file,
+      name: resultEmail.name,
+    };
+    await emailTemplateService.sendNewEmail(mailOptions).then(async () => {
+      await emailqueue.deleteEmailQueue(resultEmail._id).then(async () => {
+        await emailSentServices.createEmailSent({
+          date: resultEmail.date_email,
+          quoteID: resultEmail.quote_Id,
+          subjectEmail: resultEmail.subject,
+          from: resultEmail.sender,
+          to: resultEmail.newEmail,
+        });
       });
     });
-  });
+  }
 });
 
 io.on("connection", (socket) => {

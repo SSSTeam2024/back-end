@@ -4,6 +4,14 @@ const createEmailQueue = async (emailQueueData) => {
   return await emailQueueDao.createEmailQueue(emailQueueData);
 };
 
+const createMultipleEmailQueue = async (emails) => {
+  console.log("emails", emails);
+  emails.forEach(async (email) => {
+    await emailQueueDao.createEmailQueue(email);
+  });
+  return "Success Message !!!!";
+};
+
 const getEmailQueues = async () => {
   return await emailQueueDao.getEmailQueues();
 };
@@ -26,4 +34,5 @@ module.exports = {
   deleteEmailQueue,
   deleteEmailQueues,
   getTheOldestEmailInQueue,
+  createMultipleEmailQueue,
 };

@@ -20,4 +20,6 @@ router.delete(
 
 router.post("/sendNewEmail", emailTemplateController.sendNewEmail);
 
+router.post("/sendAllQueueEmails", emailTemplateController.sendAllQueueEmails);
+
 module.exports = router;

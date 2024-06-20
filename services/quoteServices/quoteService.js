@@ -33,7 +33,7 @@ const createQuote = async (
 
   let quote = await quoteDao.createQuote({
     ...quoteData,
-    quote_ref: newQuoteRef,
+    quote_ref: String(newQuoteRef).padStart(6, "0"),
     type: "One way",
   });
 
@@ -41,7 +41,7 @@ const createQuote = async (
   if (type === "Return") {
     quote_two = await quoteDao.createQuote({
       ...quoteData,
-      quote_ref: newQuoteRef,
+      quote_ref: String(newQuoteRef).padStart(6, "0"),
       type: "Return",
       pickup_time: quoteData.return_time,
       date: quoteData.return_date,
@@ -57,7 +57,7 @@ const createQuote = async (
   let email = "";
   let autoPrice = 0;
   if (priceMode === "0") {
-    email = await prepareAfterQuoteCreationEmail(id, quote);
+    email = await prepareAfterQuoteCreationEmail(id, quote, type);
   }
   if (priceMode === "1") {
     let mileDistance = convertMeterToMiles(distance);
@@ -198,7 +198,7 @@ const sendPaymentEmail = async (paymentData) => {
   return "Payment Email sent!";
 };
 
-async function prepareAfterQuoteCreationEmail(idVisitor, quote) {
+async function prepareAfterQuoteCreationEmail(idVisitor, quote, type) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
   //const email = await emailTemplateDao.getEmailTemplateByName('visitor quote reception');
@@ -213,7 +213,7 @@ async function prepareAfterQuoteCreationEmail(idVisitor, quote) {
     second: "2-digit",
   });
   let selectedTemplate = "";
-  switch (quote.type) {
+  switch (type) {
     case "One way":
       selectedTemplate =
         emailTemplatesStructure.emailTemplates.one_way_quote_received(

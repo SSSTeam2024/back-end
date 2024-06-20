@@ -4,6 +4,10 @@ const emailQueueController = require("../../controllers/emailQuueueControllers/e
 const router = express.Router();
 
 router.post("/newEmailQueue", emailQueueController.createEmailQueue);
+router.post(
+  "/newMultipleEmailQueue",
+  emailQueueController.createMultipleEmailQueue
+);
 router.delete("/deleteEmailQueue/:id", emailQueueController.deleteEmailQueue);
 router.delete("/deleteEmailQueues", emailQueueController.deleteEmailQueues);
 router.get("/getAllEmailQueues", emailQueueController.getEmailQueues);
