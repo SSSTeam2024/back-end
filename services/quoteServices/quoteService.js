@@ -85,8 +85,7 @@ const createQuote = async (
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
     let url =
-      `http://${process.env.DOMAIN_NAME}/api/quote/confirm-booking/` + quote_id;
-    console.log("55", quote);
+      `http://api.chercheinfo.net/api/quote/confirm-booking/` + quote_id;
     email = await prepareQuoteBookingEmail(
       id,
       autoPrice,
@@ -346,8 +345,7 @@ const acceptAssignedAffiliateToQuote = async (acceptData) => {
   await quoteDao.acceptAssignedAffiliate(idQuote, id_affiliate);
   let affiliate = await affiliateDao.getAffiliateById(id_affiliate);
   let quote = await quoteDao.getQuoteById(idQuote);
-  let url =
-    `http://${process.env.DOMAIN_NAME}/api/quote/job-accepted/` + idQuote;
+  let url = `http://api.chercheinfo.net/api/quote/job-accepted/` + idQuote;
   let email = await prepareQuoteAffiliateAcceptence(affiliate, url, quote);
   await emailService.sendEmail(email);
   return "Quote Pushed To Affiliate Acceptence Email sent!";
