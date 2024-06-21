@@ -133,7 +133,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "http:///api/quote/confirm-booking/" + quote_id;
+  let url = "http://api.chercheinfo.net/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
