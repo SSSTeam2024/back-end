@@ -110,4 +110,9 @@ router.post(
   "/get-completed-quotes-from-last-7-days-by-driver/:id",
   quoteController.getCompletedJobsFromLast7Days
 );
+router.get(
+  "/allQuotesByReference/:id",
+  quoteController.getAllQuotesByReference
+);
+
 module.exports = router;

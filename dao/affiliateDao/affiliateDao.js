@@ -123,7 +123,9 @@ const getAllQuotesByAffiliateID = async (id) => {
   return await Quote.find(query)
     .populate("id_visitor")
     .populate("school_id")
-    .populate("company_id");
+    .populate("company_id")
+    .populate("id_affiliate_vehicle")
+    .populate("id_affiliate_driver");
 };
 
 module.exports = {

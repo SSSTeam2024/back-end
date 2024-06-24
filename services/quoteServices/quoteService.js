@@ -57,7 +57,13 @@ const createQuote = async (
   let email = "";
   let autoPrice = 0;
   if (priceMode === "0") {
-    email = await prepareAfterQuoteCreationEmail(id, quote, type);
+    email = await prepareAfterQuoteCreationEmail(
+      id,
+      quote,
+      type,
+      quoteData.return_time,
+      quoteData.return_date
+    );
   }
   if (priceMode === "1") {
     let mileDistance = convertMeterToMiles(distance);
@@ -84,14 +90,16 @@ const createQuote = async (
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url =
-      `http://api.chercheinfo.net/api/quote/confirm-booking/` + quote_id;
+    let url = `http://localhost:3000/api/quote/confirm-booking/` + quote_id;
     email = await prepareQuoteBookingEmail(
       id,
       autoPrice,
       deposit_percentage,
       url,
-      quote
+      quote,
+      type,
+      quoteData.return_time,
+      quoteData.return_date
     );
   }
 
@@ -123,6 +131,9 @@ const sendBookingEmail = async (bookingData) => {
   let deposit_amount = bookingData.deposit_amount;
   let deposit_percentage = bookingData.deposit_percentage;
   let total_price = bookingData.total_price;
+  let type = bookingData.type;
+  let return_time = bookingData.return_time;
+  let return_date = bookingData.return_date;
 
   await quoteDao.updateQuotePrice(
     quote_id,
@@ -133,13 +144,16 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "http://api.chercheinfo.net/api/quote/confirm-booking/" + quote_id;
+  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
     deposit_percentage,
     url,
-    quote
+    quote,
+    type,
+    return_date,
+    return_time
   );
   await emailService.sendEmail(email);
   return "Booking Email sent!";
@@ -197,7 +211,13 @@ const sendPaymentEmail = async (paymentData) => {
   return "Payment Email sent!";
 };
 
-async function prepareAfterQuoteCreationEmail(idVisitor, quote, type) {
+async function prepareAfterQuoteCreationEmail(
+  idVisitor,
+  quote,
+  type,
+  return_time,
+  return_date
+) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
   //const email = await emailTemplateDao.getEmailTemplateByName('visitor quote reception');
@@ -226,7 +246,9 @@ async function prepareAfterQuoteCreationEmail(idVisitor, quote, type) {
         emailTemplatesStructure.emailTemplates.with_return_quote_received(
           visitor,
           quote,
-          formattedCreationDate
+          formattedCreationDate,
+          return_time,
+          return_date
         );
       break;
     default:
@@ -247,7 +269,10 @@ async function prepareQuoteBookingEmail(
   price,
   deposit_percentage,
   url,
-  quote
+  quote,
+  type,
+  return_date,
+  return_time
 ) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
@@ -261,14 +286,35 @@ async function prepareQuoteBookingEmail(
     minute: "2-digit",
     second: "2-digit",
   });
-  let emailBody = emailTemplatesStructure.emailTemplates.booking(
-    visitor,
-    price,
-    deposit_percentage,
-    url,
-    quote,
-    formattedCreationDate
-  );
+  let selectedTemplate = "";
+  switch (type) {
+    case "One way":
+      selectedTemplate = emailTemplatesStructure.emailTemplates.bookingOneWay(
+        visitor,
+        price,
+        deposit_percentage,
+        url,
+        quote,
+        formattedCreationDate
+      );
+      break;
+    case "Return":
+      selectedTemplate =
+        emailTemplatesStructure.emailTemplates.bookingWithReturn(
+          visitor,
+          price,
+          deposit_percentage,
+          url,
+          quote,
+          formattedCreationDate,
+          return_date,
+          return_time
+        );
+      break;
+    default:
+      console.log("Wrong type");
+  }
+  let emailBody = selectedTemplate;
   let emailSubject = "Booking Processed";
   let fullEmailObject = {
     to: recipient,
@@ -307,11 +353,18 @@ async function prepareQuotePaymentEmail(idVisitor, url, quote) {
 }
 
 const updateQuoteStatus = async (id) => {
+  let quote = await quoteDao.getQuoteById(id);
+  let quotes = await quoteDao.getAllQuotesByReference(quote.quote_ref);
+  console.log("quotes", quotes);
+  quotes.forEach(async (qt) => {
+    if (qt.type === "Return") {
+      await quoteDao.updateQuoteStatus(qt._id);
+    }
+  });
   return await quoteDao.updateQuoteStatus(id);
 };
 
 const getQuoteByIdSchedule = async (id) => {
-  console.log("quote service", id);
   return await quoteDao.getQuoteByIdSchedule(id);
 };
 
@@ -608,6 +661,10 @@ const getCompletedJobsFromLast7Days = async (driver_id, currentDate) => {
   return await quoteDao.getCompletedJobsFromLast7Days(driver_id, currentDate);
 };
 
+const getAllQuotesByReference = async (id) => {
+  return await quoteDao.getAllQuotesByReference(id);
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -654,4 +711,5 @@ module.exports = {
   getCompletedQuotesByDriverID,
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
+  getAllQuotesByReference,
 };

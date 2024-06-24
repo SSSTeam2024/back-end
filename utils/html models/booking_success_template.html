@@ -199,7 +199,7 @@
       margin: auto;
     ">
         <legend style="margin-left: 20%">
-          <strong>Reference: </strong>02022024 <strong>Date: </strong>` +
+          <strong>Reference: </strong>` + quote.quote_ref + `<strong>Date: </strong>` +
           creationDate +
           `
         </legend>
@@ -210,11 +210,6 @@
           padding: 8px;
         ">
           <tbody>
-            <tr>
-              <td colspan="2" style="color: #000;">
-                <b>QUOTE REQUEST RECEIVED</b>
-              </td>
-            </tr>
             <tr>
               <td style="
                   width: 200px;
@@ -345,7 +340,6 @@
                 <span style="color: #000">£` +
                   price +
                   `</span>
-                <a href=` + url + `>BOOK NOW</a>
               </td>
             </tr>
             <tr>
@@ -522,7 +516,7 @@
                   `</label>
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td style="
                 width: 200px;
                 text-align: right;
@@ -538,30 +532,15 @@
                   quote.estimated_start_time +
                   `</label>
               </td>
-            </tr>
-            <tr>
-              <td style="
-                width: 200px;
-                text-align: right;
-                vertical-align: top;
-                padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
-              ">
-                <b>Click to Book</b>
-              </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <a href=` + url + `>BOOK NOW</a>
-              </td>
-            </tr>
+            </tr> -->
             <tr>
               <td>
-                <button type="button" class="btn btnNext text-white" data-toggle="modal" style="margin-top: 20px; background-color: #ffe605;"
-                data-target="#alertModal">All Amount</button>
+                <button type="button" class="btn btnNext text-white" data-toggle="modal" style="margin-top: 20px; background-color: #e5d222; width: 150px; height: 50px; font-size: 20px;"
+                data-target="#alertModal" onclick="getPaymentMode('all')">All Amount</button>
               </td>
               <td>
-                <button type="button" class="btn btnNext text-white" data-toggle="modal" style="margin-top: 20px; background-color: #ffe605;"
-                data-target="#alertModal">Deposit</button>
+                <button type="button" class="btn btnNext text-white" data-toggle="modal" style="margin-top: 20px; background-color: #e5d222; width: 130px; height: 50px; font-size: 20px;"
+                data-target="#alertModal" onclick="getPaymentMode('deposit')">Deposit</button>
               </td>
             </tr>
           </tbody>
@@ -594,7 +573,7 @@
           <h4 class="modal-title text-white" id="exampleModalLabel"><svg class="bi flex-shrink-0 me-2" width="24"
               height="24" role="img" aria-label="Success:">
               <use xlink:href="#check-circle-fill" />
-            </svg>Quote request has been successfully sent</h4>
+            </svg>Quote Payment</h4>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -619,15 +598,10 @@
                     <div class="row">
                       <div class="col-8">
                         <p class="h4 mb-0">Summary</p>
-                        <p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: Name of
-                            product</span></p>
-                        <p class="mb-0"><span class="fw-bold">Price:</span><span class="c-green">:$452.90</span></p>
-                        <p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
-                          nihil neque
-                          quisquam aut
-                          repellendus, dicta vero? Animi dicta cupiditate, facilis provident quibusdam ab
-                          quis,
-                          iste harum ipsum hic, nemo qui!</p>
+                        <p class="mb-0"><span class="fw-bold">Quote:</span><span class="c-green">: 
+                          ` + quote.quote_ref + `</span></p>
+                        <p class="mb-0"><span class="fw-bold">Price:</span><span class="c-green" id="dynamicPaypalPrice">:</span></p>
+                        <p class="mb-0">Pay easily and securely with PayPal. Use your PayPal account to quickly complete your purchase without sharing your financial information.</p>
                       </div>
                     </div>
                   </div>
@@ -649,19 +623,15 @@
                     <div class="row">
                       <div class="col-lg-5 mb-lg-0 mb-3">
                         <p class="h4 mb-0">Summary</p>
-                        <p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: Name of
-                            product</span>
+                        <p class="mb-0"><span class="fw-bold">Quote:</span><span class="c-green">: ` + quote.quote_ref + `</span>
                         </p>
                         <p class="mb-0">
                           <span class="fw-bold">Price:</span>
-                          <span class="c-green">:$452.90</span>
+                          <span class="c-green" id="dynamicCreditCardPrice">:</span>
                         </p>
-                        <p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
-                          nihil neque
-                          quisquam aut
-                          repellendus, dicta vero? Animi dicta cupiditate, facilis provident quibusdam ab
-                          quis,
-                          iste harum ipsum hic, nemo qui!</p>
+                        <p class="mb-0">Complete your quote payment with confidence. We offer secure and easy payment options to ensure your information is protected. Simply enter your details below to finalize your payment.
+
+                          Thank you for choosing us!</p>
                       </div>
                       <div class="col-lg-7">
                         <form action="" class="form">
@@ -726,6 +696,24 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function getPaymentMode(mode){
+      if(mode === 'all'){
+        console.log("show total price");
+        let paypal_price = document.getElementById("dynamicPaypalPrice");
+        let credit_card_price = document.getElementById("dynamicCreditCardPrice");
+        paypal_price.innerHTML = "£1240";//quote.total_price;
+        credit_card_price.innerHTML = "£1240";//quote.total_price;
+      }
+      if(mode === 'deposit'){
+        console.log("show deposit price");
+        let paypal_price = document.getElementById("dynamicPaypalPrice");
+        let credit_card_price = document.getElementById("dynamicCreditCardPrice");
+        paypal_price.innerHTML = "£240";//quote.deposit_amount;
+        credit_card_price.innerHTML = "£240";//quote.deposit_amount;
+      }
+    }
+  </script>
 </body>
 
 </html>

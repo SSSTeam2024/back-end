@@ -252,6 +252,9 @@ const sendBookingEmail = async (req, res) => {
       deposit_amount,
       deposit_percentage,
       total_price,
+      type,
+      return_date,
+      return_time,
     } = req.body;
     const sentResult = await quoteService.sendBookingEmail({
       id_visitor,
@@ -261,6 +264,9 @@ const sendBookingEmail = async (req, res) => {
       deposit_amount,
       deposit_percentage,
       total_price,
+      type,
+      return_date,
+      return_time,
     });
     res.json({ success: sentResult });
   } catch (error) {
@@ -829,6 +835,18 @@ const getCompletedJobsFromLast7Days = async (req, res) => {
   }
 };
 
+// get all quote by reference
+const getAllQuotesByReference = async (req, res) => {
+  try {
+    const ref = req.params.id;
+    const quotes = await quoteService.getAllQuotesByReference(ref);
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -872,4 +890,5 @@ module.exports = {
   getCompletedQuotesByDriver,
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
+  getAllQuotesByReference,
 };

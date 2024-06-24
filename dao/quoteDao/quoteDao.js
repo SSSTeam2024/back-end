@@ -714,6 +714,19 @@ const getCompletedJobsFromLast7Days = async (driver_id, currentDateStr) => {
   }
 };
 
+const getAllQuotesByReference = async (id) => {
+  const query = {
+    quote_ref: id,
+  };
+
+  return await Quote.find(query)
+    .populate("id_visitor")
+    .populate("company_id")
+    .populate("school_id")
+    .populate("id_driver")
+    .populate("id_vehicle");
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -759,4 +772,5 @@ module.exports = {
   getLatestQuote,
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
+  getAllQuotesByReference,
 };
