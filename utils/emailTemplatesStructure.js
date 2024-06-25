@@ -1195,10 +1195,7 @@ const emailTemplates = {
             >
               <b>Click to Book</b>
             </td>
-            ` +
-    visitor._id +
-    +quote._id +
-    `
+            
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
              <a href=` +
     url +
