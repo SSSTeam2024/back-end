@@ -90,7 +90,16 @@ const createQuote = async (
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    let url = `http://localhost:3000/api/quote/confirm-booking/` + quote_id;
+    console.log(id);
+    console.log(quote_id);
+    console.log(id);
+    console.log(quote_id);
+    let url =
+      "http://api.chercheinfo.net/api/visitor-payment/create-payment-tracking-record" +
+      "/" +
+      id._id +
+      "/" +
+      quote_id;
     email = await prepareQuoteBookingEmail(
       id,
       autoPrice,
@@ -144,7 +153,13 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = "http://localhost:3000/api/quote/confirm-booking/" + quote_id;
+  console.log(id);
+  console.log(quote_id);
+  let url =
+    "http://api.chercheinfo.net/api/visitor-payment/create-payment-tracking-record/" +
+    id._id +
+    "/" +
+    quote_id;
   let email = await prepareQuoteBookingEmail(
     id,
     price,
@@ -355,7 +370,6 @@ async function prepareQuotePaymentEmail(idVisitor, url, quote) {
 const updateQuoteStatus = async (id) => {
   let quote = await quoteDao.getQuoteById(id);
   let quotes = await quoteDao.getAllQuotesByReference(quote.quote_ref);
-  console.log("quotes", quotes);
   quotes.forEach(async (qt) => {
     if (qt.type === "Return") {
       await quoteDao.updateQuoteStatus(qt._id);

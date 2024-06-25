@@ -5,7 +5,6 @@ const createEmailQueue = async (emailQueueData) => {
 };
 
 const createMultipleEmailQueue = async (emails) => {
-  console.log("emails", emails);
   emails.forEach(async (email) => {
     await emailQueueDao.createEmailQueue(email);
   });

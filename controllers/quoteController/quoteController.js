@@ -364,17 +364,36 @@ const sendPaymentEmail = async (req, res) => {
 
 const updateQuoteStatus = async (req, res) => {
   try {
-    const quoteId = req.params.id;
+    const {
+      quoteId,
+      payment_type,
+      visitorPaymentTrackingId,
+      payment_mode,
+      date,
+    } = req.body;
 
     const updatedQuote = await quoteService.updateQuoteStatus(quoteId);
 
     if (!updatedQuote) {
       return res.status(404).send("Quote not found");
     }
-    let bookingSuccessPageContent =
-      emailTemplatesStructure.emailTemplates.booking_success();
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(bookingSuccessPageContent);
+
+    res.json({
+      link:
+        "http://127.0.0.1:5500/Booking-Success.html?type=" +
+        payment_type +
+        "&mode=" +
+        payment_mode +
+        "&date=" +
+        date +
+        "&id=" +
+        visitorPaymentTrackingId,
+    });
+
+    // let bookingSuccessPageContent =
+    //   emailTemplatesStructure.emailTemplates.booking_success();
+    // res.writeHead(200, { "Content-Type": "text/html" });
+    // res.end(bookingSuccessPageContent);
   } catch (error) {
     console.error(error);
     res.end(

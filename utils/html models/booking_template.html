@@ -448,4 +448,29 @@
       </table>
   </fieldset>
   </body>
+  <script>
+    async function createPaymentTrack(){
+      let object = {
+      id_visitor: visitor._id,
+      id_quote: quote._id
+      }
+      let body = JSON.stringify(object);
+      const response = await fetch(
+        "http://api.chercheinfo.net/api/visitor-payment/create-payment-tracking-record",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: body,
+        }
+      );
+
+      response.json().then(() => {
+        localStorage.setItem("id_visitor", visitor._id);
+        localStorage.setItem("id_quote", quote._id);
+      }); 
+    }
+  </script>
 </html>

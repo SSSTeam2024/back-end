@@ -783,28 +783,6 @@ const emailTemplates = {
             successfully processed, and we are excited to assist you with your
             arrangements.
           </p>
-          <!-- <p>
-            As per your request, the total price for the journey is <strong style="font-size: 1rem;">` +
-    price +
-    `</strong>.
-          </p> -->
-          <!-- <p>
-            To proceed with confirming your booking, please click on the button
-            below: 
-            <a href="` +
-    url +
-    `" style="display: inline-block;
-                                padding: 10px 20px;
-                                margin: 10px;
-                                text-align: center;
-                                text-decoration: none;
-                                font-size: 16px;
-                                cursor: pointer;
-                                color: #fff;
-                                background-color: #e67e22;
-                                border: 2px solid #d6731d;
-                                border-radius: 17px;">Confirm Your Booking</a>
-          </p> -->
           <p>
             Once booked, you will receive an email with payment link to complete
             your payment process. 
@@ -1217,6 +1195,12 @@ const emailTemplates = {
             >
               <b>Click to Book</b>
             </td>
+            vvvvvv` +
+    visitor._id +
+    `
+            qqqqqqqqq` +
+    quote._id +
+    `
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
              <a href=` +
     url +

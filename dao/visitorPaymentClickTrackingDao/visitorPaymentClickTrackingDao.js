@@ -3,12 +3,30 @@ const visPayClickTrack = require("../../models/visitorPaymentClickTrackingModel/
 const createPaymentClickTrackingRecord = async (clickData) => {
   return await visPayClickTrack.create(clickData);
 };
-//TODO: Complete
-const getCheckType = async (id) => {
-  return await CheckType.findById(id);
+
+const getPaymentTracking = async (data) => {
+  const query = {
+    id_visitor: data.id_visitor,
+    id_quote: data.id_quote,
+  };
+
+  const result = await visPayClickTrack
+    .find(query)
+    .populate("id_visitor")
+    .populate("id_quote");
+
+  return result;
+};
+
+const getPaymentTrackingById = async (id) => {
+  return await visPayClickTrack
+    .findById(id)
+    .populate("id_visitor")
+    .populate("id_quote");
 };
 
 module.exports = {
   createPaymentClickTrackingRecord,
-  getCheckType,
+  getPaymentTracking,
+  getPaymentTrackingById,
 };
