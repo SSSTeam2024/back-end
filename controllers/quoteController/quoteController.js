@@ -380,7 +380,7 @@ const updateQuoteStatus = async (req, res) => {
 
     res.json({
       link:
-        "http://127.0.0.1:5500/Booking-Success.html?type=" +
+        "http://client.chercheinfo.net/Booking-Success.html?type=" +
         payment_type +
         "&mode=" +
         payment_mode +
