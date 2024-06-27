@@ -18,8 +18,6 @@ const getAttachmentById = async (id) => {
 
 module.exports = {
   createEmailSent,
-  //   saveDocumentsToServer,
   getEmails,
   deleteSentEmail,
-  //   getAttachmentById,
 };

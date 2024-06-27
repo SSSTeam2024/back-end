@@ -90,10 +90,6 @@ const createQuote = async (
     let quote_id = quote._id;
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
-    console.log(id);
-    console.log(quote_id);
-    console.log(id);
-    console.log(quote_id);
     let url =
       "http://api.chercheinfo.net/api/visitor-payment/create-payment-tracking-record" +
       "/" +
@@ -679,6 +675,10 @@ const getAllQuotesByReference = async (id) => {
   return await quoteDao.getAllQuotesByReference(id);
 };
 
+const getAllQuotesByVisitorId = async (id) => {
+  return await quoteDao.getAllQuotesByVisitorId(id);
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -726,4 +726,5 @@ module.exports = {
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
+  getAllQuotesByVisitorId,
 };

@@ -71,7 +71,6 @@ const getEmailQueues = async (req, res) => {
 const deleteEmailQueues = async (req, res) => {
   try {
     const emailQueueIds = req.body.ids;
-    console.log(emailQueueIds);
     const deletedEmailQueues = await emailQueueService.deleteEmailQueues(
       emailQueueIds
     );

@@ -2,7 +2,6 @@ const visPayTrackDao = require("../../dao/visitorPaymentClickTrackingDao/visitor
 
 const createPaymentTrackingRecord = async (data) => {
   let visPayTrackRec = await visPayTrackDao.getPaymentTracking(data);
-  console.log("visPayTrackRec", visPayTrackRec);
   if (visPayTrackRec.length !== 0) {
     return visPayTrackRec[0];
   } else {

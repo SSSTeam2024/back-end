@@ -13,6 +13,7 @@ const cron = require("node-cron");
 const emailSentServices = require("./services/emailSentServices/emailSentServices");
 const LocalStorage = require("node-localstorage").LocalStorage;
 const localStorage = new LocalStorage("./scratch");
+const QuoteDao = require("./dao/quoteDao/quoteDao");
 
 const app = express();
 
@@ -54,17 +55,20 @@ cron.schedule("*/25 * * * * *", async () => {
       file: resultEmail.file,
       name: resultEmail.name,
     };
-    await emailTemplateService.sendNewEmail(mailOptions).then(async () => {
-      await emailqueue.deleteEmailQueue(resultEmail._id).then(async () => {
-        await emailSentServices.createEmailSent({
-          date: resultEmail.date_email,
-          quoteID: resultEmail.quote_Id,
-          subjectEmail: resultEmail.subject,
-          from: resultEmail.sender,
-          to: resultEmail.newEmail,
+    await emailTemplateService
+      .sendNewEmail(mailOptions, resultEmail.quote_Id)
+      .then(async () => {
+        await emailqueue.deleteEmailQueue(resultEmail._id).then(async () => {
+          let quote = await QuoteDao.getQuoteById(resultEmail.quote_Id);
+          await emailSentServices.createEmailSent({
+            date: resultEmail.date_email,
+            quoteID: quote.quote_ref,
+            subjectEmail: resultEmail.subject,
+            from: resultEmail.sender,
+            to: resultEmail.newEmail,
+          });
         });
       });
-    });
   }
 });
 

@@ -192,7 +192,7 @@ const convertToQuoteAPI = async (req, res) => {
     let program = await programmService.getProgrammById(id_schedule);
     //?let vehicleType = await VehicleTypeService.getVehicleTypeById(program.vehiculeType);
     let journey = await journeyService.getJourneyById(program.journeyType);
-    let luggage = await luggageService.getLuagggeById(program.luggage);
+    //?let luggage = await luggageService.getLuagggeById(program.luggage);
 
     if (program.school_id === null) {
       for (let i = 0; i < program.employees_groups.length; i++) {
@@ -228,7 +228,8 @@ const convertToQuoteAPI = async (req, res) => {
             id_invoice: "",
             enquiryDate: new Date(),
             id_group_employee: groupID,
-            quote_ref: newQuoteRef,
+            quote_ref: String(newQuoteRef).padStart(6, "0"),
+            type: "One way",
           });
         }
       }
@@ -236,7 +237,6 @@ const convertToQuoteAPI = async (req, res) => {
       for (let i = 0; i < program.students_groups.length; i++) {
         const groupID = program.students_groups[i];
         const group = await groupStudentDAO.getGroupStudentById(groupID);
-        console.log(group);
         for (let index = 0; index < program.workDates.length; index++) {
           let latestQuote = await quoteDao.getLatestQuote();
           let newQuoteRef;
@@ -267,7 +267,8 @@ const convertToQuoteAPI = async (req, res) => {
             id_invoice: "",
             enquiryDate: new Date(),
             id_group_student: groupID,
-            quote_ref: newQuoteRef,
+            quote_ref: String(newQuoteRef).padStart(6, "0"),
+            type: "One way",
           });
         }
       }

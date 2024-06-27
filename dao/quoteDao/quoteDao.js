@@ -39,7 +39,8 @@ const getQuoteById = async (id) => {
         path: "vehicles",
       },
     })
-    .populate("id_affiliate");
+    .populate("id_affiliate")
+    .populate("id_driver");
 };
 
 const deleteQuote = async (id) => {
@@ -681,6 +682,10 @@ const getAllSuggestedQuotesByAffiliateID = async (id) => {
   //.populate("white_list.id");
 };
 
+const getAllQuotesByVisitorId = async (Id) => {
+  return await Quote.find({ id_visitor: Id });
+};
+
 const getCompletedJobsFromLast7Days = async (driver_id, currentDateStr) => {
   try {
     const currentDate = new Date(currentDateStr);
@@ -773,4 +778,5 @@ module.exports = {
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
+  getAllQuotesByVisitorId,
 };

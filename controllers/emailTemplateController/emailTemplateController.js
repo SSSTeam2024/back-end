@@ -82,6 +82,7 @@ const deleteEmailTemplate = async (req, res) => {
 const sendNewEmail = async (req, res) => {
   try {
     const { newEmail, subject, body, file, name } = req.body;
+    console.log("body controller", body);
     const sentResult = await emailTemplateService.sendNewEmail({
       newEmail,
       subject,

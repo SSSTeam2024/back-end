@@ -114,5 +114,8 @@ router.get(
   "/allQuotesByReference/:id",
   quoteController.getAllQuotesByReference
 );
-
+router.get(
+  "/getAllQuotesByVisitorId/:id",
+  quoteController.getAllQuotesByVisitorId
+);
 module.exports = router;

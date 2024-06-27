@@ -866,6 +866,18 @@ const getAllQuotesByReference = async (req, res) => {
   }
 };
 
+// get all quote by visitor email
+const getAllQuotesByVisitorId = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const quotes = await quoteService.getAllQuotesByVisitorId(id);
+    res.json(quotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -910,4 +922,5 @@ module.exports = {
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
+  getAllQuotesByVisitorId,
 };
