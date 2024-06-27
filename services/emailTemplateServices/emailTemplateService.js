@@ -78,43 +78,44 @@ const sendNewEmail = async (newData, quote_Id) => {
   }
 
   console.log("quote data", quote);
-  console.log("body", body);
+  console.log("body sendNewEmail", body);
   let email = await prepareNewEmail(newEmail, subject, body, name, quote);
   await emailService.sendEmail(email, file);
   return "New Email sent!";
 };
 
 async function prepareNewEmail(newEmail, subject, body, name, quote) {
-  console.log("body", body);
-  // if (body.includes("[name]")) {
-  //   console.log("name");
-  //   newBody = body.replace("[name]", name);
-  // }
-  // if (body.includes("[customername]")) {
-  //   newBody = body.replace("[customername]", name);
-  // }
-  // if (body.includes("[drivername]")) {
-  //   console.log("drivername");
-  //   newBody = body.replace("[drivername]", quote.id_driver.firstname);
-  // }
-  // if (body.includes("[quote_num]")) {
-  //   newBody = body.replace("[quote_num]", quote.quote_ref);
-  // }
+  let newBody = "";
+  console.log("body prepareNewEmail", body);
+  if (body.includes("[name]")) {
+    console.log("name");
+    newBody = body.replace("[name]", name);
+  }
+  if (body.includes("[customername]")) {
+    newBody = body.replace("[customername]", name);
+  }
+  if (body.includes("[drivername]")) {
+    console.log("drivername");
+    newBody = body.replace("[drivername]", quote.id_driver.firstname);
+  }
+  if (body.includes("[quote_num]")) {
+    newBody = body.replace("[quote_num]", quote.quote_ref);
+  }
 
-  // if (body.includes("[Driver's Name]")) {
-  //   console.log("Driver's Name");
-  //   newBody = body.replace("[Driver's Name]", quote.id_driver.firstname);
-  // }
-  // if (body.includes("[Driver's Contact Number]")) {
-  //   console.log("Driver's Contact Number");
-  //   newBody = body.replace(
-  //     "[Driver's Contact Number]",
-  //     quote.id_driver.phonenumber
-  //   );
-  // }
+  if (body.includes("[Driver's Name]")) {
+    console.log("Driver's Name");
+    newBody = body.replace("[Driver's Name]", quote.id_driver.firstname);
+  }
+  if (body.includes("[Driver's Contact Number]")) {
+    console.log("Driver's Contact Number");
+    newBody = body.replace(
+      "[Driver's Contact Number]",
+      quote.id_driver.phonenumber
+    );
+  }
 
   let recipient = newEmail;
-  let emailBody = emailTemplatesStructure.emailTemplates.newEmail(body);
+  let emailBody = emailTemplatesStructure.emailTemplates.newEmail(newBody);
   let fullEmailObject = {
     to: recipient,
     subject: subject,
