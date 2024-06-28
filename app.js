@@ -42,9 +42,9 @@ app.use("/api", AppRouter);
 app.all("*", (req, res) => {
   res.status(404).send("404 - Not Found");
 });
+
 // Schedule tasks to be run on the server
 cron.schedule("*/25 * * * * *", async () => {
-  // cron.schedule("0 * * * *", async () => {
   if (localStorage.getItem("isSendingAllQueueEmails") === "false") {
     const resultEmail = await emailqueue.getTheOldestEmailInQueue();
     // Send an email
@@ -59,14 +59,25 @@ cron.schedule("*/25 * * * * *", async () => {
       .sendNewEmail(mailOptions, resultEmail.quote_Id)
       .then(async () => {
         await emailqueue.deleteEmailQueue(resultEmail._id).then(async () => {
-          let quote = await QuoteDao.getQuoteById(resultEmail.quote_Id);
-          await emailSentServices.createEmailSent({
-            date: resultEmail.date_email,
-            quoteID: quote.quote_ref,
-            subjectEmail: resultEmail.subject,
-            from: resultEmail.sender,
-            to: resultEmail.newEmail,
-          });
+          let quote = null;
+          if (resultEmail.quote_Id !== undefined) {
+            quote = await QuoteDao.getQuoteById(resultEmail.quote_Id);
+            await emailSentServices.createEmailSent({
+              date: resultEmail.date_email,
+              quoteID: quote.quote_ref,
+              subjectEmail: resultEmail.subject,
+              from: resultEmail.sender,
+              to: resultEmail.newEmail,
+            });
+          } else {
+            await emailSentServices.createEmailSent({
+              date: resultEmail.date_email,
+              quoteID: null,
+              subjectEmail: resultEmail.subject,
+              from: resultEmail.sender,
+              to: resultEmail.newEmail,
+            });
+          }
         });
       });
   }

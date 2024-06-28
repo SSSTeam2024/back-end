@@ -3,10 +3,14 @@ const emailSentService = require("../../services/emailSentServices/emailSentServ
 const createEmailSent = async (req, res) => {
   try {
     const { date, quoteID, subjectEmail, from, to } = req.body;
-
+    let id = null;
+    console.log("id", id);
+    if (quoteID !== "") {
+      id = quoteID;
+    }
     const newEmailSent = await emailSentService.createEmailSent({
       date,
-      quoteID,
+      quoteID: id,
       subjectEmail,
       from,
       to,
@@ -18,28 +22,6 @@ const createEmailSent = async (req, res) => {
   }
 };
 
-// const updateCheckType = async (req, res) => {
-//   try {
-//     const checkTypeId = req.params.id;
-//     const { type, duration } = req.body;
-
-//     const updatedCheckType = await checkTypeService.updateCheckType(
-//       checkTypeId,
-//       {
-//         type,
-//         duration,
-//       }
-//     );
-
-//     if (!updatedCheckType) {
-//       return res.status(404).send("Duty check not found");
-//     }
-//     res.json(updatedCheckType);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send(error.message);
-//   }
-// };
 const deleteSentEmail = async (req, res) => {
   try {
     const SentEmailId = req.params.id;

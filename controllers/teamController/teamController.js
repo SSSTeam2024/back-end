@@ -33,8 +33,8 @@ const registerTeam = async (req, res) => {
       avatarExtension,
     } = req.body;
 
-    const FilesPath = "files/driverFiles/idsFiles/";
-    const profilePath = "files/driverFiles/avatarImages/";
+    const FilesPath = "files/teamFiles/idsFiles/";
+    const profilePath = "files/teamFiles/avatarImages/";
 
     let id_file = globalFunctions.generateUniqueFilename(
       IdFileExtension,

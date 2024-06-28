@@ -91,7 +91,7 @@ const createQuote = async (
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
     let url =
-      "http://localhost:3000/api/visitor-payment/create-payment-tracking-record" +
+      "http://api.chercheinfo.net/api/visitor-payment/create-payment-tracking-record" +
       "/" +
       id._id +
       "/" +
@@ -152,7 +152,7 @@ const sendBookingEmail = async (bookingData) => {
   console.log(id);
   console.log(quote_id);
   let url =
-    "http://localhost:3000/api/visitor-payment/create-payment-tracking-record/" +
+    "http://api.chercheinfo.net/api/visitor-payment/create-payment-tracking-record/" +
     id._id +
     "/" +
     quote_id;
@@ -408,7 +408,7 @@ const acceptAssignedAffiliateToQuote = async (acceptData) => {
   await quoteDao.acceptAssignedAffiliate(idQuote, id_affiliate);
   let affiliate = await affiliateDao.getAffiliateById(id_affiliate);
   let quote = await quoteDao.getQuoteById(idQuote);
-  let url = `http://localhost:3000/api/quote/job-accepted/` + idQuote;
+  let url = `http://api.chercheinfo.net/api/quote/job-accepted/` + idQuote;
   let email = await prepareQuoteAffiliateAcceptence(affiliate, url, quote);
   await emailService.sendEmail(email);
   return "Quote Pushed To Affiliate Acceptence Email sent!";
@@ -675,8 +675,8 @@ const getAllQuotesByReference = async (id) => {
   return await quoteDao.getAllQuotesByReference(id);
 };
 
-const getAllQuotesByVisitorId = async (id) => {
-  return await quoteDao.getAllQuotesByVisitorId(id);
+const getAllQuotesByVisitorEmail = async (email) => {
+  return await quoteDao.getAllQuotesByVisitorEmail(email);
 };
 
 module.exports = {
@@ -726,5 +726,5 @@ module.exports = {
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
-  getAllQuotesByVisitorId,
+  getAllQuotesByVisitorEmail,
 };

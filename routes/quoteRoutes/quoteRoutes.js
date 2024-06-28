@@ -115,7 +115,7 @@ router.get(
   quoteController.getAllQuotesByReference
 );
 router.get(
-  "/getAllQuotesByVisitorId/:id",
-  quoteController.getAllQuotesByVisitorId
+  "/getAllQuotesByVisitorEmail/:email",
+  quoteController.getAllQuotesByVisitorEmail
 );
 module.exports = router;

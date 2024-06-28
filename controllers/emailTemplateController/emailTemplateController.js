@@ -81,15 +81,22 @@ const deleteEmailTemplate = async (req, res) => {
 
 const sendNewEmail = async (req, res) => {
   try {
-    const { newEmail, subject, body, file, name } = req.body;
-    console.log("body controller", body);
-    const sentResult = await emailTemplateService.sendNewEmail({
-      newEmail,
-      subject,
-      body,
-      file,
-      name,
-    });
+    const { newEmail, subject, body, file, name, quote_Id } = req.body;
+    let id;
+    console.log("id", id);
+    if (quote_Id !== "") {
+      id = quote_Id;
+    }
+    const sentResult = await emailTemplateService.sendNewEmail(
+      {
+        newEmail,
+        subject,
+        body,
+        file,
+        name,
+      },
+      id
+    );
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);

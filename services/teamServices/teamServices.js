@@ -6,10 +6,7 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 // register a new team
 const registerTeam = async (teamData, documents) => {
-  console.log(userData);
-  console.log(documents);
   let saveResult = await saveDocumentsToServer(documents);
-  console.log(saveResult);
   const hashedPassword = await bcrypt.hash(teamData.password, 10);
   return await teamDao.createTeam({ ...teamData, password: hashedPassword });
 };
@@ -17,15 +14,13 @@ const registerTeam = async (teamData, documents) => {
 async function saveDocumentsToServer(documents) {
   let counter = 0;
   for (const file of documents) {
-    console.log(file);
     await saveFile(file.base64String, file.name, file.path);
     counter++;
-    console.log("File number " + counter + " saved");
   }
   if (counter == documents.length) return true;
 }
 
-async function saveAdministrativeFile(base64String, fileName, file_path) {
+async function saveFile(base64String, fileName, file_path) {
   const binaryData = Buffer.from(base64String, "base64");
   const filePath = file_path + fileName;
   await globalFunctions.ensureDirectoryExistence(file_path);

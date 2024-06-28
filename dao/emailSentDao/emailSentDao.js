@@ -12,10 +12,6 @@ const deleteSentEmail = async (id) => {
   return await EmailSent.findByIdAndDelete(id);
 };
 
-const getAttachmentById = async (id) => {
-  return await Attachment.findById(id);
-};
-
 module.exports = {
   createEmailSent,
   getEmails,

@@ -867,11 +867,11 @@ const getAllQuotesByReference = async (req, res) => {
 };
 
 // get all quote by visitor email
-const getAllQuotesByVisitorId = async (req, res) => {
+const getAllQuotesByVisitorEmail = async (req, res) => {
   try {
-    const id = req.params.id;
-    const quotes = await quoteService.getAllQuotesByVisitorId(id);
-    res.json(quotes);
+    const email = req.params.email;
+    const quotes = await quoteService.getAllQuotesByVisitorEmail(email);
+    res.json(quotes.filter((quote) => quote.id_visitor));
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -922,5 +922,5 @@ module.exports = {
   getAllSuggestedQuotesByAffiliateID,
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
-  getAllQuotesByVisitorId,
+  getAllQuotesByVisitorEmail,
 };

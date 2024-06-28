@@ -18,26 +18,42 @@ const getEmailTemplates = async () => {
 const sendAllQueueEmails = async () => {
   let queueEmails = await emailQueueService.getEmailQueues();
   localStorage.setItem("isSendingAllQueueEmails", "true");
+
   async function sendWithDelay(arr, index = 0) {
     if (index < arr.length) {
+      let quote = null;
+      if (arr[index].quote_Id !== undefined) {
+        quote = await QuoteDao.getQuoteById(arr[index].quote_Id);
+      }
+
       let email = await prepareNewEmail(
         arr[index].newEmail,
         arr[index].subject,
         arr[index].body,
-        arr[index].name
+        arr[index].name,
+        quote
       );
       await emailService.sendEmail(email, arr[index].file).then(async () => {
         await emailQueueService
           .deleteEmailQueue(arr[index]._id)
           .then(async () => {
-            let quote = await QuoteDao.getQuoteById(arr[index].quote_Id);
-            await emailSentServices.createEmailSent({
-              date: arr[index].date_email,
-              quoteID: quote.quote_ref,
-              subjectEmail: arr[index].subject,
-              from: arr[index].sender,
-              to: arr[index].newEmail,
-            });
+            if (arr[index].quote_Id !== undefined) {
+              await emailSentServices.createEmailSent({
+                date: arr[index].date_email,
+                quoteID: quote.quote_ref,
+                subjectEmail: arr[index].subject,
+                from: arr[index].sender,
+                to: arr[index].newEmail,
+              });
+            } else {
+              await emailSentServices.createEmailSent({
+                date: arr[index].date_email,
+                quoteID: null,
+                subjectEmail: arr[index].subject,
+                from: arr[index].sender,
+                to: arr[index].newEmail,
+              });
+            }
           });
       });
 
@@ -71,47 +87,48 @@ const sendNewEmail = async (newData, quote_Id) => {
   let body = newData.body;
   let file = newData.file;
   let name = newData.name;
-
   let quote = null;
-  if (quote_Id !== "") {
+  if (quote_Id !== undefined) {
     quote = await QuoteDao.getQuoteById(quote_Id);
   }
 
-  console.log("quote data", quote);
-  console.log("body sendNewEmail", body);
   let email = await prepareNewEmail(newEmail, subject, body, name, quote);
+
   await emailService.sendEmail(email, file);
   return "New Email sent!";
 };
 
 async function prepareNewEmail(newEmail, subject, body, name, quote) {
-  let newBody = "";
-  console.log("body prepareNewEmail", body);
+  let newBody = body;
+
   if (body.includes("[name]")) {
-    console.log("name");
-    newBody = body.replace("[name]", name);
-  }
-  if (body.includes("[customername]")) {
-    newBody = body.replace("[customername]", name);
-  }
-  if (body.includes("[drivername]")) {
-    console.log("drivername");
-    newBody = body.replace("[drivername]", quote.id_driver.firstname);
-  }
-  if (body.includes("[quote_num]")) {
-    newBody = body.replace("[quote_num]", quote.quote_ref);
+    newBody = newBody.replace("[name]", name);
   }
 
-  if (body.includes("[Driver's Name]")) {
-    console.log("Driver's Name");
-    newBody = body.replace("[Driver's Name]", quote.id_driver.firstname);
+  if (body.includes("[customername]")) {
+    newBody = newBody.replace("[customername]", name);
   }
-  if (body.includes("[Driver's Contact Number]")) {
-    console.log("Driver's Contact Number");
-    newBody = body.replace(
-      "[Driver's Contact Number]",
-      quote.id_driver.phonenumber
-    );
+  if (quote !== null) {
+    if (body.includes("[drivername]")) {
+      newBody = newBody.replace("[drivername]", quote.id_driver.firstname);
+    }
+    if (body.includes("[quote_num]")) {
+      newBody = newBody.replace("[quote_num]", quote.quote_ref);
+    }
+
+    if (body.includes("[Driver's Name]")) {
+      newBody = newBody.replace("[Driver's Name]", quote.id_driver.firstname);
+    }
+    if (body.includes("[Driver's Contact Number]")) {
+      newBody = newBody.replace(
+        "[Driver's Contact Number]",
+        quote.id_driver.phonenumber
+      );
+    }
+  }
+
+  if (body.includes("[Website_phone]")) {
+    newBody = newBody.replace("[Website_phone]", "+44 800 112 3770 ");
   }
 
   let recipient = newEmail;
