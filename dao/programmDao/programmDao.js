@@ -28,6 +28,16 @@ const getProgramStudentGroups = async (id) => {
   return program.students_groups;
 };
 
+const getProgramEmployeeGroups = async (id) => {
+  let program = await Programm.findOne({ _id: id }).populate({
+    path: "employees_groups",
+    populate: {
+      path: "employees",
+    },
+  });
+  return program.employees_groups;
+};
+
 const deleteProgramm = async (id) => {
   return await Programm.findByIdAndDelete(id);
 };
@@ -113,4 +123,5 @@ module.exports = {
   updateCompanyGroups,
   updateSchoolGroups,
   getProgramStudentGroups,
+  getProgramEmployeeGroups,
 };

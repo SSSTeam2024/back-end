@@ -118,4 +118,12 @@ router.get(
   "/getAllQuotesByVisitorEmail/:email",
   quoteController.getAllQuotesByVisitorEmail
 );
+router.get(
+  "/getAllQuotesByCompanyEmail/:email",
+  quoteController.getAllQuotesByCompanyEmail
+);
+router.get(
+  "/getAllQuotesBySchoolEmail/:email",
+  quoteController.getAllQuotesBySchoolEmail
+);
 module.exports = router;

@@ -30,6 +30,17 @@ const getProgramStudentGroups = async (req, res) => {
   }
 };
 
+const getProgramEmployeeGroups = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const groups = await programmService.getProgramEmployeeGroups(id);
+    res.json(groups);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const createProgramm = async (req, res) => {
   try {
     const { programDetails, groups } = req.body;
@@ -322,4 +333,5 @@ module.exports = {
   deleteProgramm,
   updateStatusToConvertedAPI,
   getProgramStudentGroups,
+  getProgramEmployeeGroups,
 };

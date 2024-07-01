@@ -878,6 +878,30 @@ const getAllQuotesByVisitorEmail = async (req, res) => {
   }
 };
 
+// get all quote by company email
+const getAllQuotesByCompanyEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const quotes = await quoteService.getAllQuotesByCompanyEmail(email);
+    res.json(quotes.filter((quote) => quote.company_id));
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+// get all quote by school email
+const getAllQuotesBySchoolEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const quotes = await quoteService.getAllQuotesBySchoolEmail(email);
+    res.json(quotes.filter((quote) => quote.school_id));
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -923,4 +947,6 @@ module.exports = {
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
   getAllQuotesByVisitorEmail,
+  getAllQuotesByCompanyEmail,
+  getAllQuotesBySchoolEmail,
 };

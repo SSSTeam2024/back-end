@@ -19,4 +19,10 @@ router.get(
   "/get-program-groups-students/:id",
   programmController.getProgramStudentGroups
 );
+
+router.get(
+  "/get-program-groups-employees/:id",
+  programmController.getProgramEmployeeGroups
+);
+
 module.exports = router;

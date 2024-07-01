@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const driverDao = require("../../dao/driverDao/driverDao");
 const globalFunctions = require("../../utils/globalFunctions");
+const PasswordResetVerificationDao = require("../../dao/passwordResetVerificationDao/passwordResetVerificationDao");
 
 const registerDriver = async (userData, documents) => {
   let saveResult = await saveDocumentsToServer(documents);
@@ -92,7 +93,7 @@ const generateCodeAndSendEmail = async (
   expires_at_date,
   expires_at_time
 ) => {
-  //let driver = await driverDao.getDriverById(driverId);
+  let driver = await driverDao.getDriverById(driverId);
 
   let verificationCode = Math.floor(100000 + Math.random() * 900000);
   console.log("verificationCode", verificationCode);
@@ -113,12 +114,12 @@ const generateCodeAndSendEmail = async (
 
   let emailBody =
     driverEmailTemplates.driverEmailTemplates.reset_password_verification_code(
-      /* driver.account_name */ "Carter",
+      driver.account_name /*"Carter"*/,
       verificationCode
     );
   let emailSubject = "Reset your password";
   let fullEmailObject = {
-    to: /* driver.email */ "mouafekhedfi@gmail.com",
+    to: driver.email /*"mouafekhedfi@gmail.com"*/,
     subject: emailSubject,
     body: emailBody,
   };

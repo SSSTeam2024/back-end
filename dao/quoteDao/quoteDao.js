@@ -40,7 +40,10 @@ const getQuoteById = async (id) => {
       },
     })
     .populate("id_affiliate")
-    .populate("id_driver");
+    .populate("id_driver")
+    .populate("id_visitor")
+    .populate("school_id")
+    .populate("company_id");
 };
 
 const deleteQuote = async (id) => {
@@ -691,6 +694,23 @@ const getAllQuotesByVisitorEmail = async (email) => {
     .exec();
 };
 
+const getAllQuotesByCompanyEmail = async (email) => {
+  return await Quote.find()
+    .populate({
+      path: "company_id",
+      match: { email: email },
+    })
+    .exec();
+};
+
+const getAllQuotesBySchoolEmail = async (email) => {
+  return await Quote.find()
+    .populate({
+      path: "school_id",
+      match: { email: email },
+    })
+    .exec();
+};
 const getCompletedJobsFromLast7Days = async (driver_id, currentDateStr) => {
   try {
     const currentDate = new Date(currentDateStr);
@@ -784,4 +804,6 @@ module.exports = {
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
   getAllQuotesByVisitorEmail,
+  getAllQuotesByCompanyEmail,
+  getAllQuotesBySchoolEmail,
 };

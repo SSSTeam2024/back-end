@@ -679,6 +679,13 @@ const getAllQuotesByVisitorEmail = async (email) => {
   return await quoteDao.getAllQuotesByVisitorEmail(email);
 };
 
+const getAllQuotesByCompanyEmail = async (email) => {
+  return await quoteDao.getAllQuotesByCompanyEmail(email);
+};
+
+const getAllQuotesBySchoolEmail = async (email) => {
+  return await quoteDao.getAllQuotesBySchoolEmail(email);
+};
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -727,4 +734,6 @@ module.exports = {
   getCompletedJobsFromLast7Days,
   getAllQuotesByReference,
   getAllQuotesByVisitorEmail,
+  getAllQuotesByCompanyEmail,
+  getAllQuotesBySchoolEmail,
 };

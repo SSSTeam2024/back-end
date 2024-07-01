@@ -91,7 +91,6 @@ const sendNewEmail = async (newData, quote_Id) => {
   if (quote_Id !== undefined) {
     quote = await QuoteDao.getQuoteById(quote_Id);
   }
-
   let email = await prepareNewEmail(newEmail, subject, body, name, quote);
 
   await emailService.sendEmail(email, file);
@@ -100,15 +99,33 @@ const sendNewEmail = async (newData, quote_Id) => {
 
 async function prepareNewEmail(newEmail, subject, body, name, quote) {
   let newBody = body;
-
-  if (body.includes("[name]")) {
-    newBody = newBody.replace("[name]", name);
-  }
-
-  if (body.includes("[customername]")) {
-    newBody = newBody.replace("[customername]", name);
-  }
   if (quote !== null) {
+    if (name === "Visitor") {
+      if (body.includes("[name]")) {
+        newBody = newBody.replace("[name]", quote.id_visitor.name);
+      }
+
+      if (body.includes("[customername]")) {
+        newBody = newBody.replace("[customername]", quote.id_visitor.name);
+      }
+    } else if (name === "School") {
+      if (body.includes("[name]")) {
+        newBody = newBody.replace("[name]", quote.school_id.name);
+      }
+
+      if (body.includes("[customername]")) {
+        newBody = newBody.replace("[customername]", quote.school_id.name);
+      }
+    } else {
+      if (body.includes("[name]")) {
+        newBody = newBody.replace("[name]", quote.company_id.name);
+      }
+
+      if (body.includes("[customername]")) {
+        newBody = newBody.replace("[customername]", quote.company_id.name);
+      }
+    }
+
     if (body.includes("[drivername]")) {
       newBody = newBody.replace("[drivername]", quote.id_driver.firstname);
     }

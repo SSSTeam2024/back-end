@@ -40,6 +40,10 @@ const getProgramStudentGroups = async (id) => {
   return await programmDao.getProgramStudentGroups(id);
 };
 
+const getProgramEmployeeGroups = async (id) => {
+  return await programmDao.getProgramEmployeeGroups(id);
+};
+
 const deleteProgramm = async (id) => {
   return await programmDao.deleteProgramm(id);
 };
@@ -96,4 +100,5 @@ module.exports = {
   deleteProgramm,
   updateStatusToConverted,
   getProgramStudentGroups,
+  getProgramEmployeeGroups,
 };
