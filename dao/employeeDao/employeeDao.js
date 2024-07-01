@@ -1,66 +1,94 @@
-const Employee = require('../../models/employeeSchema/employeeSchema');
-
+const Employee = require("../../models/employeeSchema/employeeSchema");
 
 const createEmployee = async (employeeData) => {
-    return await Employee.create(employeeData);
+  return await Employee.create(employeeData);
 };
 
 const findEmployeeByLogin = async (login) => {
-    return await Employee.findOne({ login });
+  return await Employee.findOne({ login });
 };
 
 const getEmployee = async () => {
-
-    return await Employee.find().populate("groupId")
+  return await Employee.find().populate("groupId");
 };
 
 const updateEmployee = async (id, updateData) => {
-    return await Employee.findByIdAndUpdate(id, updateData, { new: true });
+  return await Employee.findByIdAndUpdate(id, updateData, { new: true });
 };
 
 const deleteEmployee = async (id) => {
-    return await Employee.findByIdAndDelete(id);
+  return await Employee.findByIdAndDelete(id);
 };
 
 const getEmployeeById = async (id) => {
-    return await Employee.findById(id);
-}
+  return await Employee.findById(id).populate("groupId").populate("idCompany");
+};
 
 const getEmployeeByEmail = async (email) => {
-    return await Employee.findOne({ email });
-}
+  return await Employee.findOne({ email });
+};
 const getEmployeeByIdCompany = async (idCompany) => {
-    return await Employee.find({idCompany});
-}
+  return await Employee.find({ idCompany });
+};
 
 const updateEmployeePassword = async (id, password) => {
-    console.log('Hashed pwd: '+password);
-    return await Employee.findByIdAndUpdate({ _id:id }, {
+  console.log("Hashed pwd: " + password);
+  return await Employee.findByIdAndUpdate(
+    { _id: id },
+    {
       $set: {
-        password: password
-      }
-    });
-  }
+        password: password,
+      },
+    }
+  );
+};
 
-  const updateEmployeeGroupId = async (id, group, date) => {
-    return await Employee.findByIdAndUpdate({ _id:id }, {
+const updateEmployeeGroupId = async (id, group, date) => {
+  return await Employee.findByIdAndUpdate(
+    { _id: id },
+    {
       $set: {
         groupId: group,
-        groupJoiningDate:date
-      }
-    });
-  }
+        groupJoiningDate: date,
+      },
+    }
+  );
+};
 
+const updateJwtToken = async (id, token) => {
+  return await Employee.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: token,
+      },
+    }
+  );
+};
+
+// logout
+const logout = async (id) => {
+  return await Employee.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        api_token: "",
+      },
+    }
+  );
+};
 
 module.exports = {
-    createEmployee,
-    getEmployee,
-    updateEmployee,
-    deleteEmployee,
-    getEmployeeById,
-    getEmployeeByEmail,
-    findEmployeeByLogin,
-    updateEmployeePassword,
-    getEmployeeByIdCompany,
-    updateEmployeeGroupId
+  createEmployee,
+  getEmployee,
+  updateEmployee,
+  deleteEmployee,
+  getEmployeeById,
+  getEmployeeByEmail,
+  findEmployeeByLogin,
+  updateEmployeePassword,
+  getEmployeeByIdCompany,
+  updateEmployeeGroupId,
+  updateJwtToken,
+  logout,
 };

@@ -53,7 +53,9 @@ const loginEmployee = async (login, password) => {
 
   if (await bcrypt.compare(password, employee.password)) {
     const accessToken = jwt.sign({ employee: employee.login }, "yourSecretKey");
-    return { accessToken };
+    await employeeDao.updateJwtToken(employee._id, String(accessToken));
+    let updatedEmployee = await employeeDao.getEmployeeById(employee._id);
+    return updatedEmployee;
   } else {
     throw new Error("Incorrect password");
   }
@@ -114,6 +116,10 @@ async function removeEmployeeFromGroup(employeeId, groupId) {
   return { employee, group, migration };
 }
 
+const logout = async (id) => {
+  return await employeeDao.logout(id);
+};
+
 module.exports = {
   createEmployee,
   getEmployeeByEmail,
@@ -124,4 +130,5 @@ module.exports = {
   loginEmployee,
   getEmployeeByIdCompany,
   removeEmployeeFromGroup,
+  logout,
 };

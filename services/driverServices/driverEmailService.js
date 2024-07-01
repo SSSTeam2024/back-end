@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 
 const sendVerificationCodeEmail = async (email) => {
-  console.log(email);
   return new Promise((resolve, reject) => {
     try {
       const transporter = nodemailer.createTransport({

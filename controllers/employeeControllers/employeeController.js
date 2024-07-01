@@ -100,9 +100,11 @@ const loginEmployee = async (req, res) => {
   }
 };
 
-const logoutEmployee = (req, res) => {
-  res.clearCookie("access_token");
-  res.sendStatus(200);
+const logoutEmployee = async (req, res) => {
+  let id = req.params.id;
+
+  await employeeService.logout(id);
+  res.send({ result: "Successfully logged out" });
 };
 const getEmployees = async (req, res) => {
   try {

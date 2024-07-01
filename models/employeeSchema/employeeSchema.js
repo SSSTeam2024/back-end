@@ -6,7 +6,7 @@ const employeeSchema = new mongoose.Schema({
   lastName: String,
   civilStatus: String,
   positionTitle: String,
-  idCompany: String,
+  idCompany: { type: Schema.Types.ObjectId, ref: "Company", default: null },
   gender: String,
   address: String,
   station: String,
@@ -22,6 +22,7 @@ const employeeSchema = new mongoose.Schema({
   password: String,
   nationality: String,
   status: String,
+  api_token: String,
 });
 
 module.exports = mongoose.model("Employee", employeeSchema);
