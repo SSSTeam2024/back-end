@@ -4,6 +4,8 @@ const fs = require("fs");
 const driverDao = require("../../dao/driverDao/driverDao");
 const globalFunctions = require("../../utils/globalFunctions");
 const PasswordResetVerificationDao = require("../../dao/passwordResetVerificationDao/passwordResetVerificationDao");
+const driverEmailTemplates = require("../../utils/driverEmailTemplates");
+const driverEmailService = require("./driverEmailService");
 
 const registerDriver = async (userData, documents) => {
   let saveResult = await saveDocumentsToServer(documents);
