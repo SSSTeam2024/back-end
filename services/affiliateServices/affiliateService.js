@@ -74,9 +74,11 @@ const loginAffiliate = async (login, password) => {
 
   if (await bcrypt.compare(password, affiliate.password)) {
     const accessToken = jwt.sign({ login: affiliate.login }, "yourSecretKey");
-    console.log(typeof accessToken);
+
     await affiliateDao.updateJwtToken(affiliate._id, String(accessToken));
+
     let updatedAffiliate = await affiliateDao.getAffiliateById(affiliate._id);
+
     return updatedAffiliate;
   } else {
     throw new Error("Incorrect password");

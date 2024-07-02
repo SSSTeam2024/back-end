@@ -2,30 +2,13 @@ const studentAttendanceService = require("../../services/studentAttendanceServic
 
 const addStudentAttendance = async (req, res) => {
   try {
-    const {
-      pickUpStation,
-      timePickUp,
-      datePickUp,
-      tripReference,
-      tripGroup,
-      dropDownStation,
-      timeDropDown,
-      dateDropDown,
-      id_student,
-      id_school,
-    } = req.body;
+    const { id_quote, id_student, id_school, presence } = req.body;
 
     const attendance = await studentAttendanceService.addStudentAttendance({
-      pickUpStation,
-      timePickUp,
-      datePickUp,
-      tripReference,
-      tripGroup,
-      dropDownStation,
-      timeDropDown,
-      dateDropDown,
+      id_quote,
       id_student,
       id_school,
+      presence,
     });
     res.json(attendance);
   } catch (error) {
@@ -88,33 +71,16 @@ const getAttendanceByIdSchool = async (req, res) => {
 const updateStudentAttendance = async (req, res) => {
   try {
     const studentAttendanceId = req.params.id;
-    const {
-      pickUpStation,
-      timePickUp,
-      datePickUp,
-      tripReference,
-      tripGroup,
-      dropDownStation,
-      timeDropDown,
-      dateDropDown,
-      id_student,
-      id_company,
-    } = req.body;
+    const { id_quote, id_student, id_school, presence } = req.body;
 
     const updatedAttendance =
       await studentAttendanceService.updateStudentAttendance(
         studentAttendanceId,
         {
-          pickUpStation,
-          timePickUp,
-          datePickUp,
-          tripReference,
-          tripGroup,
-          dropDownStation,
-          timeDropDown,
-          dateDropDown,
+          id_quote,
           id_student,
-          id_company,
+          id_school,
+          presence,
         }
       );
     res.json(updatedAttendance);

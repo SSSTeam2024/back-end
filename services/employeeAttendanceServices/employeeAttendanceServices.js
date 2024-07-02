@@ -1,4 +1,4 @@
-const employeeAttendanceDao = require("../../dao/attendanceDao/employeeAttendanceDao");
+const employeeAttendanceDao = require("../../dao/attendanceEmployeeDao/employeeAttendanceDao");
 
 const addEmployeeAttendance = async (attendanceData) => {
   console.log(attendanceData);

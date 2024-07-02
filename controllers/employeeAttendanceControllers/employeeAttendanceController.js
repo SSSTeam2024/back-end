@@ -2,30 +2,13 @@ const employeeAttendanceService = require("../../services/employeeAttendanceServ
 
 const addEmployeeAttendance = async (req, res) => {
   try {
-    const {
-      pickUpStation,
-      timePickUp,
-      datePickUp,
-      tripReference,
-      tripGroup,
-      dropDownStation,
-      timeDropDown,
-      dateDropDown,
-      id_employee,
-      id_company,
-    } = req.body;
+    const { id_quote, id_employee, id_company, presence } = req.body;
 
     const attendance = await employeeAttendanceService.addEmployeeAttendance({
-      pickUpStation,
-      timePickUp,
-      datePickUp,
-      tripReference,
-      tripGroup,
-      dropDownStation,
-      timeDropDown,
-      dateDropDown,
+      id_quote,
       id_employee,
       id_company,
+      presence,
     });
     res.json(attendance);
   } catch (error) {
@@ -88,33 +71,16 @@ const getAttendanceByIdCompany = async (req, res) => {
 const updateEmployeeAttendance = async (req, res) => {
   try {
     const employeeAttendanceId = req.params.id;
-    const {
-      pickUpStation,
-      timePickUp,
-      datePickUp,
-      tripReference,
-      tripGroup,
-      dropDownStation,
-      timeDropDown,
-      dateDropDown,
-      id_employee,
-      id_company,
-    } = req.body;
+    const { id_quote, id_employee, id_company, presence } = req.body;
 
     const updatedAttendance =
       await employeeAttendanceService.updateEmployeeAttendance(
         employeeAttendanceId,
         {
-          pickUpStation,
-          timePickUp,
-          datePickUp,
-          tripReference,
-          tripGroup,
-          dropDownStation,
-          timeDropDown,
-          dateDropDown,
+          id_quote,
           id_employee,
           id_company,
+          presence,
         }
       );
     res.json(updatedAttendance);

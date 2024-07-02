@@ -39,9 +39,7 @@ const getAllStudents = async () => {
 // get student by id
 const getStudentById = async (id) => {
   try {
-    console.log("Querying database for student with ID:", id);
     const getStudent = await Student.findOne({ _id: id });
-    console.log("Result from database:", getStudent);
     return getStudent;
   } catch (error) {
     throw error;

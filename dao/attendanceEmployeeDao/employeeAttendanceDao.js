@@ -1,4 +1,4 @@
-const employeeAttendance = require("../../models/attendanceSchema/employeeAttendanceSchema");
+const employeeAttendance = require("../../models/attendanceEmployeeSchema/employeeAttendanceSchema");
 
 const addEmployeeAttendance = async (employeeAttendanceData) => {
   return await employeeAttendance.create(employeeAttendanceData);
