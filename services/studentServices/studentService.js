@@ -59,8 +59,11 @@ const loginStudent = async (email, password) => {
       { student: student.username },
       "yourSecretKey"
     );
+
     await studentDao.updateJwtToken(student._id, String(accessToken));
+
     let updatedStudent = await studentDao.getStudentById(student._id);
+
     return updatedStudent;
   } else {
     throw new Error("Incorrect password");

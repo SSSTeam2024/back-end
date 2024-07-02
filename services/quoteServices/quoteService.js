@@ -686,6 +686,11 @@ const getAllQuotesByCompanyEmail = async (email) => {
 const getAllQuotesBySchoolEmail = async (email) => {
   return await quoteDao.getAllQuotesBySchoolEmail(email);
 };
+
+const getQuotesByEmployeeID = async (id, date) => {
+  return await quoteDao.getQuotesByEmployeeID(id, date);
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -736,4 +741,5 @@ module.exports = {
   getAllQuotesByVisitorEmail,
   getAllQuotesByCompanyEmail,
   getAllQuotesBySchoolEmail,
+  getQuotesByEmployeeID,
 };

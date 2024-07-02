@@ -309,6 +309,7 @@ const assignDriverToQuoteAPI = async (req, res) => {
 const updateProgress = async (req, res) => {
   try {
     const { quote_id, progress } = req.body;
+    console.log(req.body);
     const sentResult = await quoteService.updateProgress({
       quote_id,
       progress,
@@ -902,6 +903,30 @@ const getAllQuotesBySchoolEmail = async (req, res) => {
   }
 };
 
+// get all quotes by employee id for this month
+const getQuotesByEmployee = async (req, res) => {
+  try {
+    const employee_id = req.params.id;
+    const date = req.body.date;
+    const quotesByEmployee = await quoteService.getQuotesByEmployeeID(
+      employee_id,
+      date
+    );
+
+    if (!quotesByEmployee || quotesByEmployee.length === 0) {
+      return res.status(404).send("No Jobs for this month");
+    }
+
+    const filteredQuotes = quotesByEmployee.filter(
+      (quote) => quote.id_group_employee
+    );
+    res.json(filteredQuotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -949,4 +974,5 @@ module.exports = {
   getAllQuotesByVisitorEmail,
   getAllQuotesByCompanyEmail,
   getAllQuotesBySchoolEmail,
+  getQuotesByEmployee,
 };
