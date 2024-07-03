@@ -127,4 +127,5 @@ router.get(
   quoteController.getAllQuotesBySchoolEmail
 );
 router.post("/getQuotesByEmployee/:id", quoteController.getQuotesByEmployee);
+router.post("/getQuotesByStudent/:id", quoteController.getQuotesByStudent);
 module.exports = router;

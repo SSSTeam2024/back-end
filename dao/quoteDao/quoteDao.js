@@ -1,6 +1,7 @@
 const Quote = require("../../models/quoteModel/quote");
 const Affiliate = require("../../models/affiliateModels/affiliate");
 const groupEmployee = require("../../models/groupEmployee/groupEmployeeSchema");
+const groupStudent = require("../../models/groupStudent/groupStudent");
 
 const createQuote = async (quoteData) => {
   return await Quote.create(quoteData);
@@ -789,6 +790,35 @@ const getQuotesByEmployeeID = async (employeeId, date) => {
   return quotes;
 };
 
+const getQuotesByStudentID = async (studentId, date) => {
+  const year = date.substring(0, 4);
+  const month = date.substring(5, 7);
+  const littleThanMonth = String(Number(month) + 1).padStart(2, "0");
+
+  const groupStudents = await groupStudent
+    .find({
+      students: studentId,
+    })
+    .select("_id");
+
+  if (!groupStudents.length) {
+    return [];
+  }
+
+  const groupStudentIds = groupStudents.map((groupStudent) => groupStudent._id);
+
+  const quotes = await Quote.find({
+    id_group_student: { $in: groupStudentIds },
+    date: { $gt: `${year}-${month}-00`, $lt: `${year}-${littleThanMonth}-00` },
+  })
+    .populate("id_visitor")
+    .populate("checklist_id")
+    .populate("company_id")
+    .populate("school_id");
+
+  return quotes;
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -839,4 +869,5 @@ module.exports = {
   getAllQuotesByCompanyEmail,
   getAllQuotesBySchoolEmail,
   getQuotesByEmployeeID,
+  getQuotesByStudentID,
 };

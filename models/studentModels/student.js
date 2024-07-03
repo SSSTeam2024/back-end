@@ -29,10 +29,11 @@ const studentSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "groupStudent",
       required: false,
+      default: null,
     },
     groupJoiningDate: String,
     idSchool: String,
-    group: String,
+    // group: String,
     api_token: String,
     // school_id: {
     //   type: Schema.Types.ObjectId,

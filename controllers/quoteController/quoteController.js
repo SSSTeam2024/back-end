@@ -927,6 +927,30 @@ const getQuotesByEmployee = async (req, res) => {
   }
 };
 
+// get all quotes by student id for this month
+const getQuotesByStudent = async (req, res) => {
+  try {
+    const student_id = req.params.id;
+    const date = req.body.date;
+    const quotesByStudent = await quoteService.getQuotesByStudentID(
+      student_id,
+      date
+    );
+
+    if (!student_id || quotesByStudent.length === 0) {
+      return res.status(404).send("No Jobs for this month");
+    }
+
+    const filteredQuotes = quotesByStudent.filter(
+      (quote) => quote.id_group_student
+    );
+    res.json(filteredQuotes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -975,4 +999,5 @@ module.exports = {
   getAllQuotesByCompanyEmail,
   getAllQuotesBySchoolEmail,
   getQuotesByEmployee,
+  getQuotesByStudent,
 };
