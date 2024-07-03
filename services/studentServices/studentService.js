@@ -11,22 +11,14 @@ const globalFunctions = require("../../utils/globalFunctions");
 // register a new student and update parent profile
 const registerStudent = async (studentData, documents) => {
   try {
-    console.log("Registering student with data:", studentData);
-    console.log("Documents:", documents);
     let saveResult = await saveDocumentToServer(documents);
-    console.log("Save result:", saveResult);
-    const hashedPassword = await bcrypt.hash(studentData.password, 10);
-
+    const hashedPassword = await bcrypt.hash(studentData.phone, 10);
     const newStudent = await studentDao.createStudent({
       ...studentData,
       password: hashedPassword,
     });
-
     const studentId = newStudent._id;
-    console.log("New student ID:", studentId);
     await updateParentWithStudentId(studentData.parent_id, studentId);
-    console.log("Parent updated with student ID.");
-
     return newStudent;
   } catch (error) {
     console.error(error);
