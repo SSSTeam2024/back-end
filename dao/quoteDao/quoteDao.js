@@ -266,7 +266,6 @@ const acceptAssignedAffiliate = async (id, id_affiliate) => {
 
 // add driver to affiliate's quotes
 const addAffiliateDriverToQuoteDao = async (id, affiliateDriver_ID) => {
-  console.log("DAO", id, affiliateDriver_ID);
   return await Quote.findByIdAndUpdate(
     { _id: id },
     {

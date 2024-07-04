@@ -27,12 +27,14 @@ const getEmployeeById = async (id) => {
 const getEmployeeByEmail = async (email) => {
   return await Employee.findOne({ email });
 };
-const getEmployeeByIdCompany = async (idCompany) => {
-  return await Employee.find({ idCompany });
+const getEmployeeByIdCompany = async (id) => {
+  const query = {
+    idCompany: id,
+  };
+  return await Employee.find(query);
 };
 
 const updateEmployeePassword = async (id, password) => {
-  console.log("Hashed pwd: " + password);
   return await Employee.findByIdAndUpdate(
     { _id: id },
     {
@@ -78,6 +80,18 @@ const logout = async (id) => {
   );
 };
 
+const updateEmployeeStop = async (data) => {
+  return await Employee.findByIdAndUpdate(
+    { _id: data.employee },
+    {
+      $set: {
+        stop_point: data.stop,
+      },
+    },
+    { new: true }
+  );
+};
+
 module.exports = {
   createEmployee,
   getEmployee,
@@ -91,4 +105,5 @@ module.exports = {
   updateEmployeeGroupId,
   updateJwtToken,
   logout,
+  updateEmployeeStop,
 };

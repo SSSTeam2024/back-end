@@ -20,4 +20,6 @@ router.delete(
   employeeController.removeEmployeeFromGroup
 );
 
+router.post("/update-employees-stops", employeeController.updateEmployeesStops);
+
 module.exports = router;

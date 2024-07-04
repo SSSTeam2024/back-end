@@ -23,6 +23,16 @@ const employeeSchema = new mongoose.Schema({
   nationality: String,
   status: String,
   api_token: String,
+  stop_point: {
+    type: {
+      coordinates: {
+        lat: String,
+        lng: String,
+      },
+      placeName: String,
+    },
+    default: null,
+  },
 });
 
 module.exports = mongoose.model("Employee", employeeSchema);

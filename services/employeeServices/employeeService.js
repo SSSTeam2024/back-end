@@ -37,7 +37,7 @@ const createEmployee = async (employeeData, documents) => {
   console.log(documents);
   let saveResult = await saveMediaToServer(documents);
   console.log(saveResult);
-  const hashedPassword = await bcrypt.hash(employeeData.password, 10);
+  const hashedPassword = await bcrypt.hash(employeeData.mobile, 10);
   return await employeeDao.createEmployee({
     ...employeeData,
     password: hashedPassword,
@@ -76,6 +76,7 @@ const getEmployeeByEmail = async (email) => {
   return await employeeDao.getEmployeeByEmail(email);
 };
 const getEmployeeByIdCompany = async (idCompany) => {
+  console.log("idCompany", idCompany);
   return await employeeDao.getEmployeeByIdCompany(idCompany);
 };
 
@@ -120,6 +121,23 @@ const logout = async (id) => {
   return await employeeDao.logout(id);
 };
 
+const updateEmployeeStops = async (employeeList) => {
+  console.log("employeeList service", employeeList);
+
+  let completionCounter = 0;
+
+  let updatedEmployees = [];
+  for (let employee of employeeList) {
+    let updatedEmployee = await employeeDao.updateEmployeeStop(employee);
+    completionCounter++;
+    updatedEmployees.push(updatedEmployee);
+  }
+
+  if (completionCounter === employeeList.length) {
+    return updatedEmployees;
+  }
+};
+
 module.exports = {
   createEmployee,
   getEmployeeByEmail,
@@ -131,4 +149,5 @@ module.exports = {
   getEmployeeByIdCompany,
   removeEmployeeFromGroup,
   logout,
+  updateEmployeeStops,
 };

@@ -224,12 +224,16 @@ const getEmployeeByEmail = async (req, res) => {
 const getEmployeeByIdCompany = async (req, res) => {
   try {
     const idCompany = req.body.idCompany;
+    console.log("idCompany", idCompany);
     const getEmployeesByIdCompany =
       await employeeService.getEmployeeByIdCompany(idCompany);
     if (!getEmployeesByIdCompany) {
       res.status(404).send("employee not found");
     }
-    res.json({ getEmployeesByIdCompany });
+    const filteredEmps = getEmployeesByIdCompany.filter(
+      (quote) => quote.idCompany
+    );
+    res.json(filteredEmps);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -249,6 +253,21 @@ const removeEmployeeFromGroup = async (req, res) => {
   }
 };
 
+// update Employees STOPS
+const updateEmployeesStops = async (req, res) => {
+  try {
+    const { employeeList } = req.body;
+    console.log("employeeList controller", employeeList);
+    let updatedEmployees = await employeeService.updateEmployeeStops(
+      employeeList
+    );
+    res.status(200).send({ employee_list: updatedEmployees });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   addNewEmployee,
   getEmployees,
@@ -260,4 +279,5 @@ module.exports = {
   logoutEmployee,
   getEmployeeByIdCompany,
   removeEmployeeFromGroup,
+  updateEmployeesStops,
 };

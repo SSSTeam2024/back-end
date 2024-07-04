@@ -15,7 +15,13 @@ const getProgramms = async () => {
       populate: {
         path: "students",
       },
-    }) /* .populate("employees_groups") */;
+    })
+    .populate({
+      path: "employees_groups",
+      populate: {
+        path: "employees",
+      },
+    });
 };
 
 const getProgramStudentGroups = async (id) => {
