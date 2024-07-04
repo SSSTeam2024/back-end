@@ -117,8 +117,9 @@ const getGroupEmployeeById = async (req, res) => {
   try {
     const GroupEmployeeId = req.params.id;
 
-    const getGroupEmployeeId =
-      await employeeAttendanceService.getGroupEmployeeById(GroupEmployeeId);
+    const getGroupEmployeeId = await groupEmployeeService.getGroupEmployeeById(
+      GroupEmployeeId
+    );
 
     if (!getGroupEmployeeId) {
       return res.status(404).send("Group Employee not found");
@@ -181,10 +182,10 @@ async function removeEmployeeFromGroup(req, res) {
     await groupEmployeeService.removeEmployeeFromGroup(groupId, employeeId);
 
     res.status(204).send(); // No content - Employee successfully removed from group
-} catch (error) {
-    console.error('Error removing employee from group:', error);
+  } catch (error) {
+    console.error("Error removing employee from group:", error);
     res.status(500).send(error.message);
-}
+  }
 }
 
 async function addEmployeesToGroup(req, res) {
@@ -197,7 +198,10 @@ async function addEmployeesToGroup(req, res) {
       return res.status(400).json({ message: "Invalid request parameters" });
     }
 
-    const updatedEmployeeGroup = await groupEmployeeService.addEmployeesToGroup(_id, employees);
+    const updatedEmployeeGroup = await groupEmployeeService.addEmployeesToGroup(
+      _id,
+      employees
+    );
     return res.status(200).json(updatedEmployeeGroup);
   } catch (error) {
     console.error(error);
@@ -215,5 +219,5 @@ module.exports = {
   deleteGroupEmployee,
   getGroupByIdCompany,
   removeEmployeeFromGroup,
-  addEmployeesToGroup
+  addEmployeesToGroup,
 };

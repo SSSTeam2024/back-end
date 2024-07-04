@@ -28,11 +28,14 @@ const addNewGroup = async (GroupData) => {
   return await groupStudent.create(GroupData);
 };
 
-
 async function getAllGroups() {
   try {
     // Query all groups and populate the 'students' field
-    return await groupStudent.find().populate("students").populate("program").exec();
+    return await groupStudent
+      .find()
+      .populate("students")
+      .populate("program")
+      .exec();
   } catch (error) {
     throw new Error("Error fetching all groups: " + error.message);
   }
@@ -47,31 +50,26 @@ const getallGroupStudent = async () => {
 
 async function addStudentsToGroup(groupId, students) {
   try {
- 
     const updatedGroup = await groupStudent.findByIdAndUpdate(
       groupId,
       {
         $push: {
-            students: {
+          students: {
             $each: students.map((id) => ({
               _id: id,
-              groupId: groupId, 
+              groupId: groupId,
               groupJoiningDate: new Date().toISOString(), // Set joining date to current time
             })),
           },
         },
       },
-      { new: true } 
+      { new: true }
     );
-
-
-  } catch (error) {
-   
-  }
+  } catch (error) {}
 }
 
 const getGroupStudentById = async (id) => {
-  return await groupStudent.findById(id)
+  return await groupStudent.findById(id).populate("students");
 };
 
 const getGroupByIdStudent = async (id_student) => {
@@ -103,32 +101,32 @@ async function getActiveGroups() {
 
 async function removeStudentFromGroup(groupId, studentId) {
   try {
-      await groupStudent.findByIdAndUpdate(groupId, {
-          $pull: { students: studentId }
-      });
+    await groupStudent.findByIdAndUpdate(groupId, {
+      $pull: { students: studentId },
+    });
   } catch (error) {
-      throw new Error('Error removing student from group: ' + error.message);
+    throw new Error("Error removing student from group: " + error.message);
   }
 }
 
 async function getStudentInfo(groupId, studentId) {
   try {
-      // Find the employee with the given _id and groupId
-      const studentInfo = await Student.findOne({ _id: studentId, groupId: groupId });
+    // Find the employee with the given _id and groupId
+    const studentInfo = await Student.findOne({
+      _id: studentId,
+      groupId: groupId,
+    });
 
-      if (!studentInfo) {
-          throw new Error('student not found in the group.');
-      }
+    if (!studentInfo) {
+      throw new Error("student not found in the group.");
+    }
 
-      return studentInfo;
+    return studentInfo;
   } catch (error) {
-      throw new Error('Error fetching student information: ' + error.message);
+    throw new Error("Error fetching student information: " + error.message);
   }
 }
 
-
-
-  
 module.exports = {
   getActiveGroups,
   getAllGroups,
@@ -142,5 +140,5 @@ module.exports = {
   getallGroupStudent,
   removeStudentFromGroup,
   getStudentInfo,
-  addStudentsToGroup
+  addStudentsToGroup,
 };
