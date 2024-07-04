@@ -1,8 +1,18 @@
 const QRCodeDao = require("../../dao/qrCodeDao/qrCodeDao");
 
 const createQRCode = async (QRCodeData) => {
-  let check_list = await QRCodeDao.createQRCode(QRCodeData);
-  return check_list;
+  let qrCodes = await QRCodeDao.getQRCodeDetails({
+    stopName: QRCodeData.stopName,
+    date: QRCodeData.date,
+    stop_time: QRCodeData.stop_time,
+    id_quote: QRCodeData.id_quote,
+  });
+  if (qrCodes.length !== 0) {
+    return qrCodes[0];
+  } else {
+    let qrCode = await QRCodeDao.createQRCode(QRCodeData);
+    return qrCode;
+  }
 };
 
 // const updateQRCode = async (id, updateData) => {
@@ -17,8 +27,13 @@ const getQRCodes = async () => {
   return await QRCodeDao.getQRCodes();
 };
 
+const getQRCodeDetails = async (QRCodeData) => {
+  return await QRCodeDao.getQRCodeDetails(QRCodeData);
+};
+
 module.exports = {
   createQRCode,
+  getQRCodeDetails,
   //   updateQRCode,
   deleteQRCode,
   getQRCodes,

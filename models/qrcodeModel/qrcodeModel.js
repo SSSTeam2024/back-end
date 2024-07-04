@@ -6,6 +6,7 @@ const qrCodeSchema = new mongoose.Schema({
   date: String,
   stop_time: String,
   id_quote: String,
+  key: String,
 });
 
 module.exports = mongoose.model("QRCode", qrCodeSchema);
