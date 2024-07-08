@@ -5,6 +5,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const http = require("http");
+const redis = require("redis");
+const redisClient = redis.createClient();
 const { Server } = require("socket.io");
 const AppRouter = require("./routes/appRouter");
 const emailqueue = require("./services/emailQueueServices/emailQueueServices");
@@ -90,7 +92,8 @@ io.on("connection", (socket) => {
   // Handle user connection
   socket.on("join", (username) => {
     socketUsers[socket.id] = username;
-    console.log(socketUsers);
+    redisClient.set(socket.id, username);
+    console.log("socketUsers", socketUsers);
     console.log(`${username} has joined`);
   });
 
@@ -98,9 +101,16 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     const username = socketUsers[socket.id];
     delete socketUsers[socket.id];
-    console.log(socketUsers);
+    console.log("socketUsers", socketUsers);
     console.log(`${username} has disconnected`);
     io.emit("live-tracking-disconnection-listening", username);
+    redisClient.get(socket.id, (err, username) => {
+      if (username) {
+        redisClient.del(socket.id);
+        console.log(`${username} has disconnected`);
+        io.emit("userDisconnected", username);
+      }
+    });
   });
   // Handle driver position sharing
   socket.on("live-tracking-driver-emit", (arg) => {
