@@ -31,6 +31,8 @@ app.use(cors());
 app.use(express.static("files"));
 const port = 3000;
 
+let socketUsers = {};
+
 // Adjust the limit to accommodate larger payloads
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -84,7 +86,23 @@ cron.schedule("*/25 * * * * *", async () => {
 });
 
 io.on("connection", (socket) => {
-  console.log("hello socket");
+  console.log("a user has connected");
+  // Handle user connection
+  socket.on("join", (username) => {
+    socketUsers[socket.id] = username;
+    console.log(socketUsers);
+    console.log(`${username} has joined`);
+  });
+
+  // Handle user disconnection
+  socket.on("disconnect", () => {
+    const username = socketUsers[socket.id];
+    delete socketUsers[socket.id];
+    console.log(socketUsers);
+    console.log(`${username} has disconnected`);
+    io.emit("live-tracking-disconnection-listening", username);
+  });
+  // Handle driver position sharing
   socket.on("live-tracking-driver-emit", (arg) => {
     console.log(arg);
     io.emit("live-tracking-listening", arg);
