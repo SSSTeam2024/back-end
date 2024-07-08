@@ -23,7 +23,6 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   },
 });
 
@@ -88,7 +87,13 @@ io.on("connection", (socket) => {
   console.log("hello socket");
   socket.on("live-tracking-driver-emit", (arg) => {
     console.log(arg);
-    io.emit("live-tracking-companies-listening", arg);
+    io.emit("live-tracking-listening", arg);
+    if (arg.details.schoolId !== null) {
+      io.emit("live-tracking-schools-listening", arg);
+    }
+    if (arg.details.companyId !== null) {
+      io.emit("live-tracking-companies-listening", arg);
+    }
   });
 });
 
