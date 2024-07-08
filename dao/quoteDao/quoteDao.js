@@ -191,7 +191,9 @@ const getQuotesByDriverID = async (id, date) => {
     .populate("id_visitor")
     .populate("checklist_id")
     .populate("company_id")
-    .populate("school_id");
+    .populate("school_id")
+    .populate("id_driver")
+    .populate("id_vehicle");
 
   return quotes;
 };
