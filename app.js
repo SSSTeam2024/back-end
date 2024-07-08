@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.static("files"));
 const port = 3000;
 
-let socketUsers = {};
+let socketQuoteIds = {};
 
 // Adjust the limit to accommodate larger payloads
 app.use(express.json({ limit: "50mb" }));
@@ -90,20 +90,20 @@ cron.schedule("*/25 * * * * *", async () => {
 io.on("connection", (socket) => {
   console.log("a user has connected");
   // Handle user connection
-  socket.on("join", (username) => {
-    socketUsers[socket.id] = username;
+  socket.on("join", (quoteId) => {
+    socketQuoteIds[socket.id] = quoteId;
     // redisClient.set(socket.id, username);
-    console.log("socketUsers", socketUsers);
-    console.log(`${username} has joined`);
+    console.log("socketQuoteIds", socketQuoteIds);
+    console.log(`Driver with quote ${quoteId} has joined`);
   });
 
   // Handle user disconnection
   socket.on("disconnect", () => {
-    const username = socketUsers[socket.id];
-    delete socketUsers[socket.id];
-    console.log("socketUsers", socketUsers);
-    console.log(`${username} has disconnected`);
-    io.emit("live-tracking-disconnection-listening", username);
+    const quoteId = socketQuoteIds[socket.id];
+    delete socketQuoteIds[socket.id];
+    console.log("socketQuoteIds", socketQuoteIds);
+    console.log(`Driver with quote ${quoteId} has disconnected`);
+    io.emit("live-tracking-disconnection-listening", quoteId);
     // redisClient.get(socket.id, (err, username) => {
     //   if (username) {
     //     redisClient.del(socket.id);
