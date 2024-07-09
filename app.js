@@ -123,6 +123,9 @@ io.on("connection", (socket) => {
       io.emit("live-tracking-companies-listening", arg);
     }
   });
+  socket.on("employee-scan", (arg) => {
+    io.emit("employee-scan-driver", arg);
+  });
 });
 
 server.listen(port, () => {

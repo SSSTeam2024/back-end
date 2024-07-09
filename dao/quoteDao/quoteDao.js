@@ -669,7 +669,12 @@ const getAllQuotesBySchoolID = async (id) => {
     school_id: id,
   };
 
-  return await Quote.find(query).populate("id_visitor");
+  return await Quote.find(query)
+    .populate("id_visitor")
+    .populate("id_vehicle")
+    .populate("id_driver")
+    .populate("company_id")
+    .populate("school_id");
 };
 
 const getAllQuotesByCompanyID = async (id) => {
@@ -677,7 +682,12 @@ const getAllQuotesByCompanyID = async (id) => {
     company_id: id,
   };
 
-  return await Quote.find(query).populate("id_visitor");
+  return await Quote.find(query)
+    .populate("id_visitor")
+    .populate("id_vehicle")
+    .populate("id_driver")
+    .populate("company_id")
+    .populate("school_id");
 };
 
 const getAllSuggestedQuotesByAffiliateID = async (id) => {
