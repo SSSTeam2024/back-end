@@ -24,6 +24,24 @@ const deleteEmployeeAttendance = async (id) => {
   return await employeeAttendanceDao.deleteEmployeeAttendance(id);
 };
 
+const getAttendancesByEmployeeIdsAndQuoteId = async (attendanceData) => {
+  let attendances = [];
+  let counter = 0;
+  for (let element of attendanceData.employeeIds) {
+    counter++;
+    let attendance =
+      await employeeAttendanceDao.getAttendanceByEmployeeIdAndQuoteId({
+        id_employee: element.id_employee,
+        id_quote: attendanceData.idQuote,
+      });
+
+    attendances.push(attendance[0]);
+  }
+  if (counter === attendanceData.employeeIds.length) {
+    return attendances;
+  }
+};
+
 module.exports = {
   addEmployeeAttendance,
   updateEmployeeAttendance,
@@ -31,4 +49,5 @@ module.exports = {
   getEmployeeAttendanceById,
   getAttendanceByIdEmployee,
   deleteEmployeeAttendance,
+  getAttendancesByEmployeeIdsAndQuoteId,
 };

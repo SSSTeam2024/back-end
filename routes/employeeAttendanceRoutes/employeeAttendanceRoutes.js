@@ -11,7 +11,7 @@ router.get(
   "/getAttendanceById/:id",
   employeeAttendanceController.getAttendanceById
 );
-router.get(
+router.post(
   "/getAttendanceByIdEmployee",
   employeeAttendanceController.getAttendanceByIdEmployee
 );
@@ -28,4 +28,8 @@ router.delete(
   employeeAttendanceController.deleteEmployeeAttendance
 );
 
+router.post(
+  "/getAttendancesByEmployeeIdsAndQuoteId",
+  employeeAttendanceController.getAttendancesByEmployeeIdsAndQuoteId
+);
 module.exports = router;

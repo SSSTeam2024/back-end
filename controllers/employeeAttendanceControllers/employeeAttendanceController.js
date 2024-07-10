@@ -36,10 +36,13 @@ const getAttendanceById = async (req, res) => {
 
 const getAttendanceByIdEmployee = async (req, res) => {
   try {
-    const id_employee = req.body;
+    const { id_employee, id_quote } = req.body;
 
     const getAttendanceByIdEmployee =
-      await employeeAttendanceService.getAttendanceByIdEmployee(id_employee);
+      await employeeAttendanceService.getAttendanceByIdEmployee({
+        id_employee,
+        id_quote,
+      });
 
     if (!getAttendanceByIdEmployee) {
       return res.status(404).send("Attendance Employee not found");
@@ -109,6 +112,25 @@ const deleteEmployeeAttendance = async (req, res) => {
   }
 };
 
+const getAttendancesByEmployeeIdsAndQuoteId = async (req, res) => {
+  try {
+    const { employeeIds, idQuote } = req.body;
+
+    const getAttendances =
+      await employeeAttendanceService.getAttendancesByEmployeeIdsAndQuoteId({
+        employeeIds,
+        idQuote,
+      });
+
+    if (!getAttendances) {
+      return res.status(404).send("Attendances not found");
+    }
+    res.json(getAttendances);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
 module.exports = {
   addEmployeeAttendance,
   getAttendanceById,
@@ -116,4 +138,5 @@ module.exports = {
   getAttendanceByIdCompany,
   updateEmployeeAttendance,
   deleteEmployeeAttendance,
+  getAttendancesByEmployeeIdsAndQuoteId,
 };
