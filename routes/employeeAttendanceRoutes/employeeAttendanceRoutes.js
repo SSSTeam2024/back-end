@@ -12,10 +12,14 @@ router.get(
   employeeAttendanceController.getAttendanceById
 );
 router.post(
+  "/getAttendanceByIdEmployeeAndQuote",
+  employeeAttendanceController.getAttendanceByIdEmployeeAndQuote
+);
+router.post(
   "/getAttendanceByIdEmployee",
   employeeAttendanceController.getAttendanceByIdEmployee
 );
-router.get(
+router.post(
   "/getAttendanceByIdCompany",
   employeeAttendanceController.getAttendanceByIdCompany
 );

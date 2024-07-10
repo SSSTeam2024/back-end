@@ -17,6 +17,10 @@ const getAttendanceByIdEmployee = async (id_employee) => {
   return await employeeAttendanceDao.getAttendanceByIdEmployee(id_employee);
 };
 
+const getAttendanceByIdEmployeeAndQuote = async (attendanceData) => {
+  return await employeeAttendanceDao.getAttendanceByIdEmployee(attendanceData);
+};
+
 const getAttendanceByIdCompany = async (id_company) => {
   return await employeeAttendanceDao.getAttendanceByIdCompany(id_company);
 };
@@ -50,4 +54,5 @@ module.exports = {
   getAttendanceByIdEmployee,
   deleteEmployeeAttendance,
   getAttendancesByEmployeeIdsAndQuoteId,
+  getAttendanceByIdEmployeeAndQuote,
 };

@@ -34,20 +34,20 @@ const getAttendanceById = async (req, res) => {
   }
 };
 
-const getAttendanceByIdEmployee = async (req, res) => {
+const getAttendanceByIdEmployeeAndQuote = async (req, res) => {
   try {
     const { id_employee, id_quote } = req.body;
 
-    const getAttendanceByIdEmployee =
-      await employeeAttendanceService.getAttendanceByIdEmployee({
+    const getAttendanceByIdEmployeeAndQuote =
+      await employeeAttendanceService.getAttendanceByIdEmployeeAndQuote({
         id_employee,
         id_quote,
       });
 
-    if (!getAttendanceByIdEmployee) {
+    if (!getAttendanceByIdEmployeeAndQuote) {
       return res.status(404).send("Attendance Employee not found");
     }
-    res.json(getAttendanceByIdEmployee);
+    res.json(getAttendanceByIdEmployeeAndQuote);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -65,6 +65,23 @@ const getAttendanceByIdCompany = async (req, res) => {
       return res.status(404).send("Attendance Employee not found");
     }
     res.json(getAttendanceByIdCompany);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getAttendanceByIdEmployee = async (req, res) => {
+  try {
+    const id_employee = req.body;
+
+    const getAttendanceByIdEmployee =
+      await employeeAttendanceService.getAttendanceByIdEmployee(id_employee);
+
+    if (!getAttendanceByIdEmployee) {
+      return res.status(404).send("Attendance Employee not found");
+    }
+    res.json(getAttendanceByIdEmployee);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -139,4 +156,5 @@ module.exports = {
   updateEmployeeAttendance,
   deleteEmployeeAttendance,
   getAttendancesByEmployeeIdsAndQuoteId,
+  getAttendanceByIdEmployeeAndQuote,
 };

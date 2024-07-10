@@ -7,7 +7,7 @@ const getemployeeAttendanceById = async (id) => {
   return await employeeAttendance.findById(id);
 };
 
-const getAttendanceByIdEmployee = async (data) => {
+const getAttendanceByIdEmployeeAndQuote = async (data) => {
   const query = {
     id_employee: data.id_employee,
     id_quote: data.id_quote,
@@ -20,6 +20,13 @@ const getAttendanceByIdEmployee = async (data) => {
 const getAttendanceByIdCompany = async (id_company) => {
   return await employeeAttendance
     .find(id_company)
+    .populate("id_quote")
+    .populate("id_employee");
+};
+
+const getAttendanceByIdEmployee = async (id_employee) => {
+  return await employeeAttendance
+    .find(id_employee)
     .populate("id_quote")
     .populate("id_employee");
 };
@@ -53,4 +60,5 @@ module.exports = {
   updateEmployeeAttendance,
   deleteEmployeeAttendance,
   getAttendanceByEmployeeIdAndQuoteId,
+  getAttendanceByIdEmployeeAndQuote,
 };
