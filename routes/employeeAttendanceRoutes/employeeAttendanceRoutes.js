@@ -36,4 +36,10 @@ router.post(
   "/getAttendancesByEmployeeIdsAndQuoteId",
   employeeAttendanceController.getAttendancesByEmployeeIdsAndQuoteId
 );
+
+router.post(
+  "/createMultipleEmployeesAttendances",
+  employeeAttendanceController.createMultipleEmployeesAttendances
+);
+
 module.exports = router;

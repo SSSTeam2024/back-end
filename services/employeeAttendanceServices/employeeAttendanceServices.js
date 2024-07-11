@@ -1,8 +1,22 @@
 const employeeAttendanceDao = require("../../dao/attendanceEmployeeDao/employeeAttendanceDao");
 
 const addEmployeeAttendance = async (attendanceData) => {
-  console.log(attendanceData);
   return await employeeAttendanceDao.addEmployeeAttendance(attendanceData);
+};
+
+const createMultipleEmployeesAttendances = async (attendanceData) => {
+  let saved_attendances = [];
+  let counter = 0;
+  for (let attendance of attendanceData) {
+    counter++;
+    let saved_attendance = await employeeAttendanceDao.addEmployeeAttendance(
+      attendance
+    );
+    saved_attendances.push(saved_attendance);
+  }
+  if (counter === saved_attendances.length) {
+    return saved_attendances;
+  }
 };
 
 const updateEmployeeAttendance = async (id, updateData) => {
@@ -55,4 +69,5 @@ module.exports = {
   deleteEmployeeAttendance,
   getAttendancesByEmployeeIdsAndQuoteId,
   getAttendanceByIdEmployeeAndQuote,
+  createMultipleEmployeesAttendances,
 };

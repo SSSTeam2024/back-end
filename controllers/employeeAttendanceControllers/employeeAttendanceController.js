@@ -17,6 +17,21 @@ const addEmployeeAttendance = async (req, res) => {
   }
 };
 
+const createMultipleEmployeesAttendances = async (req, res) => {
+  try {
+    const { attendances } = req.body;
+
+    const attendance =
+      await employeeAttendanceService.createMultipleEmployeesAttendances(
+        attendances
+      );
+    res.json(attendance);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const getAttendanceById = async (req, res) => {
   try {
     const AttendanceId = req.params.id;
@@ -157,4 +172,5 @@ module.exports = {
   deleteEmployeeAttendance,
   getAttendancesByEmployeeIdsAndQuoteId,
   getAttendanceByIdEmployeeAndQuote,
+  createMultipleEmployeesAttendances,
 };
