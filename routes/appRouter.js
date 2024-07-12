@@ -53,6 +53,8 @@ const rejectedJobsRoutes = require("./rejectedJobsByAffiliateRoutes/rejectedJobs
 const passwordResetVerifCodeRoutes = require("./passwordResetVerificationCodeRoutes/passwordResetVerificationCodeRoutes");
 const visitorPaymentTrackingRoutes = require("./visitorPaymentTrackingRoutes/visitorPaymentTrackingRoutes");
 const qrCodeRoutes = require("./qrCodeRoutes/qrCodeRoutes");
+const defectRoutes = require("./defectRoutes/defectRoutes");
+const requestFeatureRoutes = require("./requestFeatureRoutes/requestFeatureRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -115,4 +117,6 @@ router.use("/rejectedJobs", rejectedJobsRoutes);
 router.use("/password", passwordResetVerifCodeRoutes);
 router.use("/visitor-payment", visitorPaymentTrackingRoutes);
 router.use("/qr-code", qrCodeRoutes);
+router.use("/defects", defectRoutes);
+router.use("/request-feature", requestFeatureRoutes);
 module.exports = router;

@@ -1,9 +1,17 @@
-const defectService = require("../../services");
+const defectService = require("../../services/defectServices/defectServices");
 
 const createDefect = async (req, res) => {
   try {
-    const { type } = req.body;
-    const newDefect = await DefectService.createDefect({ type });
+    const { vehicle, time, level, issue, defectStatus, note, date } = req.body;
+    const newDefect = await defectService.createDefect({
+      vehicle,
+      time,
+      level,
+      issue,
+      defectStatus,
+      note,
+      date,
+    });
     res.status(201).json(newDefect);
   } catch (error) {
     console.error(error);
@@ -11,13 +19,13 @@ const createDefect = async (req, res) => {
   }
 };
 
-const deleteJouney = async (req, res) => {
+const deleteDefect = async (req, res) => {
   try {
-    const DefectId = req.params.id;
+    const defectId = req.params.id;
 
-    const deletedJouney = await DefectService.deleteJouney(DefectId);
+    const deleteDefect = await defectService.deleteDefect(defectId);
 
-    if (!deletedJouney) {
+    if (!deleteDefect) {
       return res.status(404).send("Defect not found");
     }
     res.sendStatus(200);
@@ -28,7 +36,7 @@ const deleteJouney = async (req, res) => {
 };
 const getDefects = async (req, res) => {
   try {
-    const Defects = await DefectService.getDefects();
+    const Defects = await defectService.getDefects();
     res.json(Defects);
   } catch (error) {
     console.error(error);
@@ -39,7 +47,7 @@ const getDefects = async (req, res) => {
 const getDefectById = async (req, res) => {
   try {
     const DefectId = req.params.id;
-    const getDefect = await DefectService.getDefectById(DefectId);
+    const getDefect = await defectService.getDefectById(DefectId);
     if (!getDefect) {
       return res.status(404).send("Defect not found");
     }
@@ -50,26 +58,26 @@ const getDefectById = async (req, res) => {
   }
 };
 
-const updateDefect = async (req, res) => {
-  try {
-    const DefectId = req.params.id;
-    const { type } = req.body;
+// const updateDefect = async (req, res) => {
+//   try {
+//     const DefectId = req.params.id;
+//     const { type } = req.body;
 
-    const updatedDefect = await DefectService.updateDefect(DefectId, { type });
+//     const updatedDefect = await DefectService.updateDefect(DefectId, { type });
 
-    if (!updatedDefect) {
-      return res.status(404).send("Defect not found");
-    }
-    res.json(updatedDefect);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
-};
+//     if (!updatedDefect) {
+//       return res.status(404).send("Defect not found");
+//     }
+//     res.json(updatedDefect);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send(error.message);
+//   }
+// };
 
 module.exports = {
-  deleteJouney,
-  updateDefect,
+  deleteDefect,
+  //   updateDefect,
   createDefect,
   getDefects,
   getDefectById,
