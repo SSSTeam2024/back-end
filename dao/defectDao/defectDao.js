@@ -16,13 +16,14 @@ const deleteDefect = async (id) => {
   return await Defect.findByIdAndDelete(id);
 };
 
-// const updateLocation = async (id, updateData) => {
-//     return await Location.findByIdAndUpdate(id, updateData, { new: true });
-//   };
+const updateDefect = async (id, updateData) => {
+  return await Defect.findByIdAndUpdate(id, updateData, { new: true });
+};
 
 module.exports = {
   createDefect,
   getDefectById,
   getDefects,
   deleteDefect,
+  updateDefect,
 };

@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 const addNewComplain = async (req, res) => {
   try {
     const {
-      id_corporate,
+      id_company,
+      id_school,
       id_student,
       id_parent,
       subject,
@@ -47,7 +48,6 @@ const addNewComplain = async (req, res) => {
       "ComplaintVideo"
     );
 
-    // Process PDF
     let documents = [
       {
         base64String: pdfBase64String,
@@ -69,10 +69,9 @@ const addNewComplain = async (req, res) => {
       },
     ];
 
-    // Process Photos
-
     const complainData = {
-      id_corporate,
+      id_company,
+      id_school,
       id_student,
       id_parent,
       subject,
@@ -90,10 +89,6 @@ const addNewComplain = async (req, res) => {
       resVideo,
     };
 
-    // Conditionally add id_employee if provided
-    if (req.body.id_employee) {
-      complainData.id_employee = req.body.id_employee;
-    }
     await complainService.createComplain(complainData, documents);
     res.sendStatus(201);
   } catch (error) {
@@ -102,82 +97,6 @@ const addNewComplain = async (req, res) => {
   }
 };
 
-// const respondToComplain = async (req, res) => {
-//   try {
-//     const { _id, responseMessage, responseAuthor, resPhotoBase64Strings, ResPhotoExtension, resVideoBase64Strings, ResVideoExtension, status } = req.body;
-
-//     // Ensure _id is a valid ObjectId
-//     if (!mongoose.Types.ObjectId.isValid(_id)) {
-//       return res.status(400).send('Invalid complaint ID');
-//     }
-
-//     const ResPhotoPath = "files/complainFiles/resPhotos/";
-//     const ResVideoPath = "files/complainFiles/resVideos/";
-
-//     // Check if base64 strings are defined before creating ResDocuments array
-//     const resPhoto = globalFunctions.generateUniqueFilename(ResPhotoExtension, "ResComplainPhotos");
-//     const resVideo = globalFunctions.generateUniqueFilename(ResVideoExtension, "ResComplaintVideo");
-
-//     const ResDocuments = [
-//       {
-//         base64String: resPhotoBase64Strings,
-//         extension: ResPhotoExtension,
-//         name: resPhoto,
-//         path: ResPhotoPath,
-//       },
-//       {
-//         base64String: resVideoBase64Strings,
-//         extension: ResVideoExtension,
-//         name: resVideo,
-//         path: ResVideoPath,
-//       },
-//     ];
-
-//     // Pass _id and other fields separately to the service layer function
-//     await complainService.respondToComplaint(_id, responseMessage, responseAuthor, resPhoto, resVideo, status, ResDocuments);
-
-//     res.sendStatus(200);
-//   } catch (error) {
-//     console.error('Error responding to complaint:', error);
-//     res.status(500).send(error.message);
-//   }
-// };
-
-// const respondToComplain = async (req, res) => {
-//   try {
-//     const { _id, responseMessage, responseAuthor, resPhotoBase64Strings, ResPhotoExtension, resVideoBase64Strings, ResVideoExtension } = req.body;
-
-//     const ResPhotoPath = "files/complainFiles/resPhotos/";
-//     const ResVideoPath = "files/complainFiles/resVideos/";
-
-//     // Check if base64 strings are defined before creating ResDocuments array
-//     const resPhoto = globalFunctions.generateUniqueFilename(ResPhotoExtension, "ResComplainPhotos");
-//     const resVideo = globalFunctions.generateUniqueFilename(ResVideoExtension, "ResComplaintVideo");
-
-//     const ResDocuments = [
-//       {
-//         base64String: resPhotoBase64Strings,
-//         extension: ResPhotoExtension,
-//         name: resPhoto,
-//         path: ResPhotoPath,
-//       },
-//       {
-//         base64String: resVideoBase64Strings,
-//         extension: ResVideoExtension,
-//         name: resVideo,
-//         path: ResVideoPath,
-//       },
-//     ];
-
-//     const resComplainData = { _id, responseMessage, responseAuthor, resPhoto, resVideo };
-//     console.log("from controller",resComplainData)
-//     await complainService.respondToComplaint(resComplainData, ResDocuments);
-//     res.sendStatus(200);
-//   } catch (error) {
-//     console.error('Error responding to complaint:', error);
-//     res.status(500).send(error.message);
-//   }
-// };
 const respondToComplain = async (req, res) => {
   try {
     const {
@@ -227,7 +146,7 @@ const respondToComplain = async (req, res) => {
       resPhoto,
       resVideo,
     };
-    console.log("From Controllers",documents);
+    console.log("From Controllers", documents);
     // await complainService.respondToComplaint(
     //   _id,
     //   responseMessage,
@@ -236,10 +155,7 @@ const respondToComplain = async (req, res) => {
     //   resPhoto,
     //   resVideo
     //   );
-    await complainService.respondToComplaint(
-     complainResData,
-     documents
-      );
+    await complainService.respondToComplaint(complainResData, documents);
     console.log(req.body);
     res.sendStatus(200);
   } catch (error) {
@@ -340,29 +256,32 @@ const deleteComplainById = async (req, res) => {
   }
 };
 
-
-
-// const deleteComplainById = async (req, res) => {
-//   try {
-//     const deletedComplain = await complainService.deleteComplain();
-//     if (deletedComplain.deletedCount === 0) {
-//       return res.status(404).send("No complains with null ID found to delete.");
-//     }
-//     res.sendStatus(200);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send(error.message);
-//   }
-// };
 const getComplainByIdCompany = async (req, res) => {
   try {
-    const id_corporate = req.body.id_corporate;
-    const getComplainByIdCompany =
-      await complainService.getComplainByIdCompany(id_corporate);
+    const id_company = req.body.id_company;
+    const getComplainByIdCompany = await complainService.getComplainByIdCompany(
+      id_company
+    );
     if (!getComplainByIdCompany) {
-      res.status(404).send("employee not found");
+      res.status(404).send("Complain not found");
     }
     res.json({ getComplainByIdCompany });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getComplainByIdSchool = async (req, res) => {
+  try {
+    const id_school = req.body.id_school;
+    const getComplainByIdSchool = await complainService.getComplainByIdSchool(
+      id_school
+    );
+    if (!getComplainByIdSchool) {
+      res.status(404).send("Complain not found");
+    }
+    res.json({ getComplainByIdSchool });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -378,5 +297,6 @@ module.exports = {
   respondToComplain,
   updateComplainToPushed,
   updateComplainToArchived,
-  getComplainByIdCompany
+  getComplainByIdCompany,
+  getComplainByIdSchool,
 };

@@ -7,5 +7,5 @@ router.post("/newDefect", defectController.createDefect);
 router.get("/getDefects", defectController.getDefects);
 router.get("/getDefectById/:id", defectController.getDefectById);
 router.delete("/deleteDefect/:id", defectController.deleteDefect);
-// router.put("/updateLocation/:id", defectController.updateLocation);
+router.patch("/updateDefect/:id", defectController.updateDefect);
 module.exports = router;

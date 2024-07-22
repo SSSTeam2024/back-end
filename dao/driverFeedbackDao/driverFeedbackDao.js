@@ -64,7 +64,7 @@ const updateFeedbackAnswerById = async (updateData) => {
 };
 
 const getAllDriversFeedbacks = async () => {
-  return await DriverFeedback.find();
+  return await DriverFeedback.find().populate("quote_id").populate("driver_id");
 };
 
 module.exports = {

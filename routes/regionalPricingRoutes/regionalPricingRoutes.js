@@ -7,7 +7,7 @@ router.post(
   "/newRegionalPricing",
   regionalPricingController.addNewRegionalPricing
 );
-router.put(
+router.patch(
   "/updateRegionalPricing/:id",
   regionalPricingController.updateRegionalPricing
 );

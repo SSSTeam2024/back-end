@@ -13,6 +13,8 @@ const getEmployee = async () => {
 };
 
 const updateEmployee = async (id, updateData) => {
+  console.log("id dao", id);
+  console.log("updateData dao", updateData);
   return await Employee.findByIdAndUpdate(id, updateData, { new: true });
 };
 

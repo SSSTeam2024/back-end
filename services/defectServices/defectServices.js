@@ -16,13 +16,14 @@ const deleteDefect = async (id) => {
   return await defectDao.deleteDefect(id);
 };
 
-// const updateDefect = async (id, updateData) => {
-//     return await defectDao.updateDefect(id, updateData);
-//   };
+const updateDefect = async (id, updateData) => {
+  return await defectDao.updateDefect(id, updateData);
+};
 
 module.exports = {
   createDefect,
   getDefects,
   getDefectById,
   deleteDefect,
+  updateDefect,
 };

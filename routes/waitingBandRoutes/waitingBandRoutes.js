@@ -1,11 +1,14 @@
-const express = require('express');
-const waitingBandController = require('../../controllers/waitingBandController/waitingBandController');
+const express = require("express");
+const waitingBandController = require("../../controllers/waitingBandController/waitingBandController");
 
 const router = express.Router();
 
-router.post('/newWaitingBand', waitingBandController.createWaitingBand);
-router.get('/getAllWaitingBands', waitingBandController.getWaitingBands);
-router.put('/updateWaitingBand/:id', waitingBandController.updateWaitingBand);
-router.delete('/deleteWaitingBand/:id', waitingBandController.deleteWaitingBand);
+router.post("/newWaitingBand", waitingBandController.createWaitingBand);
+router.get("/getAllWaitingBands", waitingBandController.getWaitingBands);
+router.patch("/updateWaitingBand/:id", waitingBandController.updateWaitingBand);
+router.delete(
+  "/deleteWaitingBand/:id",
+  waitingBandController.deleteWaitingBand
+);
 
 module.exports = router;

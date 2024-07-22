@@ -9,7 +9,7 @@ router.get(
   "/getEmailTemplate/:id",
   emailTemplateController.getEmailTemplateById
 );
-router.put(
+router.patch(
   "/updateEmailTemplate/:id",
   emailTemplateController.updateEmailTemplate
 );

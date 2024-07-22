@@ -80,11 +80,47 @@ const getPricingCalendarById = async (req, res) => {
 const updatePricingCalendar = async (req, res) => {
   try {
     const luxuryId = req.params.id;
-    const { name } = req.body;
+    const {
+      name,
+      vehicle_type,
+      priority,
+      exclusive,
+      accountCompany,
+      accountSchool,
+      accountPassenger,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      days,
+      uplift,
+      endPeriod,
+      allAccounts,
+      allVehicles,
+      startPeriod,
+    } = req.body;
 
     const updatedLuxury = await pricingCalendarService.updatePricingCalendar(
       luxuryId,
-      { name }
+      {
+        name,
+        vehicle_type,
+        priority,
+        exclusive,
+        accountCompany,
+        accountSchool,
+        accountPassenger,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        days,
+        uplift,
+        endPeriod,
+        allAccounts,
+        allVehicles,
+        startPeriod,
+      }
     );
 
     if (!updatedLuxury) {

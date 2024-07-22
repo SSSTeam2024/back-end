@@ -45,7 +45,6 @@ const updateEmailTemplate = async (req, res) => {
   try {
     const emailTemplateId = req.params.id;
     const { name, body, for_who } = req.body;
-    console.log(req.body);
     const updatedEmailTemplate = await emailTemplateService.updateEmailTemplate(
       emailTemplateId,
       { name, body, for_who }

@@ -55,6 +55,7 @@ const visitorPaymentTrackingRoutes = require("./visitorPaymentTrackingRoutes/vis
 const qrCodeRoutes = require("./qrCodeRoutes/qrCodeRoutes");
 const defectRoutes = require("./defectRoutes/defectRoutes");
 const requestFeatureRoutes = require("./requestFeatureRoutes/requestFeatureRoutes");
+const errorReportRoutes = require("./errorReportRoutes/errorReportRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -119,4 +120,5 @@ router.use("/visitor-payment", visitorPaymentTrackingRoutes);
 router.use("/qr-code", qrCodeRoutes);
 router.use("/defects", defectRoutes);
 router.use("/request-feature", requestFeatureRoutes);
+router.use("/error-report", errorReportRoutes);
 module.exports = router;

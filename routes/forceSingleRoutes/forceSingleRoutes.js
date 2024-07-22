@@ -4,7 +4,7 @@ const forceSingleController = require("../../controllers/forceSingleControllers/
 const router = express.Router();
 
 router.post("/newForceSingle", forceSingleController.createForceSingle);
-router.put("/updateForceSingle/:id", forceSingleController.updateForceSingle);
+router.patch("/updateForceSingle/:id", forceSingleController.updateForceSingle);
 router.delete(
   "/deleteForceSingle/:id",
   forceSingleController.deleteForceSingle

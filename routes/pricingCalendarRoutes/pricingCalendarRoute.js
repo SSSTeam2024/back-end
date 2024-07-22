@@ -15,7 +15,7 @@ router.get(
   "/getPricingCalendar/:id",
   pricingCalendarController.getPricingCalendarById
 );
-router.put(
+router.patch(
   "/updatePricingCalendar/:id",
   pricingCalendarController.updatePricingCalendar
 );

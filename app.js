@@ -121,6 +121,7 @@ io.on("connection", (socket) => {
     }
     if (arg.details.companyId !== null) {
       io.emit("live-tracking-companies-listening", arg);
+      io.emit("live-tracking-employees-listening", arg);
     }
   });
   socket.on("employee-scan", (arg) => {

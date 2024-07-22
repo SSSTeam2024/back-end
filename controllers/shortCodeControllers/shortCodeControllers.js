@@ -14,12 +14,13 @@ const createShortCode = async (req, res) => {
 const updateShortCode = async (req, res) => {
   try {
     const ShortCodeId = req.params.id;
-    const { list } = req.body;
+    const { name, text } = req.body;
 
     const updatedShortCode = await ShortCodeService.updateShortCode(
       ShortCodeId,
       {
-        list,
+        name,
+        text,
       }
     );
 

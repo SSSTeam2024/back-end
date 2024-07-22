@@ -81,6 +81,8 @@ const getEmployeeByIdCompany = async (idCompany) => {
 };
 
 const updateEmployee = async (id, updateData) => {
+  console.log("id service", id);
+  console.log("updateData service", updateData);
   return await employeeDao.updateEmployee(id, updateData);
 };
 
@@ -122,8 +124,6 @@ const logout = async (id) => {
 };
 
 const updateEmployeeStops = async (employeeList) => {
-  console.log("employeeList service", employeeList);
-
   let completionCounter = 0;
 
   let updatedEmployees = [];

@@ -198,7 +198,6 @@ const updateProfile = async (req, res) => {
           id_card_date,
           IdFileBase64String,
           IdFileExtension,
-          id_file,
         },
         documents
       );
@@ -206,17 +205,24 @@ const updateProfile = async (req, res) => {
       await teamService.updatedTeam(teamId, {
         firstName,
         lastName,
-        nameParent,
-        card_id,
-        country,
-        deparment,
-        houseStreerNumber,
+        birth_date,
+        nationality,
+        gender,
+        marital_status,
+        number_of_childs,
+        legal_card,
+        address,
         email,
         phone,
         statusTeam,
         login,
+        access_level,
         password,
-        id_creation_date,
+        contract_type,
+        salary,
+        id_card_date,
+        IdFileBase64String,
+        IdFileExtension,
       });
     }
 

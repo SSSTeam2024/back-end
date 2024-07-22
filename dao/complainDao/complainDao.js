@@ -1,80 +1,86 @@
-const Complain = require('../../models/complainModels/complain');
+const Complain = require("../../models/complainModels/complain");
 
 const createComplain = async (complainData) => {
- try {
-  return await Complain.create(complainData);
- } catch (error) {
-  console.error('Error updating complaint status in DAO:', error);
-  throw error;
- } 
+  try {
+    return await Complain.create(complainData);
+  } catch (error) {
+    console.error("Error updating complaint status in DAO:", error);
+    throw error;
+  }
 };
-
 
 const updateComplaintStatus = async (_id, newStatus) => {
   try {
-      return await Complain.findByIdAndUpdate(_id, { status: newStatus });
+    return await Complain.findByIdAndUpdate(_id, { status: newStatus });
   } catch (error) {
-      console.error('Error updating complaint status in DAO:', error);
-      throw error;
+    console.error("Error updating complaint status in DAO:", error);
+    throw error;
   }
 };
 
 // DAO method to update the complaint response (message, author, and date)
-const updateComplaintResponse = async (_id, responseMessage, responseAuthor, responseDate, resPhoto, resVideo) => {
- 
-  console.log("from dao",resPhoto)
-  console.log("from dao",resVideo)
+const updateComplaintResponse = async (
+  _id,
+  responseMessage,
+  responseAuthor,
+  responseDate,
+  resPhoto,
+  resVideo
+) => {
+  console.log("from dao", resPhoto);
+  console.log("from dao", resVideo);
   try {
-      return await Complain.findByIdAndUpdate({_id}, {
-          responseMessage,
-          responseAuthor,
-          responseDate,
-          resPhoto,
-          resVideo
-      });
+    return await Complain.findByIdAndUpdate(
+      { _id },
+      {
+        responseMessage,
+        responseAuthor,
+        responseDate,
+        resPhoto,
+        resVideo,
+      }
+    );
   } catch (error) {
-      console.error('Error updating complaint response in DAO:', error);
-      throw error;
+    console.error("Error updating complaint response in DAO:", error);
+    throw error;
   }
 };
 
-
-
-
-const updateComplainToPushed= async(_id, newStatus)=> {
+const updateComplainToPushed = async (_id, newStatus) => {
   try {
-      const updatedComplain = await Complain.findByIdAndUpdate(
-          _id,
-          { status: newStatus },
-          { new: true } // to return the updated document
-      );
-      return updatedComplain;
+    const updatedComplain = await Complain.findByIdAndUpdate(
+      _id,
+      { status: newStatus },
+      { new: true } // to return the updated document
+    );
+    return updatedComplain;
   } catch (error) {
-      throw error;
+    throw error;
   }
-}
-const updateComplainToArchived= async(_id, newStatus)=> {
+};
+const updateComplainToArchived = async (_id, newStatus) => {
   try {
-      const updatedComplain = await Complain.findByIdAndUpdate(
-          _id,
-          { archived: newStatus },
-          { new: true } // to return the updated document
-      );
-      return updatedComplain;
+    const updatedComplain = await Complain.findByIdAndUpdate(
+      _id,
+      { archived: newStatus },
+      { new: true } // to return the updated document
+    );
+    return updatedComplain;
   } catch (error) {
-      throw error;
+    throw error;
   }
-}
-
+};
 
 const getComplains = async () => {
-  return await Complain.find().populate("id_employee");
+  return await Complain.find();
 };
 
-
 const getComplainById = async (id) => {
-  return await Complain.findById(id);
-}
+  return await Complain.findById(id)
+    .populate("id_employee")
+    .populate("id_company")
+    .populate("id_school");
+};
 
 const updateComplain = async (id, updateData) => {
   return await Complain.findByIdAndUpdate(id, updateData, { new: true });
@@ -83,15 +89,14 @@ const updateComplain = async (id, updateData) => {
 const deleteComplain = async (id) => {
   return await Complain.findByIdAndDelete(id);
 };
-const getComplainByIdCompany = async (id_corporate) => {
-  return await Complain.find({id_corporate});
-}
 
+const getComplainByIdCompany = async (id_company) => {
+  return await Complain.find({ id_company });
+};
 
-// const deleteComplain = async () => {
-//   return await Complain.deleteMany({ _id: null });
-// };
-
+const getComplainByIdSchool = async (id_school) => {
+  return await Complain.find({ id_school });
+};
 module.exports = {
   createComplain,
   getComplains,
@@ -102,6 +107,6 @@ module.exports = {
   updateComplaintStatus,
   updateComplainToPushed,
   updateComplainToArchived,
-  getComplainByIdCompany
-  
+  getComplainByIdCompany,
+  getComplainByIdSchool,
 };

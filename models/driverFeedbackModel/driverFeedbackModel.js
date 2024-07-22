@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const driverFeedbackSchema = new mongoose.Schema(
   {
-    driver_id: String,
+    driver_id: { type: Schema.Types.ObjectId, ref: "Driver" },
     category: String,
     quote_id: { type: Schema.Types.ObjectId, ref: "Quote" },
     description: String,

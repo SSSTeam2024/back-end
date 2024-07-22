@@ -174,7 +174,7 @@ const updateEmployee = async (req, res) => {
       nationality,
       status,
     } = req.body;
-
+    console.log(req.body);
     const updateEmployee = await employeeService.updateEmployee(employeeId, {
       firstName,
       lastName,

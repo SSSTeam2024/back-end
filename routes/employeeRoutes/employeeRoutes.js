@@ -12,7 +12,7 @@ router.post(
 router.get("/getEmployee/:id", employeeController.getEmployeeById);
 router.post("/getEmployeeByEmail", employeeController.getEmployeeByEmail);
 router.delete("/deleteEmployee/:id", employeeController.deleteEmployee);
-router.put("/updateEmployee/:id", employeeController.updateEmployee);
+router.patch("/updateEmployee/:id", employeeController.updateEmployee);
 router.post("/loginEmployee", employeeController.loginEmployee);
 router.post("/logoutEmployee/:id", employeeController.logoutEmployee);
 router.delete(

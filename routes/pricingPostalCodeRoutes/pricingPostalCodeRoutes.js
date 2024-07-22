@@ -7,7 +7,7 @@ router.post(
   "/newPricingPostalCode",
   pricingPostalCodeController.addNewPricingPostalCode
 );
-router.put(
+router.patch(
   "/updatePricingPostalCode/:id",
   pricingPostalCodeController.updatePricingPostalCode
 );

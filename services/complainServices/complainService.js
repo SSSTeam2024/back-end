@@ -128,8 +128,12 @@ const deleteComplain = async (id) => {
 //   return await complainDao.deleteComplain();
 // };
 
-const getComplainByIdCompany = async (id_corporate) => {
-  return await complainDao.getComplainByIdCompany(id_corporate);
+const getComplainByIdCompany = async (id_company) => {
+  return await complainDao.getComplainByIdCompany(id_company);
+};
+
+const getComplainByIdSchool = async (id_school) => {
+  return await complainDao.getComplainByIdSchool(id_school);
 };
 
 module.exports = {
@@ -142,4 +146,5 @@ module.exports = {
   updateComplainToPushed,
   updateComplainToArchived,
   getComplainByIdCompany,
+  getComplainByIdSchool,
 };
