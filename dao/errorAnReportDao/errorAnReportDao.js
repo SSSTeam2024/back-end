@@ -32,6 +32,14 @@ const getAllErrorReportsByCompanyID = async (id) => {
   return await ErrorReport.find(query);
 };
 
+const getAllErrorReportsBySchoolID = async (id) => {
+  const query = {
+    school_id: id,
+  };
+
+  return await ErrorReport.find(query);
+};
+
 module.exports = {
   createErrorReport,
   getAllErrorReportsByCompanyID,
@@ -39,4 +47,5 @@ module.exports = {
   getLatestErrorReport,
   deleteErrorReport,
   getErrorReports,
+  getAllErrorReportsBySchoolID,
 };

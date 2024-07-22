@@ -60,8 +60,12 @@ const deleteErrorReport = async (id) => {
 //     return await defectDao.updateDefect(id, updateData);
 //   };
 
-const getAllRequestedFeaturesByCompanyID = async (id) => {
+const getAllErrorReportsByCompanyID = async (id) => {
   return await errorReportDao.getAllErrorReportsByCompanyID(id);
+};
+
+const getAllErrorReportsBySchoolID = async (id) => {
+  return await errorReportDao.getAllErrorReportsBySchoolID(id);
 };
 
 module.exports = {
@@ -69,5 +73,6 @@ module.exports = {
   getErrorReportById,
   getErrorReports,
   deleteErrorReport,
-  getAllRequestedFeaturesByCompanyID,
+  getAllErrorReportsByCompanyID,
+  getAllErrorReportsBySchoolID,
 };

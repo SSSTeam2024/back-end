@@ -118,7 +118,7 @@ const getAllRequestedFeaturesBySchoolID = async (req, res) => {
   try {
     const school_id = req.params.id;
     const requested_features =
-      await requestFeatureService.getAllQuotesBySchoolID(school_id);
+      await requestFeatureService.getAllRequestedFeaturesBySchoolID(school_id);
     res.json(requested_features);
   } catch (error) {
     console.error(error);

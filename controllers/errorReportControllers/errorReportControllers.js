@@ -114,11 +114,10 @@ const getErrorReportById = async (req, res) => {
 //   }
 // };
 
-// get all requested features by id school
-const getAllRequestedFeaturesBySchoolID = async (req, res) => {
+const getAllErrorReportsBySchoolID = async (req, res) => {
   try {
     const school_id = req.params.id;
-    const error_reports = await errorReportService.getAllQuotesBySchoolID(
+    const error_reports = await errorReportService.getAllErrorReportsBySchoolID(
       school_id
     );
     res.json(error_reports);
@@ -128,8 +127,7 @@ const getAllRequestedFeaturesBySchoolID = async (req, res) => {
   }
 };
 
-// get all requested features by id company
-const getAllRequestedFeaturesByCompanyID = async (req, res) => {
+const getAllErrorReportsByCompanyID = async (req, res) => {
   try {
     const company_id = req.params.id;
     const error_reports =
@@ -147,6 +145,6 @@ module.exports = {
   createErrorReport,
   getErrorReportById,
   getErrorReports,
-  getAllRequestedFeaturesBySchoolID,
-  getAllRequestedFeaturesByCompanyID,
+  getAllErrorReportsBySchoolID,
+  getAllErrorReportsByCompanyID,
 };

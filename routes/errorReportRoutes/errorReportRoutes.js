@@ -13,7 +13,12 @@ router.delete(
 
 router.get(
   "/getAllErrorReportsByCompanyID/:id",
-  errorReportController.getAllRequestedFeaturesByCompanyID
+  errorReportController.getAllErrorReportsByCompanyID
+);
+
+router.get(
+  "/getAllErrorReportsBySchoolID/:id",
+  errorReportController.getAllErrorReportsBySchoolID
 );
 
 module.exports = router;

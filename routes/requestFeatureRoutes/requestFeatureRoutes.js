@@ -25,4 +25,9 @@ router.get(
   requestFeatureController.getAllRequestedFeaturesByCompanyID
 );
 
+router.get(
+  "/getAllRequestedFeaturesBySchoolID/:id",
+  requestFeatureController.getAllRequestedFeaturesBySchoolID
+);
+
 module.exports = router;

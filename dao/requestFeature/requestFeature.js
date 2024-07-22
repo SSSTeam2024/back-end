@@ -34,6 +34,14 @@ const getAllRequestedFeaturesByCompanyID = async (id) => {
   return await RequestFeature.find(query);
 };
 
+const getAllRequestedFeaturesBySchoolID = async (id) => {
+  const query = {
+    school_id: id,
+  };
+
+  return await RequestFeature.find(query);
+};
+
 module.exports = {
   createRequestFeature,
   getRequestFeatureById,
@@ -41,4 +49,5 @@ module.exports = {
   deleteRequestFeature,
   getLatestRequestFeature,
   getAllRequestedFeaturesByCompanyID,
+  getAllRequestedFeaturesBySchoolID,
 };

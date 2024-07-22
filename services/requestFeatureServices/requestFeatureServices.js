@@ -66,10 +66,15 @@ const getAllRequestedFeaturesByCompanyID = async (id) => {
   return await requestFeatureDao.getAllRequestedFeaturesByCompanyID(id);
 };
 
+const getAllRequestedFeaturesBySchoolID = async (id) => {
+  return await requestFeatureDao.getAllRequestedFeaturesBySchoolID(id);
+};
+
 module.exports = {
   createRequestFeature,
   getRequestFeatureById,
   getRequestFeatures,
   deleteRequestFeature,
   getAllRequestedFeaturesByCompanyID,
+  getAllRequestedFeaturesBySchoolID,
 };
