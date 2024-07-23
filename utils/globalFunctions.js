@@ -7,7 +7,7 @@ const generateUniqueFilename = (extension, reference) => {
 
 const deleteFileFromServer = (filePath) => {
   try {
-    fs.unlinkSync(filePath);
+    fs.rm(filePath);
 
     console.log("File Deleted successfully.");
   } catch (error) {

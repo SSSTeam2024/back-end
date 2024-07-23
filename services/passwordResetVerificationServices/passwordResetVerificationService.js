@@ -12,7 +12,12 @@ const getPasswordResetCodeById = async (id, role, code) => {
   );
 };
 
+const deleteCode = async (id) => {
+  return await PasswordResetVerificationDao.deleteCode(id);
+};
+
 module.exports = {
   updatePasswordResetCode,
   getPasswordResetCodeById,
+  deleteCode,
 };

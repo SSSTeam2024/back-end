@@ -12,7 +12,7 @@ const passengerLuggageLimitsIdRoutes = require("./passengerLuggageLimitsRoutes/p
 const affiliateRoutes = require("./affiliateRoutes/affiliateRoutes");
 const complainRoutes = require("./complainRoutes/complainRoutes");
 const sourceRoutes = require("./sourceRoutes/sourceRoutes");
-const feedbackRoutes = require("./feedbackRoutes/feedbackRoutes");
+const visitorFeedbackRoutes = require("./visitorFeedbackRoutes/visitorFeedbackRoutes");
 const visitorRoutes = require("./visitorRoutes/visitorRoutes");
 const emailTemplateRoutes = require("./emailTemplateRoutes/emailTemplateRoutes");
 const quoteRoutes = require("./quoteRoutes/quoteRoutes");
@@ -45,7 +45,7 @@ const affiliateVehicleRoutes = require("./affiliateVehicleRoutes/affiliateVehicl
 const affiliateDriverRoutes = require("./affiliateDriverRoutes/affiliateDriverRoutes");
 const attachmentRoutes = require("./attachmentRoutes/attachmentRoutes");
 const emailSentRoutes = require("./emailSentRoutes/emailSentRoutes");
-const driverFeedbackRoutes = require("./driverFeedbackRoutes/driverFeedbackRoutes");
+const feedbackRoutes = require("./feedbackRoutes/feedbackRoutes");
 const shortCodeRoutes = require("./shortCodeRoutes/shortCodeRoutes");
 const emailQueueRoutes = require("./emailQueueRoutes/emailQueueRoutes");
 const groupRoutes = require("./groupSchoolRoutes/groupSchoolRoutes");
@@ -75,13 +75,13 @@ router.use("/todos", todoRoutes);
 
 /// BCT APIS ///
 router.use("/emailQueue", emailQueueRoutes);
-router.use("/driver-feedback", driverFeedbackRoutes);
+router.use("/feedback", feedbackRoutes);
 router.use("/attachment", attachmentRoutes);
 router.use("/emailSent", emailSentRoutes);
 router.use("/affiliate", affiliateRoutes);
 router.use("/complains", complainRoutes);
 router.use("/source", sourceRoutes);
-router.use("/feedback", feedbackRoutes);
+router.use("/visitor-feedback", visitorFeedbackRoutes);
 router.use("/visitor", visitorRoutes);
 router.use("/emailTemplate", emailTemplateRoutes);
 router.use("/quote", quoteRoutes);

@@ -7,7 +7,6 @@ const passwordResetVerificationSchema = new mongoose.Schema(
     verification_code: String,
     expires_at_date: String, // current date
     expires_at_time: String, // 5 minutes since creation
-    verification_status: String,
   },
   {
     timestamps: true,

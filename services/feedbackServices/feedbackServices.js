@@ -1,11 +1,11 @@
-const driverFeedbackDao = require("../../dao/driverFeedbackDao/driverFeedbackDao");
+const feedbackDao = require("../../dao/feedbackDao/feedbackDao");
 const fs = require("fs");
 const globalFunctions = require("../../utils/globalFunctions");
 
-const createDriverFeedback = async (feedbackData, documents) => {
+const createFeedback = async (feedbackData, documents) => {
   let saveResult = await saveDocumentsToServer(documents);
   console.log(saveResult);
-  return await driverFeedbackDao.createDriverFeedback(feedbackData);
+  return await feedbackDao.createFeedback(feedbackData);
 };
 
 async function saveDocumentsToServer(documents) {
@@ -34,31 +34,41 @@ async function saveFile(base64String, fileName, file_path) {
   });
 }
 
-const getDriverFeedbacksByDriverId = async (id) => {
-  return await driverFeedbackDao.getDriverFeedbacksByDriverId(id);
+const getFeedbacksByDriverId = async (id) => {
+  return await feedbackDao.getFeedbacksByDriverId(id);
+};
+
+const getFeedbacksByStudentId = async (id) => {
+  return await feedbackDao.getFeedbacksByStudentId(id);
+};
+
+const getFeedbacksByEmployeeId = async (id) => {
+  return await feedbackDao.getFeedbacksByEmployeeId(id);
 };
 
 const deleteFeedback = async (id) => {
-  return await driverFeedbackDao.deleteFeedback(id);
+  return await feedbackDao.deleteFeedback(id);
 };
 
 const updateFeedbackById = async (updateData) => {
-  return await driverFeedbackDao.updateFeedbackById(updateData);
+  return await feedbackDao.updateFeedbackById(updateData);
 };
 
 const updateFeedbackAnswerById = async (updateData) => {
-  return await driverFeedbackDao.updateFeedbackAnswerById(updateData);
+  return await feedbackDao.updateFeedbackAnswerById(updateData);
 };
 
-const getAllDriversFeedbacks = async () => {
-  return await driverFeedbackDao.getAllDriversFeedbacks();
+const getAllFeedbacks = async () => {
+  return await feedbackDao.getAllFeedbacks();
 };
 
 module.exports = {
-  createDriverFeedback,
-  getDriverFeedbacksByDriverId,
+  createFeedback,
+  getFeedbacksByDriverId,
+  getFeedbacksByEmployeeId,
+  getFeedbacksByStudentId,
   deleteFeedback,
   updateFeedbackById,
-  getAllDriversFeedbacks,
+  getAllFeedbacks,
   updateFeedbackAnswerById,
 };

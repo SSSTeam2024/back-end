@@ -16,12 +16,20 @@ const updatePasswordResetCode = async (id) => {
 };
 
 const getPasswordResetCodeById = async (id, role, code) => {
-  const query = {
-    user_id: id,
-    user_role: role,
-    verification_code: code,
-    verification_status: "Not verified",
-  };
+  let query;
+
+  if (code !== "") {
+    query = {
+      user_id: id,
+      user_role: role,
+      verification_code: code,
+    };
+  } else if (code === "") {
+    query = {
+      user_id: id,
+      user_role: role,
+    };
+  }
 
   const passwordResetCode = await PasswordResetVerif.find(query)
     .sort({ createdAt: -1 })
@@ -31,8 +39,13 @@ const getPasswordResetCodeById = async (id, role, code) => {
   return passwordResetCode;
 };
 
+const deleteCode = async (id) => {
+  return await PasswordResetVerif.findByIdAndDelete(id);
+};
+
 module.exports = {
   createPasswordVerificationCode,
   updatePasswordResetCode,
   getPasswordResetCodeById,
+  deleteCode,
 };

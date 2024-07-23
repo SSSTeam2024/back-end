@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const driverDao = require("../../dao/driverDao/driverDao");
 const globalFunctions = require("../../utils/globalFunctions");
-const PasswordResetVerificationDao = require("../../dao/passwordResetVerificationDao/passwordResetVerificationDao");
+const passwordResetVerificationService = require("../../services/passwordResetVerificationServices/passwordResetVerificationService");
 const driverEmailTemplates = require("../../utils/driverEmailTemplates");
 const driverEmailService = require("./driverEmailService");
 
@@ -100,19 +100,39 @@ const generateCodeAndSendEmail = async (
   let verificationCode = Math.floor(100000 + Math.random() * 900000);
   console.log("verificationCode", verificationCode);
 
-  let verifCode = {
-    user_id: driverId,
-    user_role: "Driver",
-    verification_code: verificationCode,
-    expires_at_date: expires_at_date,
-    expires_at_time: expires_at_time,
-    verification_status: "Not verified",
-  };
+  let verificationCodeDoc =
+    await passwordResetVerificationService.getPasswordResetCodeById(
+      driverId,
+      "Driver",
+      ""
+    );
+  if (verificationCodeDoc.length > 0) {
+    console.log("Verification code found:", verificationCodeDoc[0]);
+    let existedCode = verificationCodeDoc[0];
+    await passwordResetVerificationService.deleteCode(existedCode._id);
+    let verifCode = {
+      user_id: driverId,
+      user_role: "Driver",
+      verification_code: verificationCode,
+      expires_at_date: expires_at_date,
+      expires_at_time: expires_at_time,
+    };
 
-  let code = await PasswordResetVerificationDao.createPasswordVerificationCode(
-    verifCode
-  );
-  console.log("created code", code);
+    let code = await passwordResetVerificationService.createCode(verifCode);
+    console.log("created code", code);
+  } else {
+    console.log("Verification code not fount");
+    let verifCode = {
+      user_id: driverId,
+      user_role: "Driver",
+      verification_code: verificationCode,
+      expires_at_date: expires_at_date,
+      expires_at_time: expires_at_time,
+    };
+
+    let code = await passwordResetVerificationService.createCode(verifCode);
+    console.log("created code", code);
+  }
 
   let emailBody =
     driverEmailTemplates.driverEmailTemplates.reset_password_verification_code(
@@ -121,7 +141,7 @@ const generateCodeAndSendEmail = async (
     );
   let emailSubject = "Reset your password";
   let fullEmailObject = {
-    to: driver.email /*"mouafekhedfi@gmail.com"*/,
+    to: driver.email /*"mouafekhedfi@gmail.com"  driver.email */,
     subject: emailSubject,
     body: emailBody,
   };

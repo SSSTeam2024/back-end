@@ -239,18 +239,24 @@ const updateProfile = async (req, res) => {
       dateBirth,
       email,
       phone,
-      status,
+      status_account,
       login,
       password,
       id_creation_date,
       IdFileBase64String,
       IdFileExtension,
+      PhotoIdBase64String,
+      PhotoIdExtension,
+      parent_id,
       DropOff_date,
       DropOff_time,
       DropOff_station,
       pickUp_date,
       pickUp_time,
       pickUp_station,
+      api_token,
+      groupJoiningDate,
+      idSchool,
     } = req.body;
     let id_file;
     if (IdFileBase64String && IdFileExtension) {
@@ -279,17 +285,24 @@ const updateProfile = async (req, res) => {
           dateBirth,
           email,
           phone,
-          status,
+          status_account,
           login,
           password,
           id_creation_date,
-          id_file,
+          IdFileBase64String,
+          IdFileExtension,
+          PhotoIdBase64String,
+          PhotoIdExtension,
+          parent_id,
           DropOff_date,
           DropOff_time,
           DropOff_station,
           pickUp_date,
           pickUp_time,
           pickUp_station,
+          api_token,
+          groupJoiningDate,
+          idSchool,
         },
         documents
       );
@@ -306,16 +319,24 @@ const updateProfile = async (req, res) => {
         dateBirth,
         email,
         phone,
-        status,
+        status_account,
         login,
         password,
         id_creation_date,
+        IdFileBase64String,
+        IdFileExtension,
+        PhotoIdBase64String,
+        PhotoIdExtension,
+        parent_id,
         DropOff_date,
         DropOff_time,
         DropOff_station,
         pickUp_date,
         pickUp_time,
         pickUp_station,
+        api_token,
+        groupJoiningDate,
+        idSchool,
       });
       res.json(updatedStudent);
     }
@@ -327,7 +348,6 @@ const updateProfile = async (req, res) => {
 
 const createStudent = async (req, res) => {
   try {
-    console.log("req.body addstudent", req.body);
     const {
       firstName,
       lastName,

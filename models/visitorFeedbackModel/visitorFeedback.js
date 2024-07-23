@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const feedbackSchema = new mongoose.Schema({
+const visitorFeedbackSchema = new mongoose.Schema({
   experience_satisfaction_scale: Number,
   booking_process: String,
   most_enjoyed: String,
@@ -14,4 +14,4 @@ const feedbackSchema = new mongoose.Schema({
   id_visitor: String,
 });
 
-module.exports = mongoose.model('Feedback', feedbackSchema);
+module.exports = mongoose.model("VisitorFeedback", visitorFeedbackSchema);

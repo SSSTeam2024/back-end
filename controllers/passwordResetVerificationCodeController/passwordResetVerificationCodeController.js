@@ -14,7 +14,7 @@ const verifyPasswordResetCode = async (req, res) => {
     if (verificationCodeDoc.length > 0) {
       console.log("Verification code found:", verificationCodeDoc[0]);
       let code = verificationCodeDoc[0];
-      await passwordResetVerificationService.updatePasswordResetCode(code._id);
+      await passwordResetVerificationService.deleteCode(code._id);
       res.json({ msg: "Ok" });
     } else {
       console.log("Verification code not fount");
