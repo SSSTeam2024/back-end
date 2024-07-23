@@ -1,7 +1,9 @@
 const PasswordResetVerificationDao = require("../../dao/passwordResetVerificationDao/passwordResetVerificationDao");
 
-const updatePasswordResetCode = async (id) => {
-  return await PasswordResetVerificationDao.updatePasswordResetCode(id);
+const createCode = async (data) => {
+  return await PasswordResetVerificationDao.createPasswordVerificationCode(
+    data
+  );
 };
 
 const getPasswordResetCodeById = async (id, role, code) => {
@@ -17,7 +19,7 @@ const deleteCode = async (id) => {
 };
 
 module.exports = {
-  updatePasswordResetCode,
+  createCode,
   getPasswordResetCodeById,
   deleteCode,
 };
