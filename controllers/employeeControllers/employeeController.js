@@ -213,7 +213,7 @@ const getEmployeeByEmail = async (req, res) => {
       employeeEmail
     );
     if (!getEmployeeByEmail) {
-      res.status(404).send("employee not found");
+      return res.status(404).send("employee not found");
     }
     res.json(getEmployeeByEmail);
   } catch (error) {
@@ -221,6 +221,7 @@ const getEmployeeByEmail = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
 const getEmployeeByIdCompany = async (req, res) => {
   try {
     const idCompany = req.body.idCompany;
@@ -268,6 +269,48 @@ const updateEmployeesStops = async (req, res) => {
   }
 };
 
+const updatePassword = async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    const { password } = req.body;
+
+    const updatedEmployee = await employeeService.updatePassword(employeeId, {
+      password,
+    });
+
+    if (!updatedEmployee) {
+      return res.status(404).send("Employee not found!");
+    }
+    res.json(updatedEmployee);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+//** */
+const generateVerificationCodeAndSendViaEmail = async (req, res) => {
+  try {
+    const { employeeId, expires_at_date, expires_at_time } = req.body;
+    console.log(req.body);
+    const result = await employeeService.generateCodeAndSendEmail(
+      employeeId,
+      expires_at_date,
+      expires_at_time
+    );
+
+    if (!result) {
+      return res
+        .status(404)
+        .send("Error when generating code! please try later!");
+    }
+    res.send({ msg: "email sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   addNewEmployee,
   getEmployees,
@@ -280,4 +323,6 @@ module.exports = {
   getEmployeeByIdCompany,
   removeEmployeeFromGroup,
   updateEmployeesStops,
+  updatePassword,
+  generateVerificationCodeAndSendViaEmail,
 };

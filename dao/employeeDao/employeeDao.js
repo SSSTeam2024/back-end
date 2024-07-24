@@ -94,6 +94,17 @@ const updateEmployeeStop = async (data) => {
   );
 };
 
+const updatePassword = async (id, password) => {
+  return await Employee.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        password: password,
+      },
+    }
+  );
+};
+
 module.exports = {
   createEmployee,
   getEmployee,
@@ -108,4 +119,5 @@ module.exports = {
   updateJwtToken,
   logout,
   updateEmployeeStop,
+  updatePassword,
 };

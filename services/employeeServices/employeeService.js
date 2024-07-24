@@ -6,6 +6,9 @@ const Employee = require("../../models/employeeSchema/employeeSchema");
 const GroupMigration = require("../../models/groupEmployee/groupMigration");
 const GroupEmployee = require("../../models/groupEmployee/groupEmployeeSchema");
 const globalFunctions = require("../../utils/globalFunctions");
+const passwordResetVerificationService = require("../../services/passwordResetVerificationServices/passwordResetVerificationService");
+const emailTemplates = require("../../utils/emailTemplatesStructure");
+const emailService = require("../../services/EmailService/emailService");
 
 async function saveMediaToServer(documents) {
   let counter = 0;
@@ -138,6 +141,73 @@ const updateEmployeeStops = async (employeeList) => {
   }
 };
 
+const updatePassword = async (id, password) => {
+  const hashedPassword = await bcrypt.hash(password.password, 10);
+  return await employeeDao.updatePassword(id, hashedPassword);
+};
+
+//** */ */
+const generateCodeAndSendEmail = async (
+  employeeId,
+  expires_at_date,
+  expires_at_time
+) => {
+  let employee = await employeeDao.getEmployeeById(employeeId);
+
+  let verificationCode = Math.floor(100000 + Math.random() * 900000);
+  console.log("verificationCode", verificationCode);
+
+  let verificationCodeDoc =
+    await passwordResetVerificationService.getPasswordResetCodeById(
+      employeeId,
+      "Employee",
+      ""
+    );
+  if (verificationCodeDoc.length > 0) {
+    console.log("Verification code found:", verificationCodeDoc[0]);
+    let existedCode = verificationCodeDoc[0];
+    await passwordResetVerificationService.deleteCode(existedCode._id);
+    let verifCode = {
+      user_id: employeeId,
+      user_role: "Employee",
+      verification_code: verificationCode,
+      expires_at_date: expires_at_date,
+      expires_at_time: expires_at_time,
+    };
+
+    let code = await passwordResetVerificationService.createCode(verifCode);
+    console.log("created code", code);
+  } else {
+    console.log("Verification code not fount");
+    let verifCode = {
+      user_id: employeeId,
+      user_role: "Employee",
+      verification_code: verificationCode,
+      expires_at_date: expires_at_date,
+      expires_at_time: expires_at_time,
+    };
+
+    let code = await passwordResetVerificationService.createCode(verifCode);
+    console.log("created code", code);
+  }
+
+  let emailBody =
+    emailTemplates.emailTemplates.reset_password_verification_code(
+      employee.firstName + " " + employee.lastName,
+      verificationCode
+    );
+  let emailSubject = "Reset your password";
+  let fullEmailObject = {
+    to: employee.email /*"mouafekhedfi@gmail.com"  employee.email */,
+    subject: emailSubject,
+    body: emailBody,
+  };
+
+  let result = await emailService.sendEmail(fullEmailObject);
+
+  return result;
+};
+
 module.exports = {
   createEmployee,
   getEmployeeByEmail,
@@ -150,4 +220,6 @@ module.exports = {
   removeEmployeeFromGroup,
   logout,
   updateEmployeeStops,
+  updatePassword,
+  generateCodeAndSendEmail,
 };

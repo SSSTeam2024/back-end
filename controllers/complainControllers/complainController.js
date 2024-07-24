@@ -30,7 +30,6 @@ const addNewComplain = async (req, res) => {
       resVideoBase64Strings,
       ResVideoExtension,
     } = req.body;
-
     const pdfPath = "files/complainFiles/pdf/";
     const photoPath = "files/complainFiles/photos/";
     const videoPath = "files/complainFiles/videos/";
@@ -274,14 +273,14 @@ const getComplainByIdCompany = async (req, res) => {
 
 const getComplainByIdSchool = async (req, res) => {
   try {
-    const id_school = req.body.id_school;
+    const id_school = req.params.id;
     const getComplainByIdSchool = await complainService.getComplainByIdSchool(
       id_school
     );
     if (!getComplainByIdSchool) {
       res.status(404).send("Complain not found");
     }
-    res.json({ getComplainByIdSchool });
+    res.json(getComplainByIdSchool);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

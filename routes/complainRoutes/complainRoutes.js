@@ -15,6 +15,9 @@ router.post(
   "/getComplainByIdCompany",
   complainController.getComplainByIdCompany
 );
-router.post("/getComplainByIdSchool", complainController.getComplainByIdSchool);
+router.get(
+  "/getComplainByIdSchool/:id",
+  complainController.getComplainByIdSchool
+);
 
 module.exports = router;

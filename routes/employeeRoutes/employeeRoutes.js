@@ -21,5 +21,13 @@ router.delete(
 );
 
 router.post("/update-employees-stops", employeeController.updateEmployeesStops);
+//** */
+router.post(
+  "/send-verification-code",
+  employeeController.generateVerificationCodeAndSendViaEmail
+);
+
+//** */
+router.put("/update-employee-password/:id", employeeController.updatePassword);
 
 module.exports = router;
