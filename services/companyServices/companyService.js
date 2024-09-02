@@ -24,16 +24,18 @@ async function saveDocumentsToServer(documents) {
 
 async function saveFile(base64String, fileName, file_path) {
   //const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, '');
-  const binaryData = Buffer.from(base64String, "base64");
-  const filePath = file_path + fileName;
-  await globalFunctions.ensureDirectoryExistence(file_path);
-  fs.writeFile(filePath, binaryData, "binary", (err) => {
-    if (err) {
-      console.error("Error saving the file:", err);
-    } else {
-      console.log("File saved successfully!");
-    }
-  });
+  if (base64String != undefined) {
+    const binaryData = Buffer.from(base64String, "base64");
+    const filePath = file_path + fileName;
+    await globalFunctions.ensureDirectoryExistence(file_path);
+    fs.writeFile(filePath, binaryData, "binary", (err) => {
+      if (err) {
+        console.error("Error saving the file:", err);
+      } else {
+        console.log("File saved successfully!");
+      }
+    });
+  }
 }
 
 // login school service acccount
@@ -75,7 +77,6 @@ const loginCompany = async (login, password) => {
 
 //forgot password
 const updatePassword = async (id, password) => {
-  console.log(password);
   const hashedPassword = await bcrypt.hash(password.password, 10);
   return await companyDao.updatePassword(id, hashedPassword);
 };
@@ -95,8 +96,10 @@ const getCompanyByEmail = async (email) => {
   return await companyDao.getCompanyByEmail(email);
 };
 
-const updateCompany = async (id, updateData) => {
-  return await companyDao.updateCompany(id, updateData);
+const updateCompany = async (id, updateData, documents) => {
+  let saveResult = await saveDocumentsToServer(documents);
+
+  return await companyDao.updateCompany(id, updateData, documents);
 };
 // get Company by token
 const getCompanyByToken = async (token) => {

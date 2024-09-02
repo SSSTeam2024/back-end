@@ -136,6 +136,7 @@ const deleteTeam = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
 // update team profile
 const updateProfile = async (req, res) => {
   try {
@@ -154,6 +155,7 @@ const updateProfile = async (req, res) => {
       phone,
       statusTeam,
       login,
+      service_date,
       access_level,
       password,
       contract_type,
@@ -161,72 +163,76 @@ const updateProfile = async (req, res) => {
       id_card_date,
       IdFileBase64String,
       IdFileExtension,
+      bank_name,
+      account_name,
+      account_number,
+      sort_code,
+      avatarBase64String,
+      avatarExtension,
     } = req.body;
-    let id_file;
-    if (IdFileBase64String && IdFileExtension) {
-      id_file = globalFunctions.generateUniqueFilename(
-        IdFileExtension,
-        "teamId"
-      );
-      let documents = [
-        {
-          base64String: IdFileBase64String,
-          extension: IdFileExtension,
-          name: id_file,
-        },
-      ];
-      await teamService.updatedTeam(
-        teamId,
-        {
-          firstName,
-          lastName,
-          birth_date,
-          nationality,
-          gender,
-          marital_status,
-          number_of_childs,
-          legal_card,
-          address,
-          email,
-          phone,
-          statusTeam,
-          login,
-          access_level,
-          password,
-          contract_type,
-          salary,
-          id_card_date,
-          IdFileBase64String,
-          IdFileExtension,
-        },
-        documents
-      );
-    } else {
-      await teamService.updatedTeam(teamId, {
-        firstName,
-        lastName,
-        birth_date,
-        nationality,
-        gender,
-        marital_status,
-        number_of_childs,
-        legal_card,
-        address,
-        email,
-        phone,
-        statusTeam,
-        login,
-        access_level,
-        password,
-        contract_type,
-        salary,
-        id_card_date,
-        IdFileBase64String,
-        IdFileExtension,
-      });
+
+    const legalFilesPath = "files/teamFiles/idsFiles/";
+    let id_file = globalFunctions.generateUniqueFilename(
+      IdFileExtension,
+      "teamId"
+    );
+
+    const avatarFilesPath = "files/teamFiles/avatarImages/";
+    let avatar = globalFunctions.generateUniqueFilename(
+      avatarExtension,
+      "avatar"
+    );
+
+    let teamBody = {
+      firstName,
+      lastName,
+      birth_date,
+      nationality,
+      gender,
+      marital_status,
+      number_of_childs,
+      legal_card,
+      address,
+      email,
+      phone,
+      statusTeam,
+      login,
+      service_date,
+      access_level,
+      password,
+      contract_type,
+      salary,
+      id_card_date,
+      bank_name,
+      account_name,
+      account_number,
+      sort_code,
+    };
+    let documents = [
+      {
+        base64String: IdFileBase64String,
+        extension: IdFileExtension,
+        name: id_file,
+        path: legalFilesPath,
+      },
+      {
+        base64String: avatarBase64String,
+        extension: avatarExtension,
+        name: avatar,
+        path: avatarFilesPath,
+      },
+    ];
+
+    if (documents[0].base64String != undefined) {
+      teamBody.id_file = documents[0].name;
+    }
+    if (documents[1].base64String != undefined) {
+      teamBody.avatar = documents[1].name;
     }
 
-    res.sendStatus(200);
+    const team = await teamService.updatedTeam(teamId, teamBody, documents);
+
+    res.status(200).json(team);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

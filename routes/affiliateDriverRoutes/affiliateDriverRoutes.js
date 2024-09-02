@@ -7,7 +7,7 @@ router.post(
   "/registerAffiliateDriver",
   driverAffiliateController.registerDriverAffiliate
 );
-router.put(
+router.patch(
   "/updateAffiliateDriver/:id",
   driverAffiliateController.updateDriverAffiliate
 );

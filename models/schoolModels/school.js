@@ -16,7 +16,7 @@ const schoolSchema = new mongoose.Schema(
     corporateCategory: String,
     contract: String,
     sort_code: Number,
-    account_number: Number,
+    account_number: String,
     bank_name: String,
     id_creation_date: Date,
     id_file: String,

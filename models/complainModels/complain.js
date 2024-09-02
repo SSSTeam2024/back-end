@@ -31,7 +31,7 @@ const complainSchema = new mongoose.Schema(
     status: String,
     archived: String,
     pdf: String,
-    photo: [String],
+    photo: String,
     video: String,
     resVideo: String,
     resPhoto: String,

@@ -26,7 +26,7 @@ const vehicleAffiliateSchema = new mongoose.Schema(
     ownership: String,
     owner_name: String,
     note: String,
-    extra: [String],
+    extra: String,
     vehicle_images_base64_string: String,
     vehicle_images_extension: String,
     vehicle_images: String,

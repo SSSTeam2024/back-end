@@ -7,7 +7,7 @@ router.post(
   "/newAffiliateVehicle",
   vehicleAffiliateController.addNewVehicleAffiliate
 );
-router.put(
+router.patch(
   "/updateAffiliateVehicle/:id",
   vehicleAffiliateController.updateVehicleAffiliateById
 );

@@ -31,8 +31,8 @@ const addNewVehicle = async (req, res) => {
       mot_expiry,
       mot_file_base64_string, // File
       mot_file_extension, // File
-      vehicle_images_base64_string, // File
-      vehicle_images_extension, // File
+      vehicle_images_base64_string = [], // File
+      vehicle_images_extension = [], // File
       tax_expiry,
       tax_file_base64_string, // File
       tax_file_extension, // File
@@ -68,18 +68,17 @@ const addNewVehicle = async (req, res) => {
       insurance_file_extension,
       "VehicleInsurance"
     );
-    let vehicle_images = globalFunctions.generateUniqueFilename(
-      vehicle_images_extension,
-      "VehicleImages"
+    const vehicle_images = vehicle_images_extension.map((ext, index) =>
+      globalFunctions.generateUniqueFilename(ext, `VehicleImages_${index}`)
     );
-
     let documents = [
-      {
-        base64String: vehicle_images_base64_string,
-        extension: vehicle_images_extension,
-        name: vehicle_images,
+      ...vehicle_images_base64_string.map((base64String, index) => ({
+        base64String: base64String,
+        extension: vehicle_images_extension[index],
+        name: vehicle_images[index],
         path: vehicleImagesPath,
-      },
+      })),
+
       {
         base64String: mot_file_base64_string,
         extension: mot_file_extension,
@@ -142,7 +141,7 @@ const addNewVehicle = async (req, res) => {
         hp_reference_no,
         monthly_repayment_amount,
         hp_company,
-        vehicle_images,
+        vehicle_images, // File
       },
       documents
     );
@@ -181,10 +180,17 @@ const updateVehicleById = async (req, res) => {
       owner_name,
       note,
       extra,
-      vehicle_images,
       mot_expiry,
+      mot_file_base64_string, // File
+      mot_file_extension, // File
+      vehicle_images_base64_string = [], // File
+      vehicle_images_extension = [], // File
       tax_expiry,
+      tax_file_base64_string, // File
+      tax_file_extension, // File
       insurance_expiry,
+      insurance_file_base64_string, // File
+      insurance_file_extension, // File
       inspection_due,
       service_due,
       tacho_calibration_due,
@@ -197,7 +203,28 @@ const updateVehicleById = async (req, res) => {
       hp_company,
     } = req.body;
 
-    const updatedVehicle = await vehicleService.updateVehicle(vehicleId, {
+    const motFilesPath = "files/VehicleFiles/motFiles/";
+    const taxFilesPath = "files/VehicleFiles/taxFiles/";
+    const insuranceFilesPath = "files/VehicleFiles/insuranceFiles/";
+    const vehicleImagesPath = "files/VehicleFiles/vehicleImages/";
+
+    let mot_file = globalFunctions.generateUniqueFilename(
+      mot_file_extension,
+      "VehicleMot"
+    );
+    let tax_file = globalFunctions.generateUniqueFilename(
+      tax_file_extension,
+      "VehicleTax"
+    );
+    let insurance_file = globalFunctions.generateUniqueFilename(
+      insurance_file_extension,
+      "VehicleInsurance"
+    );
+    const vehicle_images = vehicle_images_extension.map((ext, index) =>
+      globalFunctions.generateUniqueFilename(ext, `VehicleImages_${index}`)
+    );
+
+    let vehicleBody = {
       registration_number,
       model,
       color,
@@ -222,7 +249,6 @@ const updateVehicleById = async (req, res) => {
       owner_name,
       note,
       extra,
-      vehicle_images,
       mot_expiry,
       tax_expiry,
       insurance_expiry,
@@ -236,12 +262,69 @@ const updateVehicleById = async (req, res) => {
       hp_reference_no,
       monthly_repayment_amount,
       hp_company,
+    };
+
+    let documents = [];
+
+    vehicle_images_base64_string.forEach((base64String, index) => {
+      if (base64String) {
+        documents.push({
+          base64String: base64String,
+          extension: vehicle_images_extension[index],
+          name: vehicle_images[index],
+          path: vehicleImagesPath,
+        });
+      }
     });
 
-    if (!updatedVehicle) {
-      return res.status(404).send("Vehicle not found!");
+    if (mot_file_base64_string) {
+      documents.push({
+        base64String: mot_file_base64_string,
+        extension: mot_file_extension,
+        name: mot_file,
+        path: motFilesPath,
+      });
     }
-    res.json(updatedVehicle);
+
+    if (tax_file_base64_string) {
+      documents.push({
+        base64String: tax_file_base64_string,
+        extension: tax_file_extension,
+        name: tax_file,
+        path: taxFilesPath,
+      });
+    }
+
+    if (insurance_file_base64_string) {
+      documents.push({
+        base64String: insurance_file_base64_string,
+        extension: insurance_file_extension,
+        name: insurance_file,
+        path: insuranceFilesPath,
+      });
+    }
+
+    // Assign the correct file names to vehicleBody
+    if (vehicle_images.length > 0) {
+      vehicleBody.vehicle_images = vehicle_images;
+    }
+    if (mot_file_base64_string) {
+      vehicleBody.mot_file = mot_file;
+    }
+    if (tax_file_base64_string) {
+      vehicleBody.tax_file = tax_file;
+    }
+    if (insurance_file_base64_string) {
+      vehicleBody.insurance_file = insurance_file;
+    }
+
+    const vehicle = await vehicleService.updateVehicle(
+      vehicleId,
+      vehicleBody,
+      documents
+    );
+
+    res.status(200).json(vehicle);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

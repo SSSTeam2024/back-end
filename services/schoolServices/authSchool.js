@@ -3,12 +3,11 @@ const jwt = require("jsonwebtoken");
 const schoolDao = require("../../dao/schoolDao/schoolDao");
 const fs = require("fs");
 const globalFunctions = require("../../utils/globalFunctions");
+const path = require("path");
 
 // register school service acccount
 const registerSchool = async (schoolDaoData, documents) => {
-  console.log("schoolDaoData:", schoolDaoData);
   let saveResult = await saveDocumentToServer(documents);
-  console.log(saveResult);
   const hashedPassword = await bcrypt.hash(schoolDaoData.password, 10);
   return await schoolDao.createSchool({
     ...schoolDaoData,
@@ -35,23 +34,31 @@ const loginSchool = async (login, password) => {
   }
 };
 
-// savedocumentToserver function
 async function saveDocumentToServer(documents) {
-  await saveAdministrativeFile(documents[0].base64String, documents[0].name);
+  let counter = 0;
+  for (const file of documents) {
+    await saveAdministrativeFile(file.base64String, file.name);
+    counter++;
+  }
+  if (counter == documents.length) return true;
 }
 
 async function saveAdministrativeFile(base64String, fileName) {
-  const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
-  const binaryData = Buffer.from(base64Data, "base64");
-  const filePath = "files/schoolFiles/" + fileName;
-  await globalFunctions.ensureDirectoryExistence("files/schoolFiles/");
-  fs.writeFile(filePath, binaryData, "binary", (err) => {
-    if (err) {
-      console.error("Error saving the file:", err);
-    } else {
-      console.log("File saved successfully!");
-    }
-  });
+  if (base64String != undefined) {
+    const binaryData = Buffer.from(base64String, "base64");
+    const directoryPath = path.join(__dirname, "files", "schoolFiles");
+    const filePath = "files/schoolFiles/" + fileName;
+
+    await globalFunctions.ensureDirectoryExistence(directoryPath);
+
+    fs.writeFile(filePath, binaryData, "binary", (err) => {
+      if (err) {
+        console.error("Error saving the file:", err);
+      } else {
+        console.log("File saved successfully!");
+      }
+    });
+  }
 }
 //forgot password
 const updatePassword = async (id, password) => {
@@ -68,7 +75,8 @@ const deleteSchool = async (id) => {
 
 // update school account
 
-const updatedSchool = async (id, updateData) => {
+const updatedSchool = async (id, updateData, documents) => {
+  let saveResult = await saveDocumentToServer(documents);
   return await schoolDao.updateSchool(id, updateData);
 };
 // get school by id

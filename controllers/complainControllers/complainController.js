@@ -192,16 +192,85 @@ const updateComplainToArchived = async (req, res) => {
 const updateComplainById = async (req, res) => {
   try {
     const complainId = req.params.id;
-    const { subject, description, responseMessage, responseDate, status } =
-      req.body;
-
-    const updatedComplain = await complainService.updateComplain(complainId, {
+    const {
+      id_company,
+      id_school,
       subject,
       description,
-      responseMessage,
-      responseDate,
+      complainDate,
       status,
-    });
+      pdfBase64String,
+      pdfExtension,
+      photoBase64Strings,
+      photoExtension,
+      videoBase64Strings,
+      videoExtension,
+    } = req.body;
+
+    const pdfFilesPath = "files/complainFiles/pdf/";
+    const photoFilesPath = "files/complainFiles/photos/";
+    const videoFilesPath = "files/complainFiles/videos/";
+
+    let pdf = globalFunctions.generateUniqueFilename(
+      pdfExtension,
+      "complainPDF"
+    );
+
+    let photo = globalFunctions.generateUniqueFilename(
+      photoExtension,
+      "ComplainPhotos"
+    );
+
+    let video = globalFunctions.generateUniqueFilename(
+      videoExtension,
+      "ComplaintVideo"
+    );
+
+    let complainBody = {
+      id_company,
+      id_school,
+      subject,
+      description,
+      complainDate,
+      status,
+    };
+
+    let documents = [
+      {
+        base64String: pdfBase64String,
+        extension: pdfExtension,
+        name: pdf,
+        path: pdfFilesPath,
+      },
+      {
+        base64String: photoBase64Strings,
+        extension: photoExtension,
+        name: photo,
+        path: photoFilesPath,
+      },
+      {
+        base64String: videoBase64Strings,
+        extension: videoExtension,
+        name: video,
+        path: videoFilesPath,
+      },
+    ];
+
+    if (documents[0].base64String != undefined) {
+      complainBody.pdf = documents[0].name;
+    }
+    if (documents[1].base64String != undefined) {
+      complainBody.photo = documents[1].name;
+    }
+    if (documents[2].base64String != undefined) {
+      complainBody.video = documents[2].name;
+    }
+
+    const updatedComplain = await complainService.updateComplain(
+      complainId,
+      complainBody,
+      documents
+    );
 
     if (!updatedComplain) {
       return res.status(404).send("Complain not found!");

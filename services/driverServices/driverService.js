@@ -27,16 +27,18 @@ async function saveDocumentsToServer(documents) {
 }
 
 async function saveFile(base64String, fileName, file_path) {
-  const binaryData = Buffer.from(base64String, "base64");
-  const filePath = file_path + fileName;
-  await globalFunctions.ensureDirectoryExistence(file_path);
-  fs.writeFile(filePath, binaryData, "binary", (err) => {
-    if (err) {
-      console.error("Error saving the file:", err);
-    } else {
-      console.log("File saved successfully!");
-    }
-  });
+  if (base64String != undefined) {
+    const binaryData = Buffer.from(base64String, "base64");
+    const filePath = file_path + fileName;
+    await globalFunctions.ensureDirectoryExistence(file_path);
+    fs.writeFile(filePath, binaryData, "binary", (err) => {
+      if (err) {
+        console.error("Error saving the file:", err);
+      } else {
+        console.log("File saved successfully!");
+      }
+    });
+  }
 }
 
 const loginDriver = async (email, password) => {
@@ -56,7 +58,8 @@ const loginDriver = async (email, password) => {
   }
 };
 
-const updateDriver = async (id, updateData) => {
+const updateDriver = async (id, updateData, documents) => {
+  let saveResult = await saveDocumentsToServer(documents);
   return await driverDao.updateDriver(id, updateData);
 };
 
@@ -98,7 +101,6 @@ const generateCodeAndSendEmail = async (
   let driver = await driverDao.getDriverById(driverId);
 
   let verificationCode = Math.floor(100000 + Math.random() * 900000);
-  console.log("verificationCode", verificationCode);
 
   let verificationCodeDoc =
     await passwordResetVerificationService.getPasswordResetCodeById(
@@ -107,7 +109,6 @@ const generateCodeAndSendEmail = async (
       ""
     );
   if (verificationCodeDoc.length > 0) {
-    console.log("Verification code found:", verificationCodeDoc[0]);
     let existedCode = verificationCodeDoc[0];
     await passwordResetVerificationService.deleteCode(existedCode._id);
     let verifCode = {
@@ -119,9 +120,7 @@ const generateCodeAndSendEmail = async (
     };
 
     let code = await passwordResetVerificationService.createCode(verifCode);
-    console.log("created code", code);
   } else {
-    console.log("Verification code not fount");
     let verifCode = {
       user_id: driverId,
       user_role: "Driver",
@@ -131,7 +130,6 @@ const generateCodeAndSendEmail = async (
     };
 
     let code = await passwordResetVerificationService.createCode(verifCode);
-    console.log("created code", code);
   }
 
   let emailBody =

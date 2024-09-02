@@ -159,7 +159,10 @@ const updateDriverAffiliate = async (req, res) => {
     const driverAffiliateId = req.params.id;
     const {
       username,
+      password,
       email,
+      profile_image_base64_string,
+      profile_image_extension,
       firstname,
       surname,
       birthdate,
@@ -167,6 +170,7 @@ const updateDriverAffiliate = async (req, res) => {
       joindate,
       address,
       city,
+      driverStatus,
       state,
       country,
       postalcode,
@@ -180,52 +184,144 @@ const updateDriverAffiliate = async (req, res) => {
       account_number,
       sort_code,
       //
+      driver_license_base64_string,
+      driver_license_extension,
       driving_license_expiry,
+      dqc_base64_string,
+      dqc_extension,
       dqc_expiry,
+      dbscheck_base64_string,
+      dbscheck_extension,
       dbs_issue_date,
       dbs_badge_date,
       pvc_expiry,
+      contract_base64_string,
+      contract_extension,
       deposti_held,
       notes,
+      affilaite_reference_id,
     } = req.body;
 
-    const updatedDriverAffiliate =
-      await driverAffiliateService.updateAffiliateDriver(driverAffiliateId, {
-        username,
-        email,
-        firstname,
-        surname,
-        birthdate,
-        jobtype,
-        joindate,
-        address,
-        city,
-        state,
-        country,
-        postalcode,
-        language,
-        nationality,
-        phonenumber,
-        emergency_contact,
-        //
-        bank_name,
-        account_name,
-        account_number,
-        sort_code,
-        //
-        driving_license_expiry,
-        dqc_expiry,
-        dbs_issue_date,
-        dbs_badge_date,
-        pvc_expiry,
-        deposti_held,
-        notes,
-      });
+    const licenseFilesPath = "files/driverAffiliateFiles/licenseFiles/";
+    const dqcFilesPath = "files/driverAffiliateFiles/dqcFiles/";
+    const dbsCheckFilesPath = "files/driverAffiliateFiles/dbsCheckFiles/";
+    const contractFilesPath = "files/driverAffiliateFiles/contractFiles/";
+    const profileImagesPath = "files/driverAffiliateFiles/profileImages/";
 
-    if (!updatedDriverAffiliate) {
-      return res.status(404).send("Affiliates Driver not found!");
+    let driver_license = globalFunctions.generateUniqueFilename(
+      driver_license_extension,
+      "drivingLicense"
+    );
+    let dqc = globalFunctions.generateUniqueFilename(dqc_extension, "DQC");
+    let dbscheck = globalFunctions.generateUniqueFilename(
+      dbscheck_extension,
+      "dbsCheck"
+    );
+    let contract = globalFunctions.generateUniqueFilename(
+      contract_extension,
+      "contract"
+    );
+    let profile_image = globalFunctions.generateUniqueFilename(
+      profile_image_extension,
+      "profileImg"
+    );
+
+    let driverBody = {
+      username,
+      password,
+      email,
+
+      firstname,
+      surname,
+      birthdate,
+      jobtype,
+      joindate,
+      address,
+      city,
+      driverStatus,
+      state,
+      country,
+      postalcode,
+      language,
+      nationality,
+      phonenumber,
+      emergency_contact,
+      //
+      bank_name,
+      account_name,
+      account_number,
+      sort_code,
+      //
+
+      driving_license_expiry,
+
+      dqc_expiry,
+
+      dbs_issue_date,
+      dbs_badge_date,
+      pvc_expiry,
+
+      deposti_held,
+      notes,
+      affilaite_reference_id,
+    };
+
+    let documents = [
+      {
+        base64String: driver_license_base64_string,
+        extension: driver_license_extension,
+        name: driver_license,
+        path: licenseFilesPath,
+      },
+      {
+        base64String: dqc_base64_string,
+        extension: dqc_extension,
+        name: dqc,
+        path: dqcFilesPath,
+      },
+      {
+        base64String: dbscheck_base64_string,
+        extension: dbscheck_extension,
+        name: dbscheck,
+        path: dbsCheckFilesPath,
+      },
+      {
+        base64String: contract_base64_string,
+        extension: contract_extension,
+        name: contract,
+        path: contractFilesPath,
+      },
+      {
+        base64String: profile_image_base64_string,
+        extension: profile_image_extension,
+        name: profile_image,
+        path: profileImagesPath,
+      },
+    ];
+
+    if (documents[0].base64String != undefined) {
+      driverBody.driver_license = documents[0].name;
     }
-    res.json(updatedDriverAffiliate);
+    if (documents[1].base64String != undefined) {
+      driverBody.dqc = documents[1].name;
+    }
+    if (documents[2].base64String != undefined) {
+      driverBody.dbscheck = documents[2].name;
+    }
+    if (documents[3].base64String != undefined) {
+      driverBody.contract = documents[3].name;
+    }
+    if (documents[4].base64String != undefined) {
+      driverBody.profile_image = documents[4].name;
+    }
+
+    const driver = await driverAffiliateService.updateAffiliateDriver(
+      driverAffiliateId,
+      driverBody,
+      documents
+    );
+
+    res.status(200).json(driver);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

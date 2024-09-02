@@ -221,12 +221,10 @@ const updateAffiliate = async (req, res) => {
       password,
       api_token,
       id_creation_date,
-
       number_file,
       insurance_number,
       insurance_date,
       notes,
-
       vehicles,
       fleetNumber,
       enquiryDate,

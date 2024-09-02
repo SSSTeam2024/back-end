@@ -21,16 +21,18 @@ async function saveDocumentsToServer(documents) {
 }
 
 async function saveFile(base64String, fileName, file_path) {
-  const binaryData = Buffer.from(base64String, "base64");
-  const filePath = file_path + fileName;
-  await globalFunctions.ensureDirectoryExistence(file_path);
-  fs.writeFile(filePath, binaryData, "binary", (err) => {
-    if (err) {
-      console.error("Error saving the file:", err);
-    } else {
-      console.log("File saved successfully!");
-    }
-  });
+  if (base64String != undefined) {
+    const binaryData = Buffer.from(base64String, "base64");
+    const filePath = file_path + fileName;
+    await globalFunctions.ensureDirectoryExistence(file_path);
+    fs.writeFile(filePath, binaryData, "binary", (err) => {
+      if (err) {
+        console.error("Error saving the file:", err);
+      } else {
+        console.log("File saved successfully!");
+      }
+    });
+  }
 }
 // login team account
 const loginTeam = async (login, password) => {
@@ -54,8 +56,10 @@ const deleteTeam = async (id) => {
 };
 
 // udpate team
-const updatedTeam = async (id, updateData) => {
-  return await teamDao.updateTeam(id, updateData);
+const updatedTeam = async (id, updateData, documents) => {
+  let saveResult = await saveDocumentsToServer(documents);
+
+  return await teamDao.updateTeam(id, updateData, documents);
 };
 // update password
 const updatePassword = async (id, password) => {

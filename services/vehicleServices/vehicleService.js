@@ -22,17 +22,18 @@ async function saveFilesToServer(documents) {
 }
 
 async function saveFile(base64String, fileName, file_path) {
-  // const base64Data = await base64String.replace(/^data:image\/\w+;base64,/, "");
-  const binaryData = Buffer.from(base64String, "base64");
-  const filePath = file_path + fileName;
-  await globalFunctions.ensureDirectoryExistence(file_path);
-  fs.writeFile(filePath, binaryData, "binary", (err) => {
-    if (err) {
-      console.error("Error saving the file:", err);
-    } else {
-      console.log("File saved successfully!");
-    }
-  });
+  if (base64String != undefined) {
+    const binaryData = Buffer.from(base64String, "base64");
+    const filePath = file_path + fileName;
+    await globalFunctions.ensureDirectoryExistence(file_path);
+    fs.writeFile(filePath, binaryData, "binary", (err) => {
+      if (err) {
+        console.error("Error saving the file:", err);
+      } else {
+        console.log("File saved successfully!");
+      }
+    });
+  }
 }
 
 const getVehicleById = async (id) => {
@@ -43,7 +44,8 @@ const getVehicles = async () => {
   return await vehicleDao.getVehicles();
 };
 
-const updateVehicle = async (id, updateData) => {
+const updateVehicle = async (id, updateData, documents) => {
+  let saveResult = await saveFilesToServer(documents);
   return await vehicleDao.updateVehicle(id, updateData);
 };
 

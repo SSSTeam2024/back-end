@@ -143,65 +143,49 @@ const updateSchool = async (req, res) => {
       IdFileBase64String,
       IdFileExtension,
     } = req.body;
-    let id_file;
-    if (IdFileBase64String && IdFileExtension) {
-      id_file = globalFunctions.generateUniqueFilename(
-        IdFileExtension,
-        "logoSchool"
-      );
-      let documents = [
-        {
-          base64String: IdFileBase64String,
-          extension: IdFileExtension,
-          name: id_file,
-        },
-      ];
-      await authShool.updatedSchool(
-        schoolId,
-        {
-          name,
-          login,
-          email,
-          phone,
-          activity,
-          address,
-          service_date,
-          statusSchool,
-          legal_status,
-          account_name,
-          corporateCategory,
-          contract,
-          sort_code,
-          account_number,
-          bank_name,
-          id_creation_date,
-          id_file,
-        },
-        documents
-      );
-    } else {
-      await authShool.updatedSchool(schoolId, {
-        name,
-        login,
-        email,
-        phone,
-        activity,
-        address,
-        service_date,
-        statusSchool,
-        legal_status,
-        account_name,
-        corporateCategory,
-        contract,
-        sort_code,
-        account_number,
-        bank_name,
-        id_creation_date,
-        id_file,
-      });
+
+    let id_file = globalFunctions.generateUniqueFilename(
+      IdFileExtension,
+      "logoSchool"
+    );
+
+    let schoolBody = {
+      name,
+      login,
+      email,
+      phone,
+      activity,
+      address,
+      service_date,
+      statusSchool,
+      legal_status,
+      account_name,
+      corporateCategory,
+      contract,
+      sort_code,
+      account_number,
+      bank_name,
+      id_creation_date,
+    };
+
+    let documents = [
+      {
+        base64String: IdFileBase64String,
+        extension: IdFileExtension,
+        name: id_file,
+      },
+    ];
+
+    if (documents[0].base64String != undefined) {
+      schoolBody.id_file = documents[0].name;
     }
 
-    res.sendStatus(200);
+    const school = await authShool.updatedSchool(
+      schoolId,
+      schoolBody,
+      documents
+    );
+    res.status(200).json(school);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

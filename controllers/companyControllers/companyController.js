@@ -68,6 +68,7 @@ const addNewCompany = async (req, res) => {
       },
       documents
     );
+
     res.json(company);
   } catch (error) {
     console.error(error);
@@ -170,9 +171,24 @@ const updateCompany = async (req, res) => {
       account_number,
       bank_name,
       login,
+      logoBase64String,
+      logoExtension,
+      legel_card_base64_string,
+      legal_card_extension,
     } = req.body;
 
-    const updateCompany = await companyService.updateCompany(companyId, {
+    const legalFilesPath = "files/companyFiles/legalFiles/";
+    const logoFilesPath = "files/companyFiles/logoFiles/";
+    let logo_file = globalFunctions.generateUniqueFilename(
+      logoExtension,
+      "logoCompany"
+    );
+    let legal_file = globalFunctions.generateUniqueFilename(
+      legal_card_extension,
+      "LegalCard"
+    );
+
+    let companyBody = {
       name,
       address,
       email,
@@ -185,12 +201,35 @@ const updateCompany = async (req, res) => {
       account_number,
       bank_name,
       login,
-    });
+    };
+    let documents = [
+      {
+        base64String: logoBase64String,
+        extension: logoExtension,
+        name: logo_file,
+        path: logoFilesPath,
+      },
+      {
+        base64String: legel_card_base64_string,
+        extension: legal_card_extension,
+        name: legal_file,
+        path: legalFilesPath,
+      },
+    ];
 
-    if (!updateCompany) {
-      return res.status(404).send("Company not found!");
+    if (documents[0].base64String != undefined) {
+      companyBody.logo_file = documents[0].name;
     }
-    res.json(updateCompany);
+    if (documents[1].base64String != undefined) {
+      companyBody.legal_file = documents[1].name;
+    }
+    // console.log("companyBody after docs", companyBody);
+    const company = await companyService.updateCompany(
+      companyId,
+      companyBody,
+      documents
+    );
+    res.status(200).json(company);
   } catch (error) {}
 };
 

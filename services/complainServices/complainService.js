@@ -116,8 +116,10 @@ const getComplains = async () => {
   return await complainDao.getComplains();
 };
 
-const updateComplain = async (id, updateData) => {
-  return await complainDao.updateComplain(id, updateData);
+const updateComplain = async (id, updateData, documents) => {
+  let saveResult = await saveMediaToServer(documents);
+  let complain = await complainDao.updateComplain(id, updateData);
+  return complain;
 };
 
 const deleteComplain = async (id) => {
