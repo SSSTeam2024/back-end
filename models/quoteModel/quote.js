@@ -56,6 +56,14 @@ const quoteSchema = new mongoose.Schema(
     luggage_details: String,
     journey_type: String,
     notes: String,
+    information: [
+      {
+        note: String,
+        by: { type: Schema.Types.ObjectId, ref: "CentralApp", default: null },
+        date: String,
+        time: String,
+      },
+    ],
     heard_of_us: String,
     pushed_price: String,
     id_invoice: String,

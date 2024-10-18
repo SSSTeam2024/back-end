@@ -951,6 +951,24 @@ const getQuotesByStudent = async (req, res) => {
   }
 };
 
+const updateQuoteInformation = async (req, res) => {
+  const { quoteId } = req.params;
+  const { information } = req.body;
+  try {
+    const updatedQuote = await quoteService.updateQuoteInformation(
+      quoteId,
+      information
+    );
+    if (!updatedQuote) {
+      return res.status(404).json({ message: "Quote not found" });
+    }
+    res.json(updatedQuote);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -1000,4 +1018,5 @@ module.exports = {
   getAllQuotesBySchoolEmail,
   getQuotesByEmployee,
   getQuotesByStudent,
+  updateQuoteInformation,
 };

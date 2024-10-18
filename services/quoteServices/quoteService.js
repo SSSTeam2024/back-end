@@ -695,6 +695,10 @@ const getQuotesByStudentID = async (id, date) => {
   return await quoteDao.getQuotesByStudentID(id, date);
 };
 
+const updateQuoteInformation = async (quoteId, information) => {
+  return await quoteDao.updateQuoteInformation(quoteId, information);
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -747,4 +751,5 @@ module.exports = {
   getAllQuotesBySchoolEmail,
   getQuotesByEmployeeID,
   getQuotesByStudentID,
+  updateQuoteInformation,
 };

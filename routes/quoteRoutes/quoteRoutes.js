@@ -128,4 +128,8 @@ router.get(
 );
 router.post("/getQuotesByEmployee/:id", quoteController.getQuotesByEmployee);
 router.post("/getQuotesByStudent/:id", quoteController.getQuotesByStudent);
+router.patch(
+  "/updateQuoteInformation/:quoteId",
+  quoteController.updateQuoteInformation
+);
 module.exports = router;

@@ -24,7 +24,13 @@ const getQuotes = async () => {
       },
     })
     .populate("id_group_employee")
-    .populate("id_group_student");
+    .populate("id_group_student")
+    .populate({
+      path: "information",
+      populate: {
+        path: "by",
+      },
+    });
 };
 
 const updateQuote = async (id, updateData) => {
@@ -830,6 +836,14 @@ const getQuotesByStudentID = async (studentId, date) => {
   return quotes;
 };
 
+const updateQuoteInformation = async (quoteId, information) => {
+  return await Quote.findByIdAndUpdate(
+    quoteId,
+    { $push: { information: information } },
+    { new: true }
+  );
+};
+
 module.exports = {
   getAllQuotesByCompanyID,
   getAllQuotesBySchoolID,
@@ -881,4 +895,5 @@ module.exports = {
   getAllQuotesBySchoolEmail,
   getQuotesByEmployeeID,
   getQuotesByStudentID,
+  updateQuoteInformation,
 };
