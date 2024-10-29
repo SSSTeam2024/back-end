@@ -44,6 +44,21 @@ const getProgramEmployeeGroups = async (req, res) => {
 const createProgramm = async (req, res) => {
   try {
     const { programDetails, groups } = req.body;
+    if (
+      programDetails.employees_groups?.length === 1 &&
+      programDetails.employees_groups[0] === ""
+    ) {
+      delete programDetails.employees_groups;
+    }
+    if (
+      programDetails.students_groups?.length === 1 &&
+      programDetails.students_groups[0] === ""
+    ) {
+      delete programDetails.students_groups;
+    }
+    if (programDetails._id === "") {
+      delete programDetails._id;
+    }
     if (programDetails.company_id === "") {
       delete programDetails.company_id;
 
@@ -130,8 +145,10 @@ const convertedToContract = async (req, res) => {
     const newNumber = latestNumber + 1;
     const paddedNumber = newNumber.toString().padStart(4, "0");
     const contractRef = `C${currentYear}/${paddedNumber}`;
+    const groups = await programmService.getProgramStudentGroups(idProgram);
+    console.log(groups);
     if (program.school_id === null) {
-      await programmService.convertToContract({
+      const companyData = {
         idProgram: idProgram,
         contractName: program.programName,
         invoiceFrequency: program.invoiceFrequency,
@@ -158,10 +175,12 @@ const convertedToContract = async (req, res) => {
         contract_number: "",
         subTotal: program.total_price,
         tva: (Number(program.total_price) * 0.2).toFixed(2),
-      });
-      res.status(201).send("Converted Successfully");
+      };
+      console.log(companyData);
+      // await programmService.convertToContract(companyData);
+      // res.status(201).send("Converted Successfully");
     } else {
-      await programmService.convertToContract({
+      const schoolData = {
         idProgram: idProgram,
         contractName: program.programName,
         invoiceFrequency: program.invoiceFrequency,
@@ -171,7 +190,7 @@ const convertedToContract = async (req, res) => {
           Number(program.total_price) +
           Number(program.total_price) * 0.2
         ).toFixed(2),
-        unit_price: program.unit_price,
+        // unit_price: program.unit_price,
         salesperson: "445566778899112233003579",
         idSchool: program.school_id,
         vehicleType: program.vehiculeType,
@@ -188,8 +207,10 @@ const convertedToContract = async (req, res) => {
         contract_number: "",
         subTotal: program.total_price,
         tva: (Number(program.total_price) * 0.2).toFixed(2),
-      });
-      res.status(201).send("Converted Successfully");
+      };
+      console.log(schoolData);
+      // await programmService.convertToContract(schoolData);
+      // res.status(201).send("Converted Successfully");
     }
   } catch (error) {
     console.error(error);
@@ -310,13 +331,54 @@ const deleteProgramm = async (req, res) => {
 const updateStatusToConvertedAPI = async (req, res) => {
   try {
     const { id, status } = req.body;
-    console.log("id", req.body);
     const sentResult = await programmService.updateStatusToConverted({
       id,
       status,
     });
     console.log(sentResult);
     res.json({ success: sentResult });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const updateProgramm = async (req, res) => {
+  const { id } = req.params;
+  const { programDetails, groups } = req.body;
+
+  if (
+    programDetails.employees_groups?.length === 1 &&
+    programDetails.employees_groups[0] === ""
+  ) {
+    delete programDetails.employees_groups;
+  }
+  if (
+    programDetails.students_groups?.length === 1 &&
+    programDetails.students_groups[0] === ""
+  ) {
+    delete programDetails.students_groups;
+  }
+
+  if (programDetails.company_id === "") {
+    delete programDetails.company_id;
+  }
+  if (programDetails.school_id === "") {
+    delete programDetails.school_id;
+  }
+
+  try {
+    const updatedProgram = await programmService.updateProgramm(
+      id,
+      programDetails,
+      groups
+    );
+
+    if (!updatedProgram) {
+      return res.status(404).json({ message: "Program not found" });
+    }
+
+    res.json(updatedProgram);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -334,4 +396,5 @@ module.exports = {
   updateStatusToConvertedAPI,
   getProgramStudentGroups,
   getProgramEmployeeGroups,
+  updateProgramm,
 };

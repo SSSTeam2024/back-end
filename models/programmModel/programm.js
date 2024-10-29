@@ -17,8 +17,8 @@ const programmSchema = new mongoose.Schema(
           placeName: String,
           coordinates: {
             lat: String,
-            lng: String
-          }
+            lng: String,
+          },
         },
         time: String,
       },
@@ -50,9 +50,8 @@ const programmSchema = new mongoose.Schema(
       },
     ],
     notes_for_admin: [String],
-    unit_price: String,
     total_price: String,
-    journeyType:String,
+    journeyType: String,
     program_status: [
       {
         status: String,
@@ -62,8 +61,14 @@ const programmSchema = new mongoose.Schema(
     invoiceFrequency: String,
     status: String,
     within_payment_days: String,
-    students_groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupStudent'}],
-    employees_groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'groupEmployee'}],
+    students_groups: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "groupStudent" },
+    ],
+    employees_groups: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "groupEmployee" },
+    ],
+    tab_number: String,
+    groups_creation_mode: String,
   },
   {
     timestamps: true,

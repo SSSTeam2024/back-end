@@ -5,31 +5,40 @@ const groupStudentDao = require("../../dao/groupStudentDao/groupStudentDao");
 const createProgramm = async (programmData, groupsData) => {
   let program = await programmDao.createProgramm(programmData);
   let groups = [];
+  if (groups.length !== 0) {
+    let updatedProgram;
 
-  let updatedProgram;
+    if (groupsData.type === "School") {
+      for (let group of groupsData.groupCollection) {
+        group.program = program._id;
+        let createdGroup = await groupStudentDao.addNewGroup(group);
 
-  if (groupsData.type === "School") {
-    for (let group of groupsData.groupCollection) {
-      group.program = program._id;
-      let createdGroup = await groupStudentDao.addNewGroup(group);
+        groups.push(createdGroup._id);
+      }
 
-      groups.push(createdGroup._id);
+      updatedProgram = await programmDao.updateSchoolGroups(
+        program._id,
+        groups
+      );
+
+      return updatedProgram;
     }
 
-    updatedProgram = await programmDao.updateSchoolGroups(program._id, groups);
-
-    return updatedProgram;
-  }
-
-  if (groupsData.type === "Company") {
-    for (let group of groupsData.groupCollection) {
-      group.program = program._id;
-      let createdGroup = await groupEmployeeDao.addNewGroup(group);
-      groups.push(createdGroup._id);
+    if (groupsData.type === "Company") {
+      for (let group of groupsData.groupCollection) {
+        group.program = program._id;
+        let createdGroup = await groupEmployeeDao.addNewGroup(group);
+        groups.push(createdGroup._id);
+      }
+      updatedProgram = await programmDao.updateCompanyGroups(
+        program._id,
+        groups
+      );
+      return updatedProgram;
     }
-    updatedProgram = await programmDao.updateCompanyGroups(program._id, groups);
-    return updatedProgram;
   }
+
+  return program;
 };
 
 const getProgramms = async () => {
@@ -90,6 +99,44 @@ const updateStatusToConverted = async (programData) => {
   return "Converted!!";
 };
 
+const updateProgramm = async (id, programDetails, groupsData) => {
+  let program = await programmDao.updateProgramm(id, programDetails);
+  let groups = [];
+  if (programDetails.tab_number == "3") {
+    let updatedProgram;
+
+    if (groupsData.type === "School") {
+      for (let group of groupsData.groupCollection) {
+        group.program = program._id;
+        let createdGroup = await groupStudentDao.addNewGroup(group);
+        groups.push(createdGroup._id);
+      }
+
+      updatedProgram = await programmDao.updateSchoolGroups(
+        program._id,
+        groups
+      );
+      return updatedProgram;
+    }
+
+    if (groupsData.type === "Company") {
+      for (let group of groupsData.groupCollection) {
+        group.program = program._id;
+        let createdGroup = await groupEmployeeDao.addNewGroup(group);
+        groups.push(createdGroup._id);
+      }
+
+      updatedProgram = await programmDao.updateCompanyGroups(
+        program._id,
+        groups
+      );
+      return updatedProgram;
+    }
+  }
+
+  return program;
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
@@ -101,4 +148,5 @@ module.exports = {
   updateStatusToConverted,
   getProgramStudentGroups,
   getProgramEmployeeGroups,
+  updateProgramm,
 };

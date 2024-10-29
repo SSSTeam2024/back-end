@@ -30,6 +30,9 @@ const getProgramStudentGroups = async (id) => {
     populate: {
       path: "students",
     },
+    populate: {
+      path: "vehicle_type",
+    },
   });
   return program.students_groups;
 };
@@ -117,6 +120,10 @@ const updateStatusToConverted = async (id, status) => {
   );
 };
 
+const updateProgramm = async (id, updatedData) => {
+  return await Programm.findByIdAndUpdate(id, updatedData, { new: true });
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
@@ -130,4 +137,5 @@ module.exports = {
   updateSchoolGroups,
   getProgramStudentGroups,
   getProgramEmployeeGroups,
+  updateProgramm,
 };
