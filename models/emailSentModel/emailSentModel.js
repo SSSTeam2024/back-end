@@ -7,6 +7,7 @@ const emailSentSchema = new mongoose.Schema(
     subjectEmail: String,
     from: String,
     to: String,
+    emailBody: String,
   },
   {
     timestamps: true,

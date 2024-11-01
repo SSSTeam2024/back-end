@@ -180,8 +180,13 @@ const updateQuote = async (req, res) => {
       estimated_end_time,
       destination,
       total_price,
+      vehicle_type,
+      date,
+      pickup_time,
+      destination_point,
+      dropoff_time,
+      dropoff_date,
     } = req.body;
-
     const updatedQuote = await quoteService.updateQuote(quoteId, {
       id_schedule,
       id_corporate,
@@ -216,6 +221,12 @@ const updateQuote = async (req, res) => {
       estimated_end_time,
       destination,
       total_price,
+      vehicle_type,
+      date,
+      pickup_time,
+      destination_point,
+      dropoff_time,
+      dropoff_date,
     });
 
     if (!updatedQuote) {

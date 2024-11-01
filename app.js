@@ -59,6 +59,7 @@ cron.schedule("*/25 * * * * *", async () => {
       file: resultEmail.file,
       name: resultEmail.name,
     };
+    console.log("mailOptions", mailOptions);
     await emailTemplateService
       .sendNewEmail(mailOptions, resultEmail.quote_Id)
       .then(async () => {
@@ -72,6 +73,7 @@ cron.schedule("*/25 * * * * *", async () => {
               subjectEmail: resultEmail.subject,
               from: resultEmail.sender,
               to: resultEmail.newEmail,
+              emailBody: resultEmail.body,
             });
           } else {
             await emailSentServices.createEmailSent({
@@ -80,6 +82,7 @@ cron.schedule("*/25 * * * * *", async () => {
               subjectEmail: resultEmail.subject,
               from: resultEmail.sender,
               to: resultEmail.newEmail,
+              emailBody: resultEmail.body,
             });
           }
         });
