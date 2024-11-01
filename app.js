@@ -74,6 +74,7 @@ cron.schedule("*/25 * * * * *", async () => {
               from: resultEmail.sender,
               to: resultEmail.newEmail,
               emailBody: resultEmail.body,
+              by: resultEmail.by,
             });
           } else {
             await emailSentServices.createEmailSent({
@@ -83,6 +84,7 @@ cron.schedule("*/25 * * * * *", async () => {
               from: resultEmail.sender,
               to: resultEmail.newEmail,
               emailBody: resultEmail.body,
+              by: resultEmail.by,
             });
           }
         });

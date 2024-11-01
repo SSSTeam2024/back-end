@@ -98,6 +98,7 @@ const sendNewEmail = async (newData, quote_Id) => {
 };
 
 async function prepareNewEmail(newEmail, subject, body, name, quote) {
+  console.log("quote", quote);
   let newBody = body;
   if (quote !== null) {
     if (name === "Visitor") {
