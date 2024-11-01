@@ -2,7 +2,7 @@ const emailSentService = require("../../services/emailSentServices/emailSentServ
 
 const createEmailSent = async (req, res) => {
   try {
-    const { date, quoteID, subjectEmail, from, to, emailBody } = req.body;
+    const { date, quoteID, subjectEmail, from, to, emailBody, by } = req.body;
     let id = null;
     if (quoteID !== "") {
       id = quoteID;
@@ -14,6 +14,7 @@ const createEmailSent = async (req, res) => {
       from,
       to,
       emailBody,
+      by,
     });
     res.status(201).json(newEmailSent);
   } catch (error) {
