@@ -346,7 +346,7 @@ const updateStatusToConvertedAPI = async (req, res) => {
 const updateProgramm = async (req, res) => {
   const { id } = req.params;
   const { programDetails, groups } = req.body;
-
+  console.log(groups);
   if (
     programDetails.employees_groups?.length === 1 &&
     programDetails.employees_groups[0] === ""

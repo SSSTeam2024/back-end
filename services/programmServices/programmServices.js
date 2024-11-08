@@ -116,6 +116,7 @@ const updateProgramm = async (id, programDetails, groupsData) => {
         program._id,
         groups
       );
+      console.log("updatedProgram", updatedProgram);
       return updatedProgram;
     }
 
@@ -130,6 +131,7 @@ const updateProgramm = async (id, programDetails, groupsData) => {
         program._id,
         groups
       );
+      console.log("updatedProgram", updatedProgram);
       return updatedProgram;
     }
   }
