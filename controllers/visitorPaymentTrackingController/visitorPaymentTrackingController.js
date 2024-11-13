@@ -11,7 +11,7 @@ const createPaymentTrackingRecord = async (req, res) => {
     });
     //res.json(visPayTrackRec);
     res.redirect(
-      "http://client.chercheinfo.net/Booking-Payment.html?id=" +
+      "http://www.coachhirenetwork.co.ukBooking-Payment.html?id=" +
         visPayTrackRec._id
     );
   } catch (error) {

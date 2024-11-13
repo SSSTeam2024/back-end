@@ -392,7 +392,7 @@ const updateQuoteStatus = async (req, res) => {
 
     res.json({
       link:
-        "http://client.chercheinfo.net/Booking-Success.html?type=" +
+        "http://www.coachhirenetwork.co.ukBooking-Success.html?type=" +
         payment_type +
         "&mode=" +
         payment_mode +
