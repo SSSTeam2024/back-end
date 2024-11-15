@@ -221,15 +221,22 @@ const getQuoteByIdSchedule = async (id) => {
 };
 
 const assignDriverAndVehicleToQuoteDao = async (id, driver_ID, vehicle_ID) => {
+  const updateFields = {
+    status: "Allocated",
+  };
+
+  if (driver_ID !== null) {
+    updateFields.id_driver = driver_ID;
+  }
+
+  if (vehicle_ID !== null) {
+    updateFields.id_vehicle = vehicle_ID;
+  }
+
   return await Quote.findByIdAndUpdate(
     { _id: id },
-    {
-      $set: {
-        id_vehicle: vehicle_ID,
-        id_driver: driver_ID,
-        status: "Allocated",
-      },
-    }
+    { $set: updateFields },
+    { new: true } // Optionally return the updated document
   );
 };
 
