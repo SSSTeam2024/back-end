@@ -236,7 +236,7 @@ const assignDriverAndVehicleToQuoteDao = async (id, driver_ID, vehicle_ID) => {
   return await Quote.findByIdAndUpdate(
     { _id: id },
     { $set: updateFields },
-    { new: true } // Optionally return the updated document
+    { new: true }
   );
 };
 
