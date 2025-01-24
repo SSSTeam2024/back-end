@@ -3,7 +3,7 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 const createOfferService = async (req, res) => {
   try {
-    const { littleTitle, bigTitle, cards } = req.body;
+    const { littleTitle, bigTitle, cards, associatedPage } = req.body;
 
     const documents = [];
     const processedCards = cards.map((card, index) => {
@@ -27,6 +27,7 @@ const createOfferService = async (req, res) => {
       littleTitle,
       bigTitle,
       cards: processedCards,
+      associatedPage,
     };
 
     const newOfferService = await offerServicesService.createOfferService(
@@ -44,7 +45,7 @@ const createOfferService = async (req, res) => {
 const updateOfferService = async (req, res) => {
   try {
     const OfferServiceId = req.params.id;
-    const { littleTitle, bigTitle, cards } = req.body;
+    const { littleTitle, bigTitle, cards, associatedPage } = req.body;
     const existingOfferService = await offerServicesService.getOfferServiceById(
       OfferServiceId
     );
@@ -91,6 +92,7 @@ const updateOfferService = async (req, res) => {
       littleTitle: littleTitle || existingOfferService.littleTitle,
       bigTitle: bigTitle || existingOfferService.bigTitle,
       cards: processedCards,
+      associatedPage,
     };
 
     // Call the update service with updated data and documents
@@ -153,7 +155,6 @@ const addCardToOfferService = async (req, res) => {
         path: imagePath,
       },
     ];
-
     const updatedOffer = await offerServicesService.addCardToOfferService(
       offerId,
       {

@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const offerServicesSchema = new Schema({
+const block1Schema = new Schema({
+  page: String,
+  image: {
+    path: String,
+    display: String,
+  },
   littleTitle: {
     name: String,
     display: String,
@@ -10,16 +15,17 @@ const offerServicesSchema = new Schema({
     name: String,
     display: String,
   },
-  cards: [
+  subTitle: {
+    name: String,
+    display: String,
+  },
+  tabs: [
     {
       title: String,
-      display: String,
-      content: String,
-      image: String,
       icon: String,
+      content: String,
     },
   ],
-  associatedPage: String,
 });
 
-module.exports = mongoose.model("OfferService", offerServicesSchema);
+module.exports = mongoose.model("Block1", block1Schema);

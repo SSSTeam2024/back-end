@@ -1045,8 +1045,9 @@ const generateHTMLFile = async (req, res) => {
       "C:/Users/HP/Desktop/3s Coach Hire Network/website"
     );
     const sanitizedLink = htmlPage.link.replace(/\s+/g, "-");
+    console.log("sanitizedLink", sanitizedLink);
     const filePath = path.join(folderPath, `${sanitizedLink}.html`);
-
+    console.log("filePath", filePath);
     // Ensure folder exists
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath, { recursive: true });

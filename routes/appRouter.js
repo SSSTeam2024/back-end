@@ -68,6 +68,12 @@ const iconRoutes = require("./iconRoutes/iconRoutes");
 const htmlPageRoutes = require("./htmlPageRoutes/htmlPageRoutes");
 const ourMissionRoutes = require("./ourMissionRoutes/ourMissionRoutes");
 const socialServicesRoutes = require("./socialServicesRoutes/socialServicesRoutes");
+const bestOfferComponentRoutes = require("./bestOfferComponentRoutes/bestOfferComponentRoutes");
+const servicesBlock1ComponentRoutes = require("./servicesBlock1ComponentRoutes/servicesBlock1ComponentRoutes");
+const vehicleGuideRoutes = require("./vehicleGuideComponentRoutes/vehicleGuideComponentRoutes");
+const vehiclesClassRoutes = require("./vehiclesClassComponentRoutes/vehiclesClassComponentRoutes");
+const fleetRoutes = require("./fleetComponentRoutes/fleetComponentRoutes");
+const onTheRoadRoutes = require("./onTheRoadComponentRoutes/onTheRoadComponentRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -145,5 +151,11 @@ router.use("/icons", iconRoutes);
 router.use("/html-pages", htmlPageRoutes);
 router.use("/our-mission-component", ourMissionRoutes);
 router.use("/social-services-component", socialServicesRoutes);
+router.use("/best-offers-component", bestOfferComponentRoutes);
+router.use("/services-block1-component", servicesBlock1ComponentRoutes);
+router.use("/vehicle-guide-component", vehicleGuideRoutes);
+router.use("/vehicles-class-component", vehiclesClassRoutes);
+router.use("/fleets-component", fleetRoutes);
+router.use("/on-the-road-component", onTheRoadRoutes);
 
 module.exports = router;
