@@ -1,4 +1,4 @@
-const iconDao = require("../../dao/icondao/icondao");
+const iconDao = require("../../dao/iconDao/iconDao");
 
 const createIcon = async (iconData) => {
   return await iconDao.createIcon(iconData);
