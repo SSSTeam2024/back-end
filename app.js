@@ -28,6 +28,15 @@ const io = new Server(server, {
   },
 });
 
+global.io = io;
+
+// const ioNotif = new Server(server, {
+//   cors: {
+//     origin: "*", // Adjust this based on your frontend URL
+//     methods: ["GET", "POST"],
+//   },
+// });
+
 app.use(compression());
 app.use(cors());
 app.use(express.static("files"));
@@ -131,6 +140,10 @@ io.on("connection", (socket) => {
   });
   socket.on("employee-scan", (arg) => {
     io.emit("employee-scan-driver", arg);
+  });
+  socket.on("notification", (arg) => {
+    console.log("notif");
+    io.emit("notification", arg);
   });
 });
 

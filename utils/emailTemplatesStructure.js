@@ -3886,6 +3886,66 @@ const emailTemplates = {
     </table>
   </body>
 </html>`,
+  admin_email_quote_received: (visitor, quote, creationDate) =>
+    `
+  <html>
+<body
+  style="
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
+  "
+>
+<div>
+<h2>A New quote is received</h2>
+at <span><strong>` +
+    creationDate +
+    `</strong></span>
+</div>
+  <fieldset
+    style="
+      width: 600px;
+      margin: auto;
+    "
+  >
+    <legend style="margin-left: 20%">
+      <strong>Reference: </strong>` +
+    quote.quote_ref +
+    ` <strong>Date: </strong>` +
+    creationDate +
+    `
+    </legend>
+    <p>Quote Received make by <strong> ` +
+    visitor.name +
+    ` </strong> </p> <br />
+    <p>Email Client : <strong> ` +
+    visitor.email +
+    ` </strong> </p> <br />
+    <p>Phone Number :  <strong> ` +
+    visitor.phone +
+    ` </strong> </p> <br />
+    <p>Quote Start from :  <strong> ` +
+    quote.start_point.placeName +
+    ` </strong> to: <strong> ` +
+    quote.destination_point.placeName +
+    ` </strong> </p> <br />
+      <p>Passengers Number :  <strong> ` +
+    quote.passengers_number +
+    ` </strong> </p> <br />
+      <p>Vehicle Type :  <strong> ` +
+    quote.vehicle_type +
+    ` </strong> </p> <br />
+      <p>Journey :  <strong> ` +
+    quote.journey_type +
+    ` </strong> </p> <br />
+      <p>Luggage Details :  <strong> ` +
+    quote.luggage_details +
+    ` </strong> </p> <br />
+  </fieldset>
+</body>
+</html>
+
+`,
 };
 
 module.exports = {

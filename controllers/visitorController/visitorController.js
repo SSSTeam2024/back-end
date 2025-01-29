@@ -98,6 +98,7 @@ const updateVisitorStatusAPI = async (req, res) => {
       visitor_id,
       status,
     });
+    console.log("req. body", req.body);
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);

@@ -74,6 +74,8 @@ const vehicleGuideRoutes = require("./vehicleGuideComponentRoutes/vehicleGuideCo
 const vehiclesClassRoutes = require("./vehiclesClassComponentRoutes/vehiclesClassComponentRoutes");
 const fleetRoutes = require("./fleetComponentRoutes/fleetComponentRoutes");
 const onTheRoadRoutes = require("./onTheRoadComponentRoutes/onTheRoadComponentRoutes");
+const inThePressRoutes = require("./inThePressComponentRoutes/inThePressComponentRoutes");
+const notificationRoutes = require("./notificationRoutes/notificationRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -157,5 +159,7 @@ router.use("/vehicle-guide-component", vehicleGuideRoutes);
 router.use("/vehicles-class-component", vehiclesClassRoutes);
 router.use("/fleets-component", fleetRoutes);
 router.use("/on-the-road-component", onTheRoadRoutes);
+router.use("/in-the-press-component", inThePressRoutes);
+router.use("/notifications", notificationRoutes);
 
 module.exports = router;

@@ -5,6 +5,7 @@ const emailService = require("./emailService");
 const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 const modeDao = require("../../dao/modeDao/modeDao");
 const mileageBandDao = require("../../dao/mileageBandDao/mileageBandDao");
+const notificationDao = require("../../dao/notificationQuoteDao/notificationDao");
 
 const {
   updateAffiliateStatus,
@@ -55,9 +56,19 @@ const createQuote = async (
   let modes = await modeDao.getModes();
   let priceMode = modes[0].type;
   let email = "";
+  let emailToAdmin = "";
   let autoPrice = 0;
   if (priceMode === "0") {
+    console.log("email", email);
     email = await prepareAfterQuoteCreationEmail(
+      id,
+      quote,
+      type,
+      quoteData.return_time,
+      quoteData.return_date
+    );
+    console.log("emailToAdmin", emailToAdmin);
+    emailToAdmin = await prepareAfterQuoteEmailToAdmin(
       id,
       quote,
       type,
@@ -107,8 +118,24 @@ const createQuote = async (
       quoteData.return_date
     );
   }
+  try {
+    await emailService.sendEmail(email);
+    await emailService.sendEmailToAdmin(emailToAdmin);
+  } catch (error) {
+    console.log("error while sending email", error);
+  }
 
-  await emailService.sendEmail(email);
+  const notification = {
+    message: `New Quote Created: ${quote.quote_ref}`,
+    quote_id: quote._id,
+    typeNotif: "quote_created",
+    lu: "0",
+    timestamp: new Date(),
+  };
+
+  await notificationDao.createNotification(notification);
+  global.io.emit("notification", notification);
+
   return quote;
 };
 
@@ -269,6 +296,43 @@ async function prepareAfterQuoteCreationEmail(
   let emailSubject = "Quote Request Received";
   let fullEmailObject = {
     to: recipient,
+    subject: emailSubject,
+    body: emailBody,
+  };
+  return fullEmailObject;
+}
+
+async function prepareAfterQuoteEmailToAdmin(
+  idVisitor,
+  quote,
+  type,
+  return_time,
+  return_date
+) {
+  let visitor = await visitorDao.getVisitorById(idVisitor);
+  let recipient = visitor.email;
+  //const email = await emailTemplateDao.getEmailTemplateByName('visitor quote reception');
+  const creationDate = quote.createdAt;
+  console.log("quote", quote);
+  console.log("visitor", visitor);
+  const formattedCreationDate = creationDate.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+  let emailBody =
+    emailTemplatesStructure.emailTemplates.admin_email_quote_received(
+      visitor,
+      quote,
+      formattedCreationDate
+    );
+  let emailSubject = "New Quote Request Received";
+  let fullEmailObject = {
+    to: "fourati.oussama9@gmail.com", //adelbouden@boudencoachtravel.co.uk
     subject: emailSubject,
     body: emailBody,
   };
