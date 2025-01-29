@@ -3889,60 +3889,84 @@ const emailTemplates = {
   admin_email_quote_received: (visitor, quote, creationDate) =>
     `
   <html>
-<body
-  style="
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-      sans-serif;
-  "
->
-<div>
-<h2>A New quote is received</h2>
-at <span><strong>` +
-    creationDate +
-    `</strong></span>
-</div>
-  <fieldset
+  <body
     style="
-      width: 600px;
-      margin: auto;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+      text-align: center;
+      background-color: #f9f9f9;
+      padding: 20px;
     "
   >
-    <legend style="margin-left: 20%">
-      <strong>Reference: </strong>` +
+    <div
+      style="
+        background-color: #cd2528;
+        color: white;
+        padding: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 5px;
+        width: 60%;
+        margin: auto;
+      "
+    >
+      <h2 style="margin: 0">A New Quote is Received</h2>
+      <p style="margin: 5px 0">at <strong>` +
+    creationDate +
+    `</strong></p>
+    </div>
+
+    <fieldset
+      style="
+        width: 600px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <legend style="font-size: 16px; font-weight: bold">
+        <strong>Reference: </strong>` +
     quote.quote_ref +
-    ` <strong>Date: </strong>` +
+    ` |
+        <strong>Date: </strong>` +
     creationDate +
     `
-    </legend>
-    <p>Quote Received make by <strong> ` +
+      </legend>
+
+      <p><strong>Quote received by:</strong> ` +
     visitor.name +
-    ` </strong> </p> <br />
-    <p>Email Client : <strong> ` +
+    `</p>
+      <p><strong>Email:</strong> ` +
     visitor.email +
-    ` </strong> </p> <br />
-    <p>Phone Number :  <strong> ` +
+    `</p>
+      <p><strong>Phone:</strong> ` +
     visitor.phone +
-    ` </strong> </p> <br />
-    <p>Quote Start from :  <strong> ` +
+    `</p>
+      <p>
+        <strong>Quote Start from:</strong> ` +
     quote.start_point.placeName +
-    ` </strong> to: <strong> ` +
+    `
+        → <strong>To:</strong> ` +
     quote.destination_point.placeName +
-    ` </strong> </p> <br />
-      <p>Passengers Number :  <strong> ` +
+    `
+      </p>
+      <p><strong>Passengers:</strong> ` +
     quote.passengers_number +
-    ` </strong> </p> <br />
-      <p>Vehicle Type :  <strong> ` +
+    `</p>
+      <p><strong>Vehicle Type:</strong> ` +
     quote.vehicle_type +
-    ` </strong> </p> <br />
-      <p>Journey :  <strong> ` +
+    `</p>
+      <p><strong>Journey:</strong> ` +
     quote.journey_type +
-    ` </strong> </p> <br />
-      <p>Luggage Details :  <strong> ` +
+    `</p>
+      <p><strong>Luggage Details:</strong> ` +
     quote.luggage_details +
-    ` </strong> </p> <br />
-  </fieldset>
-</body>
+    `</p>
+    </fieldset>
+  </body>
 </html>
 
 `,
