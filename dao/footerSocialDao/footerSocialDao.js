@@ -9,7 +9,23 @@ const getFooterSocials = async () => {
 };
 
 const updateFooterSocial = async (id, updateData) => {
-  return await FooterSocial.findByIdAndUpdate(id, updateData, { new: true });
+  const { termsAndConditions, privacyPolicy, siteName, socialLinks } =
+    updateData;
+
+  return await FooterSocial.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      $set: {
+        termsAndConditions: termsAndConditions,
+        privacyPolicy: privacyPolicy,
+        siteName: siteName,
+        socialLinks: socialLinks,
+      },
+    },
+    { new: true }
+  );
 };
 
 const deleteFooterSocial = async (id) => {
