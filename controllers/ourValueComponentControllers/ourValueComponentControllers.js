@@ -12,6 +12,7 @@ const createOurValue = async (req, res) => {
       bigTitle,
       subTitle,
       tabs,
+      newImage,
     } = req.body;
 
     let imageFilename = globalFunctions.generateUniqueFilename(
@@ -19,18 +20,24 @@ const createOurValue = async (req, res) => {
       "OurValueImage"
     );
 
-    const image = {
-      path: imageFilename,
-      display: "1",
-    };
+    let documents = [];
+    let image = {};
 
-    let documents = [
-      {
-        base64String: image_base64,
-        extension: image_extension,
-        name: imageFilename,
-      },
-    ];
+    if (newImage === "no") {
+      image = req.body.image;
+    } else {
+      image = {
+        path: imageFilename,
+        display: "1",
+      };
+      documents.push([
+        {
+          base64String: image_base64,
+          extension: image_extension,
+          name: imageFilename,
+        },
+      ]);
+    }
 
     const newOurValue = await ourValueComponentServices.createOurValue(
       {

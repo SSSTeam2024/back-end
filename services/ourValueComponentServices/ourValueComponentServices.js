@@ -4,8 +4,12 @@ const globalFunctions = require("../../utils/globalFunctions");
 const path = require("path");
 
 const createOurValue = async (ourValueData, documents) => {
-  let saveResult = await saveDocumentToServer(documents);
-  return await ouValueComponentDao.createOurValue(ourValueData);
+  if (documents.length === 0) {
+    return await ouValueComponentDao.createOurValue(ourValueData);
+  } else {
+    let saveResult = await saveDocumentToServer(documents);
+    return await ouValueComponentDao.createOurValue(ourValueData);
+  }
 };
 
 const getOurValue = async () => {
