@@ -3,24 +3,30 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 const createOfferService = async (req, res) => {
   try {
-    const { littleTitle, bigTitle, cards, associatedPage } = req.body;
+    const { littleTitle, bigTitle, cards, associatedPage, display } = req.body;
 
     const documents = [];
     const processedCards = cards.map((card, index) => {
-      const imageFilename = globalFunctions.generateUniqueFilename(
-        card.image_extension,
-        `CardImage_${index}`
-      );
+      if (card.newImage === "no") {
+        return {
+          ...card,
+        };
+      } else {
+        const imageFilename = globalFunctions.generateUniqueFilename(
+          card.image_extension,
+          `CardImage_${index}`
+        );
 
-      documents.push({
-        base64String: card.image_base64,
-        name: imageFilename,
-      });
+        documents.push({
+          base64String: card.image_base64,
+          name: imageFilename,
+        });
 
-      return {
-        ...card,
-        image: imageFilename,
-      };
+        return {
+          ...card,
+          image: imageFilename,
+        };
+      }
     });
 
     const offerServiceData = {
@@ -28,6 +34,7 @@ const createOfferService = async (req, res) => {
       bigTitle,
       cards: processedCards,
       associatedPage,
+      display,
     };
 
     const newOfferService = await offerServicesService.createOfferService(
@@ -45,7 +52,7 @@ const createOfferService = async (req, res) => {
 const updateOfferService = async (req, res) => {
   try {
     const OfferServiceId = req.params.id;
-    const { littleTitle, bigTitle, cards, associatedPage } = req.body;
+    const { littleTitle, bigTitle, cards, associatedPage, display } = req.body;
     const existingOfferService = await offerServicesService.getOfferServiceById(
       OfferServiceId
     );
@@ -93,6 +100,7 @@ const updateOfferService = async (req, res) => {
       bigTitle: bigTitle || existingOfferService.bigTitle,
       cards: processedCards,
       associatedPage,
+      display,
     };
 
     // Call the update service with updated data and documents

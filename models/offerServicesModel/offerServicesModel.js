@@ -20,6 +20,7 @@ const offerServicesSchema = new Schema({
     },
   ],
   associatedPage: String,
+  display: String,
 });
 
 module.exports = mongoose.model("OfferService", offerServicesSchema);

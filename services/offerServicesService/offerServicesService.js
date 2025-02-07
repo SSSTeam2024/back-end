@@ -4,12 +4,11 @@ const globalFunctions = require("../../utils/globalFunctions");
 const path = require("path");
 
 const createOfferService = async (offerServiceData, documents) => {
-  let saveResult = await saveDocumentToServer(documents);
-
-  if (saveResult) {
+  if (documents.length === 0) {
     return await offerServicesDao.createOfferService(offerServiceData);
   } else {
-    throw new Error("Failed to save documents to the server.");
+    let saveResult = await saveDocumentToServer(documents);
+    return await offerServicesDao.createOfferService(offerServiceData);
   }
 };
 
