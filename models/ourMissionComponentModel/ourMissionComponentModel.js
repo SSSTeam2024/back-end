@@ -5,6 +5,7 @@ const ourMissionSchema = new Schema({
   missions: [
     {
       page: String,
+      display: String,
       littleTitle: {
         name: String,
         display: String,

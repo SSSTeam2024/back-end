@@ -5,6 +5,7 @@ const createOurValue = async (req, res) => {
   try {
     const {
       page,
+      display,
       image_base64,
       image_extension,
       littleTitle,
@@ -34,6 +35,7 @@ const createOurValue = async (req, res) => {
     const newOurValue = await ourValueComponentServices.createOurValue(
       {
         page,
+        display,
         image,
         littleTitle,
         bigTitle,
@@ -61,6 +63,7 @@ const updateOurValue = async (req, res) => {
       subTitle,
       tabs,
       image,
+      display,
     } = req.body;
 
     let OurValueBody = {
@@ -68,6 +71,7 @@ const updateOurValue = async (req, res) => {
       bigTitle,
       subTitle,
       tabs,
+      display,
     };
 
     let documents = [];

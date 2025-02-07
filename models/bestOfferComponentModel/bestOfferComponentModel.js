@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const bestOfferSchema = new Schema({
   page: String,
+  display: String,
   image: {
     path: String,
     display: String,

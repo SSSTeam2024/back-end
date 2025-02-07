@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const aboutUsSchema = new Schema({
   page: String,
+  display: String,
+  newImage: String,
   image: {
     path: String,
     display: String,

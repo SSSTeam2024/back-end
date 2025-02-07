@@ -11,25 +11,31 @@ const createAboutUs = async (req, res) => {
       paragraph,
       button,
       page,
+      display,
+      newImage,
     } = req.body;
 
     let imageFilename = globalFunctions.generateUniqueFilename(
       image_extension,
       "aboutUsImage"
     );
-
-    const image = {
-      path: imageFilename,
-      display: "1",
-    };
-
-    let documents = [
-      {
-        base64String: image_base64,
-        extension: image_extension,
-        name: imageFilename,
-      },
-    ];
+    let documents = [];
+    let image = {};
+    if (newImage === "no") {
+      image = req.body.image;
+    } else {
+      image = {
+        path: imageFilename,
+        display: "1",
+      };
+      documents.push([
+        {
+          base64String: image_base64,
+          extension: image_extension,
+          name: imageFilename,
+        },
+      ]);
+    }
 
     const newAboutUs = await aboutUsComponentServices.createAboutUs(
       {
@@ -39,6 +45,8 @@ const createAboutUs = async (req, res) => {
         paragraph,
         button,
         page,
+        display,
+        newImage,
       },
       documents
     );
@@ -62,6 +70,7 @@ const updateAboutUs = async (req, res) => {
       button,
       image,
       page,
+      display,
     } = req.body;
 
     let AboutUsBody = {
@@ -70,6 +79,7 @@ const updateAboutUs = async (req, res) => {
       paragraph,
       button,
       page,
+      display,
     };
 
     let documents = [];

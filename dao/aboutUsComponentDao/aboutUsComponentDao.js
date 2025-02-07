@@ -9,7 +9,8 @@ const getAboutUs = async () => {
 };
 
 const updateAboutUs = async (id, updateData) => {
-  const { page, image, littleTitle, bigTitle, paragraph, button } = updateData;
+  const { display, page, image, littleTitle, bigTitle, paragraph, button } =
+    updateData;
 
   return await AboutUs.findOneAndUpdate(
     {
@@ -23,6 +24,7 @@ const updateAboutUs = async (id, updateData) => {
         paragraph: paragraph,
         button: button,
         page: page,
+        display: display,
       },
     },
     { new: true }

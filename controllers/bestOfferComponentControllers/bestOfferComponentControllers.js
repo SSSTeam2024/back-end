@@ -5,6 +5,7 @@ const createBestOffer = async (req, res) => {
   try {
     const {
       page,
+      display,
       image_base64,
       image_extension,
       littleTitle,
@@ -35,6 +36,7 @@ const createBestOffer = async (req, res) => {
     const newBestOffer = await bestOfferComponentServices.createBestOffer(
       {
         page,
+        display,
         image,
         littleTitle,
         bigTitle,
@@ -57,6 +59,7 @@ const updateBestOffer = async (req, res) => {
     const BestOfferId = req.params.id;
     const {
       page,
+      display,
       image_base64,
       image_extension,
       littleTitle,
@@ -69,6 +72,7 @@ const updateBestOffer = async (req, res) => {
 
     let BestOfferBody = {
       page,
+      display,
       littleTitle,
       bigTitle,
       subTitle,

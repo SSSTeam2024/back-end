@@ -2,16 +2,12 @@ const ourMissionServices = require("../../services/ourMissionServices/ourMission
 
 const createOurMission = async (req, res) => {
   try {
-    // Extract data from the request body
     const { missions } = req.body;
 
-    // Wrap the data in an array for the new schema structure
     const missionData = { missions };
 
-    // Call the service to create the new mission entry
     await ourMissionServices.createOurMission(missionData);
 
-    // Send a success response
     res.sendStatus(201);
   } catch (error) {
     console.error(error);
@@ -33,8 +29,8 @@ const updateOurMission = async (req, res) => {
   try {
     const OurMissionId = req.params.id;
     const { missions } = req.body;
-
-    // Check if the document exists
+    console.log("req.body", req.body);
+    console.log("OurMissionId", OurMissionId);
     const existingDocument = await ourMissionServices.getOurMissionById(
       OurMissionId
     );
@@ -42,7 +38,6 @@ const updateOurMission = async (req, res) => {
       return res.status(404).send("Our Mission not found");
     }
 
-    // Pass the full missions array to the service
     const updatedOurMission = await ourMissionServices.updateOurMission(
       OurMissionId,
       { missions }

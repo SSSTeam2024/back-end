@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const ourValueSchema = new Schema({
   page: String,
+  display: String,
   image: {
     path: String,
     display: String,

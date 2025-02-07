@@ -4,8 +4,12 @@ const globalFunctions = require("../../utils/globalFunctions");
 const path = require("path");
 
 const createAboutUs = async (aboutUsData, documents) => {
-  let saveResult = await saveDocumentToServer(documents);
-  return await aboutUsComponentDao.createAboutUs(aboutUsData);
+  if (documents.length === 0) {
+    return await aboutUsComponentDao.createAboutUs(aboutUsData);
+  } else {
+    let saveResult = await saveDocumentToServer(documents);
+    return await aboutUsComponentDao.createAboutUs(aboutUsData);
+  }
 };
 
 const getAboutUs = async () => {
