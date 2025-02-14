@@ -15,6 +15,8 @@ const ourMissionSchema = new Schema({
         display: String,
       },
       content: String,
+      typeComponent: String,
+      order: String,
     },
   ],
 });

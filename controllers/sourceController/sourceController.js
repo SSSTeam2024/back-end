@@ -1,4 +1,4 @@
-const sourceService = require('../../services/sourceServices/sourceService');
+const sourceService = require("../../services/sourceServices/sourceService");
 
 const createSource = async (req, res) => {
   try {
@@ -15,7 +15,7 @@ const createSource = async (req, res) => {
 const getSources = async (req, res) => {
   try {
     const sources = await sourceService.getSources();
-    res.json(sources );
+    res.json(sources);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -30,7 +30,7 @@ const updateSource = async (req, res) => {
     const updatedSource = await sourceService.updateSource(sourceId, { name });
 
     if (!updatedSource) {
-      return res.status(404).send('Source not found');
+      return res.status(404).send("Source not found");
     }
     res.json(updatedSource);
   } catch (error) {
@@ -46,7 +46,7 @@ const deleteSource = async (req, res) => {
     const deletedSource = await sourceService.deleteSource(sourceId);
 
     if (!deletedSource) {
-      return res.status(404).send('Source not found');
+      return res.status(404).send("Source not found");
     }
     res.sendStatus(200);
   } catch (error) {

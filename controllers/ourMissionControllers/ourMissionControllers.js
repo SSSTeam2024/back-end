@@ -29,8 +29,6 @@ const updateOurMission = async (req, res) => {
   try {
     const OurMissionId = req.params.id;
     const { missions } = req.body;
-    console.log("req.body", req.body);
-    console.log("OurMissionId", OurMissionId);
     const existingDocument = await ourMissionServices.getOurMissionById(
       OurMissionId
     );
@@ -42,7 +40,6 @@ const updateOurMission = async (req, res) => {
       OurMissionId,
       { missions }
     );
-
     res.json(updatedOurMission);
   } catch (error) {
     console.error(error);

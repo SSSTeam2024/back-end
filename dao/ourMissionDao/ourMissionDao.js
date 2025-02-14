@@ -10,10 +10,9 @@ const getOurMission = async () => {
 };
 
 const updateOurMission = async (id, updateData) => {
-  // Use Promise.all to update all missions concurrently
   return await Promise.all(
     updateData.missions.map(async (mission) => {
-      const { page, display, littleTitle, bigTitle, content } = mission;
+      const { page, display, littleTitle, bigTitle, content, order } = mission;
 
       return await OurMission.findOneAndUpdate(
         {
@@ -26,6 +25,7 @@ const updateOurMission = async (id, updateData) => {
             "missions.$.littleTitle": littleTitle,
             "missions.$.bigTitle": bigTitle,
             "missions.$.content": content,
+            "missions.$.order": String(order),
           },
         },
         { new: true }

@@ -26,7 +26,8 @@ const aboutUsSchema = new Schema({
     display: String,
     link: String,
   },
-  //   ,color: String,
+  typeComponent: String,
+  order: String,
 });
 
 module.exports = mongoose.model("AboutUs", aboutUsSchema);

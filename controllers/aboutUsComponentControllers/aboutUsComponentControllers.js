@@ -13,6 +13,8 @@ const createAboutUs = async (req, res) => {
       page,
       display,
       newImage,
+      typeComponent,
+      order,
     } = req.body;
 
     let imageFilename = globalFunctions.generateUniqueFilename(
@@ -47,6 +49,8 @@ const createAboutUs = async (req, res) => {
         page,
         display,
         newImage,
+        typeComponent,
+        order,
       },
       documents
     );
@@ -71,6 +75,7 @@ const updateAboutUs = async (req, res) => {
       image,
       page,
       display,
+      order,
     } = req.body;
 
     let AboutUsBody = {
@@ -80,6 +85,7 @@ const updateAboutUs = async (req, res) => {
       button,
       page,
       display,
+      order,
     };
 
     let documents = [];

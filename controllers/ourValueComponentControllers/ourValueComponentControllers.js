@@ -13,6 +13,8 @@ const createOurValue = async (req, res) => {
       subTitle,
       tabs,
       newImage,
+      typeComponent,
+      order,
     } = req.body;
 
     let imageFilename = globalFunctions.generateUniqueFilename(
@@ -48,6 +50,8 @@ const createOurValue = async (req, res) => {
         bigTitle,
         subTitle,
         tabs,
+        typeComponent,
+        order,
       },
       documents
     );
@@ -71,6 +75,7 @@ const updateOurValue = async (req, res) => {
       tabs,
       image,
       display,
+      order,
     } = req.body;
 
     let OurValueBody = {
@@ -79,6 +84,7 @@ const updateOurValue = async (req, res) => {
       subTitle,
       tabs,
       display,
+      order,
     };
 
     let documents = [];

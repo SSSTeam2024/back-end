@@ -76,6 +76,7 @@ const fleetRoutes = require("./fleetComponentRoutes/fleetComponentRoutes");
 const onTheRoadRoutes = require("./onTheRoadComponentRoutes/onTheRoadComponentRoutes");
 const inThePressRoutes = require("./inThePressComponentRoutes/inThePressComponentRoutes");
 const notificationRoutes = require("./notificationRoutes/notificationRoutes");
+const termsConditionComponentRoutes = require("./termsConditionComponentRoutes/termsConditionComponentRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -161,5 +162,6 @@ router.use("/fleets-component", fleetRoutes);
 router.use("/on-the-road-component", onTheRoadRoutes);
 router.use("/in-the-press-component", inThePressRoutes);
 router.use("/notifications", notificationRoutes);
+router.use("/terms-condition", termsConditionComponentRoutes);
 
 module.exports = router;

@@ -30,6 +30,8 @@ const ourValueSchema = new Schema({
       buttonDisplay: String,
     },
   ],
+  typeComponent: String,
+  order: String,
 });
 
 module.exports = mongoose.model("OurValue", ourValueSchema);
