@@ -8,7 +8,7 @@ const sendVerificationCodeEmail = async (email) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "mouafekhedfi@gmail.com", //"1388e7461f6fd3", "mouafekhedfi@gmail.com"
+          user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
           pass: "lwzd fdcr sclt cwfo", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
         },
       });
@@ -16,8 +16,8 @@ const sendVerificationCodeEmail = async (email) => {
       // Set up email data
       const mailOptions = {
         from: {
-          name: "Bouden Travel Agency",
-          address: "mouafekhedfi@gmail.com",
+          name: "Coach Hire Network",
+          address: "fourati.oussama9@gmail.com",
         },
         to: email.to, //email.to, "fourati.oussama9@gmail.com"
         subject: email.subject,

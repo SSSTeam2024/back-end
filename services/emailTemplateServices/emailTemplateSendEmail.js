@@ -7,8 +7,8 @@ const sendEmail = async (email, file) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "mouafekhedfi@gmail.com",
-        pass: "lwzd fdcr sclt cwfo",
+        user: "fourati.oussama9@gmail.com",
+        pass: "qitz cxsv qtlq heeg",
       },
     });
     let attachments = [
@@ -27,8 +27,8 @@ const sendEmail = async (email, file) => {
     }
     const mailOptions = {
       from: {
-        name: "Bouden Travel Agency",
-        address: "mouafekhedfi@gmail.com",
+        name: "Coach Hire Network",
+        address: "fourati.oussama9@gmail.com",
       },
       to: email.to,
       subject: email.subject,

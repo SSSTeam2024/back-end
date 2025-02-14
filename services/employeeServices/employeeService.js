@@ -198,7 +198,7 @@ const generateCodeAndSendEmail = async (
     );
   let emailSubject = "Reset your password";
   let fullEmailObject = {
-    to: employee.email /*"mouafekhedfi@gmail.com"  employee.email */,
+    to: employee.email /*"fourati.oussama9@gmail.com"  employee.email */,
     subject: emailSubject,
     body: emailBody,
   };

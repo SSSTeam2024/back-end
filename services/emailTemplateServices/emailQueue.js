@@ -15,8 +15,8 @@ const emailQueue = new Queue("emailQueue", {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "mouafekhedfi@gmail.com",
-    pass: "lwzd fdcr sclt cwfo",
+    user: "fourati.oussama9@gmail.com",
+    pass: "qitz cxsv qtlq heeg",
   },
 });
 
@@ -39,8 +39,8 @@ emailQueue.process(async (job) => {
   }
   const mailOptions = {
     from: {
-      name: "Bouden Travel Agency",
-      address: "mouafekhedfi@gmail.com",
+      name: "Coach Hire Network",
+      address: "fourati.oussama9@gmail.com",
     },
     to,
     subject,

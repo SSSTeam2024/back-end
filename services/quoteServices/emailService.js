@@ -10,7 +10,7 @@ const sendEmail = async (email) => {
       //port: 2525,
       service: "gmail",
       auth: {
-        user: "mouafekhedfi@gmail.com", //"1388e7461f6fd3", "mouafekhedfi@gmail.com"
+        user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
         pass: "lwzd fdcr sclt cwfo", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
       },
     });
@@ -18,8 +18,8 @@ const sendEmail = async (email) => {
     // Set up email data
     const mailOptions = {
       from: {
-        name: "Bouden Travel Agency",
-        address: "mouafekhedfi@gmail.com",
+        name: "Coach Hire Network",
+        address: "fourati.oussama9@gmail.com",
       },
       to: email.to, //email.to, "fourati.oussama9@gmail.com"
       subject: email.subject,
@@ -51,7 +51,7 @@ const sendEmailToAdmin = async (email) => {
       //port: 2525,
       service: "gmail",
       auth: {
-        user: "mouafekhedfi@gmail.com", //"1388e7461f6fd3", "mouafekhedfi@gmail.com"
+        user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
         pass: "lwzd fdcr sclt cwfo", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
       },
     });
@@ -59,8 +59,8 @@ const sendEmailToAdmin = async (email) => {
     // Set up email data
     const mailOptions = {
       from: {
-        name: "Bouden Travel Agency",
-        address: "mouafekhedfi@gmail.com",
+        name: "Coach Hire Network",
+        address: "fourati.oussama9@gmail.com",
       },
       to: email.to, //email.to, "fourati.oussama9@gmail.com"
       subject: email.subject,

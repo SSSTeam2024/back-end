@@ -139,7 +139,7 @@ const generateCodeAndSendEmail = async (
     );
   let emailSubject = "Reset your password";
   let fullEmailObject = {
-    to: driver.email /*"mouafekhedfi@gmail.com"  driver.email */,
+    to: driver.email /*"fourati.oussama9@gmail.com"  driver.email */,
     subject: emailSubject,
     body: emailBody,
   };
