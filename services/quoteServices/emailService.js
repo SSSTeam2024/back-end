@@ -11,7 +11,7 @@ const sendEmail = async (email) => {
       service: "gmail",
       auth: {
         user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
-        pass: "lwzd fdcr sclt cwfo", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
+        pass: "qitz cxsv qtlq heeg", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
       },
     });
     console.log("inside send email to user!!");
@@ -52,7 +52,7 @@ const sendEmailToAdmin = async (email) => {
       service: "gmail",
       auth: {
         user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
-        pass: "lwzd fdcr sclt cwfo", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
+        pass: "qitz cxsv qtlq heeg", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
       },
     });
 

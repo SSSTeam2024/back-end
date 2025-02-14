@@ -332,7 +332,7 @@ async function prepareAfterQuoteEmailToAdmin(
     );
   let emailSubject = "New Quote Request Received";
   let fullEmailObject = {
-    to: "f.natsu9@gmail.com", //adelbouden@boudencoachtravel.co.uk
+    to: "adelbouden@boudencoachtravel.co.uk", //adelbouden@boudencoachtravel.co.uk
     subject: emailSubject,
     body: emailBody,
   };
