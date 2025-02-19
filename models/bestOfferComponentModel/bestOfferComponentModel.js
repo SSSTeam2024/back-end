@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 const bestOfferSchema = new Schema({
   page: String,
   display: String,
+  order: String,
+  typeComponent: String,
   image: {
     path: String,
     display: String,

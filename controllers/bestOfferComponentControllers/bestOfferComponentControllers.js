@@ -13,6 +13,8 @@ const createBestOffer = async (req, res) => {
       subTitle,
       liltleSubTitle,
       tabs,
+      order,
+      typeComponent,
     } = req.body;
 
     let imageFilename = globalFunctions.generateUniqueFilename(
@@ -43,6 +45,8 @@ const createBestOffer = async (req, res) => {
         subTitle,
         liltleSubTitle,
         tabs,
+        order,
+        typeComponent,
       },
       documents
     );
@@ -68,6 +72,8 @@ const updateBestOffer = async (req, res) => {
       liltleSubTitle,
       tabs,
       image,
+      order,
+      typeComponent,
     } = req.body;
 
     let BestOfferBody = {
@@ -78,6 +84,8 @@ const updateBestOffer = async (req, res) => {
       subTitle,
       liltleSubTitle,
       tabs,
+      order,
+      typeComponent,
     };
 
     let documents = [];

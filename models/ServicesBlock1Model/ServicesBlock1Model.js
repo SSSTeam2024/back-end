@@ -26,6 +26,9 @@ const block1Schema = new Schema({
       content: String,
     },
   ],
+  display: String,
+  order: String,
+  typeComponent: String,
 });
 
 module.exports = mongoose.model("Block1", block1Schema);

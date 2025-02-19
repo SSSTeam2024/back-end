@@ -12,6 +12,8 @@ const TermsConditionSchema = new Schema({
     display: String,
   },
   display: String,
+  typeComponent: String,
+  order: String,
 });
 
 module.exports = mongoose.model("TermsCondition", TermsConditionSchema);

@@ -3,8 +3,12 @@ const fs = require("fs");
 const globalFunctions = require("../../utils/globalFunctions");
 
 const createFleet = async (fleetData, documents) => {
-  let saveResult = await saveDocumentsToServer(documents);
-  return await fleetComponentDao.createFleet(fleetData);
+  if (documents.length === 0) {
+    return await fleetComponentDao.createFleet(fleetData);
+  } else {
+    let saveResult = await saveDocumentsToServer(documents);
+    return await fleetComponentDao.createFleet(fleetData);
+  }
 };
 
 async function saveDocumentsToServer(documents) {
@@ -41,8 +45,8 @@ const getFleetById = async (updateData) => {
   return await fleetComponentDao.getFleetById(updateData);
 };
 
-const updateFleet = async (updateData) => {
-  return await fleetComponentDao.updateFleet(updateData);
+const updateFleet = async (id, updateData) => {
+  return await fleetComponentDao.updateFleet(id, updateData);
 };
 
 const getAllFleets = async () => {

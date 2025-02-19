@@ -3,8 +3,12 @@ const fs = require("fs");
 const globalFunctions = require("../../utils/globalFunctions");
 
 const createInThePress = async (inThePressData, documents) => {
-  let saveResult = await saveDocumentsToServer(documents);
-  return await inThePressComponentDao.createInThePress(inThePressData);
+  if (documents.length === 0) {
+    return await inThePressComponentDao.createInThePress(inThePressData);
+  } else {
+    let saveResult = await saveDocumentsToServer(documents);
+    return await inThePressComponentDao.createInThePress(inThePressData);
+  }
 };
 
 async function saveDocumentsToServer(documents) {
@@ -41,8 +45,8 @@ const getInThePressById = async (updateData) => {
   return await inThePressComponentDao.getInThePress(updateData);
 };
 
-const updateInThePress = async (updateData) => {
-  return await inThePressComponentDao.updateInThePress(updateData);
+const updateInThePress = async (id, updateData) => {
+  return await inThePressComponentDao.updateInThePress(id, updateData);
 };
 
 const getAllInThePresss = async () => {

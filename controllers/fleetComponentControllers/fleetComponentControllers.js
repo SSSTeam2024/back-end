@@ -3,31 +3,41 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 const createFleet = async (req, res) => {
   try {
-    const { page, grids } = req.body;
+    const { page, grids, display, order, typeComponent, newImage } = req.body;
 
     const imagePath = "files/fleetFiles/";
     const documents = [];
     const processedGrids = grids.map((grid, index) => {
-      const imageFilename = globalFunctions.generateUniqueFilename(
-        grid.image_extension,
-        `Fleet_${index}`
-      );
+      if (newImage === "no") {
+        return {
+          ...grid,
+          image: grid.image,
+        };
+      } else {
+        const imageFilename = globalFunctions.generateUniqueFilename(
+          grid.image_extension,
+          `Fleet_${index}`
+        );
 
-      documents.push({
-        base64String: grid.image_base64,
-        name: imageFilename,
-        path: imagePath,
-      });
+        documents.push({
+          base64String: grid.image_base64,
+          name: imageFilename,
+          path: imagePath,
+        });
 
-      return {
-        ...grid,
-        image: imageFilename,
-      };
+        return {
+          ...grid,
+          image: imageFilename,
+        };
+      }
     });
 
     const fleetData = {
       page,
       grids: processedGrids,
+      display,
+      order,
+      typeComponent,
     };
 
     const newFleet = await fleetComponentServices.createFleet(
@@ -58,11 +68,15 @@ const deleteFleetById = async (req, res) => {
 };
 
 const updateFleet = async (req, res) => {
+  const fleetId = req.params.id;
   try {
-    const { page, grids } = req.body;
-    const updatedFleet = await fleetComponentServices.updateFleet({
+    const { page, grids, display, order, typeComponent } = req.body;
+    const updatedFleet = await fleetComponentServices.updateFleet(fleetId, {
       page,
       grids,
+      display,
+      order,
+      typeComponent,
     });
     res.json({ success: updatedFleet });
   } catch (error) {

@@ -9,7 +9,8 @@ const getTermsCondition = async () => {
 };
 
 const updateTermsCondition = async (id, updateData) => {
-  const { page, bigTitle, paragraph, display } = updateData;
+  const { page, bigTitle, paragraph, display, typeComponent, order } =
+    updateData;
 
   return await TermsCondition.findOneAndUpdate(
     {
@@ -21,6 +22,8 @@ const updateTermsCondition = async (id, updateData) => {
         bigTitle: bigTitle,
         paragraph: paragraph,
         display: display,
+        typeComponent: typeComponent,
+        order: order,
       },
     },
     { new: true }

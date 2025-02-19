@@ -3,7 +3,15 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 const createOfferService = async (req, res) => {
   try {
-    const { littleTitle, bigTitle, cards, associatedPage, display } = req.body;
+    const {
+      littleTitle,
+      bigTitle,
+      cards,
+      associatedPage,
+      display,
+      typeComponent,
+      order,
+    } = req.body;
 
     const documents = [];
     const processedCards = cards.map((card, index) => {
@@ -35,6 +43,8 @@ const createOfferService = async (req, res) => {
       cards: processedCards,
       associatedPage,
       display,
+      typeComponent,
+      order,
     };
 
     const newOfferService = await offerServicesService.createOfferService(
@@ -52,7 +62,15 @@ const createOfferService = async (req, res) => {
 const updateOfferService = async (req, res) => {
   try {
     const OfferServiceId = req.params.id;
-    const { littleTitle, bigTitle, cards, associatedPage, display } = req.body;
+    const {
+      littleTitle,
+      bigTitle,
+      cards,
+      associatedPage,
+      display,
+      typeComponent,
+      order,
+    } = req.body;
     const existingOfferService = await offerServicesService.getOfferServiceById(
       OfferServiceId
     );
@@ -85,14 +103,14 @@ const updateOfferService = async (req, res) => {
         }
 
         return {
-          ...existingCard.toObject(), // Convert Mongoose document to plain object
+          ...existingCard.toObject(),
           content: updatedCard.content || existingCard.content,
           icon: updatedCard.icon || existingCard.icon,
           image: updatedImage,
         };
       }
 
-      return existingCard.toObject(); // Convert to plain object
+      return existingCard.toObject();
     });
 
     const offerServiceData = {
@@ -101,9 +119,10 @@ const updateOfferService = async (req, res) => {
       cards: processedCards,
       associatedPage,
       display,
+      typeComponent,
+      order,
     };
 
-    // Call the update service with updated data and documents
     const updatedOfferService = await offerServicesService.updateOfferService(
       OfferServiceId,
       offerServiceData,

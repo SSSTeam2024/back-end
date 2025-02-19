@@ -11,6 +11,10 @@ const createBlock1 = async (req, res) => {
       bigTitle,
       subTitle,
       tabs,
+      display,
+      newImage,
+      typeComponent,
+      order,
     } = req.body;
 
     let imageFilename = globalFunctions.generateUniqueFilename(
@@ -18,19 +22,24 @@ const createBlock1 = async (req, res) => {
       "Block1Image"
     );
 
-    const image = {
-      path: imageFilename,
-      display: "1",
-    };
+    let documents = [];
+    let image = {};
+    if (newImage === "no") {
+      image = req.body.image;
+    } else {
+      image = {
+        path: imageFilename,
+        display: "1",
+      };
 
-    let documents = [
-      {
-        base64String: image_base64,
-        extension: image_extension,
-        name: imageFilename,
-      },
-    ];
-
+      documents = [
+        {
+          base64String: image_base64,
+          extension: image_extension,
+          name: imageFilename,
+        },
+      ];
+    }
     const newBlock1 = await block1ComponentServices.createBlock1(
       {
         page,
@@ -39,6 +48,9 @@ const createBlock1 = async (req, res) => {
         bigTitle,
         subTitle,
         tabs,
+        display,
+        typeComponent,
+        order,
       },
       documents
     );
@@ -62,6 +74,9 @@ const updateBlock1 = async (req, res) => {
       subTitle,
       tabs,
       image,
+      display,
+      typeComponent,
+      order,
     } = req.body;
 
     let block1Body = {
@@ -70,6 +85,9 @@ const updateBlock1 = async (req, res) => {
       bigTitle,
       subTitle,
       tabs,
+      display,
+      typeComponent,
+      order,
     };
 
     let documents = [];

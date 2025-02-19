@@ -9,6 +9,9 @@ const fleetSchema = new mongoose.Schema({
       details: String,
     },
   ],
+  display: String,
+  order: String,
+  typeComponent: String,
 });
 
 module.exports = mongoose.model("Fleet", fleetSchema);

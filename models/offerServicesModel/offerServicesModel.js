@@ -21,6 +21,8 @@ const offerServicesSchema = new Schema({
   ],
   associatedPage: String,
   display: String,
+  typeComponent: String,
+  order: String,
 });
 
 module.exports = mongoose.model("OfferService", offerServicesSchema);

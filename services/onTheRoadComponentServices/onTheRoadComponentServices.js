@@ -3,8 +3,12 @@ const fs = require("fs");
 const globalFunctions = require("../../utils/globalFunctions");
 
 const createOnTheRoad = async (onTheRoadData, documents) => {
-  let saveResult = await saveDocumentsToServer(documents);
-  return await onTheRoadComponentDao.createOnTheRoad(onTheRoadData);
+  if (documents.length === 0) {
+    return await onTheRoadComponentDao.createOnTheRoad(onTheRoadData);
+  } else {
+    let saveResult = await saveDocumentsToServer(documents);
+    return await onTheRoadComponentDao.createOnTheRoad(onTheRoadData);
+  }
 };
 
 async function saveDocumentsToServer(documents) {
@@ -41,8 +45,8 @@ const getOnTheRoadById = async (id) => {
   return await onTheRoadComponentDao.getOnTheRoadById(id);
 };
 
-const updateOnTheRoad = async (updateData) => {
-  return await onTheRoadComponentDao.updateOnTheRoad(updateData);
+const updateOnTheRoad = async (id, updateData) => {
+  return await onTheRoadComponentDao.updateOnTheRoad(id, updateData);
 };
 
 const getOnTheRoads = async () => {

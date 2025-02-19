@@ -2,13 +2,24 @@ const vehiclesClassComponentServices = require("../../services/vehiclesClassComp
 
 const createVehiclesClass = async (req, res) => {
   try {
-    const { page, bigTitle, paragraph, vehicleTypes } = req.body;
+    const {
+      page,
+      bigTitle,
+      paragraph,
+      vehicleTypes,
+      display,
+      order,
+      typeComponent,
+    } = req.body;
 
     await vehiclesClassComponentServices.createVehiclesClass({
       page,
       bigTitle,
       paragraph,
       vehicleTypes,
+      display,
+      order,
+      typeComponent,
     });
     res.sendStatus(201);
   } catch (error) {
@@ -31,7 +42,15 @@ const getVehiclesClass = async (req, res) => {
 const updateVehiclesClass = async (req, res) => {
   try {
     const vehiclesClassId = req.params.id;
-    const { page, bigTitle, paragraph, vehicleTypes } = req.body;
+    const {
+      page,
+      bigTitle,
+      paragraph,
+      vehicleTypes,
+      display,
+      order,
+      typeComponent,
+    } = req.body;
 
     const updatedVehiclesClass =
       await vehiclesClassComponentServices.updateVehiclesClass(
@@ -41,6 +60,9 @@ const updateVehiclesClass = async (req, res) => {
           bigTitle,
           paragraph,
           vehicleTypes,
+          display,
+          order,
+          typeComponent,
         }
       );
 

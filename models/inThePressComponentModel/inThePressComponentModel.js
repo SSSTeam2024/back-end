@@ -15,6 +15,9 @@ const inThePressSchema = new Schema({
       display: String,
     },
   ],
+  display: String,
+  order: String,
+  typeComponent: String,
 });
 
 module.exports = mongoose.model("InThePress", inThePressSchema);

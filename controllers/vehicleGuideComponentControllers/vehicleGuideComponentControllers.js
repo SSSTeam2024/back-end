@@ -3,7 +3,8 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 const createVehicleGuide = async (req, res) => {
   try {
-    const { page, paragraph, vehicleType } = req.body;
+    const { page, paragraph, vehicleType, display, order, typeComponent } =
+      req.body;
 
     const documents = [];
     const processedCards = vehicleType.map((card, index) => {
@@ -27,6 +28,9 @@ const createVehicleGuide = async (req, res) => {
       page,
       paragraph,
       vehicleType: processedCards,
+      display,
+      order,
+      typeComponent,
     };
 
     const newVehicleGuide =
@@ -45,7 +49,8 @@ const createVehicleGuide = async (req, res) => {
 const updateVehicleGuide = async (req, res) => {
   try {
     const vehicleGuideId = req.params.id;
-    const { page, paragraph, vehicleType } = req.body;
+    const { page, paragraph, vehicleType, display, order, typeComponent } =
+      req.body;
     const existingVehicleGuide =
       await vehicleGuideComponentServices.getVehicleGuideById(vehicleGuideId);
 
@@ -82,6 +87,10 @@ const updateVehicleGuide = async (req, res) => {
             content: updatedType.content || existingType.content,
             display: updatedType.display || existingType.display,
             image: updatedImage,
+            display: updatedType.display || existingType.display,
+            order: updatedType.order || existingType.order,
+            typeComponent:
+              updatedType.typeComponent || existingType.typeComponent,
           };
         }
         return existingType.toObject();
@@ -91,6 +100,9 @@ const updateVehicleGuide = async (req, res) => {
     const offerServiceData = {
       page: page || existingVehicleGuide.page,
       paragraph: paragraph || existingVehicleGuide.paragraph,
+      display: display || existingVehicleGuide.display,
+      order: order || existingVehicleGuide.order,
+      typeComponent: typeComponent || existingVehicleGuide.typeComponent,
       vehicleType: processedVehicleTypes,
     };
 
@@ -100,6 +112,7 @@ const updateVehicleGuide = async (req, res) => {
         offerServiceData,
         documents
       );
+    // console.log("updatedOfferService", updatedOfferService);
     res.json(updatedOfferService);
   } catch (error) {
     console.error(error);

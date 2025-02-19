@@ -3,26 +3,33 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 const createOnTheRoad = async (req, res) => {
   try {
-    const { page, bigTitle, paragraph, grids } = req.body;
+    const { page, bigTitle, paragraph, grids, display, typeComponent, order } =
+      req.body;
 
     const imagePath = "files/onTheRoadFiles/";
     const documents = [];
     const processedGrids = grids.map((grid, index) => {
-      const imageFilename = globalFunctions.generateUniqueFilename(
-        grid.image_extension,
-        `${grid.title}_${index}`
-      );
+      if (grid.newImage === "no") {
+        return {
+          ...grid,
+        };
+      } else {
+        const imageFilename = globalFunctions.generateUniqueFilename(
+          grid.image_extension,
+          `${grid.title}_${index}`
+        );
 
-      documents.push({
-        base64String: grid.image_base64,
-        name: imageFilename,
-        path: imagePath,
-      });
+        documents.push({
+          base64String: grid.image_base64,
+          name: imageFilename,
+          path: imagePath,
+        });
 
-      return {
-        ...grid,
-        image: imageFilename,
-      };
+        return {
+          ...grid,
+          image: imageFilename,
+        };
+      }
     });
 
     const fleetData = {
@@ -30,6 +37,9 @@ const createOnTheRoad = async (req, res) => {
       bigTitle,
       paragraph,
       grids: processedGrids,
+      display,
+      typeComponent,
+      order,
     };
 
     const newFleet = await onTheRoadComponentServices.createOnTheRoad(
@@ -63,14 +73,25 @@ const deleteOnTheRoad = async (req, res) => {
 
 const updateOnTheRoad = async (req, res) => {
   try {
-    const { page, bigTitle, paragraph, grids } = req.body;
-    const updatedFleet = await onTheRoadComponentServices.updateOnTheRoad({
-      page,
-      bigTitle,
-      paragraph,
-      grids,
-    });
-    res.json({ success: updatedFleet });
+    const onTheRoadId = req.params.id;
+
+    const { page, bigTitle, paragraph, grids, display, typeComponent, order } =
+      req.body;
+    console.log("req.body", req.body);
+    const updatedOnTheRoad = await onTheRoadComponentServices.updateOnTheRoad(
+      onTheRoadId,
+      {
+        page,
+        bigTitle,
+        paragraph,
+        grids,
+        display,
+        typeComponent,
+        order,
+      }
+    );
+    console.log("updatedOnTheRoad", updatedOnTheRoad);
+    res.json({ success: updatedOnTheRoad });
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);

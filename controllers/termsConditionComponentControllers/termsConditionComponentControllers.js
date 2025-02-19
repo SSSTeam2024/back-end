@@ -2,7 +2,8 @@ const termsConditionComponentServices = require("../../services/termsConditionCo
 
 const createTermsConditions = async (req, res) => {
   try {
-    const { page, bigTitle, paragraph, display } = req.body;
+    const { page, bigTitle, paragraph, display, typeComponent, order } =
+      req.body;
 
     const newTermsCondtion =
       await termsConditionComponentServices.createTermsConditions({
@@ -10,6 +11,8 @@ const createTermsConditions = async (req, res) => {
         bigTitle,
         paragraph,
         display,
+        typeComponent,
+        order,
       });
 
     res.status(201).json(newTermsCondtion);
@@ -22,13 +25,16 @@ const createTermsConditions = async (req, res) => {
 const updateTermsCondition = async (req, res) => {
   try {
     const termsConditionId = req.params.id;
-    const { page, bigTitle, paragraph, display } = req.body;
+    const { page, bigTitle, paragraph, display, typeComponent, order } =
+      req.body;
 
     let termsConditionBody = {
       page,
       bigTitle,
       paragraph,
       display,
+      typeComponent,
+      order,
     };
 
     const updatedTermsCondition =

@@ -3,26 +3,42 @@ const globalFunctions = require("../../utils/globalFunctions");
 
 const createInThePress = async (req, res) => {
   try {
-    const { page, paragraph, title, news } = req.body;
+    const {
+      page,
+      paragraph,
+      title,
+      news,
+      display,
+      order,
+      typeComponent,
+      newImage,
+    } = req.body;
 
     const imagePath = "files/inThePressFiles/";
     const documents = [];
     const processedGrids = news.map((grid, index) => {
-      const imageFilename = globalFunctions.generateUniqueFilename(
-        grid.image_extension,
-        `InThePress_${index}`
-      );
+      if (newImage === "no") {
+        return {
+          ...grid,
+          image: grid.image,
+        };
+      } else {
+        const imageFilename = globalFunctions.generateUniqueFilename(
+          grid.image_extension,
+          `InThePress_${index}`
+        );
 
-      documents.push({
-        base64String: grid.image_base64,
-        name: imageFilename,
-        path: imagePath,
-      });
+        documents.push({
+          base64String: grid.image_base64,
+          name: imageFilename,
+          path: imagePath,
+        });
 
-      return {
-        ...grid,
-        image: imageFilename,
-      };
+        return {
+          ...grid,
+          image: imageFilename,
+        };
+      }
     });
 
     const fleetData = {
@@ -30,6 +46,9 @@ const createInThePress = async (req, res) => {
       paragraph,
       title,
       news: processedGrids,
+      display,
+      order,
+      typeComponent,
     };
 
     const newInThePress = await inThePressComponentServices.createInThePress(
@@ -63,11 +82,31 @@ const deleteInThePress = async (req, res) => {
 
 const updateInThePress = async (req, res) => {
   try {
-    const { page, grids } = req.body;
-    const updatedFleet = await inThePressComponentServices.updateInThePress({
+    const inThePressId = req.params.id;
+    const {
       page,
-      grids,
-    });
+      paragraph,
+      title,
+      news,
+      display,
+      order,
+      typeComponent,
+      newImage,
+    } = req.body;
+
+    const updatedFleet = await inThePressComponentServices.updateInThePress(
+      inThePressId,
+      {
+        page,
+        paragraph,
+        title,
+        news,
+        display,
+        order,
+        typeComponent,
+        newImage,
+      }
+    );
     res.json({ success: updatedFleet });
   } catch (error) {
     console.error(error);
