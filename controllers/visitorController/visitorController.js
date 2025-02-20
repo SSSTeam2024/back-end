@@ -13,7 +13,7 @@ const createVisitor = async (req, res) => {
       status,
       enquiryDate,
     } = req.body;
-    console.log(req.body);
+    console.log("visitor", req.body);
     const visitor = await visitorService.createVisitor({
       email,
       name,
@@ -98,7 +98,7 @@ const updateVisitorStatusAPI = async (req, res) => {
       visitor_id,
       status,
     });
-    console.log("req. body", req.body);
+    console.log("req. body update", req.body);
     res.json({ success: sentResult });
   } catch (error) {
     console.error(error);

@@ -112,6 +112,7 @@ const createQuote = async (req, res) => {
       return_dropoff_date
       //duration,
     );
+    console.log("quote", quote);
     res.json(quote);
   } catch (error) {
     console.error(error);

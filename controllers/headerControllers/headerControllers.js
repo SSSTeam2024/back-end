@@ -83,6 +83,7 @@ const updateHeader = async (req, res) => {
       address_display,
     } = req.body;
 
+    console.log("req.body", req.body);
     let logo = globalFunctions.generateUniqueFilename(
       logo_extension,
       "logoSite"
