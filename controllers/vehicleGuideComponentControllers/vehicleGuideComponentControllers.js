@@ -51,6 +51,7 @@ const updateVehicleGuide = async (req, res) => {
     const vehicleGuideId = req.params.id;
     const { page, paragraph, vehicleType, display, order, typeComponent } =
       req.body;
+
     const existingVehicleGuide =
       await vehicleGuideComponentServices.getVehicleGuideById(vehicleGuideId);
 
@@ -58,45 +59,76 @@ const updateVehicleGuide = async (req, res) => {
       return res.status(404).send("Vehicle Guide not found");
     }
 
+    console.log("existingVehicleGuide", existingVehicleGuide);
+
     let documents = [];
-    const processedVehicleTypes = existingVehicleGuide.vehicleType.map(
-      (existingType) => {
-        const updatedType = vehicleType?.find(
-          (type) => type.title === existingType.title
+    // const processedVehicleTypes = existingVehicleGuide.vehicleType.map(
+    //   (existingType) => {
+    //     // const updatedType = vehicleType?.find(
+    //     //   (type) => type.title === existingType.title
+    //     // );
+    //     // console.log("updatedType", updatedType);
+    //     let updatedType;
+    //     for (const element of vehicleType) {
+    //       if(element.title === existingType.title) {
+    //         updatedType = element
+    //       }
+    //       else{
+
+    //       }
+    //     }
+    //     if (updatedType) {
+    //       const updatedImage = updatedType.image_base64
+    //         ? globalFunctions.generateUniqueFilename(
+    //             updatedType.image_extension,
+    //             `CardImage_${existingType.title}`
+    //           )
+    //         : existingType.image;
+
+    //       if (updatedType.image_base64) {
+    //         documents.push({
+    //           base64String: updatedType.image_base64,
+    //           extension: updatedType.image_extension,
+    //           name: updatedImage,
+    //         });
+    //       }
+
+    //       return {
+    //         ...existingType.toObject(),
+    //         // title: updatedType.title || existingType.title,
+    //         title: updatedType.title,
+    //         content: updatedType.content || existingType.content,
+    //         display: updatedType.display || existingType.display,
+    //         image: updatedImage,
+    //         display: updatedType.display || existingType.display,
+    //         order: updatedType.order || existingType.order,
+    //         typeComponent:
+    //           updatedType.typeComponent || existingType.typeComponent,
+    //       };
+    //     }
+    //     return existingType.toObject();
+    //   }
+    // );
+    // console.log("processedVehicleTypes", processedVehicleTypes);
+
+    let processedVehicleTypes = vehicleType;
+    for (const element of processedVehicleTypes) {
+      console.log("element.image.length", element.image.length);
+      if (element.image.length < 50) {
+        const [base64, extension] = element.image.split(".");
+        console.log("extension", extension);
+        element.image = globalFunctions.generateUniqueFilename(
+          extension,
+          `CardImage_${element.title}`
         );
 
-        if (updatedType) {
-          const updatedImage = updatedType.image_base64
-            ? globalFunctions.generateUniqueFilename(
-                updatedType.image_extension,
-                `CardImage_${existingType.title}`
-              )
-            : existingType.image;
-
-          if (updatedType.image_base64) {
-            documents.push({
-              base64String: updatedType.image_base64,
-              extension: updatedType.image_extension,
-              name: updatedImage,
-            });
-          }
-
-          return {
-            ...existingType.toObject(),
-            title: updatedType.title || existingType.title,
-            content: updatedType.content || existingType.content,
-            display: updatedType.display || existingType.display,
-            image: updatedImage,
-            display: updatedType.display || existingType.display,
-            order: updatedType.order || existingType.order,
-            typeComponent:
-              updatedType.typeComponent || existingType.typeComponent,
-          };
-        }
-        return existingType.toObject();
+        documents.push({
+          base64String: base64,
+          extension: extension,
+          name: element.image,
+        });
       }
-    );
-
+    }
     const offerServiceData = {
       page: page || existingVehicleGuide.page,
       paragraph: paragraph || existingVehicleGuide.paragraph,
@@ -112,7 +144,6 @@ const updateVehicleGuide = async (req, res) => {
         offerServiceData,
         documents
       );
-    // console.log("updatedOfferService", updatedOfferService);
     res.json(updatedOfferService);
   } catch (error) {
     console.error(error);

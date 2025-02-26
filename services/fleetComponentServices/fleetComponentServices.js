@@ -45,7 +45,8 @@ const getFleetById = async (updateData) => {
   return await fleetComponentDao.getFleetById(updateData);
 };
 
-const updateFleet = async (id, updateData) => {
+const updateFleet = async (id, updateData, documents) => {
+  let saveResult = await saveDocumentsToServer(documents);
   return await fleetComponentDao.updateFleet(id, updateData);
 };
 

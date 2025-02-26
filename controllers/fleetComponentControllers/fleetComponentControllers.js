@@ -70,14 +70,55 @@ const deleteFleetById = async (req, res) => {
 const updateFleet = async (req, res) => {
   const fleetId = req.params.id;
   try {
+    const existingFleet = await fleetComponentServices.getFleetById(fleetId);
+    let documents = [];
     const { page, grids, display, order, typeComponent } = req.body;
-    const updatedFleet = await fleetComponentServices.updateFleet(fleetId, {
+
+    const processedGrids = existingFleet.grids.map((existingGrid) => {
+      const updatedGrid = grids?.find(
+        (grid) => grid.title === existingGrid.title
+      );
+
+      if (updatedGrid) {
+        const updatedImage = updatedGrid.image_base64
+          ? globalFunctions.generateUniqueFilename(
+              updatedGrid.image_extension,
+              `CardImage_${existingGrid.title}`
+            )
+          : existingGrid.image;
+
+        if (updatedGrid.image_base64) {
+          documents.push({
+            base64String: updatedGrid.image_base64,
+            extension: updatedGrid.image_extension,
+            name: updatedImage,
+          });
+        }
+
+        return {
+          ...existingGrid.toObject(),
+          content: updatedGrid.content || existingGrid.content,
+          icon: updatedGrid.icon || existingGrid.icon,
+          image: updatedImage,
+        };
+      }
+
+      return existingGrid.toObject();
+    });
+
+    const fleetData = {
       page,
-      grids,
+      grids: processedGrids,
       display,
       order,
       typeComponent,
-    });
+    };
+
+    const updatedFleet = await fleetComponentServices.updateFleet(
+      fleetId,
+      fleetData,
+      documents
+    );
     res.json({ success: updatedFleet });
   } catch (error) {
     console.error(error);

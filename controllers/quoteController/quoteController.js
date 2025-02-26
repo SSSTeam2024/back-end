@@ -384,7 +384,7 @@ const updateQuoteStatus = async (req, res) => {
       payment_mode,
       date,
     } = req.body;
-
+    console.log("req.body", req.body);
     const updatedQuote = await quoteService.updateQuoteStatus(quoteId);
 
     if (!updatedQuote) {
@@ -393,7 +393,7 @@ const updateQuoteStatus = async (req, res) => {
 
     res.json({
       link:
-        "http://www.coachhirenetwork.co.uk/Booking-Success.html?type=" +
+        "http://127.0.0.1:5500/Booking-Success.html?type=" +
         payment_type +
         "&mode=" +
         payment_mode +

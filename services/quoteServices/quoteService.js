@@ -27,7 +27,7 @@ const createQuote = async (
   let latestQuote = await quoteDao.getLatestQuote();
   let newQuoteRef;
   if (!latestQuote) {
-    newQuoteRef = "000001";
+    newQuoteRef = "001001";
   } else {
     newQuoteRef = Number(latestQuote.quote_ref) + 1;
   }
@@ -176,8 +176,6 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
-  console.log(id);
-  console.log(quote_id);
   let url =
     "http://57.128.184.217:3000/api/visitor-payment/create-payment-tracking-record/" +
     id._id +
@@ -243,7 +241,7 @@ const sendPaymentEmail = async (paymentData) => {
   let id = paymentData.id_visitor;
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = `http://${process.env.DOMAIN_NAME}/api/quote/quote-payment/4fe5t1g44f6d5f748ds654fs97fsd4fs8df764h6j78ty`;
+  let url = `http://127.0.0.1:5500/Booking-Payment.html?id=` + quote_id;
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";

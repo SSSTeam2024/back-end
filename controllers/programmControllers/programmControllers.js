@@ -234,7 +234,7 @@ const convertToQuoteAPI = async (req, res) => {
           let latestQuote = await quoteDao.getLatestQuote();
           let newQuoteRef;
           if (!latestQuote) {
-            newQuoteRef = "000001";
+            newQuoteRef = "001001";
           } else {
             newQuoteRef = Number(latestQuote.quote_ref) + 1;
           }
@@ -273,7 +273,7 @@ const convertToQuoteAPI = async (req, res) => {
           let latestQuote = await quoteDao.getLatestQuote();
           let newQuoteRef;
           if (!latestQuote) {
-            newQuoteRef = "000001";
+            newQuoteRef = "001001";
           } else {
             newQuoteRef = Number(latestQuote.quote_ref) + 1;
           }

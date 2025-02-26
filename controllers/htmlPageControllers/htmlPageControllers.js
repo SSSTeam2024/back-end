@@ -135,15 +135,6 @@ const generateHTMLFile = async (req, res) => {
     }
                     </a>
                   </li>
-                  <li id="base-address">
-                    <span>
-                      <i class="bx bx-map"></i>
-                      <span>${htmlPage.header.address_label}</span>
-                      <span style="color: #000000; font-size: larger"
-                        >${htmlPage.header.address_value}</span
-                      >
-                    </span>
-                  </li>
                   <li class="get-quote pl-0" id="get-a-quote">
                     <a class="default-btn active" href="request-quote.html">
                     ${htmlPage.header.button_text}
@@ -314,14 +305,14 @@ const generateHTMLFile = async (req, res) => {
       <div class="page-title-content">
         <div class="row align-items-center">
           <div class="col-lg-6 col-sm-6">
-            <h3>About Us</h3>
+            <h3>${htmlPage.name}</h3>
           </div>
           <div class="col-lg-6 col-sm-6">
             <ul>
               <li>
                 <a href="index.html"> Home </a>
               </li>
-              <li>About Us</li>
+              <li>${htmlPage.name}</li>
             </ul>
           </div>
         </div>
@@ -758,136 +749,11 @@ const generateHTMLFile = async (req, res) => {
     </section> `
         : ""
     }
-        <section class="about-area ptb-100">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6">
-            <div class="about-img">
-              <img src="${htmlPage.aboutUs.image.path}" alt="Image" />
-              <div class="about-quatre">
-                <i class="bx bxs-quote-alt-left bx-tada"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="about-content ml-30">
-              <span>${htmlPage.aboutUs.littleTitle.name}</span>
-              <h2>
-              ${htmlPage.aboutUs.bigTitle.name}
-              </h2>
-              <p class="mb-0">
-                 ${htmlPage.aboutUs.paragraph.content}
-              </p>
-              <a class="default-btn" href="${htmlPage.aboutUs.button.link}"> ${
-      htmlPage.aboutUs.button.label
-    } </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-<section class="choose-us-area" style="margin-bottom: 30px">
-      <div class="container">
-        <div class="section-title">
-          <span>Our Mission</span>
-          <h2>At Coach Hire Network</h2>
-          <p class="mb-0" style="font-size: 22px">
-            Our mission is to provide top-quality coach hire services that
-            exceed our customers' expectations. We strive to deliver exceptional
-            customer service, comfortable and well-maintained coaches, and
-            reliable transportation solutions. Your satisfaction and safety are
-            our highest priorities.
-          </p>
-        </div>
-      </div>
-    </section>
-     <section class="choose-us-area" style="margin-bottom: 30px" id="our-values">
-      <div class="container">
-        <div class="section-title">
-          <span>${htmlPage.ourValues.littleTitle.name}</span>
-          <h2>${htmlPage.ourValues.bigTitle.name}</h2>
-        </div>
-        <div class="tab__bar">
-          <div class="tab__navigation">
-            <ul class="tab__menu">
-            ${htmlPage.ourValues.tabs.map(
-              (tab) => `<li class="tab__btn active">H${tab.title}</li>`
-            )}
-            </ul>
-          </div>
-        </div>
-        <div class="tab__content">
-        ${htmlPage.ourValues.tabs.map(
-          (tab) =>
-            `
-          <div class="tab active">
-            <div class="row">
-              <div class="left-column">
-                <div class="img-card">
-                  <img
-                    src="${htmlPage.ourValues.image.path}"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="right-column">
-                <div class="info">
-                  <div class="description">
-                    <p>
-                     ${tab.content}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          `
-        )}
-        </div>
-      </div>
-    </section>
-    <section class="service-area pb-100" id="offreServices">
-      <div class="container">
-        <div class="section-title">
-          <span>${htmlPage.offerServices.littleTitle.name} </span>
-          <h2>${htmlPage.offerServices.bigTitle.name}</h2>
-        </div>
-        <div class="row">
-        ${htmlPage.offerServices.cards.map(
-          (card) =>
-            `
-          <div class="col-lg-4 col-sm-6">
-          <div class="single-service">
-            <div class="service-content-wrap">
-              <i class="icon ${card.icon}"></i>
-              <h3>${card.title}</h3>
-              <p>
-               ${card.content}
-              </p>
-            </div>
-          </div>
-        </div>
-        `
-        )}
-          <div class="col-12">
-            <div class="service-all">
-              <p>
-                We would love to hear from you and discuss how we can assist you
-                with your travel needs. Feel free to reach out to our friendly
-                team via phone, email, or through our online contact form. We
-                are here to provide you with exceptional service and make your
-                journey a memorable one.
-              </p>
-              <p>
-                Thank you for considering Coach Hire Network as your trusted
-                travel partner. We look forward to serving you and ensuring a
-                comfortable and enjoyable journey every time.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div id="content-container">
+      <div id="div1"></div>
+      <div id="div2"></div>
+      <div id="div3"></div>
+    </div>
         <footer
       class="footer-top-area pt-70 pb-70"
       style="background-color: #cd2528"
@@ -1033,17 +899,13 @@ const generateHTMLFile = async (req, res) => {
     <script src="assets/js/top-menu.js"></script>
     <script src="assets/js/footer-list.js"></script>
     <script src="assets/js/footer-social.js"></script>
-    <script src="assets/js/aboutUsComponent.js"></script>
-    <script src="assets/js/ourValuesComponent.js"></script>
-    <script src="assets/js/offreServicesComponent.js"></script>
+    <script src="assets/js/loadComponents.js"></script>
       </body>
       </html>
     `;
 
     // Specify external folder
-    const folderPath = path.join(
-      "C:/Users/HP/Desktop/3s Coach Hire Network/website"
-    );
+    const folderPath = path.join("/var/www/client");
     const sanitizedLink = htmlPage.link.replace(/\s+/g, "-");
     console.log("sanitizedLink", sanitizedLink);
     const filePath = path.join(folderPath, `${sanitizedLink}.html`);
