@@ -390,7 +390,7 @@ async function prepareQuoteBookingEmail(
       console.log("Wrong type");
   }
   let emailBody = selectedTemplate;
-  let emailSubject = "Booking Processed";
+  let emailSubject = "Your Quote is Ready";
   let fullEmailObject = {
     to: recipient,
     subject: emailSubject,
