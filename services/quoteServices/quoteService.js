@@ -241,7 +241,8 @@ const sendPaymentEmail = async (paymentData) => {
   let id = paymentData.id_visitor;
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = `http://127.0.0.1:5500/Booking-Payment.html?id=` + quote_id;
+  let url =
+    `http://www.coachhirenetwork.co.uk/Booking-Payment.html?id=` + quote_id;
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";

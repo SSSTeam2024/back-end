@@ -11,7 +11,8 @@ const createPaymentTrackingRecord = async (req, res) => {
     });
 
     res.redirect(
-      "http://127.0.0.1:5500/Booking-Confirmation.html?id=" + visPayTrackRec._id
+      "http://www.coachhirenetwork.co.uk/Booking-Confirmation.html?id=" +
+        visPayTrackRec._id
     );
   } catch (error) {
     console.error(error);
