@@ -2596,9 +2596,9 @@ const emailTemplates = {
                                 text-decoration: none;
                                 font-size: 16px;
                                 cursor: pointer;
-                                color: #fff;
-                                background-color: #e67e22;
-                                border: 2px solid #d6731d;
+                                color: #ffe605;
+                                background-color: #555;
+                                border: 2px solid #555;
                                 border-radius: 17px;">Proceed Your Payment</a>
           </p>
           <p>Please ensure to complete the payment process at your earliest convenience to avoid any delays in your journey.</p> 
