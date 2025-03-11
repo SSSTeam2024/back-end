@@ -19,7 +19,6 @@ const generateHTMLFile = async (req, res) => {
       return res.status(404).json({ error: "HTMLPage not found" });
     }
 
-    // Construct HTML content
     const htmlContent = `
       <!DOCTYPE html>
       <html lang="en">
@@ -906,6 +905,9 @@ const generateHTMLFile = async (req, res) => {
 
     // Specify external folder
     const folderPath = path.join("/var/www/client");
+    // const folderPath = path.join(
+    //   "C:/Users/HP/Desktop/3s Coach Hire Network/website"
+    // );
     const sanitizedLink = htmlPage.link.replace(/\s+/g, "-");
     console.log("sanitizedLink", sanitizedLink);
     const filePath = path.join(folderPath, `${sanitizedLink}.html`);

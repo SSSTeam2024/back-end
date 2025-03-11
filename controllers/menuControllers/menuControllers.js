@@ -60,7 +60,8 @@ const deleteMenu = async (req, res) => {
 
 const addMenuItem = async (req, res) => {
   try {
-    const { menuId, newItem } = req.body; // Expecting menuId and newItem in the request body
+    const { menuId, newItem } = req.body;
+    console.log("req.body", req.body);
     if (!menuId || !newItem) {
       return res.status(400).json({ error: "menuId and newItem are required" });
     }
