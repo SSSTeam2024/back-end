@@ -93,8 +93,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Pickup</b>
@@ -110,8 +110,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Date & Time</b>
@@ -131,8 +131,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Collection Address</b>
@@ -150,8 +150,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Destination Address</b>
@@ -169,8 +169,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Luggage</b>
@@ -188,8 +188,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Return</b>
@@ -205,8 +205,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Date & Time</b>
@@ -226,8 +226,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Collection Address</b>
@@ -245,8 +245,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Destination Address</b>
@@ -264,33 +264,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
-                "
-              >
-                <b>Route</b>
-              </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
-                <label><a href="https://www.google.com/maps/dir/?api=1&origin=` +
-    quote.start_point.coordinates.lat +
-    `,` +
-    quote.start_point.coordinates.lon +
-    `&destination=` +
-    quote.destination_point.coordinates.lat +
-    `,` +
-    quote.destination_point.coordinates.lon +
-    `&travelmode=driving">View Route</a></label>
-              </td>
-            </tr>
-            <tr>
-              <td
-                style="
-                  width: 200px;
-                  text-align: right;
-                  vertical-align: top;
-                  padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Luggage</b>
@@ -308,8 +283,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Number Of Passengers</b>
@@ -327,8 +302,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Vehicle Type</b>
@@ -346,8 +321,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Journey Type</b>
@@ -365,8 +340,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Passenger Name</b>
@@ -384,8 +359,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Passenger Phone</b>
@@ -403,8 +378,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Email</b>
@@ -519,8 +494,8 @@ const emailTemplates = {
                     text-align: right;
                     vertical-align: top;
                     padding-right: 15px;
-                    background-color: #555;
-                    color: #ffe605;
+                    background-color: #C0C0C0;
+                    color: #CD2528;
                   "
                 >
                   <b>Pickup</b>
@@ -536,8 +511,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Date & Time</b>
@@ -557,8 +532,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Collection Address</b>
@@ -576,8 +551,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Destination Address</b>
@@ -595,8 +570,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Luggage</b>
@@ -614,8 +589,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Number Of Passengers</b>
@@ -633,8 +608,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Vehicle Type</b>
@@ -652,8 +627,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Journey Type</b>
@@ -671,8 +646,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Passenger Name</b>
@@ -690,8 +665,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Passenger Phone</b>
@@ -709,8 +684,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Email</b>
@@ -836,8 +811,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Pickup</b>
@@ -853,8 +828,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Date & Time</b>
@@ -874,8 +849,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Collection Address</b>
@@ -893,8 +868,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Destination Address</b>
@@ -912,8 +887,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Luggage</b>
@@ -931,8 +906,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Number Of Passengers</b>
@@ -950,8 +925,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Vehicle Type</b>
@@ -968,8 +943,8 @@ const emailTemplates = {
             text-align: right;
             vertical-align: top;
             padding-right: 15px;
-            background-color: #555;
-            color: #ffe605;
+            background-color: #C0C0C0;
+            color: #CD2528;
           "></td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
             <span style="color: #000">£` +
@@ -987,8 +962,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Journey Type</b>
@@ -1006,8 +981,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Passenger Name</b>
@@ -1025,8 +1000,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Passenger Phone</b>
@@ -1044,8 +1019,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Email</b>
@@ -1091,8 +1066,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Vehicle Price</b>
@@ -1110,8 +1085,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>VAT</b>
@@ -1129,8 +1104,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Total Price</b>
@@ -1148,8 +1123,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Deposit Amount</b>
@@ -1170,8 +1145,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Current Balance</b>
@@ -1189,8 +1164,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Click to Book</b>
@@ -1333,8 +1308,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Pickup</b>
@@ -1350,8 +1325,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Date & Time</b>
@@ -1371,8 +1346,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Collection Address</b>
@@ -1390,8 +1365,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Destination Address</b>
@@ -1409,8 +1384,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Retrurn</b>
@@ -1426,8 +1401,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Date & Time</b>
@@ -1447,8 +1422,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Collection Address</b>
@@ -1466,8 +1441,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Destination Address</b>
@@ -1485,8 +1460,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Luggage</b>
@@ -1504,8 +1479,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Number Of Passengers</b>
@@ -1523,8 +1498,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Vehicle Type</b>
@@ -1541,8 +1516,8 @@ const emailTemplates = {
             text-align: right;
             vertical-align: top;
             padding-right: 15px;
-            background-color: #555;
-            color: #ffe605;
+            background-color: #C0C0C0;
+            color: #CD2528;
           "></td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
             <span style="color: #000">£` +
@@ -1560,8 +1535,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Journey Type</b>
@@ -1579,8 +1554,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Passenger Name</b>
@@ -1598,8 +1573,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Passenger Phone</b>
@@ -1617,8 +1592,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Email</b>
@@ -1664,8 +1639,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Vehicle Price</b>
@@ -1683,8 +1658,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>VAT</b>
@@ -1702,8 +1677,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Total Price</b>
@@ -1721,8 +1696,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Deposit Amount</b>
@@ -1743,8 +1718,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Current Balance</b>
@@ -1762,8 +1737,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Click to Book</b>
@@ -2035,8 +2010,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 ">
                 <b>Pickup</b>
               </td>
@@ -2050,8 +2025,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Date & Time</b>
               </td>
@@ -2069,8 +2044,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Collection Address</b>
               </td>
@@ -2086,8 +2061,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Destination Address</b>
               </td>
@@ -2103,8 +2078,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Luggage</b>
               </td>
@@ -2120,8 +2095,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Number Of Passengers</b>
               </td>
@@ -2137,8 +2112,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Vehicle Type</b>
               </td>
@@ -2154,8 +2129,8 @@ const emailTemplates = {
             text-align: right;
             vertical-align: top;
             padding-right: 15px;
-            background-color: #555;
-            color: #ffe605;
+            background-color: #C0C0C0;
+            color: #CD2528;
           "></td>
               <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
                 <span style="color: #000">£` +
@@ -2169,8 +2144,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Journey Type</b>
               </td>
@@ -2186,8 +2161,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Passenger Name</b>
               </td>
@@ -2203,8 +2178,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Passenger Phone</b>
               </td>
@@ -2220,8 +2195,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Email</b>
               </td>
@@ -2258,8 +2233,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 ">
                 <b>Vehicle Price</b>
               </td>
@@ -2275,8 +2250,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>VAT</b>
               </td>
@@ -2292,8 +2267,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Total Price</b>
               </td>
@@ -2309,8 +2284,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Deposit Amount</b>
               </td>
@@ -2326,8 +2301,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Current Balance</b>
               </td>
@@ -2343,8 +2318,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                 <b>Balance Due Date</b>
               </td>
@@ -2596,9 +2571,9 @@ const emailTemplates = {
                                 text-decoration: none;
                                 font-size: 16px;
                                 cursor: pointer;
-                                color: #ffe605;
-                                background-color: #555;
-                                border: 2px solid #555;
+                                color: #CD2528;
+                                background-color: #C0C0C0;
+                                border: 2px solid #C0C0C0;
                                 border-radius: 17px;">Proceed Your Payment</a>
           </p>
           <p>Please ensure to complete the payment process at your earliest convenience to avoid any delays in your journey.</p> 
@@ -2643,8 +2618,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Pickup</b>
@@ -2660,8 +2635,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Date & Time</b>
@@ -2681,8 +2656,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Collection Address</b>
@@ -2700,8 +2675,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Destination Address</b>
@@ -2719,8 +2694,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Luggage</b>
@@ -2738,8 +2713,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Number Of Passengers</b>
@@ -2757,8 +2732,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Vehicle Type</b>
@@ -2776,8 +2751,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Journey Type</b>
@@ -2795,8 +2770,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Passenger Name</b>
@@ -2814,8 +2789,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Passenger Phone</b>
@@ -2833,8 +2808,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Email</b>
@@ -2938,8 +2913,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Name</b>
                   </td>
@@ -2955,8 +2930,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Email</b>
                   </td>
@@ -2972,8 +2947,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Phone</b>
                   </td>
@@ -2989,8 +2964,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Address</b>
                   </td>
@@ -3006,8 +2981,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Website</b>
                   </td>
@@ -3105,8 +3080,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Name</b>
                   </td>
@@ -3122,8 +3097,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Email</b>
                   </td>
@@ -3139,8 +3114,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Phone</b>
                   </td>
@@ -3156,8 +3131,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Address</b>
                   </td>
@@ -3173,8 +3148,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Fleet Number</b>
                   </td>
@@ -3190,8 +3165,8 @@ const emailTemplates = {
               text-align: right;
               vertical-align: top;
               padding-right: 15px;
-              background-color: #555;
-              color: #ffe605;
+              background-color: #C0C0C0;
+              color: #CD2528;
             ">
                       <b>Region</b>
                   </td>
@@ -3320,8 +3295,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Name</b>
                     </td>
@@ -3337,8 +3312,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Email</b>
                     </td>
@@ -3354,8 +3329,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Phone</b>
                     </td>
@@ -3371,8 +3346,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Address</b>
                     </td>
@@ -3388,8 +3363,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Vehicle Type</b>
                     </td>
@@ -3405,8 +3380,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Coverage Area</b>
                     </td>
@@ -3422,8 +3397,8 @@ const emailTemplates = {
             text-align: right;
             vertical-align: top;
             padding-right: 15px;
-            background-color: #555;
-            color: #ffe605;
+            background-color: #C0C0C0;
+            color: #CD2528;
           "></td>
                     <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
                         <a href="` +
@@ -3454,8 +3429,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 ">
                         <b>Username</b>
                     </td>
@@ -3471,8 +3446,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Password</b>
                     </td>
@@ -3488,8 +3463,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               ">
                         <b>Click to Login</b>
                     </td>
@@ -3544,7 +3519,7 @@ const emailTemplates = {
       </tr>
       <tr>
         <td>
-            <a href="" style="display: flex; justify-content: start; margin-bottom: 10px; font-size: larger; color: #555;">
+            <a href="" style="display: flex; justify-content: start; margin-bottom: 10px; font-size: larger; color: #C0C0C0;">
                 Click here to take this job for £ ` +
     quote.pushed_price +
     `
@@ -3553,14 +3528,14 @@ const emailTemplates = {
       </tr>
       <tr>
         <td>
-            <a href="" style="display: flex; justify-content: start; margin-bottom: 10px; font-size: larger; color: #555;">
+            <a href="" style="display: flex; justify-content: start; margin-bottom: 10px; font-size: larger; color: #C0C0C0;">
                 Click here to provide a quote for this job
             </a>
         </td>
       </tr>
       <tr>
         <td>
-            <a href="" style="display: flex; justify-content: start; margin-bottom: 20px; font-size: larger; color: #555;">
+            <a href="" style="display: flex; justify-content: start; margin-bottom: 20px; font-size: larger; color: #C0C0C0;">
                 Click here if you are not available for this job.
             </a>
         </td>
@@ -3619,8 +3594,8 @@ const emailTemplates = {
                   text-align: right;
                   vertical-align: top;
                   padding-right: 15px;
-                  background-color: #555;
-                  color: #ffe605;
+                  background-color: #C0C0C0;
+                  color: #CD2528;
                 "
               >
                 <b>Journey 1</b>
@@ -3636,8 +3611,8 @@ const emailTemplates = {
                     text-align: right;
                     vertical-align: top;
                     padding-right: 15px;
-                    background-color: #555;
-                    color: #ffe605;
+                    background-color: #C0C0C0;
+                    color: #CD2528;
                   "
                 >
                   <b>On Site Before</b>
@@ -3656,8 +3631,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Date & Time</b>
@@ -3677,8 +3652,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Collection Address</b>
@@ -3696,8 +3671,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Destination Address</b>
@@ -3715,8 +3690,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Luggage</b>
@@ -3734,8 +3709,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Number Of Passengers</b>
@@ -3753,8 +3728,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Vehicle Type</b>
@@ -3772,8 +3747,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Journey Type</b>
@@ -3791,8 +3766,8 @@ const emailTemplates = {
                 text-align: right;
                 vertical-align: top;
                 padding-right: 15px;
-                background-color: #555;
-                color: #ffe605;
+                background-color: #C0C0C0;
+                color: #CD2528;
               "
             >
               <b>Extra Details</b>

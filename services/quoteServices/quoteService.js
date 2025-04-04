@@ -312,8 +312,6 @@ async function prepareAfterQuoteEmailToAdmin(
   let recipient = visitor.email;
   //const email = await emailTemplateDao.getEmailTemplateByName('visitor quote reception');
   const creationDate = quote.createdAt;
-  console.log("quote", quote);
-  console.log("visitor", visitor);
   const formattedCreationDate = creationDate.toLocaleString("en-GB", {
     day: "2-digit",
     month: "2-digit",
@@ -332,7 +330,7 @@ async function prepareAfterQuoteEmailToAdmin(
   let emailSubject = "New Quote Request Received";
   let fullEmailObject = {
     to: "sales@coachhirenetwork.co.uk", //adelbouden@boudencoachtravel.co.uk
-    // to: "f.natsu9@gmail.com", //adelbouden@boudencoachtravel.co.uk
+    // to: "fefomix663@lesotica.com", //adelbouden@boudencoachtravel.co.uk
     subject: emailSubject,
     body: emailBody,
   };
