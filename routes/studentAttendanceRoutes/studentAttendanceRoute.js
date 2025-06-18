@@ -9,7 +9,7 @@ router.post(
 );
 router.get(
   "/getAttendanceById/:id",
-  studentAttendanceController.getAttendanceById
+  studentAttendanceController.getStudentAttendanceById
 );
 router.get(
   "/getAttendanceByIdStudent",
@@ -27,5 +27,12 @@ router.delete(
   "/deleteStudentAttendanceById/:id",
   studentAttendanceController.deleteStudentAttendance
 );
-
+router.post(
+  "/getAttendanceByIdStudentAndQuote",
+  studentAttendanceController.getAttendanceByIdStudentAndQuote
+);
+router.post(
+  "/getAttendancesByStudentIdsAndQuoteId",
+  studentAttendanceController.getAttendancesByStudentIdsAndQuoteId
+);
 module.exports = router;

@@ -5,9 +5,16 @@ const path = require("path");
 const sendEmail = async (email) => {
   try {
     // Create a transporter with desired email service configuration
+    // const transporter = nodemailer.createTransport({
+    //   host: "smtpout.secureserver.net", // e.g., smtp.gmail.com
+    //   port: 587,
+    //   secure: false, // true for port 465, false for 587
+    //   auth: {
+    //     user: "sales@coachhirenetwork.co.uk",
+    //     pass: "Tunisiatrip2025@",
+    //   },
+    // });
     const transporter = nodemailer.createTransport({
-      //host: "sandbox.smtp.mailtrap.io",
-      //port: 2525,
       service: "gmail",
       auth: {
         user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
@@ -47,12 +54,12 @@ const sendEmailToAdmin = async (email) => {
   try {
     // Create a transporter with desired email service configuration
     const transporter = nodemailer.createTransport({
-      //host: "sandbox.smtp.mailtrap.io",
-      //port: 2525,
-      service: "gmail",
+      host: "smtpout.secureserver.net", // e.g., smtp.gmail.com
+      port: 587,
+      secure: false, // true for port 465, false for 587
       auth: {
-        user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
-        pass: "qitz cxsv qtlq heeg", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
+        user: "sales@coachhirenetwork.co.uk",
+        pass: "Tunisiatrip2025@",
       },
     });
 
@@ -60,7 +67,7 @@ const sendEmailToAdmin = async (email) => {
     const mailOptions = {
       from: {
         name: "Coach Hire Network",
-        address: "fourati.oussama9@gmail.com",
+        address: "sales@coachhirenetwork.co.uk",
       },
       to: email.to, //email.to, "fourati.oussama9@gmail.com"
       subject: email.subject,

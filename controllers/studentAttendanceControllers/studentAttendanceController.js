@@ -1,10 +1,10 @@
-const studentAttendanceService = require("../../services/studentAttendanceServices/studentAttendanceServices");
+const studentAttendanceServices = require("../../services/studentAttendanceServices/studentAttendanceServices");
 
 const addStudentAttendance = async (req, res) => {
   try {
     const { id_quote, id_student, id_school, presence } = req.body;
 
-    const attendance = await studentAttendanceService.addStudentAttendance({
+    const attendance = await studentAttendanceServices.addStudentAttendance({
       id_quote,
       id_student,
       id_school,
@@ -17,17 +17,69 @@ const addStudentAttendance = async (req, res) => {
   }
 };
 
-const getAttendanceById = async (req, res) => {
+const createMultipleStudentsAttendances = async (req, res) => {
+  try {
+    const { attendances } = req.body;
+
+    const attendance =
+      await studentAttendanceServices.createMultipleStudentsAttendances(
+        attendances
+      );
+    res.json(attendance);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getStudentAttendanceById = async (req, res) => {
   try {
     const AttendanceId = req.params.id;
 
-    const getstudentAttendance =
-      await studentAttendanceService.getStudentAttendanceById(AttendanceId);
+    const getStudentAttendance =
+      await studentAttendanceServices.getStudentAttendanceById(AttendanceId);
 
-    if (!getstudentAttendance) {
-      return res.status(404).send("Attendance student not found");
+    if (!getStudentAttendance) {
+      return res.status(404).send("Attendance Student not found");
     }
-    res.json(getstudentAttendance);
+    res.json(getStudentAttendance);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getAttendanceByIdStudentAndQuote = async (req, res) => {
+  try {
+    const { id_student, id_quote } = req.body;
+
+    const getAttendanceByIdStudentAndQuote =
+      await studentAttendanceServices.getAttendanceByIdStudentAndQuote({
+        id_student,
+        id_quote,
+      });
+
+    if (!getAttendanceByIdStudentAndQuote) {
+      return res.status(404).send("Attendance Student not found");
+    }
+    res.json(getAttendanceByIdStudentAndQuote);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
+const getAttendanceByIdSchool = async (req, res) => {
+  try {
+    const id_student = req.body;
+
+    const getAttendanceByIdSchool =
+      await studentAttendanceServices.getAttendanceByIdSchool(id_student);
+
+    if (!getAttendanceByIdSchool) {
+      return res.status(404).send("Attendance Student not found");
+    }
+    res.json(getAttendanceByIdSchool);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -38,30 +90,13 @@ const getAttendanceByIdStudent = async (req, res) => {
   try {
     const id_student = req.body;
 
-    const getAttendanceByIdstudent =
-      await studentAttendanceService.getAttendanceByIdStudent(id_student);
+    const getAttendanceByIdStudent =
+      await studentAttendanceServices.getAttendanceByIdStudent(id_student);
 
-    if (!getAttendanceByIdstudent) {
-      return res.status(404).send("Attendance student not found");
+    if (!getAttendanceByIdStudent) {
+      return res.status(404).send("Attendance Student not found");
     }
-    res.json(getAttendanceByIdstudent);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
-};
-
-const getAttendanceByIdSchool = async (req, res) => {
-  try {
-    const id_company = req.body;
-
-    const getAttendanceByIdCompany =
-      await studentAttendanceService.getAttendanceByIdSchool(id_company);
-
-    if (!getAttendanceByIdCompany) {
-      return res.status(404).send("Attendance student not found");
-    }
-    res.json(getAttendanceByIdCompany);
+    res.json(getAttendanceByIdStudent);
   } catch (error) {
     console.error(error);
     res.status(500).send(error.message);
@@ -74,7 +109,7 @@ const updateStudentAttendance = async (req, res) => {
     const { id_quote, id_student, id_school, presence } = req.body;
 
     const updatedAttendance =
-      await studentAttendanceService.updateStudentAttendance(
+      await studentAttendanceServices.updateStudentAttendance(
         studentAttendanceId,
         {
           id_quote,
@@ -94,13 +129,13 @@ const deleteStudentAttendance = async (req, res) => {
   try {
     const studentAttendanceId = req.params.id;
 
-    const deletedstudentAttendance =
-      await studentAttendanceService.deleteStudentAttendance(
+    const deleteStudentAttendance =
+      await studentAttendanceServices.deleteStudentAttendance(
         studentAttendanceId
       );
 
-    if (!deletedstudentAttendance) {
-      return res.status(404).send("student Attendance not found");
+    if (!deleteStudentAttendance) {
+      return res.status(404).send("Employee Student not found");
     }
     res.sendStatus(200);
   } catch (error) {
@@ -109,11 +144,33 @@ const deleteStudentAttendance = async (req, res) => {
   }
 };
 
+const getAttendancesByStudentIdsAndQuoteId = async (req, res) => {
+  try {
+    const { studentIds, idQuote } = req.body;
+
+    const getAttendances =
+      await studentAttendanceServices.getAttendancesByStudentIdsAndQuoteId({
+        studentIds,
+        idQuote,
+      });
+
+    if (!getAttendances) {
+      return res.status(404).send("Attendances not found");
+    }
+    res.json(getAttendances);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
 module.exports = {
   addStudentAttendance,
-  getAttendanceById,
+  getStudentAttendanceById,
   getAttendanceByIdStudent,
   getAttendanceByIdSchool,
   updateStudentAttendance,
   deleteStudentAttendance,
+  getAttendancesByStudentIdsAndQuoteId,
+  getAttendanceByIdStudentAndQuote,
+  createMultipleStudentsAttendances,
 };

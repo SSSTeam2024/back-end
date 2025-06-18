@@ -4,11 +4,20 @@ const path = require("path");
 
 const sendEmail = async (email, file) => {
   try {
+    // const transporter = nodemailer.createTransport({
+    //   service: "gmail",
+    //   auth: {
+    //     user: "fourati.oussama9@gmail.com",
+    //     pass: "qitz cxsv qtlq heeg",
+    //   },
+    // });
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtpout.secureserver.net", // e.g., smtp.gmail.com
+      port: 465,
+      secure: true, // true for port 465, false for 587
       auth: {
-        user: "fourati.oussama9@gmail.com",
-        pass: "qitz cxsv qtlq heeg",
+        user: "sales@coachhirenetwork.co.uk",
+        pass: "Tunisiatrip2025@",
       },
     });
     let attachments = [
@@ -28,7 +37,7 @@ const sendEmail = async (email, file) => {
     const mailOptions = {
       from: {
         name: "Coach Hire Network",
-        address: "fourati.oussama9@gmail.com",
+        address: "sales@coachhirenetwork.co.uk",
       },
       to: email.to,
       subject: email.subject,

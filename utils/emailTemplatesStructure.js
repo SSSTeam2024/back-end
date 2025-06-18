@@ -36,7 +36,7 @@ const emailTemplates = {
           </td>
         </tr>
         <tr>
-          <td style="text-align: left">
+          <td style="text-align: left; font-size: 20px">
             <p>Dear ` +
     visitor.name +
     `</p>
@@ -65,7 +65,7 @@ const emailTemplates = {
         margin: auto;
       "
     >
-      <legend style="margin-left: 20%">
+      <legend style="font-size: 14px">
         <strong>Reference: </strong>` +
     quote.quote_ref +
     `<strong>Date: </strong>` +
@@ -95,11 +95,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Pickup</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label></label>
               </td>
             </tr>
@@ -112,11 +113,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Date & Time</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.date +
     `<strong> at </strong>` +
@@ -133,11 +135,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Collection Address</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.start_point.placeName +
     `</label>
@@ -152,11 +155,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Destination Address</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.destination_point.placeName +
     `</label>
@@ -171,11 +175,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Luggage</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.luggage_details +
     `</label>
@@ -189,12 +194,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Return</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label></label>
               </td>
             </tr>
@@ -206,12 +211,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Date & Time</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     return_date +
     `<strong> at </strong>` +
@@ -227,12 +232,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Collection Address</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.destination_point.placeName +
     `</label>
@@ -246,12 +251,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Destination Address</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.start_point.placeName +
     `</label>
@@ -265,12 +270,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Luggage</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.luggage_details +
     `</label>
@@ -284,12 +289,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Number Of Passengers</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.passengers_number +
     `</label>
@@ -303,12 +308,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Vehicle Type</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label> ` +
     quote.vehicle_type +
     ` </label>
@@ -322,12 +327,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Journey Type</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     quote.journey_type +
     `</label>
@@ -341,12 +346,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Passenger Name</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     visitor.name +
     `</label>
@@ -360,12 +365,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Passenger Phone</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>` +
     visitor.phone +
     `</label>
@@ -379,12 +384,12 @@ const emailTemplates = {
                   vertical-align: top;
                   padding-right: 15px;
                   background-color: #C0C0C0;
-                  color: #CD2528;
+                  color: #CD2528;font-size: 18px
                 "
               >
                 <b>Email</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;font-size: 18px">
                 <label>
                   <a
                     style="
@@ -437,7 +442,7 @@ const emailTemplates = {
           </td>
         </tr>
         <tr>
-          <td style="text-align: left">
+          <td style="text-align: left; font-size: 20px">
             <p>Dear ` +
     visitor.name +
     `</p>
@@ -466,7 +471,7 @@ const emailTemplates = {
         margin: auto;
       "
     >
-      <legend style="margin-left: 20%">
+      <legend style="font-size: 14px">
         <strong>Reference: </strong>` +
     quote.quote_ref +
     ` <strong>Date: </strong>` +
@@ -496,6 +501,7 @@ const emailTemplates = {
                     padding-right: 15px;
                     background-color: #C0C0C0;
                     color: #CD2528;
+                    font-size: 18px
                   "
                 >
                   <b>Pickup</b>
@@ -513,11 +519,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Date & Time</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     quote.date +
     `<strong> at </strong>` +
@@ -534,11 +541,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Collection Address</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     quote.start_point.placeName +
     `</label>
@@ -553,11 +561,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Destination Address</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     quote.destination_point.placeName +
     `</label>
@@ -572,11 +581,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Luggage</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     quote.luggage_details +
     `</label>
@@ -591,11 +601,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Number Of Passengers</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     quote.passengers_number +
     `</label>
@@ -610,11 +621,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Vehicle Type</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label> ` +
     quote.vehicle_type +
     ` </label>
@@ -629,11 +641,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Journey Type</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     quote.journey_type +
     `</label>
@@ -648,11 +661,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Passenger Name</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     visitor.name +
     `</label>
@@ -667,11 +681,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Passenger Phone</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>` +
     visitor.phone +
     `</label>
@@ -686,11 +701,12 @@ const emailTemplates = {
                   padding-right: 15px;
                   background-color: #C0C0C0;
                   color: #CD2528;
+                  font-size: 18px
                 "
               >
                 <b>Email</b>
               </td>
-              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000;">
+              <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc; color: #000; font-size: 18px">
                 <label>
                   <a
                     style="
