@@ -5,31 +5,31 @@ const path = require("path");
 const sendEmail = async (email) => {
   return new Promise((resolve, reject) => {
     try {
-      // const transporter = nodemailer.createTransport({
-      //   service: "gmail",
-      //   auth: {
-      //     user: "fourati.oussama9@gmail.com", //"1388e7461f6fd3", "fourati.oussama9@gmail.com"
-      //     pass: "qitz cxsv qtlq heeg", //"76988076dd94e1"; "lwzd fdcr sclt cwfo"
-      //   },
-      // });
-
       const transporter = nodemailer.createTransport({
-        host: "smtpout.secureserver.net", // e.g., smtp.gmail.com
-        port: 465,
-        secure: true, // true for port 465, false for 587
+        service: `${process.env.EMAIL_SERVICE}`,
         auth: {
-          user: "sales@coachhirenetwork.co.uk",
-          pass: "Tunisiatrip2025@",
+          user: `${process.env.EMAIL_USER}`,
+          pass: `${process.env.EMAIL_PWD}`,
         },
       });
+
+      // const transporter = nodemailer.createTransport({
+      //   host: `${process.env.EMAIL_HOST}`,
+      //   port: `${process.env.EMAIL_PORT}`,
+      //   secure: true,
+      //   auth: {
+      // user: `${process.env.EMAIL_USER}`,
+      // pass: `${process.env.EMAIL_PWD}`,
+      // },
+      // });
 
       // Set up email data
       const mailOptions = {
         from: {
           name: "Coach Hire Network",
-          address: "sales@coachhirenetwork.co.uk",
+          address: `${process.env.EMAIL_SERVICE}`,
         },
-        to: email.to, //email.to, "fourati.oussama9@gmail.com"
+        to: email.to,
         subject: email.subject,
         html: email.body,
         attachments: [
