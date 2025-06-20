@@ -15,6 +15,7 @@ const quoteSchema = new mongoose.Schema(
       ref: "VehicleAffiliate",
       default: null,
     },
+
     // affiliate_id: {
     //   type: Schema.Types.ObjectId,
     //   ref: "Affiliate",
@@ -76,6 +77,8 @@ const quoteSchema = new mongoose.Schema(
     manual_cost: String,
     automatic_cost: String,
     deposit_amount: String,
+    payment_type: String,
+    payment_method: String,
     total_price: String,
     start_point: {
       placeName: String,

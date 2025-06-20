@@ -58,7 +58,7 @@ const deleteQuote = async (id) => {
   return await Quote.findByIdAndDelete(id);
 };
 
-const updateQuoteStatus = async (id) => {
+const updateQuoteStatus = async (id, paymentType, paymentMode) => {
   let bookedStatus = "Booked";
   return await Quote.findByIdAndUpdate(
     { _id: id },
@@ -66,6 +66,8 @@ const updateQuoteStatus = async (id) => {
       $set: {
         status: bookedStatus,
         progress: "Booked",
+        payment_type: paymentType,
+        payment_method: paymentMode,
       },
     }
   );

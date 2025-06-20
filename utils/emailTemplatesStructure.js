@@ -964,7 +964,7 @@ const emailTemplates = {
           "></td>
             <td style="text-align: left; padding-left: 15px; border-bottom: 1px solid #ccc;">
             <span style="color: #000">£` +
-    price +
+    (Number(price) + Number(price) * 0.2) +
     `</span> 
       <a href=` +
     url +

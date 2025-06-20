@@ -241,8 +241,7 @@ const sendPaymentEmail = async (paymentData) => {
   let id = paymentData.id_visitor;
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url =
-    `http://www.coachhirenetwork.co.uk/Booking-Payment.html?id=` + quote_id;
+  let url = `coachhirenetwork.co.uk/Booking-Payment.html?id=` + quote_id;
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
@@ -310,7 +309,6 @@ async function prepareAfterQuoteEmailToAdmin(
 ) {
   let visitor = await visitorDao.getVisitorById(idVisitor);
   let recipient = visitor.email;
-  //const email = await emailTemplateDao.getEmailTemplateByName('visitor quote reception');
   const creationDate = quote.createdAt;
   const formattedCreationDate = creationDate.toLocaleString("en-GB", {
     day: "2-digit",
@@ -329,8 +327,7 @@ async function prepareAfterQuoteEmailToAdmin(
     );
   let emailSubject = "New Quote Request Received";
   let fullEmailObject = {
-    to: "sales@coachhirenetwork.co.uk", //adelbouden@boudencoachtravel.co.uk
-    // to: "fefomix663@lesotica.com", //adelbouden@boudencoachtravel.co.uk
+    to: "sales@coachhirenetwork.co.uk",
     subject: emailSubject,
     body: emailBody,
   };
@@ -425,7 +422,7 @@ async function prepareQuotePaymentEmail(idVisitor, url, quote) {
   return fullEmailObject;
 }
 
-const updateQuoteStatus = async (id) => {
+const updateQuoteStatus = async (id, paymentType, paymentMode) => {
   let quote = await quoteDao.getQuoteById(id);
   let quotes = await quoteDao.getAllQuotesByReference(quote.quote_ref);
   quotes.forEach(async (qt) => {
@@ -433,7 +430,7 @@ const updateQuoteStatus = async (id) => {
       await quoteDao.updateQuoteStatus(qt._id);
     }
   });
-  return await quoteDao.updateQuoteStatus(id);
+  return await quoteDao.updateQuoteStatus(id, paymentType, paymentMode);
 };
 
 const getQuoteByIdSchedule = async (id) => {

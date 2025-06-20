@@ -11,8 +11,7 @@ const createPaymentTrackingRecord = async (req, res) => {
     });
 
     res.redirect(
-      "http://www.coachhirenetwork.co.uk/Booking-Confirmation.html?id=" +
-        id_quote
+      "coachhirenetwork.co.uk/Booking-Confirmation.html?id=" + id_quote
     );
   } catch (error) {
     console.error(error);

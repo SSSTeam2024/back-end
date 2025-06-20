@@ -384,8 +384,11 @@ const updateQuoteStatus = async (req, res) => {
       payment_mode,
       date,
     } = req.body;
-    console.log("req.body", req.body);
-    const updatedQuote = await quoteService.updateQuoteStatus(quoteId);
+    const updatedQuote = await quoteService.updateQuoteStatus(
+      quoteId,
+      payment_type,
+      payment_mode
+    );
 
     if (!updatedQuote) {
       return res.status(404).send("Quote not found");
@@ -393,7 +396,7 @@ const updateQuoteStatus = async (req, res) => {
 
     res.json({
       link:
-        "http://www.coachhirenetwork.co.uk/Booking-Success.html?type=" +
+        "coachhirenetwork.co.uk/Booking-Success.html?type=" +
         payment_type +
         "&mode=" +
         payment_mode +
