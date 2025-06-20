@@ -156,6 +156,7 @@ const deleteQuote = async (id) => {
 };
 
 const sendBookingEmail = async (bookingData) => {
+  console.log("bookingData", bookingData);
   let id = bookingData.id_visitor;
   let price = bookingData.price;
   let quote_id = bookingData.quote_id;
@@ -176,6 +177,7 @@ const sendBookingEmail = async (bookingData) => {
     total_price
   );
   let quote = await quoteDao.getQuoteById(quote_id);
+  console.log("quote_id", quote_id);
   let url =
     "http://57.128.184.217:3000/api/visitor-payment/create-payment-tracking-record/" +
     id._id +
