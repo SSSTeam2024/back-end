@@ -102,7 +102,7 @@ const createQuote = async (
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
     let url =
-      "http://57.128.184.217:3000/api/visitor-payment/create-payment-tracking-record" +
+      "http://coachhirenetwork.co.uk/api/visitor-payment/create-payment-tracking-record" +
       "/" +
       id._id +
       "/" +
