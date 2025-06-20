@@ -102,7 +102,7 @@ const createQuote = async (
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
     let url =
-      "http://57.128.184.217:3000/api/visitor-payment/create-payment-tracking-record" +
+      "http://localhost:3000/api/visitor-payment/create-payment-tracking-record" +
       "/" +
       id._id +
       "/" +
@@ -179,7 +179,7 @@ const sendBookingEmail = async (bookingData) => {
   let quote = await quoteDao.getQuoteById(quote_id);
   console.log("quote_id", quote_id);
   let url =
-    "http://57.128.184.217:3000/api/visitor-payment/create-payment-tracking-record/" +
+    "http://localhost:3000/api/visitor-payment/create-payment-tracking-record/" +
     id._id +
     "/" +
     quote_id;
@@ -243,7 +243,9 @@ const sendPaymentEmail = async (paymentData) => {
   let id = paymentData.id_visitor;
   let quote_id = paymentData.quote_id;
   let quote = await quoteDao.getQuoteById(quote_id);
-  let url = `coachhirenetwork.co.uk/Booking-Payment.html?id=` + quote_id;
+  let url =
+    `http://www.coachhirenetwork.co.uk:5500/Booking-Payment.html?id=` +
+    quote_id;
   let email = await prepareQuotePaymentEmail(id, url, quote);
   await emailService.sendEmail(email);
   return "Payment Email sent!";
@@ -469,7 +471,7 @@ const acceptAssignedAffiliateToQuote = async (acceptData) => {
   await quoteDao.acceptAssignedAffiliate(idQuote, id_affiliate);
   let affiliate = await affiliateDao.getAffiliateById(id_affiliate);
   let quote = await quoteDao.getQuoteById(idQuote);
-  let url = `http://57.128.184.217:3000/api/quote/job-accepted/` + idQuote;
+  let url = `http://localhost:3000/api/quote/job-accepted/` + idQuote;
   let email = await prepareQuoteAffiliateAcceptence(affiliate, url, quote);
   await emailService.sendEmail(email);
   return "Quote Pushed To Affiliate Acceptence Email sent!";

@@ -396,7 +396,7 @@ const updateQuoteStatus = async (req, res) => {
 
     res.json({
       link:
-        "coachhirenetwork.co.uk/Booking-Success.html?type=" +
+        "http://www.coachhirenetwork.co.uk:5500/Booking-Success.html?type=" +
         payment_type +
         "&mode=" +
         payment_mode +

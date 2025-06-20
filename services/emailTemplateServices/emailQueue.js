@@ -6,7 +6,7 @@ const emailService = require("./emailTemplateSendEmail");
 // Email queue setup
 const emailQueue = new Queue("emailQueue", {
   redis: {
-    host: "127.0.0.1",
+    host: "www.coachhirenetwork.co.uk",
     port: 6379,
   },
 });

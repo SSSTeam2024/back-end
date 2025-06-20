@@ -109,7 +109,7 @@ const generateHTMLFile = async (req, res) => {
             <div class="col-lg-3">
               <div class="header-left-content" id="logo-of-site">
                 <a href="index.html">
-                  <img src="http://57.128.184.217:3000/header/${
+                  <img src="http://localhost:3000/header/${
                     htmlPage.header.logo
                   }" alt="Logo" />
                 </a>
