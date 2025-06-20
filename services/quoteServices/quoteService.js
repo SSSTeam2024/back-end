@@ -102,7 +102,7 @@ const createQuote = async (
     let deposit_percentage = 30;
     await quoteDao.updateQuotePrice(quote_id, autoPrice);
     let url =
-      "http://coachhirenetwork.co.uk/api/visitor-payment/create-payment-tracking-record" +
+      "http://57.128.184.217:3000/api/visitor-payment/create-payment-tracking-record" +
       "/" +
       id._id +
       "/" +
@@ -177,7 +177,7 @@ const sendBookingEmail = async (bookingData) => {
   );
   let quote = await quoteDao.getQuoteById(quote_id);
   let url =
-    "http://coachhirenetwork.co.uk/api/visitor-payment/create-payment-tracking-record/" +
+    "http://57.128.184.217:3000/api/visitor-payment/create-payment-tracking-record/" +
     id._id +
     "/" +
     quote_id;
