@@ -132,6 +132,7 @@ io.on("connection", (socket) => {
     io.emit("live-tracking-listening", arg);
     if (arg.details.schoolId !== null) {
       io.emit("live-tracking-schools-listening", arg);
+      io.emit("live-tracking-students-listening", arg);
     }
     if (arg.details.companyId !== null) {
       io.emit("live-tracking-companies-listening", arg);
@@ -140,6 +141,9 @@ io.on("connection", (socket) => {
   });
   socket.on("employee-scan", (arg) => {
     io.emit("employee-scan-driver", arg);
+  });
+  socket.on("student-scan", (arg) => {
+    io.emit("student-scan-driver", arg);
   });
   socket.on("notification", (arg) => {
     console.log("notif");

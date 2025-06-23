@@ -222,6 +222,7 @@ const convertToQuoteAPI = async (req, res) => {
   try {
     const { id_schedule } = req.body;
     let program = await programmService.getProgrammById(id_schedule);
+    console.log("program: ", program);
     //?let vehicleType = await VehicleTypeService.getVehicleTypeById(program.vehiculeType);
     let journey = await journeyService.getJourneyById(program.journeyType);
     //?let luggage = await luggageService.getLuagggeById(program.luggage);
@@ -346,7 +347,8 @@ const updateStatusToConvertedAPI = async (req, res) => {
 const updateProgramm = async (req, res) => {
   const { id } = req.params;
   const { programDetails, groups } = req.body;
-  console.log(groups);
+  console.log("req.body in ctrl", req.body);
+  console.log("id in ctrl", id);
   if (
     programDetails.employees_groups?.length === 1 &&
     programDetails.employees_groups[0] === ""
