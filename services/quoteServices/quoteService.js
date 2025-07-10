@@ -6,7 +6,9 @@ const emailTemplatesStructure = require("../../utils/emailTemplatesStructure");
 const modeDao = require("../../dao/modeDao/modeDao");
 const mileageBandDao = require("../../dao/mileageBandDao/mileageBandDao");
 const notificationDao = require("../../dao/notificationQuoteDao/notificationDao");
-
+const vehicleServices = require("../../services/vehicleServices/vehicleService");
+const driverServices = require("../../services/driverServices/driverService");
+const onesignalService = require("../oneSignalServices/oneSignalServices");
 const {
   updateAffiliateStatus,
 } = require("../affiliateServices/affiliateService");
@@ -209,8 +211,17 @@ const sendAssign = async (bookingData) => {
 
 const assignDriver = async (bookingData) => {
   let quote_id = bookingData.quote_id;
+  let quote_infos = await quoteDao.getQuoteById(quote_id);
   let driver = bookingData.id_driver;
+  let driver_infos = await driverServices.getDriverById(driver);
+  const onesignal_notification = {
+    contents: `Ref : ${quote_infos.quote_ref} at ${quote_infos.date} from ${quote_infos.pickup_time} to ${quote_infos.dropoff_time}`,
+    title: "New Job Assigned",
+    users: [driver_infos.onesignal_api_key],
+  };
   await quoteDao.updateDriver(quote_id, driver);
+
+  await onesignalService.sendNotification(onesignal_notification);
   return "Driver Assigned!!";
 };
 
@@ -230,8 +241,20 @@ const updateToCancel = async (updateData) => {
 
 const assignVehicle = async (bookingData) => {
   let quote_id = bookingData.quote_id;
+  let quote_infos = await quoteDao.getQuoteById(quote_id);
   let vehicle = bookingData.id_vehicle;
+  let vehicle_infos = await vehicleServices.getVehicleById(vehicle);
+
+  if (quote_infos.id_driver !== null) {
+    const onesignal_notification = {
+      contents: `Ref : ${quote_infos.quote_ref} at ${quote_infos.date} from ${quote_infos.pickup_time} to ${quote_infos.dropoff_time}.\nVehicle: ${vehicle_infos.registration_number}`,
+      title: "New Vehicle Assigned",
+      users: [quote_infos.id_driver.onesignal_api_key],
+    };
+    await onesignalService.sendNotification(onesignal_notification);
+  }
   await quoteDao.updateVehicle(quote_id, vehicle);
+
   return "Vehicle Assigned!!";
 };
 
@@ -442,9 +465,19 @@ const getQuoteByIdSchedule = async (id) => {
 
 const assignDriverAndVehicleToQuoteService = async (bookingData) => {
   let quote_id = bookingData.quote_ID;
+  let quote_infos = await quoteDao.getQuoteById(quote_id);
   let driver = bookingData.driver_ID;
   let vehicle = bookingData.vehicle_ID;
+  let driver_infos = await driverServices.getDriverById(driver);
+  let vehicle_infos = await vehicleServices.getVehicleById(vehicle);
+
   await quoteDao.assignDriverAndVehicleToQuoteDao(quote_id, driver, vehicle);
+  const onesignal_notification = {
+    contents: `Ref : ${quote_infos.quote_ref} at ${quote_infos.date} from ${quote_infos.pickup_time} to ${quote_infos.dropoff_time}.\nVehicle: ${vehicle_infos.registration_number}`,
+    title: "New Job And Vehicle Assigned",
+    users: [driver_infos.onesignal_api_key],
+  };
+  await onesignalService.sendNotification(onesignal_notification);
   return "Driver and Vehicle Assigned!!";
 };
 

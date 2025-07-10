@@ -146,7 +146,7 @@ const convertedToContract = async (req, res) => {
     const paddedNumber = newNumber.toString().padStart(4, "0");
     const contractRef = `C${currentYear}/${paddedNumber}`;
     const groups = await programmService.getProgramStudentGroups(idProgram);
-    console.log(groups);
+    console.log("groups", groups);
     if (program.school_id === null) {
       const companyData = {
         idProgram: idProgram,
@@ -176,9 +176,9 @@ const convertedToContract = async (req, res) => {
         subTotal: program.total_price,
         tva: (Number(program.total_price) * 0.2).toFixed(2),
       };
-      console.log(companyData);
-      // await programmService.convertToContract(companyData);
-      // res.status(201).send("Converted Successfully");
+      console.log("companyData", companyData);
+      await programmService.convertToContract(companyData);
+      res.status(201).send("Converted Successfully");
     } else {
       const schoolData = {
         idProgram: idProgram,
@@ -208,9 +208,9 @@ const convertedToContract = async (req, res) => {
         subTotal: program.total_price,
         tva: (Number(program.total_price) * 0.2).toFixed(2),
       };
-      console.log(schoolData);
-      // await programmService.convertToContract(schoolData);
-      // res.status(201).send("Converted Successfully");
+      console.log("schoolData");
+      await programmService.convertToContract(schoolData);
+      res.status(201).send("Converted Successfully");
     }
   } catch (error) {
     console.error(error);
@@ -222,7 +222,6 @@ const convertToQuoteAPI = async (req, res) => {
   try {
     const { id_schedule } = req.body;
     let program = await programmService.getProgrammById(id_schedule);
-    console.log("program: ", program);
     //?let vehicleType = await VehicleTypeService.getVehicleTypeById(program.vehiculeType);
     let journey = await journeyService.getJourneyById(program.journeyType);
     //?let luggage = await luggageService.getLuagggeById(program.luggage);
@@ -387,6 +386,83 @@ const updateProgramm = async (req, res) => {
   }
 };
 
+const editProgram = async (req, res) => {
+  const { id } = req.params;
+  const {
+    programName,
+    origin_point,
+    stops,
+    destination_point,
+    pickUp_date,
+    droppOff_date,
+    freeDays_date,
+    exceptDays,
+    workDates,
+    recommanded_capacity,
+    extra,
+    notes,
+    dropOff_time,
+    pickUp_Time,
+    school_id,
+    company_id,
+    luggage,
+    vehiculeType,
+    unit_price,
+    total_price,
+    journeyType,
+    program_status,
+    within_payment_days,
+    invoiceFrequency,
+    notes_for_client,
+    tab_number,
+    employees_groups,
+    students_groups,
+  } = req.body;
+  console.log("id : ", id);
+  console.log("req.body", req.body);
+  try {
+    const updatedProgram = await programmService.editProgram(id, {
+      programName,
+      origin_point,
+      stops,
+      destination_point,
+      pickUp_date,
+      droppOff_date,
+      freeDays_date,
+      exceptDays,
+      workDates,
+      recommanded_capacity,
+      extra,
+      notes,
+      dropOff_time,
+      pickUp_Time,
+      school_id,
+      company_id,
+      luggage,
+      vehiculeType,
+      unit_price,
+      total_price,
+      journeyType,
+      program_status,
+      within_payment_days,
+      invoiceFrequency,
+      notes_for_client,
+      tab_number,
+      employees_groups,
+      students_groups,
+    });
+
+    if (!updatedProgram) {
+      return res.status(404).json({ message: "Program not found" });
+    }
+
+    res.json(updatedProgram);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getProgramms,
   createProgramm,
@@ -399,4 +475,5 @@ module.exports = {
   getProgramStudentGroups,
   getProgramEmployeeGroups,
   updateProgramm,
+  editProgram,
 };

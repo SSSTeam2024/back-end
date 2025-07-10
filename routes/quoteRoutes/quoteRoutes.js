@@ -65,7 +65,6 @@ router.post(
   "/assignAffiliateVehicleAndDriver",
   quoteController.assignAffiliateDriverAndVehicleToQuoteAPI
 );
-
 router.post("/sendPriceAndNotes", quoteController.sendPriceAndNotes);
 router.post("/sendAcceptJobStatus", quoteController.sendJobStatus);
 router.post("/sendRefuseJobStatus", quoteController.sendRefuseJobStatus);

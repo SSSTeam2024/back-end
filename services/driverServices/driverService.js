@@ -151,6 +151,10 @@ const generateCodeAndSendEmail = async (
   return result;
 };
 
+const updateOneSignalApiKey = async (id, key) => {
+  return await driverDao.updateOneSignalApiKey(id, key);
+};
+
 module.exports = {
   registerDriver,
   loginDriver,
@@ -164,4 +168,5 @@ module.exports = {
   logout,
   getDriverByToken,
   generateCodeAndSendEmail,
+  updateOneSignalApiKey,
 };

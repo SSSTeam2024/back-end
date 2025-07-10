@@ -139,6 +139,12 @@ const updateProgramm = async (id, programDetails, groupsData) => {
   return program;
 };
 
+const editProgram = async (id, programData) => {
+  let program = await programmDao.updateProgramm(id, programData);
+
+  return program;
+};
+
 module.exports = {
   createProgramm,
   getProgramms,
@@ -151,4 +157,5 @@ module.exports = {
   getProgramStudentGroups,
   getProgramEmployeeGroups,
   updateProgramm,
+  editProgram,
 };

@@ -77,6 +77,52 @@ const addNewGroup = async (req, res) => {
   }
 };
 
+const addNewGroupWithoutUpdateEmployees = async (req, res) => {
+  try {
+    const {
+      groupName,
+      note,
+      startPoint,
+      dateStart,
+      timeStart,
+      Destination,
+      dateEnd,
+      timeEnd,
+      status,
+      id_company,
+      program,
+      passenger_number,
+      employees,
+      luggage_details,
+      vehicle_type,
+      unit_price,
+    } = req.body;
+    console.log(req.body);
+    const group = await groupEmployeeService.addNewGroupWithoutUpdateEmployees({
+      groupName,
+      note,
+      startPoint,
+      dateStart,
+      timeStart,
+      Destination,
+      dateEnd,
+      timeEnd,
+      status,
+      id_company,
+      program,
+      passenger_number,
+      employees,
+      luggage_details,
+      vehicle_type,
+      unit_price,
+    });
+    res.json(group);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const updateGroupEmployee = async (req, res) => {
   try {
     const {
@@ -157,6 +203,25 @@ const getGroupByIdCompany = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const getGroupsByIdProgram = async (req, res) => {
+  try {
+    const program = req.params.id;
+
+    const getGroupByIdProgram = await groupEmployeeService.getGroupsByIdProgram(
+      program
+    );
+
+    if (!getGroupByIdProgram) {
+      return res.status(404).send("Group Employee not found");
+    }
+    res.json(getGroupByIdProgram);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 const deleteGroupEmployee = async (req, res) => {
   try {
     const groupEmployeeId = req.params.id;
@@ -209,6 +274,28 @@ async function addEmployeesToGroup(req, res) {
   }
 }
 
+const deleteManyGroupEmployees = async (req, res) => {
+  try {
+    const groupIds = req.body.ids;
+
+    if (!groupIds || groupIds.length === 0) {
+      return res.status(400).send("No IDs provided");
+    }
+
+    const deleteGroupsResult =
+      await groupEmployeeService.deleteManyGroupEmployees(groupIds);
+
+    if (deleteGroupsResult.deletedCount === 0) {
+      return res.status(404).send("No Groupes found with provided IDs");
+    }
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   getGroups,
   createGroupAndAssignEmployees,
@@ -220,4 +307,7 @@ module.exports = {
   getGroupByIdCompany,
   removeEmployeeFromGroup,
   addEmployeesToGroup,
+  getGroupsByIdProgram,
+  deleteManyGroupEmployees,
+  addNewGroupWithoutUpdateEmployees,
 };

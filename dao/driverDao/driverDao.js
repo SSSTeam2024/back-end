@@ -68,6 +68,18 @@ const updatePassword = async (id, password) => {
   );
 };
 
+const updateOneSignalApiKey = async (id, key) => {
+  return await Driver.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        onesignal_api_key: key,
+      },
+    },
+    { new: true }
+  );
+};
+
 module.exports = {
   createDriver,
   getDrivers,
@@ -80,4 +92,5 @@ module.exports = {
   logout,
   updateJwtToken,
   findDriverByToken,
+  updateOneSignalApiKey,
 };

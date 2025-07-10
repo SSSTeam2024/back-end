@@ -1,0 +1,35 @@
+const mongoose = require("mongoose");
+
+const appSchema = new mongoose.Schema({
+  trading_name: String,
+  registred_name: String,
+  company_number: String,
+  tax_number: String,
+  driver_app_code: String,
+  billing_profile: String,
+  prefix: String,
+  copy_customer_details: String,
+  address: String,
+  tel: String,
+  mobile: String,
+  sales_email: String,
+  op_email: String,
+  color: String,
+  currency_symbol: String,
+  symbol_position: String,
+  balance_due: String,
+  default_deposit_type: String,
+  default_deposit_amount: String,
+  auto_pricing_type: String,
+  auto_pricing_amount: String,
+  show_journey: String,
+  show_journey_price: String,
+  logo: String,
+  enquiry_email: String,
+  booking_email: String,
+  regular_email: String,
+  mobile_sms: String,
+  bcc_email: String,
+});
+
+module.exports = mongoose.model("App", appSchema);

@@ -77,6 +77,8 @@ const onTheRoadRoutes = require("./onTheRoadComponentRoutes/onTheRoadComponentRo
 const inThePressRoutes = require("./inThePressComponentRoutes/inThePressComponentRoutes");
 const notificationRoutes = require("./notificationRoutes/notificationRoutes");
 const termsConditionComponentRoutes = require("./termsConditionComponentRoutes/termsConditionComponentRoutes");
+const appRoutes = require("./appRoutes/appRoutes");
+const offerRoutes = require("./offerRoutes/offerRoutes");
 
 router.use("/authSchool", schoolRoutes);
 router.use("/student", studentRoutes);
@@ -163,5 +165,7 @@ router.use("/on-the-road-component", onTheRoadRoutes);
 router.use("/in-the-press-component", inThePressRoutes);
 router.use("/notifications", notificationRoutes);
 router.use("/terms-condition", termsConditionComponentRoutes);
+router.use("/application", appRoutes);
+router.use("/offer", offerRoutes);
 
 module.exports = router;

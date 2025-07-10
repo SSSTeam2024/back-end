@@ -39,6 +39,7 @@ const driverSchema = new mongoose.Schema(
     deposti_held: String,
     notes: String,
     api_token: String,
+    onesignal_api_key: String,
   },
   {
     timestamps: true,

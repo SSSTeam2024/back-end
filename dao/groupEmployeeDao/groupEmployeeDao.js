@@ -89,6 +89,12 @@ const getGroupByIdCompany = async (id_company) => {
   return await groupEmployee.find(id_company);
 };
 
+const getGroupsByIdProgram = async (programId) => {
+  return await groupEmployee
+    .find({ program: programId })
+    .populate("vehicle_type");
+};
+
 const updateGroupEmployee = async (id, updateData) => {
   return await groupEmployee.findByIdAndUpdate(id, updateData, { new: true });
 };
@@ -155,6 +161,13 @@ async function getEmployeeInfo(groupId, employeeId) {
   }
 }
 
+const deleteManyGroupEmployees = async (ids) => {
+  const query = {
+    _id: { $in: ids },
+  };
+  return await groupEmployee.deleteMany(query);
+};
+
 module.exports = {
   getActiveGroups,
   getAllGroups,
@@ -169,4 +182,6 @@ module.exports = {
   removeEmployeeFromGroup,
   getEmployeeInfo,
   addEmployeesToGroup,
+  getGroupsByIdProgram,
+  deleteManyGroupEmployees,
 };

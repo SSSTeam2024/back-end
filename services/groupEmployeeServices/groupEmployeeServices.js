@@ -1,10 +1,8 @@
 const groupEmployeeDao = require("../../dao/groupEmployeeDao/groupEmployeeDao");
 const employeeDao = require("../../dao/employeeDao/employeeDao");
-const groupMigrationDao = require('../../dao/groupEmployeeDao/groupMigrationDao');
-const GroupMigration = require ("../../models/groupEmployee/groupMigration")
+const groupMigrationDao = require("../../dao/groupEmployeeDao/groupMigrationDao");
+const GroupMigration = require("../../models/groupEmployee/groupMigration");
 const Employee = require("../../models/employeeSchema/employeeSchema");
-
-
 
 async function createGroupAndAssignEmployees(groupData, employeeIds) {
   try {
@@ -50,6 +48,10 @@ const addNewGroup = async (groupData) => {
   return group;
 };
 
+const addNewGroupWithoutUpdateEmployees = async (groupData) => {
+  return await groupEmployeeDao.addNewGroup(groupData);
+};
+
 async function updateEmployees(employees, group, date) {
   employees.forEach(async (id) => {
     await employeeDao.updateEmployeeGroupId(id, group._id, date);
@@ -58,12 +60,11 @@ async function updateEmployees(employees, group, date) {
 
 // async function addEmployeesToGroup(_id, employees) {
 //   try {
-   
+
 //     if (!_id) {
 //       throw new Error("group Id is required");
 //     }
 
-    
 //     const UpdatedGroupEmployees = await groupEmployeeDao.addEmployeesToGroup(
 //       _id,
 //       employees
@@ -79,7 +80,10 @@ async function addEmployeesToGroup(_id, employees) {
       throw new Error("Group ID is required");
     }
 
-    const updatedGroup = await groupEmployeeDao.addEmployeesToGroup(_id, employees);
+    const updatedGroup = await groupEmployeeDao.addEmployeesToGroup(
+      _id,
+      employees
+    );
 
     // Update each employee with groupId and joining date
     const updatedEmployees = await Promise.all(
@@ -116,34 +120,38 @@ const getGroupByIdEmployee = async (id_employee) => {
 const getGroupByIdCompany = async (id_company) => {
   return await groupEmployeeDao.getGroupByIdCompany(id_company);
 };
+
+const getGroupsByIdProgram = async (program) => {
+  return await groupEmployeeDao.getGroupsByIdProgram(program);
+};
+
 const deleteGroupEmployee = async (id) => {
   return await groupEmployeeDao.deleteGroupEmployee(id);
 };
 
-
-
-
-
 async function removeEmployeeFromGroup(groupId, employeeId) {
   try {
-      const employeeInfo = await groupEmployeeDao.getEmployeeInfo(groupId, employeeId);
-      if (!employeeInfo) {
-          throw new Error('Employee information not found.');
-      }
+    const employeeInfo = await groupEmployeeDao.getEmployeeInfo(
+      groupId,
+      employeeId
+    );
+    if (!employeeInfo) {
+      throw new Error("Employee information not found.");
+    }
 
-      // Register employee movement
-      await groupMigrationDao.registerEmployeeMovement(employeeInfo);
+    // Register employee movement
+    await groupMigrationDao.registerEmployeeMovement(employeeInfo);
 
-      // Remove employee from the group
-      await groupEmployeeDao.removeEmployeeFromGroup(groupId, employeeId);
+    // Remove employee from the group
+    await groupEmployeeDao.removeEmployeeFromGroup(groupId, employeeId);
   } catch (error) {
-      throw new Error('Error removing employee from group: ' + error.message);
+    throw new Error("Error removing employee from group: " + error.message);
   }
 }
 
-
-
-
+const deleteManyGroupEmployees = async (ids) => {
+  return await groupEmployeeDao.deleteManyGroupEmployees(ids);
+};
 
 module.exports = {
   getAllGroups,
@@ -156,5 +164,8 @@ module.exports = {
   deleteGroupEmployee,
   getGroupByIdCompany,
   removeEmployeeFromGroup,
-  addEmployeesToGroup
+  addEmployeesToGroup,
+  getGroupsByIdProgram,
+  deleteManyGroupEmployees,
+  addNewGroupWithoutUpdateEmployees,
 };

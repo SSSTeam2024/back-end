@@ -17,4 +17,5 @@ router.post(
   "/send-verification-code",
   driverController.generateVerificationCodeAndSendViaEmail
 );
+router.post("/updateApiKey", driverController.updateOneSignalApiKey);
 module.exports = router;

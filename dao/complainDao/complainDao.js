@@ -72,7 +72,7 @@ const updateComplainToArchived = async (_id, newStatus) => {
 };
 
 const getComplains = async () => {
-  return await Complain.find();
+  return await Complain.find().populate("id_company").populate("id_school");
 };
 
 const getComplainById = async (id) => {

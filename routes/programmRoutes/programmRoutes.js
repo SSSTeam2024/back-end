@@ -7,6 +7,7 @@ router.post("/newProgramm", programmController.createProgramm);
 router.get("/getAllProgramms", programmController.getProgramms);
 router.get("/getProgrammById/:id", programmController.getProgrammById);
 router.put("/updateProgram/:id", programmController.updateProgramm);
+router.put("/edit/:id", programmController.editProgram);
 router.delete("/deleteProgram/:id", programmController.deleteProgramm);
 router.post("/convertToQuote", programmController.convertToQuoteAPI);
 router.post("/sendResponse", programmController.sendResponseAPI);

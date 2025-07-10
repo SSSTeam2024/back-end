@@ -455,6 +455,17 @@ const generateVerificationCodeAndSendViaEmail = async (req, res) => {
   }
 };
 
+const updateOneSignalApiKey = async (req, res) => {
+  try {
+    const { id, key } = req.body;
+    const sentResult = await driverService.updateOneSignalApiKey(id, key);
+    res.json(sentResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -467,4 +478,5 @@ module.exports = {
   updatePassword,
   getDriverByJwtToken,
   generateVerificationCodeAndSendViaEmail,
+  updateOneSignalApiKey,
 };
