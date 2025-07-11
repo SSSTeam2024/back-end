@@ -438,6 +438,17 @@ const removeStudentFromGroup = async (req, res) => {
   }
 };
 
+const updateOneSignalApiKey = async (req, res) => {
+  try {
+    const { id, key } = req.body;
+    const sentResult = await studentService.updateOneSignalApiKey(id, key);
+    res.json(sentResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   registerStudent,
   login,
@@ -453,4 +464,5 @@ module.exports = {
   getStudentByIdSchool,
   updateStudentStops,
   removeStudentFromGroup,
+  updateOneSignalApiKey,
 };

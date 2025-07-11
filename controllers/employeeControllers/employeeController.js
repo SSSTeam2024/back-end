@@ -311,6 +311,17 @@ const generateVerificationCodeAndSendViaEmail = async (req, res) => {
   }
 };
 
+const updateOneSignalApiKey = async (req, res) => {
+  try {
+    const { id, key } = req.body;
+    const sentResult = await employeeService.updateOneSignalApiKey(id, key);
+    res.json(sentResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   addNewEmployee,
   getEmployees,
@@ -325,4 +336,5 @@ module.exports = {
   updateEmployeesStops,
   updatePassword,
   generateVerificationCodeAndSendViaEmail,
+  updateOneSignalApiKey,
 };

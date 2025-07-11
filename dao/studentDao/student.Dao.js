@@ -145,6 +145,18 @@ const updateStudentStop = async (data) => {
   );
 };
 
+const updateOneSignalApiKey = async (id, key) => {
+  return await Student.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        onesignal_api_key: key,
+      },
+    },
+    { new: true }
+  );
+};
+
 module.exports = {
   createStudent,
   getAllStudents,
@@ -161,4 +173,5 @@ module.exports = {
   updateJwtToken,
   logout,
   updateStudentStop,
+  updateOneSignalApiKey,
 };

@@ -33,6 +33,7 @@ const employeeSchema = new mongoose.Schema({
     },
     default: null,
   },
+  onesignal_api_key: String,
 });
 
 module.exports = mongoose.model("Employee", employeeSchema);

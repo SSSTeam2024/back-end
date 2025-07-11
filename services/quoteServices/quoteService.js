@@ -8,7 +8,9 @@ const mileageBandDao = require("../../dao/mileageBandDao/mileageBandDao");
 const notificationDao = require("../../dao/notificationQuoteDao/notificationDao");
 const vehicleServices = require("../../services/vehicleServices/vehicleService");
 const driverServices = require("../../services/driverServices/driverService");
-const onesignalService = require("../oneSignalServices/oneSignalServices");
+const onesignalService = require("../oneSignalServices/oneSignalDriverServices");
+const onesignalEmployeeService = require("../oneSignalServices/oneSignalEmployeeServices");
+const oneSignalStudentServices = require("../oneSignalServices/oneSignalStudentServices");
 const {
   updateAffiliateStatus,
 } = require("../affiliateServices/affiliateService");
@@ -228,6 +230,26 @@ const assignDriver = async (bookingData) => {
 const updateProgress = async (updateData) => {
   let quote_id = updateData.quote_id;
   let progress = updateData.progress;
+  if (progress === "On Route") {
+    let quote_infos = await quoteDao.getQuoteById(quote_id);
+    const onesignal_notification = {
+      contents: `Ref : ${quote_infos.quote_ref} at ${quote_infos.date} from ${quote_infos.pickup_time} to ${quote_infos.dropoff_time}`,
+      title: "Driver On Route",
+      users: [],
+    };
+    if (quote_infos.id_group_employee !== null) {
+      for (const employee of quote_infos.id_group_employee.employees) {
+        onesignal_notification.users.push(employee.onesignal_api_key);
+      }
+      await onesignalEmployeeService.sendNotification(onesignal_notification);
+    }
+    if (quote_infos.id_group_student !== null) {
+      for (const student of quote_infos.id_group_student.students) {
+        onesignal_notification.users.push(student.onesignal_api_key);
+      }
+      await oneSignalStudentServices.sendNotification(onesignal_notification);
+    }
+  }
   await quoteDao.updateProgress(quote_id, progress);
   return "Progress Updated!!";
 };

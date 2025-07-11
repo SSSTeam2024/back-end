@@ -51,6 +51,7 @@ const updateOffer = async (req, res) => {
       destination,
       cost,
       offer_number,
+      offer_status,
     } = req.body;
 
     const offerData = {
@@ -64,6 +65,7 @@ const updateOffer = async (req, res) => {
       destination,
       cost,
       offer_number,
+      offer_status,
     };
 
     const updatedOffer = await offerServices.updateOffer(offerId, offerData);

@@ -50,6 +50,7 @@ const studentSchema = new mongoose.Schema(
       },
       default: null,
     },
+    onesignal_api_key: String,
   },
   { timestamps: true }
 );

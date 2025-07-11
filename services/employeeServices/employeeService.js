@@ -208,6 +208,10 @@ const generateCodeAndSendEmail = async (
   return result;
 };
 
+const updateOneSignalApiKey = async (id, key) => {
+  return await employeeDao.updateOneSignalApiKey(id, key);
+};
+
 module.exports = {
   createEmployee,
   getEmployeeByEmail,
@@ -222,4 +226,5 @@ module.exports = {
   updateEmployeeStops,
   updatePassword,
   generateCodeAndSendEmail,
+  updateOneSignalApiKey,
 };

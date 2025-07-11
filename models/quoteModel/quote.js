@@ -126,6 +126,7 @@ const quoteSchema = new mongoose.Schema(
     category: String, //TODO: private_hire_job or regular NB: TO ADD TO CONTROLLER
     enquiryDate: String,
     pushedDate: String,
+    extraTrip: String,
   },
   {
     timestamps: true,

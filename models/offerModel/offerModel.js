@@ -17,6 +17,7 @@ const offerSchema = new Schema(
     destination: String,
     cost: String,
     offer_number: String,
+    offer_status: String,
   },
   { timestamps: true }
 );

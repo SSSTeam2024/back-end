@@ -19,4 +19,5 @@ router.delete(
   "/student/:studentId/groups/:groupId",
   studentController.removeStudentFromGroup
 );
+router.post("/updateApiKey", studentController.updateOneSignalApiKey);
 module.exports = router;

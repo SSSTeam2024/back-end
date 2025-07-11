@@ -176,6 +176,10 @@ async function removeStudentFromGroup(studentId, groupId) {
   return { student, group, migration };
 }
 
+const updateOneSignalApiKey = async (id, key) => {
+  return await studentDao.updateOneSignalApiKey(id, key);
+};
+
 module.exports = {
   registerStudent,
   getStudents,
@@ -191,4 +195,5 @@ module.exports = {
   logout,
   updateStudentStops,
   removeStudentFromGroup,
+  updateOneSignalApiKey,
 };

@@ -105,6 +105,18 @@ const updatePassword = async (id, password) => {
   );
 };
 
+const updateOneSignalApiKey = async (id, key) => {
+  return await Employee.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        onesignal_api_key: key,
+      },
+    },
+    { new: true }
+  );
+};
+
 module.exports = {
   createEmployee,
   getEmployee,
@@ -120,4 +132,5 @@ module.exports = {
   logout,
   updateEmployeeStop,
   updatePassword,
+  updateOneSignalApiKey,
 };

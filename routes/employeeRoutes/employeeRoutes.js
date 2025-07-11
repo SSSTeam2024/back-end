@@ -29,5 +29,5 @@ router.post(
 
 //** */
 router.put("/update-employee-password/:id", employeeController.updatePassword);
-
+router.post("/updateApiKey", employeeController.updateOneSignalApiKey);
 module.exports = router;

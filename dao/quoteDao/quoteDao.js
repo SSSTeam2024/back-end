@@ -51,7 +51,19 @@ const getQuoteById = async (id) => {
     .populate("id_driver")
     .populate("id_visitor")
     .populate("school_id")
-    .populate("company_id");
+    .populate("company_id")
+    .populate({
+      path: "id_group_employee",
+      populate: {
+        path: "employees",
+      },
+    })
+    .populate({
+      path: "id_group_student",
+      populate: {
+        path: "students",
+      },
+    });
 };
 
 const deleteQuote = async (id) => {
